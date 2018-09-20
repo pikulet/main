@@ -24,7 +24,7 @@ Side-responsiblities: Scheduling and tracking, Integration
 image::team_photos/joyce.jpg[width="150", align="left"]
 {empty}[http://github.com/pikulet[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer
+Role: Developer +
 Responsibilities: Documentation, Storage Component, IntelliJ expert +
 Side-responsiblities: Deliverables and deadlines
 
