@@ -1030,7 +1030,7 @@ The one person in-charge of the entire hotel. Manages staff, guests and faciliti
 Staff in-charge of cleaning rooms and restoring them to the default configuration for a new Guest to stay
 
 [[facilities]] Facilities::
-Facilities: Any form of services provided within the hotel. These include the spa, gym, game room, casino, laundry, bar, restaurants, etc 
+Facilities: Any form of services provided within the hotel. These include the spa, gym, game room, casino, laundry, bar, restaurants, etc
 
 [appendix]
 == Product Survey
