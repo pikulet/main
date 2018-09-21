@@ -831,20 +831,56 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |receptionist |retrieve the room number of a guest |provide any kind of services to the guest in his/her room 
 
-|`* * *` |user |add a new person |
+|`* * *` |receptionist |view the prices of different room types |inform the guests of the prices of different rooms
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |receptionist |mark rooms in need of maintenance or cleaning |prevent guests from staying in those rooms
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |hotel manager |know which rooms' guests are checking out on a certain day |assign cleaning staff to those rooms
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |receptionist |look at the available rooms of a certain type in a certain time |designate rooms for guests
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |receptionist / hotel manager |know the room services called by a guest |charge the guest accordingly
+
+|`* * *` |receptionist |keep track of the particulars of guests such as home address, phone number, room number |contact them in the event of emergencies before, during or after their stay
+
+|`* * *` |receptionist |be informed of the guests that checked out late |charge them with a late check-out fee
+
+|`* * *` |receptionist |swap rooms for guests |allow guests to change rooms if they report any damages
+
+|`* * *` |receptionist |manually reduce / extend the stay of a guest (including late check-out requests) |allow guests to change their check-out timing
+
+|`* * *` |receptionist |modify a guest's particulars |correct errors without rewriting the entry
+
+|`* * *` |receptionist / hotel manager |remove a guest's entry |facilitate the check-out procedure
+
+|`* * *` |receptionist |reserve rooms for guests |allow guests to place reservations
+
+|`* * *` |receptionist |cancel reservations on request |let other guests occupy the room
+
+|`* * *` |hotel manager |export the guests' profiles |keep an archive
+
+|`* * *` |hotel manager |look at all financial transactions made between guests and the hotel |facilitate the monthly audit
+
+|`* * *` |receptionist / hotel manager |red flag problematic guests and write descriptions on them |warn the staff of problematic guests
+
+|`* * *` |receptionist |filter rooms by type, occupancy status, number of guests, etc. |understand the current state of occupancy 
+
+|`* *` |hotel manager |know the usage statistics of facilities |plan for budget and staff allocation
+
+|`* *` |hotel manager |adjust the room rates |take advantage of seasonal pricing
+
+|`* *` |hotel manager |send my guests a "Thank You" note upon check-out |maintain good relations with them
+
+|`* *` |hotel manager |backup my data |prepare for data corruption accidents
+
+|`* *` |receptionists |convert room rates to common global currencies |help guests better understand the pricing 
+
+|`*` |hotel manager |know the average amount spent by guests who checked out in the current month |evaluate the effectiveness of short-term events
+
+|`*` |hotel manager |look at which receptionist last edited a reservation or stay |hold the receptionists accountable if mistakes were made
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
