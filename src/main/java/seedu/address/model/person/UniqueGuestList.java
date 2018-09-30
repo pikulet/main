@@ -8,13 +8,13 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateGuestException;
+import seedu.address.model.person.exceptions.GuestNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of guests that enforces uniqueness between its elements and does not allow nulls.
  * A guest is considered unique by comparing using {@code Guest#isSameGuest(Guest)}. As such, adding and updating of
- * persons uses Guest#isSameGuest(Guest) for equality so as to ensure that the guest being added or updated is
+ * guests uses Guest#isSameGuest(Guest) for equality so as to ensure that the guest being added or updated is
  * unique in terms of identity in the UniqueGuestList. However, the removal of a guest uses Guest#equals(Object) so
  * as to ensure that the guest with exactly the same fields will be removed.
  *
@@ -41,7 +41,7 @@ public class UniqueGuestList implements Iterable<Guest> {
     public void add(Guest toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateGuestException();
         }
         internalList.add(toAdd);
     }
@@ -56,11 +56,11 @@ public class UniqueGuestList implements Iterable<Guest> {
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new GuestNotFoundException();
         }
 
         if (!target.isSameGuest(editedGuest) && contains(editedGuest)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateGuestException();
         }
 
         internalList.set(index, editedGuest);
@@ -73,11 +73,11 @@ public class UniqueGuestList implements Iterable<Guest> {
     public void remove(Guest toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
+            throw new GuestNotFoundException();
         }
     }
 
-    public void setPersons(UniqueGuestList replacement) {
+    public void setGuests(UniqueGuestList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -86,10 +86,10 @@ public class UniqueGuestList implements Iterable<Guest> {
      * Replaces the contents of this list with {@code guests}.
      * {@code guests} must not contain duplicate guests.
      */
-    public void setPersons(List<Guest> guests) {
+    public void setGuests(List<Guest> guests) {
         requireAllNonNull(guests);
-        if (!personsAreUnique(guests)) {
-            throw new DuplicatePersonException();
+        if (!guestsAreUnique(guests)) {
+            throw new DuplicateGuestException();
         }
 
         internalList.setAll(guests);
@@ -122,7 +122,7 @@ public class UniqueGuestList implements Iterable<Guest> {
     /**
      * Returns true if {@code guests} contains only unique guests.
      */
-    private boolean personsAreUnique(List<Guest> guests) {
+    private boolean guestsAreUnique(List<Guest> guests) {
         for (int i = 0; i < guests.size() - 1; i++) {
             for (int j = i + 1; j < guests.size(); j++) {
                 if (guests.get(i).isSameGuest(guests.get(j))) {

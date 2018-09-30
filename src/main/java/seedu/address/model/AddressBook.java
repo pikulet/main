@@ -44,7 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code guests} must not contain duplicate guests.
      */
     public void setPersons(List<Guest> guests) {
-        this.persons.setPersons(guests);
+        this.persons.setGuests(guests);
     }
 
     /**

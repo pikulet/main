@@ -16,8 +16,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateGuestException;
+import seedu.address.model.person.exceptions.GuestNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class UniqueGuestListTest {
@@ -60,7 +60,7 @@ public class UniqueGuestListTest {
     @Test
     public void add_duplicatePerson_throwsDuplicatePersonException() {
         uniqueGuestList.add(ALICE);
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateGuestException.class);
         uniqueGuestList.add(ALICE);
     }
 
@@ -78,7 +78,7 @@ public class UniqueGuestListTest {
 
     @Test
     public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
-        thrown.expect(PersonNotFoundException.class);
+        thrown.expect(GuestNotFoundException.class);
         uniqueGuestList.setGuest(ALICE, ALICE);
     }
 
@@ -115,7 +115,7 @@ public class UniqueGuestListTest {
     public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
         uniqueGuestList.add(ALICE);
         uniqueGuestList.add(BOB);
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateGuestException.class);
         uniqueGuestList.setGuest(ALICE, BOB);
     }
 
@@ -127,7 +127,7 @@ public class UniqueGuestListTest {
 
     @Test
     public void remove_personDoesNotExist_throwsPersonNotFoundException() {
-        thrown.expect(PersonNotFoundException.class);
+        thrown.expect(GuestNotFoundException.class);
         uniqueGuestList.remove(ALICE);
     }
 
@@ -142,7 +142,7 @@ public class UniqueGuestListTest {
     @Test
     public void setPersons_nullUniquePersonList_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueGuestList.setPersons((UniqueGuestList) null);
+        uniqueGuestList.setGuests((UniqueGuestList) null);
     }
 
     @Test
@@ -150,21 +150,21 @@ public class UniqueGuestListTest {
         uniqueGuestList.add(ALICE);
         UniqueGuestList expectedUniqueGuestList = new UniqueGuestList();
         expectedUniqueGuestList.add(BOB);
-        uniqueGuestList.setPersons(expectedUniqueGuestList);
+        uniqueGuestList.setGuests(expectedUniqueGuestList);
         assertEquals(expectedUniqueGuestList, uniqueGuestList);
     }
 
     @Test
     public void setPersons_nullList_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueGuestList.setPersons((List<Guest>) null);
+        uniqueGuestList.setGuests((List<Guest>) null);
     }
 
     @Test
     public void setPersons_list_replacesOwnListWithProvidedList() {
         uniqueGuestList.add(ALICE);
         List<Guest> guestList = Collections.singletonList(BOB);
-        uniqueGuestList.setPersons(guestList);
+        uniqueGuestList.setGuests(guestList);
         UniqueGuestList expectedUniqueGuestList = new UniqueGuestList();
         expectedUniqueGuestList.add(BOB);
         assertEquals(expectedUniqueGuestList, uniqueGuestList);
@@ -173,8 +173,8 @@ public class UniqueGuestListTest {
     @Test
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
         List<Guest> listWithDuplicateGuests = Arrays.asList(ALICE, ALICE);
-        thrown.expect(DuplicatePersonException.class);
-        uniqueGuestList.setPersons(listWithDuplicateGuests);
+        thrown.expect(DuplicateGuestException.class);
+        uniqueGuestList.setGuests(listWithDuplicateGuests);
     }
 
     @Test
