@@ -13,14 +13,14 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A guest is considered unique by comparing using {@code Guest#isSamePerson(Guest)}. As such, adding and updating of
- * persons uses Guest#isSamePerson(Guest) for equality so as to ensure that the guest being added or updated is
+ * A guest is considered unique by comparing using {@code Guest#isSameGuest(Guest)}. As such, adding and updating of
+ * persons uses Guest#isSameGuest(Guest) for equality so as to ensure that the guest being added or updated is
  * unique in terms of identity in the UniqueGuestList. However, the removal of a guest uses Guest#equals(Object) so
  * as to ensure that the guest with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
- * @see Guest#isSamePerson(Guest)
+ * @see Guest#isSameGuest(Guest)
  */
 public class UniqueGuestList implements Iterable<Guest> {
 
@@ -31,7 +31,7 @@ public class UniqueGuestList implements Iterable<Guest> {
      */
     public boolean contains(Guest toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSameGuest);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UniqueGuestList implements Iterable<Guest> {
             throw new PersonNotFoundException();
         }
 
-        if (!target.isSamePerson(editedGuest) && contains(editedGuest)) {
+        if (!target.isSameGuest(editedGuest) && contains(editedGuest)) {
             throw new DuplicatePersonException();
         }
 
@@ -125,7 +125,7 @@ public class UniqueGuestList implements Iterable<Guest> {
     private boolean personsAreUnique(List<Guest> guests) {
         for (int i = 0; i < guests.size() - 1; i++) {
             for (int j = i + 1; j < guests.size(); j++) {
-                if (guests.get(i).isSamePerson(guests.get(j))) {
+                if (guests.get(i).isSameGuest(guests.get(j))) {
                     return false;
                 }
             }

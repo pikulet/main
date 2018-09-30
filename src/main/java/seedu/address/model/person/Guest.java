@@ -61,10 +61,10 @@ public class Guest {
     }
 
     /**
-     * Returns true if both persons of the same name have at least one other identity field that is the same.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both guests of the same name have at least one other identity field that is the same.
+     * This defines a weaker notion of equality between two guests.
      */
-    public boolean isSamePerson(Guest otherGuest) {
+    public boolean isSameGuest(Guest otherGuest) {
         if (otherGuest == this) {
             return true;
         }
@@ -75,8 +75,8 @@ public class Guest {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both guests have the same identity and data fields.
+     * This defines a stronger notion of equality between two guests.
      */
     @Override
     public boolean equals(Object other) {
