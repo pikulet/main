@@ -15,14 +15,14 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
  * A guest is considered unique by comparing using {@code Guest#isSamePerson(Guest)}. As such, adding and updating of
  * persons uses Guest#isSamePerson(Guest) for equality so as to ensure that the guest being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a guest uses Guest#equals(Object) so
+ * unique in terms of identity in the UniqueGuestList. However, the removal of a guest uses Guest#equals(Object) so
  * as to ensure that the guest with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
  * @see Guest#isSamePerson(Guest)
  */
-public class UniquePersonList implements Iterable<Guest> {
+public class UniqueGuestList implements Iterable<Guest> {
 
     private final ObservableList<Guest> internalList = FXCollections.observableArrayList();
 
@@ -51,7 +51,7 @@ public class UniquePersonList implements Iterable<Guest> {
      * {@code target} must exist in the list.
      * The guest identity of {@code editedGuest} must not be the same as another existing guest in the list.
      */
-    public void setPerson(Guest target, Guest editedGuest) {
+    public void setGuest(Guest target, Guest editedGuest) {
         requireAllNonNull(target, editedGuest);
 
         int index = internalList.indexOf(target);
@@ -77,7 +77,7 @@ public class UniquePersonList implements Iterable<Guest> {
         }
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setPersons(UniqueGuestList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -110,8 +110,8 @@ public class UniquePersonList implements Iterable<Guest> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                        && internalList.equals(((UniquePersonList) other).internalList));
+                || (other instanceof UniqueGuestList // instanceof handles nulls
+                        && internalList.equals(((UniqueGuestList) other).internalList));
     }
 
     @Override
