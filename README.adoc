@@ -8,18 +8,6 @@ https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https:
 https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
 
 ifdef::env-github[]
-image::docs/images/UI_login_username.png[width="600"]
-endif::[]
-
-ifdef::env-github[]
-image::docs/images/UI_login_password.png[width="600"]
-endif::[]
-
-ifdef::env-github[]
-image::docs/images/UI_landing_page.png[width="600"]
-endif::[]
-
-ifdef::env-github[]
 image::docs/images/UI_list_guests.png[width="600"]
 endif::[]
 
