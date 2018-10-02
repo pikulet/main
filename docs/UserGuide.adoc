@@ -36,8 +36,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all rooms types and cost of rooms
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* *`list`* : lists all rooms types and cost of room
 * **`checkout`**`S9465789B` : checks out guest with NRIC no. S9465789B from his/her room
 * *`exit`* : exits the app
 
