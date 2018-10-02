@@ -12,7 +12,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103-AY1819S1-F11-2/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -58,6 +58,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+
 === Clearing all entries : `avail`
 
 Lists all the available rooms of that type for the next NUM_DAYS days +
@@ -65,12 +66,22 @@ Format: `avail r/ROOM TYPE num/NUM_DAYS`
 
 Lists all available rooms from start to end date. Dates have to be given in YYMMDD format
 
+=== Adding a guest: `add`
+
+Adds a guest to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A guest can have any number of tags (including 0)
+
+
 Examples:
 
 * `avail r/Double Room num/5`
 * `avail r/Double Room ds/20180910 de/21080912`
 
-=== Listing all persons : `list`
+=== Listing all guests : `list`
+
 
 Shows a list of all room types and cost of room +
 Format: `list`
@@ -97,9 +108,39 @@ Examples:
 Lists information about a specified guest +
 Format: `n/guest g/S9876543B`
 
+Shows a list of all guests in the address book. +
+Format: `list`
+
+=== Editing a guest : `edit`
+
+Edits an existing guest in the address book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the guest at the specified `INDEX`. The index refers to the index number shown in the displayed guest list. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the guest will be removed i.e adding of tags is not cumulative.
+* You can remove all the guest's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st guest to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd guest to be `Betsy Crower` and clears all existing tags.
+
+=== Locating guests by name: `find`
+
+Finds guests whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+
 Guests are identified by their ID number
 
 === Assigning a room to a guest: `assign`
+
 
 Assigns all guests added with the `add` command to the room with the given `ROOM_ID`  +
 Format: `assign rm/709`
@@ -112,6 +153,23 @@ Guests are identified by their ID number
 
 === Reserving a room for a guest: `reserve`
 
+* `find John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any guest having names `Betsy`, `Tim`, or `John`
+
+=== Deleting a guest : `delete`
+
+Deletes the specified guest from the address book. +
+Format: `delete INDEX`
+
+****
+* Deletes the guest at the specified `INDEX`.
+* The index refers to the index number shown in the displayed guest list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+
 Reserves the room given by `ROOM_ID` for all guests added with the add command.
 Dates have to be given in YYMMDD format  +
 Format: `reserve rm/709 ds/20180910 de/20180912`
@@ -122,6 +180,7 @@ Format: `assign rm/709 ds/20180910 de/20180912 g/S9876543B g/S9345678Z`
 If there are conflicting guest entries, the system will prompt for a selection decision.
 Dates have to be given on YYMMDD format.
 Guests are identified by their ID number.
+
 
 === Checkout room: `checkout`
 
@@ -172,14 +231,41 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+* `list` +
+`delete 2` +
+Deletes the 2nd guest in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st guest in the results of the `find` command.
+
+=== Selecting a guest : `select`
+
+Selects the guest identified by the index number used in the displayed guest list. +
+Format: `select INDEX`
+
+****
+* Selects the guest and loads the Google search page the guest at the specified `INDEX`.
+* The index refers to the index number shown in the displayed guest list.
+* The index *must be a positive integer* `1, 2, 3, ...`
+
 ****
 
 Examples:
+
 
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+* `list` +
+`select 2` +
+Selects the 2nd guest in the address book.
+* `find Betsy` +
+`select 1` +
+Selects the 1st guest in the results of the `find` command.
+
 
 === Listing entered commands : `history`
 
