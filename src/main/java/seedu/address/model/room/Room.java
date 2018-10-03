@@ -73,7 +73,8 @@ public abstract class Room {
             return true;
         }
 
-        return otherRoom != null && otherRoom.getRoomNumber().equals(getRoomNumber());
+        return otherRoom != null 
+            && otherRoom.getRoomNumber().equals(getRoomNumber());
     }
 
     /**
