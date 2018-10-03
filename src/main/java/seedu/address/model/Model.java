@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.RoomNumber;
 
 /**
  * The API of the Model component.
@@ -75,4 +76,21 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
+    /**
+     * Returns the RoomList
+     * @return
+     */
+    RoomList getRoomList();
+
+    /**
+     * Checks out the room.
+     * @param roomNumber
+     */
+    void checkoutRoom(RoomNumber roomNumber);
+
+    /**
+     * Saves the current room list state for undo/redo
+     */
+    void commitRoomList();
 }
