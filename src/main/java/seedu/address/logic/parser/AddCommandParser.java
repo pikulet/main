@@ -49,8 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Guest guest = new Guest(name, phone, email, address, tagList);
 
         RoomNumber roomNumber =
-                ParserUtil.parseRoomNumber(argMultimap.getValue(PREFIX_ROOM).get());
-
+                ParserUtil.parseRoomNumber(argMultimap.getValue(PREFIX_ROOM).orElse(""));
         return new AddCommand(guest);
     }
 
