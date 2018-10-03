@@ -123,9 +123,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String roomNumber} into an {@code RoomNumber}.
+     * Parses a {@code String roomNumber} into a {@code RoomNumber}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code roomNumber} is invalid.
      */
     public static RoomNumber parseRoomNumber(String roomNumber) throws ParseException {
@@ -137,7 +136,6 @@ public class ParserUtil {
         return new RoomNumber(trimmedRoomNumber);
     }
 
-
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
@@ -146,4 +144,5 @@ public class ParserUtil {
                                         Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
 }
