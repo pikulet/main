@@ -22,7 +22,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  *
  * @see Room#isSameRoom(Room)
  */
-public class Rooms implements Iterable<Room> {
+public class UniqueRoomList implements Iterable<Room> {
 
     private final ObservableList<Room> internalList = FXCollections.observableArrayList();
 
@@ -92,7 +92,7 @@ public class Rooms implements Iterable<Room> {
         throw new RoomNotFoundException();
     }
 
-    public void setRooms(Rooms replacement) {
+    public void setRooms(UniqueRoomList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -125,8 +125,8 @@ public class Rooms implements Iterable<Room> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Rooms // instanceof handles nulls
-                        && internalList.equals(((Rooms) other).internalList));
+                || (other instanceof UniqueRoomList // instanceof handles nulls
+                        && internalList.equals(((UniqueRoomList) other).internalList));
     }
 
     @Override
