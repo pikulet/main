@@ -1,12 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Deletes a guest identified using it's displayed index from the address book.
@@ -31,13 +30,11 @@ public class CheckoutCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        RoomList lastShownList = model.getRoomList();
 
         // roomNumber is guaranteed to be a valid room number.
-        Room roomToCheckout = lastShownList.get(roomNumber);
-        model.checkoutRoom(roomToCheckout);
+        model.checkoutRoom(roomNumber);
         model.commitRoomList();
-        return new CommandResult(String.format(MESSAGE_CHECKOUT_ROOM_SUCCESS, roomToCheckout));
+        return new CommandResult(String.format(MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumber));
     }
 
     @Override

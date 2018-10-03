@@ -126,7 +126,6 @@ public class ParserUtil {
     /**
      * Parses {@code String roomNumber} into a {@code RoomNumber}.
      * Leading and trailing whitespaces will be trimmed.
-     * 
      * @throws ParseException if the given {@code roomNumber} is invalid.
      */
     public static RoomNumber parseRoomNumber(String roomNumber) throws ParseException {
