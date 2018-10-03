@@ -2,7 +2,8 @@ package seedu.address.model.room;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Room;
+import seedu.address.model.room.exceptions.DuplicateRoomException;
+import seedu.address.model.room.exceptions.RoomNotFoundException;
 
 import java.util.Iterator;
 import java.util.List;
