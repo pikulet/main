@@ -1,7 +1,7 @@
 package seedu.address.model.room;
 
 /**
- * Dummy class
+ * Dummy class.
  */
 public class Expenses {
 }
