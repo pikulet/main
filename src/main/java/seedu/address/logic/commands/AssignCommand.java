@@ -52,8 +52,17 @@ public class AssignCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && targetIndex.equals(((AssignCommand) other).targetIndex)); // state check
+
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof AssignCommand)) {
+            return false;
+        }
+
+        AssignCommand otherAssignCommand = (AssignCommand) other;
+        return otherAssignCommand.targetIndex.equals(targetIndex)
+                && otherAssignCommand.roomNumber.equals(roomNumber);
     }
 }

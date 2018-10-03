@@ -17,7 +17,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.room.RoomNumber;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -48,8 +47,6 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Guest guest = new Guest(name, phone, email, address, tagList);
 
-        RoomNumber roomNumber =
-                ParserUtil.parseRoomNumber(argMultimap.getValue(PREFIX_ROOM).orElse(""));
         return new AddCommand(guest);
     }
 
