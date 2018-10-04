@@ -1,6 +1,5 @@
 package seedu.address.model.expenses;
 
-
 import java.time.LocalDateTime;
 
 import seedu.address.model.expenses.exceptions.ItemNotFoundException;

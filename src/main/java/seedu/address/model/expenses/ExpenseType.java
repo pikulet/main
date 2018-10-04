@@ -11,11 +11,8 @@ import seedu.address.model.expenses.exceptions.ItemNotFoundException;
  * All products and services have a unique menu number.
  */
 public class ExpenseType {
-    private final String itemNumber;
-    private final String itemName;
-    private final double itemPrice;
-    public static final Map<String, String> numberToName;
-    public static final Map<String, Double> numberToPrice;
+    private static final Map<String, String> numberToName;
+    private static final Map<String, Double> numberToPrice;
     static {
         Map<String, String> numberToNameDummy = new HashMap<>();
         Map<String, Double> numberToPriceDummy = new HashMap<>();
@@ -38,6 +35,9 @@ public class ExpenseType {
         numberToName = Collections.unmodifiableMap(numberToNameDummy);
         numberToPrice = Collections.unmodifiableMap(numberToPriceDummy);
     }
+    private final String itemNumber;
+    private final String itemName;
+    private final double itemPrice;
 
     /**
      * Constructor for an ExpenseType object. Only called via the {@code createExpenseType()} method.
@@ -80,6 +80,15 @@ public class ExpenseType {
     }
 
     /**
+     * Returns the name of the item in the ExpenseType object.
+     *
+     * @return The name of the item.
+     */
+    public String getItemName() {
+        return itemName;
+    }
+
+    /**
      * Returns the price of the item associated with the given menu number.
      *
      * @param menuNumber The menu number of the item.
@@ -91,15 +100,6 @@ public class ExpenseType {
             throw new ItemNotFoundException();
         }
         return numberToPrice.get(menuNumber);
-    }
-
-    /**
-     * Returns the name of the item in the ExpenseType object.
-     *
-     * @return The name of the item.
-     */
-    public String getItemName() {
-        return itemName;
     }
 
     /**
