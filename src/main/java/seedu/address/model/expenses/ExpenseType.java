@@ -11,7 +11,9 @@ import seedu.address.model.expenses.exceptions.ItemNotFoundException;
  * All products and services have a unique menu number.
  */
 public class ExpenseType {
-
+    private final String itemNumber;
+    private final String itemName;
+    private final double itemPrice;
     public static final Map<String, String> numberToName;
     public static final Map<String, Double> numberToPrice;
     static {
@@ -35,6 +37,21 @@ public class ExpenseType {
         numberToPriceDummy.put("MB03", 7.00);
         numberToName = Collections.unmodifiableMap(numberToNameDummy);
         numberToPrice = Collections.unmodifiableMap(numberToPriceDummy);
+    }
+
+    /**
+     * Constructor for an ExpenseType object. Only called via the {@code createExpenseType()} method.
+     *
+     * @param number The menu number of the item.
+     * @throws ItemNotFoundException if the given menu number does not exist.
+     */
+    ExpenseType(String number) throws ItemNotFoundException {
+        if (!isValidMenuNumber(number)) {
+            throw new ItemNotFoundException();
+        }
+        itemNumber = number;
+        itemName = numberToName.get(number);
+        itemPrice = numberToPrice.get(number);
     }
 
     /**
@@ -74,5 +91,42 @@ public class ExpenseType {
             throw new ItemNotFoundException();
         }
         return numberToPrice.get(menuNumber);
+    }
+
+    /**
+     * Returns the name of the item in the ExpenseType object.
+     *
+     * @return The name of the item.
+     */
+    public String getItemName() {
+        return itemName;
+    }
+
+    /**
+     * Returns the price of the item in the ExpenseType object.
+     *
+     * @return The price of the item.
+     */
+    public double getItemPrice() {
+        return itemPrice;
+    }
+
+    @Override
+    public String toString() {
+        return itemNumber + " " + itemName + " $" + itemPrice;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExpenseType // instanceof handles nulls
+                && itemNumber.equals(((ExpenseType) other).itemNumber)
+                && itemName.equals(((ExpenseType) other).itemName)
+                && itemPrice == ((ExpenseType) other).itemPrice); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return itemNumber.hashCode();
     }
 }
