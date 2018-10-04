@@ -2,6 +2,7 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -29,10 +30,25 @@ public abstract class Room {
     protected final Set<Tag> tags = new HashSet<>();
 
     /**
-     * All parameters must be non-null.
-     * Note: {@code occupant} may be an empty list.
+     * NEVER USE THIS DEFAULT CONSTRUCTOR.
+     * I had to write this default constructor because Java necessitates that `final` fields must be
+     * instantiated. Between choosing this or removing `final` access modifier, I decided to go with this because
+     * the latter opens up the possibility for once-correct fields to be changed unintentionally.
+     * If you can find a better alternative, please let me know and I will replace this stain immediately.
      */
-    public Room(RoomNumber roomNumber, Capacity capacity, List<Guest> occupant, Expenses expenses,
+    public Room() {
+        this.roomNumber = new RoomNumber("001");
+        this.capacity = new Capacity(1);
+        this.occupant = new ArrayList<>();
+        this.expenses = new Expenses();
+        this.reservations = new Reservations();
+    }
+
+    /**
+     * All parameters must be non-null.
+     * Note: {@code occupant}, {@code expenses}, or {@code reservations} may be empty, but not null.
+     */
+    protected Room(RoomNumber roomNumber, Capacity capacity, List<Guest> occupant, Expenses expenses,
                 Reservations reservations) {
         requireAllNonNull(roomNumber, capacity, occupant, expenses, reservations);
         this.roomNumber = roomNumber;
