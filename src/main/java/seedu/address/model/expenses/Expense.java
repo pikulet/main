@@ -1,7 +1,7 @@
 package seedu.address.model.expenses;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 
@@ -12,7 +12,7 @@ public class Expense {
 
     private final double cost;
     private final ExpenseType type;
-    private final Date date;
+    private final LocalDateTime date;
 
     /**
      * Constructs an {@code Expense} object.
@@ -27,7 +27,7 @@ public class Expense {
         }
         this.type = new ExpenseType(type);
         this.cost = cost;
-        this.date = new Date();
+        this.date = LocalDateTime.now();
     }
 
     /**
@@ -43,7 +43,7 @@ public class Expense {
         }
         this.type = new ExpenseType(type);
         this.cost = this.type.getItemPrice();
-        this.date = new Date();
+        this.date = LocalDateTime.now();
     }
 
     /**
@@ -78,7 +78,7 @@ public class Expense {
      *
      * @return The date and time of this transaction.
      */
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
