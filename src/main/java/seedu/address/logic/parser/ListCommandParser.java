@@ -42,5 +42,4 @@ public class ListCommandParser implements Parser<ListCommand> {
         }
         return false;
     }
-
 }
