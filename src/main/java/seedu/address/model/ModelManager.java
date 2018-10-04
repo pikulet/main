@@ -39,7 +39,19 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
         // Dummy variable for now. Delete when implemented.
-        rooms = new UniqueRoomList();
+        this.rooms = new UniqueRoomList();
+    }
+
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, UniqueRoomList rooms) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        versionedAddressBook = new VersionedAddressBook(addressBook);
+        filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
+        // Dummy variable for now. Delete when implemented.
+        this.rooms = rooms;
     }
 
     public ModelManager() {
@@ -154,9 +166,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void checkoutRoom(RoomNumber roomNumber) {
-        
-    }
+    public void checkoutRoom(RoomNumber roomNumber) {}
     @Override
     public void commitRoomList() {}
 }
