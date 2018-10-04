@@ -12,20 +12,20 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 public class Reservation {
 
     // Identity fields
-    private final Guest guest;
+    private final Guest registeredGuest;
     private final ReservationPeriod reservationPeriod;
 
     /**
      * Every field must be present and not null.
      */
-    public Reservation(Guest guest, ReservationPeriod phone) {
-        requireAllNonNull(guest, phone);
-        this.guest = guest;
+    public Reservation(Guest registeredGuest, ReservationPeriod phone) {
+        requireAllNonNull(registeredGuest, phone);
+        this.registeredGuest = registeredGuest;
         this.reservationPeriod = phone;
     }
 
-    public Guest getGuest() {
-        return guest;
+    public Guest getRegisteredGuest() {
+        return registeredGuest;
     }
 
     public ReservationPeriod getReservationPeriod() {
@@ -54,21 +54,21 @@ public class Reservation {
         }
 
         Reservation otherReservation = (Reservation) other;
-        return otherReservation.getGuest().equals(getGuest())
+        return otherReservation.getRegisteredGuest().equals(getRegisteredGuest())
                 && otherReservation.getReservationPeriod().equals(getReservationPeriod());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(guest, reservationPeriod);
+        return Objects.hash(registeredGuest, reservationPeriod);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Guest: ")
-                .append(getGuest())
+                .append(getRegisteredGuest())
                 .append(" ReservationPeriod: ")
                 .append(getReservationPeriod());
         return builder.toString();
