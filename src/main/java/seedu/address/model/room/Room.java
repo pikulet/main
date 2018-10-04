@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.model.tag.Tag;
 
 /**
