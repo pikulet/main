@@ -23,17 +23,17 @@ public abstract class Room {
     protected final Capacity capacity;
     protected final UniqueGuestList occupants;
     protected final Expenses expenses;
-    protected final ReservationDates reservationDates;
+    protected final Reservations reservations;
     protected final Set<Tag> tags = new HashSet<>();
 
     public Room(RoomNumber roomNumber, Capacity capacity, UniqueGuestList occupants, Expenses expenses,
-                ReservationDates reservationDates) {
-        requireAllNonNull(roomNumber, capacity, occupants, expenses, reservationDates);
+                Reservations reservations) {
+        requireAllNonNull(roomNumber, capacity, occupants, expenses, reservations);
         this.roomNumber = roomNumber;
         this.capacity = capacity;
         this.occupants = occupants;
         this.expenses = expenses;
-        this.reservationDates = reservationDates;
+        this.reservations = reservations;
     }
 
     public RoomNumber getRoomNumber() {
@@ -52,8 +52,8 @@ public abstract class Room {
         return expenses;
     }
 
-    public ReservationDates getReservationDates() {
-        return reservationDates;
+    public Reservations getReservations() {
+        return reservations;
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class Room {
         return otherRoom.getRoomNumber().equals(getRoomNumber())
                 && otherRoom.getCapacity().equals(getCapacity())
                 && otherRoom.getOccupants().equals(getOccupants())
-                && otherRoom.getReservationDates().equals(getReservationDates())
+                && otherRoom.getReservations().equals(getReservations())
                 && otherRoom.getExpenses().equals(getExpenses())
                 && otherRoom.getTags().equals(getTags());
     }
@@ -103,7 +103,7 @@ public abstract class Room {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(roomNumber, capacity, expenses, reservationDates, occupants, tags);
+        return Objects.hash(roomNumber, capacity, expenses, reservations, occupants, tags);
     }
 
     @Override
@@ -115,8 +115,8 @@ public abstract class Room {
                 .append(getCapacity())
                 .append(" Occupants: ")
                 .append(getOccupants())
-                .append(" Reservation Dates: ")
-                .append(getReservationDates())
+                .append(" Reservations: ")
+                .append(getReservations())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
