@@ -1,10 +1,10 @@
 package seedu.address.testutil;
 
+import java.util.List;
+
 import seedu.address.model.room.Room;
 import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.util.SampleDataUtil;
-
-import java.util.List;
 
 /**
  * A utility class containing a list of {@code Room} objects to be used in tests.
@@ -18,7 +18,7 @@ public class TypicalRooms {
         rooms.setRooms(SampleDataUtil.getSampleRooms());
         return rooms;
     }
-    
+
     public static List<Room> getTypicalRooms() {
         return SampleDataUtil.getSampleRooms();
     }

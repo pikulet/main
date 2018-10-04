@@ -14,10 +14,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Expenses;
-import seedu.address.model.room.Reservation;
 import seedu.address.model.room.Reservations;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
@@ -51,7 +49,7 @@ public class SampleDataUtil {
                 getTagSet("colleagues"))
         };
     }
-    
+
     public static List<Room> getSampleRooms() {
         return Stream.iterate(1, i -> i <= Integer.parseInt(RoomNumber.MAX_ROOM_NUMBER), i -> i + 1)
             .map(i -> {

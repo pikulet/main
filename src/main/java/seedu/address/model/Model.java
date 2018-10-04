@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.UniqueRoomList;
 
 /**
  * The API of the Model component.

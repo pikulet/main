@@ -1,15 +1,14 @@
 package seedu.address.model.room;
 
-import seedu.address.model.person.Guest;
-
 import java.util.List;
+
+import seedu.address.model.person.Guest;
 
 /**
  * Represents a Double Room in the hotel.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class DoubleRoom extends Room {
-    
     public static final Capacity CAPACITY_DOUBLE_ROOM = new Capacity(2);
 
     /**

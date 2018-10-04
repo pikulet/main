@@ -14,12 +14,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Guest;
-import seedu.address.model.room.Room;
-import seedu.address.model.room.UniqueRoomList;
 
 /**
  * A utility class containing a list of {@code Guest} objects to be used in tests.

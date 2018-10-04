@@ -72,7 +72,7 @@ public class Reservations implements Iterable<Reservation> {
             throw new ReservationNotFoundException();
         }
     }
-    
+
     /**
      * Replaces the Reservation {@code target} in the list with {@code editedReservation}.
      * {@code target} must exist in the list.

@@ -1,9 +1,11 @@
 package seedu.address.model.room;
 
-import seedu.address.model.person.Guest;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.model.person.Guest;
+
 
 /**
  * Represents a Reservation of a room in the hotel.
@@ -12,20 +14,20 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 public class Reservation {
 
     // Identity fields
-    private final Guest registeredGuest;
+    private final Guest guest;
     private final ReservationPeriod reservationPeriod;
 
     /**
      * Every field must be present and not null.
      */
-    public Reservation(Guest registeredGuest, ReservationPeriod phone) {
-        requireAllNonNull(registeredGuest, phone);
-        this.registeredGuest = registeredGuest;
-        this.reservationPeriod = phone;
+    public Reservation(Guest guest, ReservationPeriod reservationPeriod) {
+        requireAllNonNull(guest, reservationPeriod);
+        this.guest = guest;
+        this.reservationPeriod = reservationPeriod;
     }
 
-    public Guest getRegisteredGuest() {
-        return registeredGuest;
+    public Guest getGuest() {
+        return guest;
     }
 
     public ReservationPeriod getReservationPeriod() {
@@ -54,21 +56,21 @@ public class Reservation {
         }
 
         Reservation otherReservation = (Reservation) other;
-        return otherReservation.getRegisteredGuest().equals(getRegisteredGuest())
+        return otherReservation.getGuest().equals(getGuest())
                 && otherReservation.getReservationPeriod().equals(getReservationPeriod());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(registeredGuest, reservationPeriod);
+        return Objects.hash(guest, reservationPeriod);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Guest: ")
-                .append(getRegisteredGuest())
+                .append(getGuest())
                 .append(" ReservationPeriod: ")
                 .append(getReservationPeriod());
         return builder.toString();

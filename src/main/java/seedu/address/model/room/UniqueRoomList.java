@@ -99,7 +99,7 @@ public class UniqueRoomList implements Iterable<Room> {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
-    
+
     /**
      * Replaces the contents of this list with {@code rooms}.
      * {@code rooms} must not contain duplicate rooms.
@@ -112,11 +112,15 @@ public class UniqueRoomList implements Iterable<Room> {
 
         internalList.setAll(rooms);
     }
-    
+
+    /**
+     * Checks out a room using its room number
+     * @param roomNumber
+     */
     public void checkoutRoom(RoomNumber roomNumber) {
         for (Room room : internalList) {
             if (room.isRoom(roomNumber)) {
-                
+                room.checkout();
             }
         }
     }
