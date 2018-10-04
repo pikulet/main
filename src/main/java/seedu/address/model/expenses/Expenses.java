@@ -37,11 +37,11 @@ public class Expenses {
 
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (Expense e : expenseList) {
-            output = output + e.toString() + "\n";
+            output.append(e.toString() + "\n");
         }
-        return output;
+        return output.toString();
     }
 
     @Override

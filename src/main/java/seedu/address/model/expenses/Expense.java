@@ -2,29 +2,51 @@ package seedu.address.model.expenses;
 
 import java.util.Date;
 
+import seedu.address.model.expenses.exceptions.ItemNotFoundException;
+
 /**
  * Represents a single spending on a single type of service.
  */
 public class Expense {
 
     private final double cost;
-    private final ExpenseType type;
+    private final String item;
     private final Date date;
 
     /**
      * Constructs an {@code Expense} object.
      *
+     * @param item The product or service exchanged for with this expense.
      * @param cost The monetary value of the expense.
-     * @param type The product or service exchanged for with this expense.
+     * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
-    public Expense(double cost, ExpenseType type) {
+    public Expense(String item, double cost) throws ItemNotFoundException {
+        if (!ExpenseType.isValidMenuNumber(item)) {
+            throw new ItemNotFoundException();
+        }
         this.cost = cost;
-        this.type = type;
+        this.item = item;
         this.date = new Date();
     }
 
     /**
-     * Accessor method for the cost.
+     * Constructs an {@code Expense} object.
+     * Used if the user is charging the base price and hence does not need to manually enter a price.
+     *
+     * @param item The product or service exchanged for with this expense.
+     * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
+     */
+    public Expense(String item) {
+        if (!ExpenseType.isValidMenuNumber(item)) {
+            throw new ItemNotFoundException();
+        }
+        this.cost = ExpenseType.getItemPrice(item);
+        this.item = item;
+        this.date = new Date();
+    }
+
+    /**
+     * Provides the cost of this expense.
      *
      * @return The monetary value of the expense.
      */
@@ -33,16 +55,25 @@ public class Expense {
     }
 
     /**
-     * Accessor method for the type.
+     * Provides the menu number of the item purchased in this expense.
      *
      * @return The product or service exchanged for with this expense.
      */
-    public ExpenseType getType() {
-        return type;
+    public String getItemNumber() {
+        return item;
     }
 
     /**
-     * Accessor method for the date.
+     * Provides the name of the item purchased in this expense.
+     *
+     * @return The product or service exchanged for with this expense.
+     */
+    public String getItemName() {
+        return ExpenseType.getItemName(item);
+    }
+
+    /**
+     * Provides the date of the transaction.
      *
      * @return The date and time of this transaction.
      */
@@ -51,7 +82,7 @@ public class Expense {
     }
 
     /**
-     * Accessor method for the date in a string.
+     * Provides the date of the transaction in a string.
      *
      * @return The date and time of this transaction in string.
      */
@@ -61,7 +92,7 @@ public class Expense {
 
     @Override
     public String toString() {
-        return cost + " spent on " + type + " on " + getDateString();
+        return cost + " spent on " + item + " on " + getDateString();
     }
 
     @Override
@@ -69,7 +100,7 @@ public class Expense {
         return other == this // short circuit if same object
                 || (other instanceof Expenses // instanceof handles nulls
                 && cost == ((Expense) other).cost
-                && type == ((Expense) other).type
+                && item.equals(((Expense) other).item)
                 && date.equals(((Expense) other).date)); // state check
     }
 
