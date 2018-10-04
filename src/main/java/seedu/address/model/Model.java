@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 
 /**
@@ -81,7 +82,7 @@ public interface Model {
      * Returns the RoomList
      * @return
      */
-    RoomList getRoomList();
+    //RoomList getRoomList();
 
     /**
      * Checks out the room.
@@ -93,4 +94,9 @@ public interface Model {
      * Saves the current room list state for undo/redo
      */
     void commitRoomList();
+
+    /**
+     *  Displays room list instead of guest list
+     */
+    //void displayRoomList(Predicate<Room> predicate);
 }

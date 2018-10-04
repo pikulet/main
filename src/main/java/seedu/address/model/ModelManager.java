@@ -13,6 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 
 /**
@@ -23,8 +24,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Guest> filteredGuests;
-    // Dummy variable for now. Delete when implemented.
-    private final RoomList roomList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,8 +36,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
-        // Dummy variable for now. Delete when implemented.
-        roomList = new RoomList();
     }
 
     public ModelManager() {
@@ -152,12 +149,24 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredGuests.equals(other.filteredGuests);
     }
 
+    //=========== Undo/Redo =================================================================================
+
+    /*
     @Override
     public RoomList getRoomList() {
         return roomList;
-    }
+    }*/
     @Override
     public void checkoutRoom(RoomNumber roomNumber) {}
     @Override
     public void commitRoomList() {}
+
+    /*
+    @Override
+    public void displayRoomList(Predicate<Room> predicate) {
+        //Disable guest list
+        requireNonNull(predicate);
+        //filteredGuests.setPredicate(predicate);
+
+    }*/
 }
