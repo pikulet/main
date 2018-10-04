@@ -1,5 +1,12 @@
 package seedu.address.testutil;
 
+import seedu.address.model.AddressBook;
+import seedu.address.model.person.Guest;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -11,20 +18,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import seedu.address.model.AddressBook;
-import seedu.address.model.person.Guest;
-import seedu.address.model.room.Room;
-import seedu.address.model.room.UniqueRoomList;
-
 /**
  * A utility class containing a list of {@code Guest} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalRooms {
 
     public static final Guest ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
@@ -60,7 +57,7 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalRooms() {} // prevents instantiation
 
     /**
      * Returns an {@code AddressBook} with all the typical persons.
