@@ -37,7 +37,7 @@ public class ReservationPeriod {
     /**
      * Constructs a {@code ReservationPeriod} that encapsulates the period from start through end date (inclusive).
      */
-    private ReservationPeriod(String startDate, String endDate) {
+    public ReservationPeriod(String startDate, String endDate) {
         requireNonNull(startDate);
         requireNonNull(endDate);
         checkArgument(isValidReservationPeriod(startDate, endDate), MESSAGE_RESERVATION_PERIOD_CONSTRAINTS);
