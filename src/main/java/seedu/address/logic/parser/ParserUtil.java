@@ -13,6 +13,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.room.RoomNumber;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -120,5 +121,19 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code String roomNumber} into a {@code RoomNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws ParseException if the given {@code roomNumber} is invalid.
+     */
+    public static RoomNumber parseRoomNumber(String roomNumber) throws ParseException {
+        requireNonNull(roomNumber);
+        String trimmedRoomNumber = roomNumber.trim();
+        if (!RoomNumber.isValidRoomNumber(trimmedRoomNumber)) {
+            throw new ParseException(RoomNumber.MESSAGE_ROOM_NUMBER_CONSTRAINTS);
+        }
+        return new RoomNumber(trimmedRoomNumber);
     }
 }
