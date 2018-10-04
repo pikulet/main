@@ -4,10 +4,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.person.UniqueGuestList;
+import seedu.address.model.person.Guest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,17 +22,21 @@ public abstract class Room {
 
     // Data fields
     protected final Capacity capacity;
-    protected final UniqueGuestList occupants;
+    protected final List<Guest> occupant; // Note: List must be at most size == 1
     protected final Expenses expenses;
     protected final Reservations reservations;
     protected final Set<Tag> tags = new HashSet<>();
 
-    public Room(RoomNumber roomNumber, Capacity capacity, UniqueGuestList occupants, Expenses expenses,
+    /**
+     * All parameters must be non-null.
+     * Note: {@code occupant} may be an empty list.
+     */
+    public Room(RoomNumber roomNumber, Capacity capacity, List<Guest> occupant, Expenses expenses,
                 Reservations reservations) {
-        requireAllNonNull(roomNumber, capacity, occupants, expenses, reservations);
+        requireAllNonNull(roomNumber, capacity, occupant, expenses, reservations);
         this.roomNumber = roomNumber;
         this.capacity = capacity;
-        this.occupants = occupants;
+        this.occupant = occupant;
         this.expenses = expenses;
         this.reservations = reservations;
     }
@@ -44,8 +49,8 @@ public abstract class Room {
         return capacity;
     }
 
-    public UniqueGuestList getOccupants() {
-        return occupants;
+    public List<Guest> getOccupant() {
+        return occupant;
     }
 
     public Expenses getExpenses() {
@@ -65,7 +70,14 @@ public abstract class Room {
     }
 
     /**
-     * Returns true if both rooms of the same name have at least one other identity field that is the same.
+     * Returns true if room is occupied.
+     */
+    public boolean isOccupied() {
+        return occupant.isEmpty();
+    }
+
+    /**
+     * Returns true if both rooms of the same name have the same room number.
      * This defines a weaker notion of equality between two rooms.
      */
     public boolean isSameRoom(Room otherRoom) {
@@ -75,6 +87,25 @@ public abstract class Room {
 
         return otherRoom != null
             && otherRoom.getRoomNumber().equals(getRoomNumber());
+    }
+
+    /**
+     * Returns true if the room number identifies this room.
+     */
+    public boolean isRoom(RoomNumber roomNumber) {
+        return getRoomNumber().equals(roomNumber);
+    }
+
+    /**
+     * Checks out this room and its occupant.
+     * Future features to include exporting of receipt, setting room to housekeeping status for 1 hour.
+     */
+    public void checkout() {
+        if (occupant.isEmpty()) {
+            throw new UnoccupiedRoomCheckoutException();
+        }
+        // Add guest.checkout() once its implemented
+        occupant.clear();
     }
 
     /**
@@ -94,7 +125,7 @@ public abstract class Room {
         Room otherRoom = (Room) other;
         return otherRoom.getRoomNumber().equals(getRoomNumber())
                 && otherRoom.getCapacity().equals(getCapacity())
-                && otherRoom.getOccupants().equals(getOccupants())
+                && otherRoom.getOccupant().equals(getOccupant())
                 && otherRoom.getReservations().equals(getReservations())
                 && otherRoom.getExpenses().equals(getExpenses())
                 && otherRoom.getTags().equals(getTags());
@@ -103,19 +134,19 @@ public abstract class Room {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(roomNumber, capacity, expenses, reservations, occupants, tags);
+        return Objects.hash(roomNumber, capacity, expenses, reservations, occupant, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Room ID: ")
+        builder.append("Room: ")
                 .append(getRoomNumber())
                 .append(" Capacity: ")
                 .append(getCapacity())
-                .append(" Occupants: ")
-                .append(getOccupants())
-                .append(" Reservations: ")
+                .append(" Registered Guest: ");
+        getOccupant().forEach(builder::append);
+        builder.append(" Reservations: ")
                 .append(getReservations())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

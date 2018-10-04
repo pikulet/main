@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.UniqueRoomList;
 
 /**
  * The API of the Model component.
@@ -78,14 +79,7 @@ public interface Model {
     void commitAddressBook();
 
     /**
-     * Returns the RoomList
-     * @return
-     */
-    RoomList getRoomList();
-
-    /**
-     * Checks out the room.
-     * @param roomNumber
+     * Checks out the room by its room number and removes its registered guest.
      */
     void checkoutRoom(RoomNumber roomNumber);
 
