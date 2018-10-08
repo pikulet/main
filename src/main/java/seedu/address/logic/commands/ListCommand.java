@@ -1,9 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GUEST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ROOMS;
+import static seedu.address.model.Model.PREDICATE_SHOW_NO_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_NO_ROOMS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
@@ -38,10 +41,12 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        if(splitString[0].equals(PREFIX_GUEST.toString())) {
+        if (splitString[0].equals(PREFIX_GUEST.toString())) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            model.updateFilteredRoomList(PREDICATE_SHOW_NO_ROOMS);
         } else if (splitString[0].equals(PREFIX_ROOM.toString())) {
-            //model.updateFilteredRoomList(PREDICATE)
+            model.updateFilteredPersonList(PREDICATE_SHOW_NO_PERSONS);
+            model.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
             int i = 0;
         }
 

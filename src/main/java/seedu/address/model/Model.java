@@ -11,8 +11,12 @@ import seedu.address.model.room.RoomNumber;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
+    /** {@code Predicate} that always evaluate to true/false */
     Predicate<Guest> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Guest> PREDICATE_SHOW_NO_PERSONS = unused -> false;
+    Predicate<Room> PREDICATE_SHOW_ALL_ROOMS = unused -> true;
+    Predicate<Room> PREDICATE_SHOW_NO_ROOMS = unused -> false;
+
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -77,6 +81,15 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
+    /** Returns an unmodifiable view of the filtered room list */
+    ObservableList<Room> getFilteredRoomList();
+
+    /**
+     * Updates the filter of the filtered room list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredRoomList(Predicate<Room> predicate);
 
     /**
      * Checks out the room by its room number and removes its registered guest.

@@ -28,7 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniqueGuestList();
     }
-    private final UniqueRoomList rooms;{
+    private final UniqueRoomList rooms; {
         rooms = new UniqueRoomList();
     }
 
@@ -59,6 +59,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setRooms(newData.getRoomList());
     }
 
     //// guest-level operations
@@ -98,6 +99,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    /**
+     * Adds a room to the address book.
+     * The room must not already exist in the address book.
+     */
+    public void addRoom(Room r) {
+        rooms.add(r);
+    }
+
+    /**
+     * Returns true if a room with the same identity as {@code room} exists in the address book.
+     */
+    public boolean hasRoom(Room room) {
+        requireNonNull(room);
+        return rooms.contains(room);
+    }
+
+    /**
+     * Replaces the contents of the room list with {@code rooms}.
+     * {@code rooms} must not contain duplicate rooms.
+     */
+    public void setRooms(List<Room> rooms) {
+        this.rooms.setRooms(rooms);
+    }
+
+
     //// util methods
 
     @Override
@@ -111,11 +137,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList();
     }
 
-    /*
+
     @Override
     public ObservableList<Room> getRoomList() {
         return rooms.asUnmodifiableObservableList();
-    }*/
+    }
 
     @Override
     public boolean equals(Object other) {

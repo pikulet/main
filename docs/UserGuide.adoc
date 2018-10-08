@@ -80,11 +80,11 @@ Examples:
 * `avail r/Double Room num/5`
 * `avail r/Double Room ds/20180910 de/21080912`
 
-=== Listing all guests : `list`
+=== Listing all guests and rooms : `list`
 
+Displays a list of all rooms or guests (using flags -r/-g).
 
-Shows a list of all room types and cost of room +
-Format: `list`
+Format: `list -r`, `list -g`
 
 === Adding a person: `add`
 

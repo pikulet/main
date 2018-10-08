@@ -55,7 +55,8 @@ public class AddressBookTest {
         Guest editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         List<Guest> newGuests = Arrays.asList(ALICE, editedAlice);
-        AddressBookStub newData = new AddressBookStub(newGuests);
+
+        AddressBookStub newData = new AddressBookStub(newGuests, null);
 
         thrown.expect(DuplicateGuestException.class);
         addressBook.resetData(newData);
@@ -97,15 +98,20 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Guest> guests = FXCollections.observableArrayList();
+        private final ObservableList<Room> rooms = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Guest> guests) {
+        AddressBookStub(Collection<Guest> guests, Collection<Room> rooms) {
             this.guests.setAll(guests);
+            this.rooms.setAll(rooms);
         }
 
         @Override
         public ObservableList<Guest> getPersonList() {
             return guests;
         }
+
+        @Override
+        public ObservableList<Room> getRoomList() { return rooms; }
 
     }
 
