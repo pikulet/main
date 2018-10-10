@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -32,12 +30,14 @@ public class ListCommandTest {
     @Test
     public void execute_listIsNotFiltered_showsSameRoomList() {
         String[] splitString = "list -r".trim().split("\\s+");
-        assertCommandSuccess(new ListCommand(splitString), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListCommand(splitString), model,
+                commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameGuestList() {
         String[] splitString = "list -g".trim().split("\\s+");
-        assertCommandSuccess(new ListCommand(splitString), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListCommand(splitString), model,
+                commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

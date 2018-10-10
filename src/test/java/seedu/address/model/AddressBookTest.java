@@ -113,8 +113,9 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Room> getRoomList() { return rooms; }
-
+        public ObservableList<Room> getRoomList() {
+            return rooms;
+        }
     }
 
 }
