@@ -102,7 +102,9 @@ public class AddressBookTest {
 
         AddressBookStub(Collection<Guest> guests, Collection<Room> rooms) {
             this.guests.setAll(guests);
-            this.rooms.setAll(rooms);
+
+
+
         }
 
         @Override

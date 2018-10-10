@@ -28,14 +28,16 @@ public class ListCommandTest {
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
 
+
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(null), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listIsNotFiltered_showsSameRoomList() {
+        String[] splitString = "list -r".trim().split("\\s+");
+        assertCommandSuccess(new ListCommand(splitString), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(new ListCommand(null), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listIsNotFiltered_showsSameGuestList() {
+        String[] splitString = "list -g".trim().split("\\s+");
+        assertCommandSuccess(new ListCommand(splitString), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
