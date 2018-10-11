@@ -78,7 +78,7 @@ Examples:
 
 === Checkout room: `checkout`
 
-Checks out the room and the guest staying in it. The guest is deleted from the guest list and the room is then marked 
+Checks out the room and the guest staying in it. The guest is deleted from the guest list and the room is then marked
 for housekeeping. +
 Format: `checkout ROOM_NUMBER`
 
