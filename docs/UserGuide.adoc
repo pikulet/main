@@ -83,6 +83,7 @@ for housekeeping. +
 Format: `checkout ROOM_NUMBER`
 
 Examples:
+
 * `checkout 305` +
 Checks out room 305 and the guest staying in it.
 
@@ -96,6 +97,8 @@ Format: `delete INDEX`
 * The index refers to the index number shown in the displayed guest list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+Examples:
 
 * `list -g` +
 `delete 2` +
@@ -134,8 +137,10 @@ Format: `find [flag] KEYWORD`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
 
 Examples:
+
 * `find -g n/John Smith` +
 Find guest(s) with "John" or "Smith" or both in their names.
 * `find -g r/305` +
@@ -151,6 +156,7 @@ Shows a list of rooms or guests, depending on the input flag +
 Format: `list [flag]`
 
 Examples:
+
 * `list -r` +
 List all rooms (default)
 * `list -g` +
