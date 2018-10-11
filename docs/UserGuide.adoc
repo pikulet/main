@@ -203,7 +203,7 @@ Marks the given room for maintenance +
 Format: `service rm/709 mt/wiring`
 
 mt refers to the type of maintenance required.
-Room will not be available for booking or reservation whilst in this state.
+Room will not be available for booking whilst in this state.
 
 === Listing entered commands : `history`
 

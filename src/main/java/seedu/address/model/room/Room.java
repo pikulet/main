@@ -26,7 +26,7 @@ public abstract class Room {
     protected final Capacity capacity;
     protected final List<Guest> occupant; // Note: List must be at most size == 1
     protected final Expenses expenses;
-    protected final Reservations reservations;
+    protected final Bookings bookings;
     protected final Set<Tag> tags = new HashSet<>();
 
     /**
@@ -41,21 +41,21 @@ public abstract class Room {
         this.capacity = new Capacity(1);
         this.occupant = new ArrayList<>();
         this.expenses = new Expenses();
-        this.reservations = new Reservations();
+        this.bookings = new Bookings();
     }
 
     /**
      * All parameters must be non-null.
-     * Note: {@code occupant}, {@code expenses}, or {@code reservations} may be empty, but not null.
+     * Note: {@code occupant}, {@code expenses}, or {@code bookings} may be empty, but not null.
      */
     protected Room(RoomNumber roomNumber, Capacity capacity, List<Guest> occupant, Expenses expenses,
-                Reservations reservations) {
-        requireAllNonNull(roomNumber, capacity, occupant, expenses, reservations);
+                Bookings bookings) {
+        requireAllNonNull(roomNumber, capacity, occupant, expenses, bookings);
         this.roomNumber = roomNumber;
         this.capacity = capacity;
         this.occupant = occupant;
         this.expenses = expenses;
-        this.reservations = reservations;
+        this.bookings = bookings;
     }
 
     public RoomNumber getRoomNumber() {
@@ -74,8 +74,8 @@ public abstract class Room {
         return expenses;
     }
 
-    public Reservations getReservations() {
-        return reservations;
+    public Bookings getBookings() {
+        return bookings;
     }
 
     /**
@@ -143,7 +143,7 @@ public abstract class Room {
         return otherRoom.getRoomNumber().equals(getRoomNumber())
                 && otherRoom.getCapacity().equals(getCapacity())
                 && otherRoom.getOccupant().equals(getOccupant())
-                && otherRoom.getReservations().equals(getReservations())
+                && otherRoom.getBookings().equals(getBookings())
                 && otherRoom.getExpenses().equals(getExpenses())
                 && otherRoom.getTags().equals(getTags());
     }
@@ -151,7 +151,7 @@ public abstract class Room {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(roomNumber, capacity, expenses, reservations, occupant, tags);
+        return Objects.hash(roomNumber, capacity, expenses, bookings, occupant, tags);
     }
 
     @Override
@@ -163,8 +163,8 @@ public abstract class Room {
                 .append(getCapacity())
                 .append(" Registered Guest: ");
         getOccupant().forEach(builder::append);
-        builder.append(" Reservations: ")
-                .append(getReservations())
+        builder.append(" Bookings: ")
+                .append(getBookings())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

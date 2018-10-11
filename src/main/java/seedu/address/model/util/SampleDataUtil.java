@@ -14,9 +14,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.room.Bookings;
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Expenses;
-import seedu.address.model.room.Reservations;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
@@ -56,15 +56,15 @@ public class SampleDataUtil {
                 RoomNumber roomNumber = new RoomNumber(String.format("%03d", i));;
                 List<Guest> occupant = new ArrayList<>();
                 Expenses expenses = new Expenses();
-                Reservations reservations = new Reservations();
+                Bookings bookings = new Bookings();
                 if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a SuiteRoom.
-                    return new SuiteRoom(roomNumber, occupant, expenses, reservations);
+                    return new SuiteRoom(roomNumber, occupant, expenses, bookings);
                 }
                 if (i % 2 == 0) { // All rooms with even room number is a DoubleRoom.
-                    return new DoubleRoom(roomNumber, occupant, expenses, reservations);
+                    return new DoubleRoom(roomNumber, occupant, expenses, bookings);
                 }
                 // ALl rooms with odd room number is a SingleRoom.
-                return new SingleRoom(roomNumber, occupant, expenses, reservations);
+                return new SingleRoom(roomNumber, occupant, expenses, bookings);
             })
             .collect(Collectors.toList());
     }

@@ -9,21 +9,21 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 /**
- * Represents a Room's reservation period in the address book.
+ * Represents a Room's booking period in the address book.
  * Guarantees: immutable; is valid as declared in
- * {@link #isValidReservationPeriod(String testStartDate,String testEndDate)}
+ * {@link #isValidBookingPeriod(String testStartDate,String testEndDate)}
  */
-public class ReservationPeriod {
+public class BookingPeriod {
 
-    public static final String MESSAGE_RESERVATION_PERIOD_CONSTRAINTS =
-            "Reservation dates should only contain two 8-digit numbers, each in the form dd/MM/yyyy, "
+    public static final String MESSAGE_BOOKING_PERIOD_CONSTRAINTS =
+            "Booking dates should only contain two 8-digit numbers, each in the form dd/MM/yyyy, "
                 + "should be correct dates according to the calendar, and should not be blank.";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String RESERVATION_PERIOD_VALIDATION_REGEX =
+    public static final String BOOKING_PERIOD_VALIDATION_REGEX =
         "^(0[1-9]|[1-2]\\d|3[0-1])\\/(0[1-9]|1[0-2])\\/(\\d\\d\\d\\d)$";
 
     /**
@@ -35,12 +35,12 @@ public class ReservationPeriod {
     public final LocalDate endDate;
 
     /**
-     * Constructs a {@code ReservationPeriod} that encapsulates the period from start through end date (inclusive).
+     * Constructs a {@code BookingPeriod} that encapsulates the period from start through end date (inclusive).
      */
-    public ReservationPeriod(String startDate, String endDate) {
+    public BookingPeriod(String startDate, String endDate) {
         requireNonNull(startDate);
         requireNonNull(endDate);
-        checkArgument(isValidReservationPeriod(startDate, endDate), MESSAGE_RESERVATION_PERIOD_CONSTRAINTS);
+        checkArgument(isValidBookingPeriod(startDate, endDate), MESSAGE_BOOKING_PERIOD_CONSTRAINTS);
         this.startDate = parseDate(startDate);
         this.endDate = parseDate(endDate);
     }
@@ -48,9 +48,9 @@ public class ReservationPeriod {
     /**
      * Returns true if a given string is a valid name.
      */
-    public static boolean isValidReservationPeriod(String testStartDate, String testEndDate) {
-        return (testStartDate.matches(RESERVATION_PERIOD_VALIDATION_REGEX)
-            && testEndDate.matches(RESERVATION_PERIOD_VALIDATION_REGEX))
+    public static boolean isValidBookingPeriod(String testStartDate, String testEndDate) {
+        return (testStartDate.matches(BOOKING_PERIOD_VALIDATION_REGEX)
+            && testEndDate.matches(BOOKING_PERIOD_VALIDATION_REGEX))
             && parsableDate(testStartDate)
             && parsableDate(testEndDate);
     }
@@ -79,11 +79,11 @@ public class ReservationPeriod {
     }
 
     /**
-     * Checks if the start and end dates of this {@code ReservationPeriod} overlaps with the other.
-     * @param other Other reservation period to be compared to.
+     * Checks if the start and end dates of this {@code BookingPeriod} overlaps with the other.
+     * @param other Other booking period to be compared to.
      * @return True if there is any overlap, false otherwise.
      */
-    public boolean isOverlapping(ReservationPeriod other) {
+    public boolean isOverlapping(BookingPeriod other) {
         return (isLessThanOrEqual(this.startDate, other.endDate)
             && isLessThanOrEqual(other.startDate, this.endDate));
     }
@@ -106,9 +106,9 @@ public class ReservationPeriod {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReservationPeriod // instanceof handles nulls
-                && startDate.equals(((ReservationPeriod) other).startDate) // state check
-                && endDate.equals(((ReservationPeriod) other).endDate));
+                || (other instanceof BookingPeriod // instanceof handles nulls
+                && startDate.equals(((BookingPeriod) other).startDate) // state check
+                && endDate.equals(((BookingPeriod) other).endDate));
     }
 
     @Override

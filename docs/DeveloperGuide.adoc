@@ -855,9 +855,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |receptionist / hotel manager |remove a guest's entry |facilitate the check-out procedure
 
-|`* * *` |receptionist |reserve rooms for guests |allow guests to place reservations
+|`* * *` |receptionist |reserve rooms for guests |allow guests to place bookings
 
-|`* * *` |receptionist |cancel reservations on request |let other guests occupy the room
+|`* * *` |receptionist |cancel bookings on request |let other guests occupy the room
 
 |`* * *` |hotel manager |export the guests' profiles |keep an archive
 

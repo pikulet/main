@@ -13,10 +13,10 @@ public class DoubleRoom extends Room {
 
     /**
      * All parameters must be non-null.
-     * Note: {@code occupant}, {@code expenses}, or {@code reservations} may be empty, but not null.
+     * Note: {@code occupant}, {@code expenses}, or {@code bookings} may be empty, but not null.
      */
     public DoubleRoom(RoomNumber roomNumber, List<Guest> occupant, Expenses expenses,
-                      Reservations reservations) {
-        super(roomNumber, CAPACITY_DOUBLE_ROOM, occupant, expenses, reservations);
+                      Bookings bookings) {
+        super(roomNumber, CAPACITY_DOUBLE_ROOM, occupant, expenses, bookings);
     }
 }
