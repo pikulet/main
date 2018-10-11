@@ -21,9 +21,6 @@ public class Expense {
      * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
     public Expense(String type, double cost) throws ItemNotFoundException {
-        if (!ExpenseType.isValidMenuNumber(type)) {
-            throw new ItemNotFoundException();
-        }
         this.type = new ExpenseType(type);
         this.cost = cost;
         this.date = LocalDateTime.now();
@@ -37,9 +34,6 @@ public class Expense {
      * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
     public Expense(String type) throws ItemNotFoundException {
-        if (!ExpenseType.isValidMenuNumber(type)) {
-            throw new ItemNotFoundException();
-        }
         this.type = new ExpenseType(type);
         this.cost = this.type.getItemPrice();
         this.date = LocalDateTime.now();
