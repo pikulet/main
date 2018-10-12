@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <guests>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <tagged>neighbours</tagged>
+    </guests>
+    <guests>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <tagged>family</tagged>
+    </guests>
+    <guests>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <tagged>classmates</tagged>
+    </guests>
+    <guests>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <tagged>colleagues</tagged>
+    </guests>
+    <rooms>
+        <roomNumber>032</roomNumber>
+        <capacity>5</capacity>
+        <expenses>seedu.address.model.room.Expenses@574b5eec</expenses>
+        <reservations></reservations>
+    </rooms>
+    <rooms>
+        <roomNumber>024</roomNumber>
+        <capacity>1</capacity>
+        <expenses>seedu.address.model.room.Expenses@411a2b2d</expenses>
+        <reservations></reservations>
+    </rooms>
+    <rooms>
+        <roomNumber>069</roomNumber>
+        <capacity>2</capacity>
+        <expenses>seedu.address.model.room.Expenses@512d822b</expenses>
+        <reservations></reservations>
+    </rooms>
+</addressbook>
