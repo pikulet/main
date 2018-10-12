@@ -64,8 +64,8 @@ A guest can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/305 from/09/12/18 to/10/12/18`
-Add a guest "John Smith" to room 305 for a period of stay from 09/12/18 to 10/12/18.
+* `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/85 from/09/12/18 to/10/12/18`
+Add a guest "John Smith" to room 85 for a period of stay from 09/12/18 to 10/12/18.
 
 === Adding a person: `addx`
 
@@ -84,8 +84,8 @@ Format: `checkout ROOM_NUMBER`
 
 Examples:
 
-* `checkout 305` +
-Checks out room 305 and the guest staying in it.
+* `checkout 85` +
+Checks out room 85 and the guest staying in it.
 
 === Deleting a guest : `delete`
 
@@ -143,10 +143,10 @@ Examples:
 
 * `find -g n/John Smith` +
 Find guest(s) with "John" or "Smith" or both in their names.
-* `find -g r/305` +
-Find guest currently staying in room 305
-* `find -r 305` +
-Find room 305
+* `find -g r/85` +
+Find guest currently staying in room 85
+* `find -r 85` +
+Find room 85
 * `find -r g/John Smith` +
 Find room in which guest John Smith is currently staying
 
