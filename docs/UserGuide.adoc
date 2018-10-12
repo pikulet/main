@@ -168,6 +168,7 @@ List all available rooms today
 * `list -r -a 09/12/18 10/12/18` +
 Lists rooms that are available from 091218 101218. Input dates must be in DD/MM/YY format.
 
+
 === Selecting a guest : `select`
 
 Selects the guest/room identified by the index number used in the displayed list. +
