@@ -2,13 +2,13 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.model.tag.Tag;
@@ -24,7 +24,6 @@ public abstract class Room {
 
     // Data fields
     protected final Capacity capacity;
-    protected final List<Guest> occupant; // Note: List must be at most size == 1
     protected final Expenses expenses;
     protected final Bookings bookings;
     protected final Set<Tag> tags = new HashSet<>();
@@ -39,21 +38,18 @@ public abstract class Room {
     public Room() {
         this.roomNumber = new RoomNumber("001");
         this.capacity = new Capacity(1);
-        this.occupant = new ArrayList<>();
         this.expenses = new Expenses();
         this.bookings = new Bookings();
     }
 
     /**
      * All parameters must be non-null.
-     * Note: {@code occupant}, {@code expenses}, or {@code bookings} may be empty, but not null.
+     * Note: {@code expenses}, or {@code bookings} may be empty, but not null.
      */
-    protected Room(RoomNumber roomNumber, Capacity capacity, List<Guest> occupant, Expenses expenses,
-                Bookings bookings) {
-        requireAllNonNull(roomNumber, capacity, occupant, expenses, bookings);
+    protected Room(RoomNumber roomNumber, Capacity capacity, Expenses expenses, Bookings bookings) {
+        requireAllNonNull(roomNumber, capacity, expenses, bookings);
         this.roomNumber = roomNumber;
         this.capacity = capacity;
-        this.occupant = occupant;
         this.expenses = expenses;
         this.bookings = bookings;
     }
@@ -64,10 +60,6 @@ public abstract class Room {
 
     public Capacity getCapacity() {
         return capacity;
-    }
-
-    public List<Guest> getOccupant() {
-        return occupant;
     }
 
     public Expenses getExpenses() {
@@ -87,10 +79,10 @@ public abstract class Room {
     }
 
     /**
-     * Returns true if room is occupied.
+     * Returns true if room has an active booking.
      */
     public boolean isOccupied() {
-        return occupant.isEmpty();
+        return getBookings().hasActiveBooking();
     }
 
     /**
@@ -115,14 +107,18 @@ public abstract class Room {
 
     /**
      * Checks out this room and its occupant.
-     * Future features to include exporting of receipt, setting room to housekeeping status for 1 hour.
+     * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
      */
     public void checkout() {
-        if (occupant.isEmpty()) {
+        if (!bookings.hasActiveBooking()) {
             throw new UnoccupiedRoomCheckoutException();
         }
-        // Add guest.checkout() once its implemented
-        occupant.clear();
+        Booking activeBooking = bookings.getActiveBooking();
+        Guest guest = activeBooking.getGuest();
+        // guest.checkout(); // joyce implement this later
+
+        bookings.remove(activeBooking);
+        // expenses.report(); // weizheng implement this later
     }
 
     /**
@@ -142,7 +138,6 @@ public abstract class Room {
         Room otherRoom = (Room) other;
         return otherRoom.getRoomNumber().equals(getRoomNumber())
                 && otherRoom.getCapacity().equals(getCapacity())
-                && otherRoom.getOccupant().equals(getOccupant())
                 && otherRoom.getBookings().equals(getBookings())
                 && otherRoom.getExpenses().equals(getExpenses())
                 && otherRoom.getTags().equals(getTags());
@@ -151,7 +146,7 @@ public abstract class Room {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(roomNumber, capacity, expenses, bookings, occupant, tags);
+        return Objects.hash(roomNumber, capacity, expenses, bookings, tags);
     }
 
     @Override
@@ -162,7 +157,6 @@ public abstract class Room {
                 .append(" Capacity: ")
                 .append(getCapacity())
                 .append(" Registered Guest: ");
-        getOccupant().forEach(builder::append);
         builder.append(" Bookings: ")
                 .append(getBookings())
                 .append(" Tags: ");

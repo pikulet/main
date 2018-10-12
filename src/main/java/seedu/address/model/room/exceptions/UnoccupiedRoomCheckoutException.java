@@ -1,10 +1,10 @@
 package seedu.address.model.room.exceptions;
 
 /**
- * Signals that the operation checked out an unoccupied room
+ * Signals that the operation is unable to find an active booking.
  */
 public class UnoccupiedRoomCheckoutException extends RuntimeException {
     public UnoccupiedRoomCheckoutException() {
-        super("Operation would result in an unoccupied room being checked out.");
+        super("Operation is attempting to checkout an unoccupied room.");
     }
 }

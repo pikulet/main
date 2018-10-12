@@ -1,4 +1,4 @@
-package seedu.address.model.room.exceptions;
+package seedu.address.model.room.booking.exceptions;
 
 /**
  * Signals that the operation will result in overlapping Bookings

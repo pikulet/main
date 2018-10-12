@@ -2,6 +2,7 @@ package seedu.address.model.room;
 
 import java.util.List;
 
+import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.person.Guest;
 
 /**
@@ -13,10 +14,9 @@ public class DoubleRoom extends Room {
 
     /**
      * All parameters must be non-null.
-     * Note: {@code occupant}, {@code expenses}, or {@code bookings} may be empty, but not null.
+     * Note: {@code expenses}, or {@code bookings} may be empty, but not null.
      */
-    public DoubleRoom(RoomNumber roomNumber, List<Guest> occupant, Expenses expenses,
-                      Bookings bookings) {
-        super(roomNumber, CAPACITY_DOUBLE_ROOM, occupant, expenses, bookings);
+    public DoubleRoom(RoomNumber roomNumber, Expenses expenses, Bookings bookings) {
+        super(roomNumber, CAPACITY_DOUBLE_ROOM, expenses, bookings);
     }
 }

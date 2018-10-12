@@ -1,4 +1,4 @@
-package seedu.address.model.room;
+package seedu.address.model.room.booking;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -13,7 +13,7 @@ import java.util.Objects;
  * Guarantees: immutable; is valid as declared in
  * {@link #isValidBookingPeriod(String testStartDate,String testEndDate)}
  */
-public class BookingPeriod {
+public class BookingPeriod implements Comparable<BookingPeriod> {
 
     public static final String MESSAGE_BOOKING_PERIOD_CONSTRAINTS =
             "Booking dates should only contain two 8-digit numbers, each in the form dd/MM/yyyy, "
@@ -80,49 +80,40 @@ public class BookingPeriod {
 
     /**
      * Checks if the start and end dates of this {@code BookingPeriod} overlaps with the other.
+     * Note: There is NO OVERLAPPING if this period's start date coincides with another's end date.
      * @param other Other booking period to be compared to.
      * @return True if there is any overlap, false otherwise.
      */
     public boolean isOverlapping(BookingPeriod other) {
-        return (isLessThanOrEqual(this.startDate, other.endDate)
-            && isLessThanOrEqual(other.startDate, this.endDate));
+        return startDate.isBefore(other.endDate)
+            && other.startDate.isBefore(this.endDate);
     }
 
     /**
-     * Checks if {@code LocalDate} date1 <= date2.
-     * @param date1 First date to compare.
-     * @param date2 Second date to compare.
-     * @return True if date1 <= date2, false otherwise.
+     * Checks if this booking period is expired.
+     * Expired means being before today's date.
      */
-    private static boolean isLessThanOrEqual(LocalDate date1, LocalDate date2) {
-        return date1.compareTo(date2) <= 0;
-    }
-
-    /**
-     * Checks if this booking period includes the given date.
-     * @param date
-     * @return True if date is between the start date and end date, both inclusive. False otherwise.
-     */
-    private boolean includes(LocalDate date) {
-        return date.compareTo(startDate) >= 0 
-            && date.compareTo(endDate) <= 0;
-    }
-
-    /**
-     * Checks if this booking period is an upcoming booking period.
-     * Upcoming is defined as being after today's date.
-     */
-    public boolean isUpcomingBookingPeriod() {
+    public boolean isExpired() {
         LocalDate today = LocalDate.now();
-        return startDate.isAfter(today);
+        return startDate.isBefore(today);
     }
 
     /**
      * Checks if this booking period is active now.
      */
-    public boolean isActiveBookingPeriod() {
+    public boolean isActive() {
         LocalDate today = LocalDate.now();
-        return includes(today);
+        return today.compareTo(startDate) >= 0
+            && today.compareTo(endDate) <= 0;
+    }
+
+    /**
+     * Checks if this booking period is upcoming.
+     * Upcoming is defined as strictly after today's date.
+     */
+    public boolean isUpcoming() {
+        LocalDate today = LocalDate.now();
+        return endDate.isAfter(today);
     }
 
     @Override
@@ -142,5 +133,9 @@ public class BookingPeriod {
     public int hashCode() {
         return Objects.hash(startDate, endDate);
     }
-
+    
+    @Override
+    public int compareTo(BookingPeriod other) {
+        return startDate.compareTo(other.startDate);
+    }
 }

@@ -1,8 +1,7 @@
-package seedu.address.model.room;
+package seedu.address.model.room.booking;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import seedu.address.model.person.Guest;
@@ -12,7 +11,7 @@ import seedu.address.model.person.Guest;
  * Represents a Booking of a room in the hotel.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Booking {
+public class Booking implements Comparable<Booking> {
 
     // Identity fields
     private final Guest guest;
@@ -43,18 +42,24 @@ public class Booking {
     }
 
     /**
-     * Checks if this booking is active now
+     * Checks if this booking is expired.
+     */
+    public boolean isExpired() {
+        return getBookingPeriod().isExpired();
+    }
+    
+    /**
+     * Checks if this booking is active.
      */
     public boolean isActive() {
-        return getBookingPeriod().isActiveBookingPeriod();
+        return getBookingPeriod().isActive();
     }
 
     /**
-     * Checks if this booking is an upcoming booking.
-     * Upcoming is defined as being after today's date.
+     * Checks if this booking is upcoming.
      */
     public boolean isUpcoming() {
-        return getBookingPeriod().isUpcomingBookingPeriod();
+        return getBookingPeriod().isUpcoming();
     }
 
     /**
@@ -92,4 +97,8 @@ public class Booking {
         return builder.toString();
     }
 
+    @Override
+    public int compareTo(Booking other) {
+        return bookingPeriod.compareTo(other.getBookingPeriod());
+    }
 }

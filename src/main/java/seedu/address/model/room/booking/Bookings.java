@@ -1,17 +1,17 @@
-package seedu.address.model.room;
+package seedu.address.model.room.booking;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import seedu.address.model.room.exceptions.BookingNotFoundException;
-import seedu.address.model.room.exceptions.OverlappingBookingException;
+import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
+import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
+import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
 
 /**
  * A list of Bookings that maintains non-overlapping property between its elements and does not allow nulls.
@@ -58,23 +58,27 @@ public class Bookings implements Iterable<Booking> {
     }
 
     /**
-     * Checks if there is an active booking now
+     * Gets the first booking in the list
      */
-    public boolean hasCurrentBooking() {
-        return getFirstUpcomingBooking().isActive();
-    }
-
-    /**
-     * Gets the first upcoming booking
-     */
-    public Booking getFirstUpcomingBooking() {
+    private Booking getFirstBooking() {
         return sortedList.get(0);
     }
     
-    public void updateBookings() {
-        LocalDate today = LocalDate.now();
-        internalList.stream()
-            .filter(booking -> booking.isUpcoming());
+    /**
+     * Checks if the first booking in the list is active.
+     */
+    public boolean hasActiveBooking() {
+        return getFirstBooking().isActive();
+    }
+
+    /**
+     * Get the active booking
+     */
+    public Booking getActiveBooking() {
+        if (!hasActiveBooking()) {
+            throw new NoActiveBookingException();
+        }
+        return getFirstBooking();
     }
 
     /**
