@@ -98,6 +98,33 @@ public class BookingPeriod {
         return date1.compareTo(date2) <= 0;
     }
 
+    /**
+     * Checks if this booking period includes the given date.
+     * @param date
+     * @return True if date is between the start date and end date, both inclusive. False otherwise.
+     */
+    private boolean includes(LocalDate date) {
+        return date.compareTo(startDate) >= 0 
+            && date.compareTo(endDate) <= 0;
+    }
+
+    /**
+     * Checks if this booking period is an upcoming booking period.
+     * Upcoming is defined as being after today's date.
+     */
+    public boolean isUpcomingBookingPeriod() {
+        LocalDate today = LocalDate.now();
+        return startDate.isAfter(today);
+    }
+
+    /**
+     * Checks if this booking period is active now.
+     */
+    public boolean isActiveBookingPeriod() {
+        LocalDate today = LocalDate.now();
+        return includes(today);
+    }
+
     @Override
     public String toString() {
         return String.format("%s - %s", startDate, endDate);

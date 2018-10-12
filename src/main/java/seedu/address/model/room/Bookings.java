@@ -3,22 +3,28 @@ package seedu.address.model.room;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.room.exceptions.OverlappingBookingException;
+import javafx.collections.transformation.SortedList;
 import seedu.address.model.room.exceptions.BookingNotFoundException;
+import seedu.address.model.room.exceptions.OverlappingBookingException;
 
 /**
  * A list of Bookings that maintains non-overlapping property between its elements and does not allow nulls.
  * A Booking is considered non-overlapping by comparing using
  * {@code Booking#canAcceptBooking(Booking)}. As such, adding and updating of
- * Bookings uses Booking#canAcceptBooking(Booking) so as to ensure that the
+ * Bookings uses Booking#canAcceptBooking(Booking) to ensure that the
  * Booking being added or updated does not overlap any existing ones in Bookings.
  * However, the removal of a Booking uses Booking#equals(Object) so
  * as to ensure that the Booking with exactly the same fields will be removed.
+ * 
+ * A sorted list of bookings is also maintained to support viewing of bookings in chronological order.
+ * Note: SortedList only provides a sorted view of the list. Any changes to the list must be made through the underlying
+ * ObservableList.
  *
  * Supports a minimal set of list operations.
  *
@@ -27,6 +33,7 @@ import seedu.address.model.room.exceptions.BookingNotFoundException;
 public class Bookings implements Iterable<Booking> {
 
     private final ObservableList<Booking> internalList = FXCollections.observableArrayList();
+    private final SortedList<Booking> sortedList = new SortedList<>(internalList);
 
     /**
      * Returns true if the list canAcceptBooking an equivalent Booking as the given argument.
@@ -48,6 +55,26 @@ public class Bookings implements Iterable<Booking> {
             }
         }
         return true;
+    }
+
+    /**
+     * Checks if there is an active booking now
+     */
+    public boolean hasCurrentBooking() {
+        return getFirstUpcomingBooking().isActive();
+    }
+
+    /**
+     * Gets the first upcoming booking
+     */
+    public Booking getFirstUpcomingBooking() {
+        return sortedList.get(0);
+    }
+    
+    public void updateBookings() {
+        LocalDate today = LocalDate.now();
+        internalList.stream()
+            .filter(booking -> booking.isUpcoming());
     }
 
     /**
@@ -116,8 +143,8 @@ public class Bookings implements Iterable<Booking> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Booking> asUnmodifiableObservableList() {
-        return FXCollections.unmodifiableObservableList(internalList);
+    public ObservableList<Booking> asUnmodifiableSortedList() {
+        return FXCollections.unmodifiableObservableList(sortedList);
     }
 
     @Override
@@ -140,7 +167,7 @@ public class Bookings implements Iterable<Booking> {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        internalList.forEach(builder::append);
+        sortedList.forEach(builder::append);
         return builder.toString();
     }
 }

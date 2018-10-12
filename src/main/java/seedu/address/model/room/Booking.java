@@ -2,6 +2,7 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import seedu.address.model.person.Guest;
@@ -39,6 +40,21 @@ public class Booking {
      */
     public boolean isOverlapping(Booking other) {
         return bookingPeriod.isOverlapping(other.getBookingPeriod());
+    }
+
+    /**
+     * Checks if this booking is active now
+     */
+    public boolean isActive() {
+        return getBookingPeriod().isActiveBookingPeriod();
+    }
+
+    /**
+     * Checks if this booking is an upcoming booking.
+     * Upcoming is defined as being after today's date.
+     */
+    public boolean isUpcoming() {
+        return getBookingPeriod().isUpcomingBookingPeriod();
     }
 
     /**
