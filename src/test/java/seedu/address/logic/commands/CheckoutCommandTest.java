@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalRooms.getTypicalUniqueRoomList;
 
 import org.junit.Test;
 
@@ -22,7 +21,7 @@ import seedu.address.testutil.TypicalRoomNumbers;
  */
 public class CheckoutCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), getTypicalUniqueRoomList());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

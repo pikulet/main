@@ -67,13 +67,17 @@ Examples:
 * `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/85 from/09/12/18 to/10/12/18`
 Add a guest "John Smith" to room 85 for a period of stay from 09/12/18 to 10/12/18.
 
+=== Listing all guests or rooms : `list`
+
+Displays a list of all rooms or guests (using flags -r/-g).
+Format: `list -r`, `list -g`
+
 === Adding a person: `addx`
 
 Adds a guest to the guest list NOT for the purpose of assigning a room (perhaps add to archived guest list) +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG]...`
 
 Examples:
-
 * `add n/guest g/S9876543B`
 
 === Checkout room: `checkout`

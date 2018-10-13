@@ -16,7 +16,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.UniqueRoomList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -26,8 +25,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Guest> filteredGuests;
-    // Dummy variable for now. Delete when implemented.
-    private final UniqueRoomList rooms;
     private final FilteredList<Room> filteredRooms;
 
     /**
@@ -41,22 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
-        // Dummy variable for now. Delete when implemented.
-        this.rooms = new UniqueRoomList();
-        this.filteredRooms = new FilteredList<>(rooms.asUnmodifiableObservableList());
-    }
-
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, UniqueRoomList rooms) {
-        super();
-        requireAllNonNull(addressBook, userPrefs);
-
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
-
-        versionedAddressBook = new VersionedAddressBook(addressBook);
-        filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
-        // Dummy variable for now. Delete when implemented.
-        this.rooms = new UniqueRoomList(rooms);
-        this.filteredRooms = new FilteredList<>(rooms.asUnmodifiableObservableList());
+        filteredRooms = new FilteredList<>(versionedAddressBook.getRoomList());
     }
 
     public ModelManager() {
@@ -192,7 +174,26 @@ public class ModelManager extends ComponentManager implements Model {
         rooms.checkinRoom(roomNumber);
     }
 
+    //=========== Filtered Room List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Room} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
     @Override
+    public ObservableList<Room> getFilteredRoomList() {
+        return FXCollections.unmodifiableObservableList(filteredRooms);
+    }
+
+    @Override
+    public void updateFilteredRoomList(Predicate<Room> predicate) {
+        requireNonNull(predicate);
+        filteredRooms.setPredicate(predicate);
+    }
+
+    @Override
+    public void checkoutRoom(RoomNumber roomNumber) {}
+
     public void checkoutRoom(RoomNumber roomNumber) {
         rooms.checkoutRoom(roomNumber);
     }
