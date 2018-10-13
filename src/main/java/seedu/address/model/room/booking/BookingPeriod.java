@@ -133,7 +133,9 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
 
     @Override
     public String toString() {
-        return String.format("%s - %s", startDate, endDate);
+        String start = startDate.format(FORMAT);
+        String end = endDate.format(FORMAT);
+        return String.format("%s - %s", start, end);
     }
 
     @Override

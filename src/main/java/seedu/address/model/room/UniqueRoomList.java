@@ -176,14 +176,6 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     /**
-     * FOR TESTING CHECKOUTCOMMAND ONLY - DO NOT USE IN MAIN APP
-     * Checks out a room using its room number, provided that the date given is within the first booking period
-     */
-    public void checkoutRoom(RoomNumber roomNumber, LocalDate dateWithinBookingPeriod) {
-        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkout(dateWithinBookingPeriod);
-    }
-
-    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Room> asUnmodifiableObservableList() {

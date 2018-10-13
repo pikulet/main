@@ -89,6 +89,11 @@ public interface Model {
     void commitAddressBook();
 
     /**
+     * Checks in the room by its room number
+     */
+    void checkinRoom(RoomNumber roomNumber);
+    
+    /**
      * Checks out the room by its room number and removes its registered guest.
      */
     void checkoutRoom(RoomNumber roomNumber);

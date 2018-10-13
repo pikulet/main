@@ -186,18 +186,15 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredGuests.equals(other.filteredGuests);
     }
+    
+    @Override
+    public void checkinRoom(RoomNumber roomNumber) {
+        rooms.checkinRoom(roomNumber);
+    }
 
     @Override
     public void checkoutRoom(RoomNumber roomNumber) {
         rooms.checkoutRoom(roomNumber);
-    }
-
-    /**
-     * FOR TESTING CHECKOUTCOMMAND ONLY - DO NOT USE IN MAIN APP
-     * Checks out a room using its room number, provided that the date given is within the first booking period
-     */
-    public void checkoutRoom(RoomNumber roomNumber, LocalDate dateWithinBookingPeriod) {
-        rooms.checkoutRoom(roomNumber, dateWithinBookingPeriod);
     }
     
     @Override

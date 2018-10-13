@@ -68,6 +68,13 @@ public abstract class Room {
     }
 
     /**
+     * Adds a booking to this room's list of bookings
+     */
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
+
+    /**
      * Returns true if room's first booking has been checked in.
      */
     public boolean isCheckedIn() {
@@ -114,23 +121,6 @@ public abstract class Room {
 
         bookings.remove(firstBooking);
         // expenses.report(); // weizheng implement this later
-    }
-
-    /**
-     * FOR TESTING CHECKOUTCOMMAND ONLY - DO NOT USE IN MAIN APP
-     * Checks out this room and its current occupant if the given date is within the first booking period
-     * @param dateWithinBookingPeriod Given date that must be within the first booking period
-     */
-    public void checkout(LocalDate dateWithinBookingPeriod) {
-        Booking booking = bookings.getFirstBooking();
-        if (!booking.includesDate(dateWithinBookingPeriod)) {
-            throw new UnoccupiedRoomCheckoutException();
-        }
-        bookings.remove(booking);
-    }
-    
-    public void addBooking(Booking booking) {
-        bookings.add(booking);
     }
 
     /**
