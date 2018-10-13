@@ -3,11 +3,16 @@ package seedu.address.model.room;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.exceptions.DuplicateRoomException;
 import seedu.address.model.room.exceptions.RoomNotFoundException;
 
@@ -25,6 +30,27 @@ import seedu.address.model.room.exceptions.RoomNotFoundException;
 public class UniqueRoomList implements Iterable<Room> {
 
     private final ObservableList<Room> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Initializes UniqueRoomList with list of rooms ranging from 001 up to the maximum room number.
+     */
+    public UniqueRoomList() {
+        this.internalList.setAll(Stream.iterate(1, i -> i <= Integer.parseInt(RoomNumber.MAX_ROOM_NUMBER), i -> i + 1)
+            .map(i -> {
+                RoomNumber roomNumber = new RoomNumber(String.format("%03d", i));;
+                Expenses expenses = new Expenses();
+                Bookings bookings = new Bookings();
+                if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a SuiteRoom.
+                    return new SuiteRoom(roomNumber, expenses, bookings);
+                }
+                if (i % 2 == 0) { // All rooms with even room number is a DoubleRoom.
+                    return new DoubleRoom(roomNumber, expenses, bookings);
+                }
+                // ALl rooms with odd room number is a SingleRoom.
+                return new SingleRoom(roomNumber, expenses, bookings);
+            })
+            .collect(Collectors.toList()));
+    }
 
     /**
      * Returns true if the list contains an equivalent room as the given argument.
@@ -114,15 +140,27 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     /**
+     * Add a booking to a room identified by its room number.
+     */
+    public void addBooking(RoomNumber roomNumber, Booking booking) {
+        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased())
+            .addBooking(booking);
+    }
+
+    /**
      * Checks out a room using its room number
      * @param roomNumber
      */
     public void checkoutRoom(RoomNumber roomNumber) {
-        for (Room room : internalList) {
-            if (room.isRoom(roomNumber)) {
-                room.checkout();
-            }
-        }
+        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkout();
+    }
+
+    /**
+     * FOR TESTING CHECKOUTCOMMAND ONLY - DO NOT USE IN MAIN APP
+     * Checks out a room using its room number, provided that the date given is within the first booking period
+     */
+    public void checkoutRoom(RoomNumber roomNumber, LocalDate dateWithinBookingPeriod) {
+        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkout(dateWithinBookingPeriod);
     }
 
     /**

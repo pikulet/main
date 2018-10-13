@@ -14,6 +14,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Expenses;
@@ -48,24 +49,6 @@ public class SampleDataUtil {
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
                 getTagSet("colleagues"))
         };
-    }
-
-    public static List<Room> getSampleRooms() {
-        return Stream.iterate(1, i -> i <= Integer.parseInt(RoomNumber.MAX_ROOM_NUMBER), i -> i + 1)
-            .map(i -> {
-                RoomNumber roomNumber = new RoomNumber(String.format("%03d", i));;
-                Expenses expenses = new Expenses();
-                Bookings bookings = new Bookings();
-                if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a SuiteRoom.
-                    return new SuiteRoom(roomNumber, expenses, bookings);
-                }
-                if (i % 2 == 0) { // All rooms with even room number is a DoubleRoom.
-                    return new DoubleRoom(roomNumber, expenses, bookings);
-                }
-                // ALl rooms with odd room number is a SingleRoom.
-                return new SingleRoom(roomNumber, expenses, bookings);
-            })
-            .collect(Collectors.toList());
     }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {

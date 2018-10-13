@@ -2,6 +2,7 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Set;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.model.tag.Tag;
 
@@ -27,20 +29,6 @@ public abstract class Room {
     protected final Expenses expenses;
     protected final Bookings bookings;
     protected final Set<Tag> tags = new HashSet<>();
-
-    /**
-     * NEVER USE THIS DEFAULT CONSTRUCTOR.
-     * I had to write this default constructor because Java necessitates that `final` fields must be
-     * instantiated. Between choosing this or removing `final` access modifier, I decided to go with this because
-     * the latter opens up the possibility for once-correct fields to be changed unintentionally.
-     * If you can find a better alternative, please let me know and I will replace this stain immediately.
-     */
-    public Room() {
-        this.roomNumber = new RoomNumber("001");
-        this.capacity = new Capacity(1);
-        this.expenses = new Expenses();
-        this.bookings = new Bookings();
-    }
 
     /**
      * All parameters must be non-null.
@@ -86,6 +74,46 @@ public abstract class Room {
     }
 
     /**
+     * Checks out this room and its current occupant.
+     * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
+     */
+    public void checkout() {
+        if (!isOccupied()) {
+            throw new UnoccupiedRoomCheckoutException();
+        }
+        Booking activeBooking = bookings.getActiveBooking();
+        Guest guest = activeBooking.getGuest();
+        // guest.checkout(); // joyce implement this later
+
+        bookings.remove(activeBooking);
+        // expenses.report(); // weizheng implement this later
+    }
+
+    /**
+     * FOR TESTING CHECKOUTCOMMAND ONLY - DO NOT USE IN MAIN APP
+     * Checks out this room and its current occupant if the given date is within the first booking period
+     * @param dateWithinBookingPeriod Given date that must be within the first booking period
+     */
+    public void checkout(LocalDate dateWithinBookingPeriod) {
+        Booking booking = bookings.getFirstBooking();
+        if (!booking.includesDate(dateWithinBookingPeriod)) {
+            throw new UnoccupiedRoomCheckoutException();
+        }
+        bookings.remove(booking);
+    }
+
+    /**
+     * Checks in a guest (according to his booking)
+     */
+    public void checkin(Guest guest) {
+        
+    }
+    
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
+
+    /**
      * Returns true if both rooms of the same name have the same room number.
      * This defines a weaker notion of equality between two rooms.
      */
@@ -96,29 +124,6 @@ public abstract class Room {
 
         return otherRoom != null
             && otherRoom.getRoomNumber().equals(getRoomNumber());
-    }
-
-    /**
-     * Returns true if the room number identifies this room.
-     */
-    public boolean isRoom(RoomNumber roomNumber) {
-        return getRoomNumber().equals(roomNumber);
-    }
-
-    /**
-     * Checks out this room and its occupant.
-     * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
-     */
-    public void checkout() {
-        if (!bookings.hasActiveBooking()) {
-            throw new UnoccupiedRoomCheckoutException();
-        }
-        Booking activeBooking = bookings.getActiveBooking();
-        Guest guest = activeBooking.getGuest();
-        // guest.checkout(); // joyce implement this later
-
-        bookings.remove(activeBooking);
-        // expenses.report(); // weizheng implement this later
     }
 
     /**

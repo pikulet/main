@@ -2,6 +2,7 @@ package seedu.address.model.room.booking;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import seedu.address.model.person.Guest;
@@ -60,6 +61,13 @@ public class Booking implements Comparable<Booking> {
      */
     public boolean isUpcoming() {
         return getBookingPeriod().isUpcoming();
+    }
+
+    /**
+     * Checks if this booking includes the given date
+     */
+    public boolean includesDate(LocalDate date) {
+        return getBookingPeriod().includesDate(date);
     }
 
     /**

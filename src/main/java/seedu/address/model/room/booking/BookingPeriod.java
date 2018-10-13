@@ -55,6 +55,14 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
             && parsableDate(testEndDate);
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
     /**
      * Checks whether the given date can be constructed into {@code LocalDate} object.
      * @param date A date of the correct format.
@@ -103,8 +111,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      */
     public boolean isActive() {
         LocalDate today = LocalDate.now();
-        return today.compareTo(startDate) >= 0
-            && today.compareTo(endDate) <= 0;
+        return includesDate(today);
     }
 
     /**
@@ -114,6 +121,14 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     public boolean isUpcoming() {
         LocalDate today = LocalDate.now();
         return endDate.isAfter(today);
+    }
+
+    /**
+     * Checks if the given date is within this booking period's start and end dates.
+     */
+    public boolean includesDate(LocalDate date) {
+        return date.compareTo(startDate) >= 0
+            && date.compareTo(endDate) <= 0;
     }
 
     @Override

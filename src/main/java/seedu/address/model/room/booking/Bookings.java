@@ -60,7 +60,7 @@ public class Bookings implements Iterable<Booking> {
     /**
      * Gets the first booking in the list
      */
-    private Booking getFirstBooking() {
+    public Booking getFirstBooking() {
         return sortedList.get(0);
     }
     

@@ -4,7 +4,9 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.UniqueRoomList;
 
 /**
  * The API of the Model component.
@@ -52,6 +54,15 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Guest> predicate);
 
+    /** Returns an unmodifiable view of the filtered room list */
+    ObservableList<Room> getFilteredRoomList();
+
+    /**
+     * Updates the filter of the filtered room list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredRoomList(Predicate<Room> predicate);
+
     /**
      * Returns true if the model has previous address book states to restore.
      */
@@ -86,4 +97,9 @@ public interface Model {
      * Saves the current room list state for undo/redo
      */
     void commitRoomList();
+
+    /**
+     * Gets the room list
+     */
+    UniqueRoomList getUniqueRoomList();
 }

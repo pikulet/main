@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
 
@@ -26,6 +28,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Guest> filteredGuests;
     // Dummy variable for now. Delete when implemented.
     private final UniqueRoomList rooms;
+    private final FilteredList<Room> filteredRooms;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -40,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
         // Dummy variable for now. Delete when implemented.
         this.rooms = new UniqueRoomList();
+        this.filteredRooms = new FilteredList<>(rooms.asUnmodifiableObservableList());
     }
 
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, UniqueRoomList rooms) {
@@ -52,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
         // Dummy variable for now. Delete when implemented.
         this.rooms = rooms;
+        this.filteredRooms = new FilteredList<>(rooms.asUnmodifiableObservableList());
     }
 
     public ModelManager() {
@@ -118,6 +123,23 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGuests.setPredicate(predicate);
     }
 
+    //=========== Filtered Room List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Room} backed by the internal list of
+     * {@code UniqueRoomList}
+     */
+    @Override
+    public ObservableList<Room> getFilteredRoomList() {
+        return FXCollections.unmodifiableObservableList(filteredRooms);
+    }
+
+    @Override
+    public void updateFilteredRoomList(Predicate<Room> predicate) {
+        requireNonNull(predicate);
+        filteredRooms.setPredicate(predicate);
+    }
+
     //=========== Undo/Redo =================================================================================
 
     @Override
@@ -166,7 +188,23 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void checkoutRoom(RoomNumber roomNumber) {}
+    public void checkoutRoom(RoomNumber roomNumber) {
+        rooms.checkoutRoom(roomNumber);
+    }
+
+    /**
+     * FOR TESTING CHECKOUTCOMMAND ONLY - DO NOT USE IN MAIN APP
+     * Checks out a room using its room number, provided that the date given is within the first booking period
+     */
+    public void checkoutRoom(RoomNumber roomNumber, LocalDate dateWithinBookingPeriod) {
+        rooms.checkoutRoom(roomNumber, dateWithinBookingPeriod);
+    }
+    
     @Override
     public void commitRoomList() {}
+    
+    @Override
+    public UniqueRoomList getUniqueRoomList() {
+        return rooms;
+    }
 }
