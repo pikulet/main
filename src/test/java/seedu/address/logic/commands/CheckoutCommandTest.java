@@ -18,7 +18,7 @@ import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
- * {@code DeleteCommand}.
+ * {@code CheckoutCommand}.
  */
 public class CheckoutCommandTest {
 
@@ -65,12 +65,10 @@ public class CheckoutCommandTest {
     
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() {
-        // to be filled in once addressbook is refactored into hotel
     }
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        // to be filled in once addressbook is refactored into hotel
     }
 
     @Test
