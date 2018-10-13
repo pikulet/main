@@ -63,23 +63,6 @@ public class Bookings implements Iterable<Booking> {
     public Booking getFirstBooking() {
         return sortedList.get(0);
     }
-    
-    /**
-     * Checks if the first booking in the list is active.
-     */
-    public boolean hasActiveBooking() {
-        return getFirstBooking().isActive();
-    }
-
-    /**
-     * Get the active booking
-     */
-    public Booking getActiveBooking() {
-        if (!hasActiveBooking()) {
-            throw new NoActiveBookingException();
-        }
-        return getFirstBooking();
-    }
 
     /**
      * Adds a Booking to the list.

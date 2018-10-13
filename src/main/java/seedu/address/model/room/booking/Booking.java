@@ -17,6 +17,7 @@ public class Booking implements Comparable<Booking> {
     // Identity fields
     private final Guest guest;
     private final BookingPeriod bookingPeriod;
+    private boolean checkIn;
 
     /**
      * Every field must be present and not null.
@@ -25,6 +26,7 @@ public class Booking implements Comparable<Booking> {
         requireAllNonNull(guest, bookingPeriod);
         this.guest = guest;
         this.bookingPeriod = bookingPeriod;
+        this.checkIn = false;
     }
 
     public Guest getGuest() {
@@ -33,6 +35,17 @@ public class Booking implements Comparable<Booking> {
 
     public BookingPeriod getBookingPeriod() {
         return bookingPeriod;
+    }
+
+    public boolean isCheckedIn() {
+        return checkIn;
+    }
+
+    /**
+     * Set the checkIn flag of this booking and guest to true
+     */
+    public void checkIn() {
+        checkIn = true;
     }
 
     /**

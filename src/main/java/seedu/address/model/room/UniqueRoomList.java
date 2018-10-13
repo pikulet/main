@@ -146,6 +146,10 @@ public class UniqueRoomList implements Iterable<Room> {
         internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased())
             .addBooking(booking);
     }
+    
+    public void checkinRoom(RoomNumber roomNumber) {
+        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkIn();
+    }
 
     /**
      * Checks out a room using its room number

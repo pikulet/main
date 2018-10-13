@@ -11,6 +11,7 @@ import java.util.Set;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.model.tag.Tag;
@@ -67,25 +68,43 @@ public abstract class Room {
     }
 
     /**
-     * Returns true if room has an active booking.
+     * Returns true if room has been checked in.
      */
-    public boolean isOccupied() {
-        return getBookings().hasActiveBooking();
+    public boolean isCheckedIn() {
+        Booking firstBooking = bookings.getFirstBooking();
+        return firstBooking.isCheckedIn();
     }
 
     /**
-     * Checks out this room and its current occupant.
+     * Checks in the guest in the first booking of this room
+     */
+    public void checkIn() {
+        Booking firstBooking = bookings.getFirstBooking();
+        if (!firstBooking.isActive()) {
+            throw new NoActiveBookingException();
+        }
+        if (firstBooking.isCheckedIn()) {
+            throw new OccupiedRoomCheckinException();
+        }
+        firstBooking.checkIn();
+    }
+
+    /**
+     * Checks out the first booking of this room and its current occupant.
      * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
      */
     public void checkout() {
-        if (!isOccupied()) {
+        Booking firstBooking = bookings.getFirstBooking();
+        if (!firstBooking.isActive()) {
+            throw new NoActiveBookingException();
+        }
+        if (!isCheckedIn()) {
             throw new UnoccupiedRoomCheckoutException();
         }
-        Booking activeBooking = bookings.getActiveBooking();
-        Guest guest = activeBooking.getGuest();
+        Guest guest = firstBooking.getGuest();
         // guest.checkout(); // joyce implement this later
 
-        bookings.remove(activeBooking);
+        bookings.remove(firstBooking);
         // expenses.report(); // weizheng implement this later
     }
 
@@ -100,13 +119,6 @@ public abstract class Room {
             throw new UnoccupiedRoomCheckoutException();
         }
         bookings.remove(booking);
-    }
-
-    /**
-     * Checks in a guest (according to his booking)
-     */
-    public void checkin(Guest guest) {
-        
     }
     
     public void addBooking(Booking booking) {
