@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -20,6 +21,10 @@ public class CheckoutCommand extends Command {
             + "Example: " + COMMAND_WORD + " 001";
 
     public static final String MESSAGE_CHECKOUT_ROOM_SUCCESS = "Checked out Room: %1$s";
+    public static final String MESSAGE_UNOCCUPIED_ROOM_CHECKOUT = "Cannot checkout Room %1$s, as it is not checked-in" +
+        " yet.";
+    public static final String MESSAGE_INACTIVE_BOOKING_ROOM_CHECKOUT = "Cannot checkout Room %1$s, as it does not " +
+        "have an active booking.";
 
     private final RoomNumber roomNumber;
 
@@ -30,8 +35,13 @@ public class CheckoutCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-
-        // roomNumber is guaranteed to be a valid room number.
+        // roomNumber is guaranteed to be a valid room number after parsing.
+        if (!model.getUniqueRoomList().isRoomBookingActive(roomNumber)) {
+            throw new CommandException(String.format(MESSAGE_INACTIVE_BOOKING_ROOM_CHECKOUT, roomNumber));
+        }
+        if (!model.getUniqueRoomList().isRoomCheckedIn(roomNumber)) {
+            throw new CommandException(String.format(MESSAGE_UNOCCUPIED_ROOM_CHECKOUT, roomNumber));
+        }        
         model.checkoutRoom(roomNumber);
         model.commitRoomList();
         return new CommandResult(String.format(MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumber));

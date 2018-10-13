@@ -146,14 +146,30 @@ public class UniqueRoomList implements Iterable<Room> {
         internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased())
             .addBooking(booking);
     }
-    
+
+    /**
+     * Returns true if the room identified by its room number is checked in.
+     */
+    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
+        return internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).isCheckedIn();
+    }
+
+    /**
+     * Returns true if the room's first booking is active.
+     */
+    public boolean isRoomBookingActive(RoomNumber roomNumber) {
+        return internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).hasActiveBooking();
+    }
+
+    /**
+     * Checks in the room using its room number
+     */
     public void checkinRoom(RoomNumber roomNumber) {
         internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkIn();
     }
 
     /**
      * Checks out a room using its room number
-     * @param roomNumber
      */
     public void checkoutRoom(RoomNumber roomNumber) {
         internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkout();

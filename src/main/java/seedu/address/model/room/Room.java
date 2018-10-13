@@ -68,7 +68,7 @@ public abstract class Room {
     }
 
     /**
-     * Returns true if room has been checked in.
+     * Returns true if room's first booking has been checked in.
      */
     public boolean isCheckedIn() {
         Booking firstBooking = bookings.getFirstBooking();
@@ -76,16 +76,24 @@ public abstract class Room {
     }
 
     /**
+     * Returns true if room's first booking is active.
+     */
+    public boolean hasActiveBooking() {
+        Booking firstBooking = bookings.getFirstBooking();
+        return firstBooking.isActive();
+    }
+
+    /**
      * Checks in the guest in the first booking of this room
      */
     public void checkIn() {
-        Booking firstBooking = bookings.getFirstBooking();
-        if (!firstBooking.isActive()) {
+        if (!hasActiveBooking()) {
             throw new NoActiveBookingException();
         }
-        if (firstBooking.isCheckedIn()) {
+        if (isCheckedIn()) {
             throw new OccupiedRoomCheckinException();
         }
+        Booking firstBooking = bookings.getFirstBooking();
         firstBooking.checkIn();
     }
 
@@ -94,13 +102,13 @@ public abstract class Room {
      * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
      */
     public void checkout() {
-        Booking firstBooking = bookings.getFirstBooking();
-        if (!firstBooking.isActive()) {
+        if (!hasActiveBooking()) {
             throw new NoActiveBookingException();
         }
         if (!isCheckedIn()) {
             throw new UnoccupiedRoomCheckoutException();
         }
+        Booking firstBooking = bookings.getFirstBooking();
         Guest guest = firstBooking.getGuest();
         // guest.checkout(); // joyce implement this later
 
