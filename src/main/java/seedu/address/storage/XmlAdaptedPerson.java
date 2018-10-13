@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
@@ -36,6 +38,9 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement
+    private List<XmlAdaptedExpense> expenses = new ArrayList<>();
+
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
@@ -45,13 +50,17 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given guest details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address,
+                            List<XmlAdaptedTag> tagged, List<XmlAdaptedExpense> expenses) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (expenses != null) {
+            this.expenses = expenses;
         }
     }
 
@@ -68,6 +77,9 @@ public class XmlAdaptedPerson {
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
+        expenses = source.getExpensesList().stream()
+                .map(XmlAdaptedExpense::new)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -79,6 +91,11 @@ public class XmlAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<Expense> expenseList = new ArrayList<>();
+        for (XmlAdaptedExpense expense : expenses) {
+            expenseList.add(expense.toModelType());
         }
 
         if (name == null) {
@@ -114,7 +131,8 @@ public class XmlAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Guest(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        final Expenses expenses = new Expenses(expenseList);
+        return new Guest(modelName, modelPhone, modelEmail, modelAddress, modelTags, expenses);
     }
 
     @Override

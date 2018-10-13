@@ -35,8 +35,14 @@ public class Expense {
      */
     public Expense(String type) throws ItemNotFoundException {
         this.type = new ExpenseType(type);
-        this.cost = this.type.getItemPrice();
+        this.cost = this.type.getItemCost();
         this.date = LocalDateTime.now();
+    }
+
+    public Expense(ExpenseType type, double cost, LocalDateTime date) {
+        this.type = type;
+        this.cost = cost;
+        this.date = date;
     }
 
     /**

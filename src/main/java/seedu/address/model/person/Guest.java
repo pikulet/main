@@ -4,9 +4,12 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,17 +26,19 @@ public class Guest {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Expenses expenses;
 
     /**
      * Every field must be present and not null.
      */
-    public Guest(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Guest(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Expenses expenses) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.expenses = expenses;
     }
 
     public Name getName() {
@@ -59,6 +64,10 @@ public class Guest {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
     }
+
+    public Expenses getExpenses() { return expenses; }
+
+    public List<Expense> getExpensesList() { return expenses.getExpensesList(); }
 
     /**
      * Returns true if both guests of the same name have at least one other identity field that is the same.

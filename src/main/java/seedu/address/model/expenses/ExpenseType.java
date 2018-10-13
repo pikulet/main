@@ -37,7 +37,7 @@ public class ExpenseType {
     }
     private final String itemNumber;
     private final String itemName;
-    private final double itemPrice;
+    private final double itemCost;
 
     /**
      * Constructor for an ExpenseType object. Only called via the {@code createExpenseType()} method.
@@ -45,13 +45,27 @@ public class ExpenseType {
      * @param number The menu number of the item.
      * @throws ItemNotFoundException if the given menu number does not exist.
      */
-    ExpenseType(String number) throws ItemNotFoundException {
+    public ExpenseType(String number) throws ItemNotFoundException {
         if (!isValidMenuNumber(number)) {
             throw new ItemNotFoundException();
         }
         itemNumber = number;
         itemName = numberToName.get(number);
-        itemPrice = numberToPrice.get(number);
+        itemCost = numberToPrice.get(number);
+    }
+
+    /**
+     * Constructor for a custom ExpenseType object.
+     * Can be used as filler for items that were removed from the menu.
+     *
+     * @param number The menu number of the item.
+     * @param name The name of the item.
+     * @param cost The cost of the item.
+     */
+    public ExpenseType(String number, String name, double cost) {
+        itemNumber = number;
+        itemName = name;
+        itemCost = cost;
     }
 
     /**
@@ -95,7 +109,7 @@ public class ExpenseType {
      * @return The price of the item.
      * @throws ItemNotFoundException if the user provides a non-existent menu number.
      */
-    public static double getItemPrice(String menuNumber) throws ItemNotFoundException {
+    public static double getItemCost(String menuNumber) throws ItemNotFoundException {
         if (!isValidMenuNumber(menuNumber)) {
             throw new ItemNotFoundException();
         }
@@ -107,13 +121,17 @@ public class ExpenseType {
      *
      * @return The price of the item.
      */
-    public double getItemPrice() {
-        return itemPrice;
+    public double getItemCost() {
+        return itemCost;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
     }
 
     @Override
     public String toString() {
-        return itemNumber + " " + itemName + " $" + itemPrice;
+        return itemNumber + " " + itemName + " $" + itemCost;
     }
 
     @Override
@@ -122,7 +140,7 @@ public class ExpenseType {
                 || (other instanceof ExpenseType // instanceof handles nulls
                 && itemNumber.equals(((ExpenseType) other).itemNumber)
                 && itemName.equals(((ExpenseType) other).itemName)
-                && itemPrice == ((ExpenseType) other).itemPrice); // state check
+                && itemCost == ((ExpenseType) other).itemCost); // state check
     }
 
     @Override

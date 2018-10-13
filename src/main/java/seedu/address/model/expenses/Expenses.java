@@ -1,5 +1,6 @@
 package seedu.address.model.expenses;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +16,10 @@ public class Expenses {
      */
     public Expenses() {
         expenseList = new LinkedList<Expense>();
+    }
+
+    public Expenses(List<Expense> expenseList) {
+        this.expenseList = expenseList;
     }
 
     /**
@@ -33,6 +38,10 @@ public class Expenses {
      */
     public void clearExpenses() {
         expenseList.clear();
+    }
+
+    public List<Expense> getExpensesList() {
+        return Collections.unmodifiableList(expenseList);
     }
 
     @Override
