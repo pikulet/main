@@ -26,7 +26,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
 
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -169,22 +168,9 @@ public class ModelManager extends ComponentManager implements Model {
         filteredRooms.setPredicate(predicate);
     }
 
-    /*
-    @Override
-    public RoomList getRoomList() {
-        return roomList;
-    }*/
     @Override
     public void checkoutRoom(RoomNumber roomNumber) {}
+
     @Override
     public void commitRoomList() {}
-
-    /*
-    @Override
-    public void displayRoomList(Predicate<Room> predicate) {
-        //Disable guest list
-        requireNonNull(predicate);
-        //filteredGuests.setPredicate(predicate);
-
-    }*/
 }

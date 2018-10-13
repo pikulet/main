@@ -80,7 +80,7 @@ Examples:
 * `avail r/Double Room num/5`
 * `avail r/Double Room ds/20180910 de/21080912`
 
-=== Listing all guests and rooms : `list`
+=== Listing all guests or rooms : `list`
 
 Displays a list of all rooms or guests (using flags -r/-g).
 

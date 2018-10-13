@@ -17,7 +17,7 @@ import seedu.address.model.room.UniqueRoomList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueGuestList persons;
-
+    private final UniqueRoomList rooms;
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -27,8 +27,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniqueGuestList();
-    }
-    private final UniqueRoomList rooms; {
         rooms = new UniqueRoomList();
     }
 

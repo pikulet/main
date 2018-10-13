@@ -47,7 +47,6 @@ public class ListCommand extends Command {
         } else if (splitString[0].equals(PREFIX_ROOM.toString())) {
             model.updateFilteredPersonList(PREDICATE_SHOW_NO_PERSONS);
             model.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
-            int i = 0;
         }
 
         return new CommandResult(MESSAGE_SUCCESS);

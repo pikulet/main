@@ -43,13 +43,13 @@ public class XmlAdaptedRoom {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedRoom.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedRoom() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given guest details.
+     * Constructs an {@code XmlAdaptedRoom} with the given room details.
      */
     public XmlAdaptedRoom(String roomNumber, String capacity, String expenses,
                           String reservations, List<Guest> guests, List<XmlAdaptedTag> tagged) {
@@ -67,9 +67,9 @@ public class XmlAdaptedRoom {
     }
 
     /**
-     * Converts a given Guest into this class for JAXB use.
+     * Converts a given room into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedRoom
      */
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
@@ -83,9 +83,9 @@ public class XmlAdaptedRoom {
     }
 
     /**
-     * Converts this jaxb-friendly adapted guest object into the model's Guest object.
+     * Converts this jaxb-friendly adapted room object into the model's room object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted guest
+     * @throws IllegalValueException if there were any data constraints violated in the adapted room
      */
     public Room toModelType() throws IllegalValueException {
         final List<Tag> roomTags = new ArrayList<>();
