@@ -55,7 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredGuests = new FilteredList<>(versionedAddressBook.getPersonList());
         // Dummy variable for now. Delete when implemented.
-        this.rooms = rooms;
+        this.rooms = new UniqueRoomList(rooms);
         this.filteredRooms = new FilteredList<>(rooms.asUnmodifiableObservableList());
     }
 

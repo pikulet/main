@@ -53,6 +53,13 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     /**
+     * Deep copies the UniqueRoomList toBeCopied into this UniqueRoomList
+     */
+    public UniqueRoomList(UniqueRoomList toBeCopied) {
+        setRooms(toBeCopied.internalList);
+    }
+
+    /**
      * Returns true if the list contains an equivalent room as the given argument.
      */
     public boolean contains(Room toCheck) {

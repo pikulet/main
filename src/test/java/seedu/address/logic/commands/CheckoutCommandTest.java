@@ -34,6 +34,7 @@ public class CheckoutCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), 
             model.getUniqueRoomList());
+        expectedModel.checkinRoom(roomNumberToCheckout);
         expectedModel.checkoutRoom(roomNumberToCheckout);
         expectedModel.commitAddressBook();
 
@@ -44,9 +45,11 @@ public class CheckoutCommandTest {
     public void execute_invalidCheckoutNoActiveBooking_throwsCommandException() {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_099;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
+        
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_BOOKING_ROOM_CHECKOUT, 
+            roomNumberToCheckout);
 
-        assertCommandFailure(checkoutCommand, model, commandHistory, 
-            CheckoutCommand.MESSAGE_NO_ACTIVE_BOOKING_ROOM_CHECKOUT);
+        assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
     }
 
     @Test
@@ -54,21 +57,19 @@ public class CheckoutCommandTest {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_088;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(),
-            model.getUniqueRoomList());
-        expectedModel.checkinRoom(roomNumberToCheckout);
-        expectedModel.commitAddressBook();
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_UNOCCUPIED_ROOM_CHECKOUT, roomNumberToCheckout);
 
-        assertCommandFailure(checkoutCommand, model, commandHistory,
-            CheckoutCommand.MESSAGE_UNOCCUPIED_ROOM_CHECKOUT);
+        assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
     }
     
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() {
+        // to be completed after AddressBook is refactored
     }
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
+        // to be completed after AddressBook is refactored
     }
 
     @Test
