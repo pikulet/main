@@ -10,15 +10,16 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.expenses.Expense;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
-import seedu.address.model.room.Expenses;
 import seedu.address.model.room.Reservations;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
 import seedu.address.model.room.SuiteRoom;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,11 +35,11 @@ public class XmlAdaptedRoom {
     private String capacity;
 
     @XmlElement
-    private String expenses;
+    private List<XmlAdaptedExpense> expenses;
     @XmlElement
     private String reservations;
     @XmlElement
-    private List<Guest> guests = new ArrayList();
+    private List<XmlAdaptedPerson> guests = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -51,11 +52,10 @@ public class XmlAdaptedRoom {
     /**
      * Constructs an {@code XmlAdaptedRoom} with the given room details.
      */
-    public XmlAdaptedRoom(String roomNumber, String capacity, String expenses,
-                          String reservations, List<Guest> guests, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedRoom(String roomNumber, String capacity, List<XmlAdaptedExpense> expenses,
+                          String reservations, List<XmlAdaptedPerson> guests, List<XmlAdaptedTag> tagged) {
         this.roomNumber = roomNumber;
         this.capacity = capacity;
-        this.expenses = expenses;
         this.reservations = reservations;
 
         if (guests != null) {
@@ -63,6 +63,9 @@ public class XmlAdaptedRoom {
         }
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (expenses != null) {
+            this.expenses = new ArrayList<>(expenses);
         }
     }
 
@@ -74,9 +77,13 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
         capacity = source.getCapacity().toString();
-        expenses = source.getExpenses().toString();
+        expenses = source.getExpensesList().stream()
+                .map(XmlAdaptedExpense::new)
+                .collect(Collectors.toList());
         reservations = source.getReservations().toString();
-        guests = source.getOccupant();
+        guests = source.getOccupant().stream()
+                .map(XmlAdaptedPerson::new)
+                .collect(Collectors.toList());
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -93,6 +100,16 @@ public class XmlAdaptedRoom {
             roomTags.add(tag.toModelType());
         }
 
+        final List<Expense> expenseList = new ArrayList<>();
+        for (XmlAdaptedExpense expense : expenses) {
+            expenseList.add(expense.toModelType());
+        }
+
+        final List<Guest> modelGuests = new ArrayList<>();
+        for (XmlAdaptedPerson guest : guests) {
+            modelGuests.add(guest.toModelType());
+        }
+
         if (roomNumber == null) {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName()));
@@ -105,7 +122,7 @@ public class XmlAdaptedRoom {
         }
         final Capacity modelCapacity = new Capacity(Integer.parseInt(capacity));
 
-        final Expenses modelExpenses = new Expenses();
+        final Expenses modelExpenses = new Expenses(expenseList);
 
         final Reservations modelReservations = new Reservations();
 
@@ -113,13 +130,13 @@ public class XmlAdaptedRoom {
 
         switch(Integer.parseInt(capacity)) {
         case 1:
-            return new SingleRoom(modelRoomNumber, guests, modelExpenses, modelReservations);
+            return new SingleRoom(modelRoomNumber, modelGuests, modelExpenses, modelReservations);
 
         case 2:
-            return new DoubleRoom(modelRoomNumber, guests, modelExpenses, modelReservations);
+            return new DoubleRoom(modelRoomNumber, modelGuests, modelExpenses, modelReservations);
 
         case 5:
-            return new SuiteRoom(modelRoomNumber, guests, modelExpenses, modelReservations);
+            return new SuiteRoom(modelRoomNumber, modelGuests, modelExpenses, modelReservations);
 
         default:
             throw new IllegalValueException(

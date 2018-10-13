@@ -9,13 +9,13 @@ import java.util.stream.Stream;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.room.DoubleRoom;
-import seedu.address.model.room.Expenses;
 import seedu.address.model.room.Reservations;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;

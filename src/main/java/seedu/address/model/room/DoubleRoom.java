@@ -2,6 +2,7 @@ package seedu.address.model.room;
 
 import java.util.List;
 
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Guest;
 
 /**

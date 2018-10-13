@@ -26,19 +26,17 @@ public class Guest {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Expenses expenses;
 
     /**
      * Every field must be present and not null.
      */
-    public Guest(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Expenses expenses) {
+    public Guest(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.expenses = expenses;
     }
 
     public Name getName() {
@@ -64,10 +62,6 @@ public class Guest {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
     }
-
-    public Expenses getExpenses() { return expenses; }
-
-    public List<Expense> getExpensesList() { return expenses.getExpensesList(); }
 
     /**
      * Returns true if both guests of the same name have at least one other identity field that is the same.

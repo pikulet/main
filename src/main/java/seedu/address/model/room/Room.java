@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.model.tag.Tag;
@@ -73,6 +75,8 @@ public abstract class Room {
     public Expenses getExpenses() {
         return expenses;
     }
+
+    public List<Expense> getExpensesList() { return expenses.getExpensesList(); }
 
     public Reservations getReservations() {
         return reservations;
