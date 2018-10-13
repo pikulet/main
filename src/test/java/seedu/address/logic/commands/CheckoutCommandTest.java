@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalRooms.getTypicalUniqueRoomList;
 
 import org.junit.Test;
 
@@ -16,7 +15,7 @@ import seedu.address.model.UserPrefs;
  */
 public class CheckoutCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), getTypicalUniqueRoomList());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
