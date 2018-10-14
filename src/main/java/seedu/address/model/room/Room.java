@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
@@ -26,17 +27,24 @@ public abstract class Room {
 
     // Data fields
     protected final Capacity capacity;
-    protected final Expenses expenses = new Expenses();
-    protected final Bookings bookings = new Bookings();
-    protected final Set<Tag> tags = new HashSet<>();
+    protected final Expenses expenses;
+    protected final Bookings bookings;
+    protected final Set<Tag> tags;
+
+    protected Room(RoomNumber roomNumber, Capacity capacity) {
+        this(roomNumber, capacity, new Expenses(), new Bookings(), new HashSet<>());
+    }
 
     /**
      * All parameters must be non-null.
      */
-    protected Room(RoomNumber roomNumber, Capacity capacity) {
-        requireAllNonNull(roomNumber, capacity, expenses, bookings);
+    protected Room(RoomNumber roomNumber, Capacity capacity, Expenses expenses, Bookings bookings, Set<Tag> tags) {
+        requireAllNonNull(roomNumber, capacity, expenses, bookings, tags);
         this.roomNumber = roomNumber;
         this.capacity = capacity;
+        this.expenses = expenses;
+        this.bookings = bookings;
+        this.tags = tags;
     }
 
     protected Room(Room room) {
@@ -127,8 +135,8 @@ public abstract class Room {
         }
         Booking firstBooking = bookings.getFirstBooking();
         // For tests to pass, we need to deep copy the booking here and replace it with its updated version
-        Booking updatedFirstBooking = new Booking(firstBooking);
-        updatedFirstBooking.checkIn();
+        // firstBooking.checkIn() returns a deep copy of the booking with check-in flag set to true
+        Booking updatedFirstBooking = firstBooking.checkIn();
         updateBooking(firstBooking, updatedFirstBooking);
     }
 

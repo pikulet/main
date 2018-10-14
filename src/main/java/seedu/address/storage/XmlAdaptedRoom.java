@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
-import seedu.address.model.room.Expenses;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;

@@ -16,7 +16,7 @@ public class Booking implements Comparable<Booking> {
     // Identity fields
     private final Guest guest;
     private final BookingPeriod bookingPeriod;
-    private boolean checkIn; // default boolean value is false
+    private final Boolean checkIn;
 
     /**
      * Guest and BookingPeriod must be present and not null.
@@ -25,6 +25,7 @@ public class Booking implements Comparable<Booking> {
         requireAllNonNull(guest, bookingPeriod);
         this.guest = guest;
         this.bookingPeriod = bookingPeriod;
+        this.checkIn = false;
     }
 
     /**
@@ -46,6 +47,17 @@ public class Booking implements Comparable<Booking> {
         this.checkIn = toBeCopied.isCheckedIn();
     }
 
+    /**
+     * Private constructor used to check in a booking
+     * @param toBeCheckedIn Copy of the original booking
+     * @param checkIn Flag for setting room check-in
+     */
+    private Booking(Booking toBeCheckedIn, boolean checkIn) {
+        this.guest = toBeCheckedIn.getGuest();
+        this.bookingPeriod = toBeCheckedIn.getBookingPeriod();
+        this.checkIn = checkIn;
+    }
+
     public Guest getGuest() {
         return guest;
     }
@@ -59,10 +71,11 @@ public class Booking implements Comparable<Booking> {
     }
 
     /**
-     * Set the checkIn flag of this booking and guest to true
+     * Returns an edited booking that has been checked-in
+     * This is needed to maintain immutability of objects in Concierge
      */
-    public void checkIn() {
-        checkIn = true;
+    public Booking checkIn() {
+        return new Booking(this, true);
     }
 
     /**

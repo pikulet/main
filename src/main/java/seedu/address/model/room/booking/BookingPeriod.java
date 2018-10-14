@@ -45,6 +45,10 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
         this.endDate = parseDate(endDate);
     }
 
+    public BookingPeriod(BookingPeriod toBeCopied) {
+        this(toBeCopied.getStartDateAsFormattedString(), toBeCopied.getEndDateAsFormattedString());
+    }
+
     /**
      * Returns true if a given string is a valid name.
      */
@@ -61,6 +65,14 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public String getStartDateAsFormattedString() {
+        return startDate.format(FORMAT);
+    }
+
+    public String getEndDateAsFormattedString() {
+        return endDate.format(FORMAT);
     }
 
     /**

@@ -31,8 +31,8 @@ public class XmlAdaptedBookingPeriod {
      * @param source future changes to this will not affect the created XmlAdaptedBookingPeriod
      */
     public XmlAdaptedBookingPeriod(BookingPeriod source) {
-        startDate = source.getStartDate().format(BookingPeriod.FORMAT);
-        endDate = source.getEndDate().format(BookingPeriod.FORMAT);
+        startDate = source.getStartDateAsFormattedString();
+        endDate = source.getEndDateAsFormattedString();
     }
 
     /**
