@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Menu;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Capacity;
@@ -94,7 +95,7 @@ public class XmlAdaptedRoom {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted room
      */
-    public Room toModelType() throws IllegalValueException {
+    public Room toModelType(Menu menu) throws IllegalValueException {
         final List<Tag> roomTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             roomTags.add(tag.toModelType());
@@ -102,7 +103,7 @@ public class XmlAdaptedRoom {
 
         final List<Expense> expenseList = new ArrayList<>();
         for (XmlAdaptedExpense expense : expenses) {
-            expenseList.add(expense.toModelType());
+            expenseList.add(expense.toModelType(menu));
         }
 
         final List<Guest> modelGuests = new ArrayList<>();

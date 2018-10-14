@@ -2,9 +2,13 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.UniqueGuestList;
 import seedu.address.model.room.Room;
@@ -18,6 +22,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueGuestList persons;
     private final UniqueRoomList rooms;
+    private final Menu menu;
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -28,6 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniqueGuestList();
         rooms = new UniqueRoomList();
+        menu = new Menu();
     }
 
     public AddressBook() {}
@@ -58,6 +64,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setRooms(newData.getRoomList());
+        setMenu(newData.getMenuMap());
     }
 
     //// guest-level operations
@@ -121,6 +128,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.rooms.setRooms(rooms);
     }
 
+    public void setMenu(Map<String, ExpenseType> menu) {
+        this.menu.setMenu(menu);
+    }
 
     //// util methods
 
@@ -139,6 +149,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Room> getRoomList() {
         return rooms.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public Menu getMenu() { return menu; }
+
+    @Override
+    public Map<String, ExpenseType> getMenuMap() {
+        return menu.asUnmodifiableMap();
     }
 
     @Override

@@ -15,7 +15,7 @@ public class Expenses {
      * Constructs an {@code Expenses} object.
      */
     public Expenses() {
-        expenseList = new LinkedList<Expense>();
+        expenseList = new LinkedList<>();
     }
 
     public Expenses(List<Expense> expenseList) {

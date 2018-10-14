@@ -18,10 +18,9 @@ public class Expense {
      *
      * @param type The menu number of the product or service exchanged for with this expense.
      * @param cost The monetary value of the expense.
-     * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
-    public Expense(String type, double cost) throws ItemNotFoundException {
-        this.type = new ExpenseType(type);
+    public Expense(ExpenseType type, double cost) {
+        this.type = type;
         this.cost = cost;
         this.date = LocalDateTime.now();
     }
@@ -33,8 +32,8 @@ public class Expense {
      * @param type The product or service exchanged for with this expense.
      * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
-    public Expense(String type) throws ItemNotFoundException {
-        this.type = new ExpenseType(type);
+    public Expense(ExpenseType type) {
+        this.type = type;
         this.cost = this.type.getItemCost();
         this.date = LocalDateTime.now();
     }

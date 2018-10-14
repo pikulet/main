@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.model.Menu;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.ExpenseType;
 
@@ -56,12 +57,12 @@ public class XmlAdaptedExpense {
      * Converts this object into the proper Expense object.
      * @return The Expense representation of this object.
      */
-    public Expense toModelType() {
+    public Expense toModelType(Menu menu) {
         ExpenseType expenseType;
-        if (!ExpenseType.isValidMenuNumber(item)) {
+        if (!menu.isValidMenuNumber(item)) {
             expenseType = new ExpenseType(item, EXPENSETYPE_UNKNOWN_NAME, EXPENSETYPE_UNKNOWN_COST);
         } else {
-            expenseType = new ExpenseType(item);
+            expenseType = menu.getExpenseType(item);
         }
         LocalDateTime localDateTime = LocalDateTime.parse(datetime);
         return new Expense(expenseType, cost, localDateTime);

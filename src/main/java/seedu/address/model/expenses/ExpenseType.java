@@ -4,59 +4,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import seedu.address.model.Menu;
 import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 
 /**
  * Contains all the different types of expenses available at the hotel.
  * All products and services have a unique menu number.
+ * ExpenseType objects will only be created when the menu is read from the hard disk.
  */
 public class ExpenseType {
-    private static final Map<String, String> numberToName;
-    private static final Map<String, Double> numberToPrice;
-    static {
-        Map<String, String> numberToNameDummy = new HashMap<>();
-        Map<String, Double> numberToPriceDummy = new HashMap<>();
-        numberToNameDummy.put("RS01", "RS: Red wine");
-        numberToNameDummy.put("RS02", "RS: Beef Steak");
-        numberToNameDummy.put("RS03", "RS: Massage");
-        numberToNameDummy.put("SP99", "SP: Pool entrance fee");
-        numberToNameDummy.put("GY99", "GY: Gym entrance fee");
-        numberToNameDummy.put("MB01", "Minibar: Coke");
-        numberToNameDummy.put("MB02", "Minibar: Mineral water");
-        numberToNameDummy.put("MB03", "Minibar: Beer");
-        numberToPriceDummy.put("RS01", 50.00);
-        numberToPriceDummy.put("RS02", 70.00);
-        numberToPriceDummy.put("RS03", 100.00);
-        numberToPriceDummy.put("SP99", 4.00);
-        numberToPriceDummy.put("GY99", 10.00);
-        numberToPriceDummy.put("MB01", 3.00);
-        numberToPriceDummy.put("MB02", 3.00);
-        numberToPriceDummy.put("MB03", 7.00);
-        numberToName = Collections.unmodifiableMap(numberToNameDummy);
-        numberToPrice = Collections.unmodifiableMap(numberToPriceDummy);
-    }
     private final String itemNumber;
     private final String itemName;
     private final double itemCost;
 
     /**
-     * Constructor for an ExpenseType object. Only called via the {@code createExpenseType()} method.
-     *
-     * @param number The menu number of the item.
-     * @throws ItemNotFoundException if the given menu number does not exist.
-     */
-    public ExpenseType(String number) throws ItemNotFoundException {
-        if (!isValidMenuNumber(number)) {
-            throw new ItemNotFoundException();
-        }
-        itemNumber = number;
-        itemName = numberToName.get(number);
-        itemCost = numberToPrice.get(number);
-    }
-
-    /**
-     * Constructor for a custom ExpenseType object.
-     * Can be used as filler for items that were removed from the menu.
+     * Constructor for an {@code ExpenseType} object.
      *
      * @param number The menu number of the item.
      * @param name The name of the item.
@@ -68,66 +30,11 @@ public class ExpenseType {
         itemCost = cost;
     }
 
-    /**
-     * Checks if a given menu number exists in the menu.
-     * String does not have to be case-sensitive.
-     *
-     * @param menuNumber The menu number to be tested.
-     * @return True if the menuNumber exists in the menu, false otherwise.
-     */
-    public static boolean isValidMenuNumber(String menuNumber) {
-        return numberToName.containsKey(menuNumber);
-    }
+    public String getItemNumber() { return itemNumber; }
 
-    /**
-     * Returns the name of the item associated with the given menu number.
-     *
-     * @param menuNumber The menu number of the item.
-     * @return The name of the item.
-     * @throws ItemNotFoundException if the user provides a non-existent menu number.
-     */
-    public static String getItemName(String menuNumber) throws ItemNotFoundException {
-        if (!isValidMenuNumber(menuNumber)) {
-            throw new ItemNotFoundException();
-        }
-        return numberToName.get(menuNumber);
-    }
+    public String getItemName() { return itemName; }
 
-    /**
-     * Returns the name of the item in the ExpenseType object.
-     *
-     * @return The name of the item.
-     */
-    public String getItemName() {
-        return itemName;
-    }
-
-    /**
-     * Returns the price of the item associated with the given menu number.
-     *
-     * @param menuNumber The menu number of the item.
-     * @return The price of the item.
-     * @throws ItemNotFoundException if the user provides a non-existent menu number.
-     */
-    public static double getItemCost(String menuNumber) throws ItemNotFoundException {
-        if (!isValidMenuNumber(menuNumber)) {
-            throw new ItemNotFoundException();
-        }
-        return numberToPrice.get(menuNumber);
-    }
-
-    /**
-     * Returns the price of the item in the ExpenseType object.
-     *
-     * @return The price of the item.
-     */
-    public double getItemCost() {
-        return itemCost;
-    }
-
-    public String getItemNumber() {
-        return itemNumber;
-    }
+    public double getItemCost() { return itemCost; }
 
     @Override
     public String toString() {

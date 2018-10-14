@@ -1,7 +1,9 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,7 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Menu;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 
@@ -28,6 +32,9 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedRoom> rooms;
 
+    @XmlElement
+    private HashMap<String, XmlAdaptedExpenseType> menu;
+
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
@@ -35,6 +42,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         guests = new ArrayList<>();
         rooms = new ArrayList<>();
+        menu = new HashMap<>();
     }
 
     /**
@@ -44,6 +52,9 @@ public class XmlSerializableAddressBook {
         this();
         guests.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         rooms.addAll(src.getRoomList().stream().map(XmlAdaptedRoom::new).collect(Collectors.toList()));
+        for (Map.Entry<String, ExpenseType> mapping : src.getMenuMap().entrySet()) {
+            menu.put(mapping.getKey(), new XmlAdaptedExpenseType(mapping.getValue()));
+        }
     }
 
     /**
@@ -61,8 +72,14 @@ public class XmlSerializableAddressBook {
             addressBook.addPerson(guest);
         }
 
+        HashMap<String, ExpenseType> newMenu = new HashMap<>();
+        for (Map.Entry<String, XmlAdaptedExpenseType> mapping : menu.entrySet()) {
+            newMenu.put(mapping.getKey(), mapping.getValue().toModelType());
+        }
+        addressBook.setMenu(newMenu);
+
         for (XmlAdaptedRoom r : rooms) {
-            Room room = r.toModelType();
+            Room room = r.toModelType(addressBook.getMenu());
             if (addressBook.hasRoom(room)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM);
             }
