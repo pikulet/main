@@ -20,8 +20,8 @@ public class XmlAdaptedExpense {
     @XmlElement (required = true)
     private String datetime;
 
-    private final String EXPENSETYPE_UNKNOWN_NAME = "Unknown";
-    private final double EXPENSETYPE_UNKNOWN_COST = 0;
+    public static final String EXPENSETYPE_UNKNOWN_NAME = "Unknown";
+    public static final double EXPENSETYPE_UNKNOWN_COST = 0;
 
     /**
      * Constructs an XmlAdaptedExpense.
