@@ -15,7 +15,7 @@ public class TypicalRooms {
     private static final int CAPACITY_SINGLE_ROOM = SingleRoom.CAPACITY_SINGLE_ROOM.getValue();
     private static final int CAPACITY_DOUBLE_ROOM = DoubleRoom.CAPACITY_DOUBLE_ROOM.getValue();
     private static final int CAPACITY_SUITE_ROOM = SuiteRoom.CAPACITY_SUITE_ROOM.getValue();
-    
+
     public static final Room SINGLE_001 = new RoomBuilder()
         .withRoomNumber("001").withCapacity(CAPACITY_SINGLE_ROOM)
         .build();
