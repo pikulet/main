@@ -36,7 +36,7 @@ public class XmlAdaptedRoom {
     private String capacity;
 
     @XmlElement
-    private List<XmlAdaptedExpense> expenses;
+    private List<XmlAdaptedExpense> expenses = new ArrayList<>();
     @XmlElement
     private String reservations;
     @XmlElement

@@ -2,18 +2,24 @@ package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.expenses.ExpenseType;
 
 /**
  * JAXB-friendly adapted version of Expense.
  */
 public class XmlAdaptedExpenseType {
+
+    public static final String MESSAGE_NUMBER_MISSING = "ExpenseType's number field is missing!";
+    public static final String MESSAGE_NAME_MISSING = "ExpenseType's name field is missing!";
+    public static final String MESSAGE_COST_MISSING = "ExpenseType's cost field is missing!";
+
     @XmlElement (required = true)
     private String itemNumber;
     @XmlElement (required = true)
     private String itemName;
     @XmlElement (required = true)
-    private double itemCost;
+    private Double itemCost;
 
     /**
      * Constructs an XmlAdaptedExpenseType.
@@ -23,12 +29,11 @@ public class XmlAdaptedExpenseType {
 
     /**
      * Constructs an XmlAdaptedExpenseType with the given fields.
-     *
-     * @param itemNumber The menu number of the item.
+     *  @param itemNumber The menu number of the item.
      * @param itemName The cost incurred in this expense.
      * @param itemCost The date and time of this transaction.
      */
-    public XmlAdaptedExpenseType(String itemNumber, String itemName, double itemCost) {
+    public XmlAdaptedExpenseType(String itemNumber, String itemName, Double itemCost) {
         this.itemNumber = itemNumber;
         this.itemName = itemName;
         this.itemCost = itemCost;
@@ -49,7 +54,16 @@ public class XmlAdaptedExpenseType {
      * Converts this object into the proper ExpenseType object.
      * @return The ExpenseType representation of this object.
      */
-    public ExpenseType toModelType() {
+    public ExpenseType toModelType() throws IllegalValueException {
+        if (itemNumber == null) {
+            throw new IllegalValueException(MESSAGE_NUMBER_MISSING);
+        }
+        if (itemName == null) {
+            throw new IllegalValueException(MESSAGE_NAME_MISSING);
+        }
+        if (itemCost == null) {
+            throw new IllegalValueException(MESSAGE_COST_MISSING);
+        }
         return new ExpenseType(itemNumber, itemName, itemCost);
     }
 }
