@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.UniqueGuestList;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.room.booking.Booking;
 
 /**
  * Wraps all data at the address-book level
@@ -121,6 +123,40 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.rooms.setRooms(rooms);
     }
 
+    /**
+     * Add a booking to a room identified by its room number.
+     */
+    public void addBooking(RoomNumber roomNumber, Booking booking) {
+        rooms.addBooking(roomNumber, booking);
+    }
+
+    /**
+     * Returns true if the room identified by its room number is checked in.
+     */
+    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
+        return rooms.isRoomCheckedIn(roomNumber);
+    }
+
+    /**
+     * Returns true if the room's first booking is active.
+     */
+    public boolean hasActiveBooking(RoomNumber roomNumber) {
+        return rooms.hasActiveBooking(roomNumber);
+    }
+
+    /**
+     * Checks in the room using its room number
+     */
+    public void checkinRoom(RoomNumber roomNumber) {
+        rooms.checkinRoom(roomNumber);
+    }
+
+    /**
+     * Checks out a room using its room number
+     */
+    public void checkoutRoom(RoomNumber roomNumber) {
+        rooms.checkoutRoom(roomNumber);
+    }
 
     //// util methods
 

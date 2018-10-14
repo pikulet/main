@@ -21,7 +21,7 @@
         <Label fx:id="roomNumber" text="\$first" styleClass="cell_big_label" />
          <Label fx:id="capacity" styleClass="cell_small_label" text="\$capacity" />
          <Label fx:id="expenses" styleClass="cell_small_label" text="\$expenses" />
-         <Label fx:id="reservations" styleClass="cell_small_label" text="\$reservations" />
+         <Label fx:id="bookings" styleClass="cell_small_label" text="\$bookings" />
          <FlowPane fx:id="occupant" />
          <FlowPane fx:id="tags" />
     </VBox>

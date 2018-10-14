@@ -10,15 +10,15 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Guest;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Expenses;
-import seedu.address.model.room.Reservations;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
 import seedu.address.model.room.SuiteRoom;
+import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,18 +27,18 @@ import seedu.address.model.tag.Tag;
 public class XmlAdaptedRoom {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Room's %s field is missing!";
+    public static final String MESSAGE_OVERLAPPING_BOOKING = "Room contains overlapping bookings!";
+    public static final String MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY = "No such rooms with the capacity %d exists.";
 
     @XmlElement(required = true)
     private String roomNumber;
     @XmlElement(required = true)
-    private String capacity;
+    private Integer capacity;
 
-    @XmlElement
+    @XmlElement(required = true)
     private String expenses;
-    @XmlElement
-    private String reservations;
-    @XmlElement
-    private List<Guest> guests = new ArrayList();
+    @XmlElement(required = true)
+    private List<XmlAdaptedBooking> bookings = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -49,34 +49,16 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom() {}
 
     /**
-     * Constructs an {@code XmlAdaptedRoom} with the given room details.
-     */
-    public XmlAdaptedRoom(String roomNumber, String capacity, String expenses,
-                          String reservations, List<Guest> guests, List<XmlAdaptedTag> tagged) {
-        this.roomNumber = roomNumber;
-        this.capacity = capacity;
-        this.expenses = expenses;
-        this.reservations = reservations;
-
-        if (guests != null) {
-            this.guests = new ArrayList<>(guests);
-        }
-        if (tagged != null) {
-            this.tagged = new ArrayList<>(tagged);
-        }
-    }
-
-    /**
      * Converts a given room into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedRoom
      */
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
-        capacity = source.getCapacity().toString();
+        capacity = source.getCapacity().getValue();
         expenses = source.getExpenses().toString();
-        reservations = source.getReservations().toString();
-        guests = source.getOccupant();
+        bookings.addAll(source.getBookings().asUnmodifiableSortedList().stream().map(XmlAdaptedBooking::new).collect
+            (Collectors.toList()));
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -97,33 +79,53 @@ public class XmlAdaptedRoom {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName()));
         }
+        if (!RoomNumber.isValidRoomNumber(roomNumber)) {
+            throw new IllegalValueException(RoomNumber.MESSAGE_ROOM_NUMBER_CONSTRAINTS);
+        }
         final RoomNumber modelRoomNumber = new RoomNumber(roomNumber);
 
         if (capacity == null) {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName()));
         }
-        final Capacity modelCapacity = new Capacity(Integer.parseInt(capacity));
+        if (!Capacity.isValidCapacity(capacity)) {
+            throw new IllegalValueException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
+        }
+
+        final Bookings modelBookings = new Bookings();
+        for (XmlAdaptedBooking b : bookings) {
+            Booking booking = b.toModelType();
+            if (modelBookings.canAcceptBooking(booking)) {
+                throw new IllegalValueException(MESSAGE_OVERLAPPING_BOOKING);
+            }
+            modelBookings.add(booking);
+        }
 
         final Expenses modelExpenses = new Expenses();
 
-        final Reservations modelReservations = new Reservations();
-
         final Set<Tag> modelTags = new HashSet<>(roomTags);
 
-        switch(Integer.parseInt(capacity)) {
+        switch(capacity) {
         case 1:
-            return new SingleRoom(modelRoomNumber, guests, modelExpenses, modelReservations);
+            SingleRoom singleRoom = new SingleRoom(modelRoomNumber);
+            singleRoom.resetBookings(modelBookings);
+            singleRoom.resetExpenses(modelExpenses);
+            return singleRoom;
 
         case 2:
-            return new DoubleRoom(modelRoomNumber, guests, modelExpenses, modelReservations);
+            DoubleRoom doubleRoom = new DoubleRoom(modelRoomNumber);
+            doubleRoom.resetBookings(modelBookings);
+            doubleRoom.resetExpenses(modelExpenses);
+            return doubleRoom;
 
         case 5:
-            return new SuiteRoom(modelRoomNumber, guests, modelExpenses, modelReservations);
+            SuiteRoom suiteRoom = new SuiteRoom(modelRoomNumber);
+            suiteRoom.resetBookings(modelBookings);
+            suiteRoom.resetExpenses(modelExpenses);
+            return suiteRoom;
 
         default:
-            throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY, capacity));
         }
 
     }
@@ -142,7 +144,7 @@ public class XmlAdaptedRoom {
         return Objects.equals(roomNumber, otherRoom.roomNumber)
                 && Objects.equals(capacity, otherRoom.capacity)
                 && Objects.equals(expenses, otherRoom.expenses)
-                && Objects.equals(reservations, otherRoom.reservations)
+                && Objects.equals(bookings, otherRoom.bookings)
                 && tagged.equals(otherRoom.tagged);
     }
 }

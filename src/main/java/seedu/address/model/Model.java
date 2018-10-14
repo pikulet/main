@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.room.booking.Booking;
 
 /**
  * The API of the Model component.
@@ -92,26 +92,10 @@ public interface Model {
      */
     void commitAddressBook();
 
-    /** Returns an unmodifiable view of the filtered room list */
-    ObservableList<Room> getFilteredRoomList();
-
-    /**
-     * Updates the filter of the filtered room list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredRoomList(Predicate<Room> predicate);
-
     /**
      * Checks in the room by its room number
      */
     void checkinRoom(RoomNumber roomNumber);
-    
-    /**
-     * Checks out the room by its room number and removes its registered guest.
-     * Returns the RoomList
-     * @return
-     */
-    //RoomList getRoomList();
 
     /**
      * Checks out the room.
@@ -120,17 +104,22 @@ public interface Model {
     void checkoutRoom(RoomNumber roomNumber);
 
     /**
-     * Saves the current room list state for undo/redo
+     * Returns true if the room identified by its room number is checked in.
      */
-    void commitRoomList();
+    boolean isCheckedIn(RoomNumber roomNumber);
+
+    /**
+     * Returns true if the room's first booking is active.
+     */
+    boolean hasActiveBooking(RoomNumber roomNumber);
+
+    /**
+     * Add a booking to a room identified by its room number.
+     */
+    public void addBooking(RoomNumber roomNumber, Booking booking);
 
     /**
      *  Displays room list instead of guest list
      */
     //void displayRoomList(Predicate<Room> predicate);
-
-    /**
-     * Gets the room list
-     */
-    UniqueRoomList getUniqueRoomList();
 }

@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import seedu.address.model.person.Guest;
 
-
 /**
  * Represents a Booking of a room in the hotel.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -17,16 +16,34 @@ public class Booking implements Comparable<Booking> {
     // Identity fields
     private final Guest guest;
     private final BookingPeriod bookingPeriod;
-    private boolean checkIn;
+    private boolean checkIn; // default boolean value is false
 
     /**
-     * Every field must be present and not null.
+     * Guest and BookingPeriod must be present and not null.
      */
     public Booking(Guest guest, BookingPeriod bookingPeriod) {
         requireAllNonNull(guest, bookingPeriod);
         this.guest = guest;
         this.bookingPeriod = bookingPeriod;
-        this.checkIn = false;
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Booking(Guest guest, BookingPeriod bookingPeriod, boolean checkin) {
+        requireAllNonNull(guest, bookingPeriod);
+        this.guest = guest;
+        this.bookingPeriod = bookingPeriod;
+        this.checkIn = checkin;
+    }
+
+    /**
+     * Copies the given Booking to this one
+     */
+    public Booking(Booking toBeCopied) {
+        this.guest = toBeCopied.getGuest();
+        this.bookingPeriod = toBeCopied.getBookingPeriod();
+        this.checkIn = toBeCopied.isCheckedIn();
     }
 
     public Guest getGuest() {
@@ -61,7 +78,7 @@ public class Booking implements Comparable<Booking> {
     public boolean isExpired() {
         return getBookingPeriod().isExpired();
     }
-    
+
     /**
      * Checks if this booking is active.
      */
@@ -84,6 +101,20 @@ public class Booking implements Comparable<Booking> {
     }
 
     /**
+     * Returns true if both bookings have the same guest and booking period.
+     * This defines a weaker notion of equality between two rooms, as it does not need checkIn to be the same.
+     */
+    public boolean isSameBooking(Booking otherBooking) {
+        if (otherBooking == this) {
+            return true;
+        }
+
+        return otherBooking != null
+            && otherBooking.getGuest().equals(getGuest())
+            && otherBooking.getBookingPeriod().equals(getBookingPeriod());
+    }
+
+    /**
      * Returns true if both bookings have the same identity and data fields.
      * This defines a stronger notion of equality between two bookings.
      */
@@ -99,7 +130,8 @@ public class Booking implements Comparable<Booking> {
 
         Booking otherBooking = (Booking) other;
         return otherBooking.getGuest().equals(getGuest())
-                && otherBooking.getBookingPeriod().equals(getBookingPeriod());
+                && otherBooking.getBookingPeriod().equals(getBookingPeriod())
+                && (otherBooking.isCheckedIn() == isCheckedIn());
     }
 
     @Override
@@ -114,7 +146,9 @@ public class Booking implements Comparable<Booking> {
         builder.append("Guest: ")
                 .append(getGuest())
                 .append(" BookingPeriod: ")
-                .append(getBookingPeriod());
+                .append(getBookingPeriod())
+                .append(" Checked-in: ")
+                .append(isCheckedIn());
         return builder.toString();
     }
 

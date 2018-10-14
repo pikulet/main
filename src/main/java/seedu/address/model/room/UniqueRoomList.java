@@ -3,7 +3,6 @@ package seedu.address.model.room;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +11,6 @@ import java.util.stream.Stream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.room.booking.Booking;
-import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.exceptions.DuplicateRoomException;
 import seedu.address.model.room.exceptions.RoomNotFoundException;
 
@@ -32,31 +30,28 @@ public class UniqueRoomList implements Iterable<Room> {
     private final ObservableList<Room> internalList = FXCollections.observableArrayList();
 
     /**
-     * Initializes UniqueRoomList with list of rooms ranging from 001 up to the maximum room number.
+     * Initializes an empty room list
      */
-    public UniqueRoomList() {
-        this.internalList.setAll(Stream.iterate(1, i -> i <= Integer.parseInt(RoomNumber.MAX_ROOM_NUMBER), i -> i + 1)
-            .map(i -> {
-                RoomNumber roomNumber = new RoomNumber(String.format("%03d", i));;
-                Expenses expenses = new Expenses();
-                Bookings bookings = new Bookings();
-                if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a SuiteRoom.
-                    return new SuiteRoom(roomNumber, expenses, bookings);
-                }
-                if (i % 2 == 0) { // All rooms with even room number is a DoubleRoom.
-                    return new DoubleRoom(roomNumber, expenses, bookings);
-                }
-                // ALl rooms with odd room number is a SingleRoom.
-                return new SingleRoom(roomNumber, expenses, bookings);
-            })
-            .collect(Collectors.toList()));
-    }
+    public UniqueRoomList() {}
 
     /**
-     * Deep copies the UniqueRoomList toBeCopied into this UniqueRoomList
+     * Initializes a room list with rooms ranging from 001 up to the maxRoomNumber
+     * @param maxRoomNumber The maximum room number as a string
      */
-    public UniqueRoomList(UniqueRoomList toBeCopied) {
-        setRooms(toBeCopied.internalList);
+    public UniqueRoomList(String maxRoomNumber) {
+        this.internalList.setAll(Stream.iterate(1, i -> i <= Integer.parseInt(maxRoomNumber), i -> i + 1)
+            .map(i -> {
+                RoomNumber roomNumber = new RoomNumber(String.format("%03d", i));;
+                if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a SuiteRoom.
+                    return new SuiteRoom(roomNumber);
+                }
+                if (i % 2 == 0) { // All rooms with even room number is a DoubleRoom.
+                    return new DoubleRoom(roomNumber);
+                }
+                // ALl rooms with odd room number is a SingleRoom.
+                return new SingleRoom(roomNumber);
+            })
+            .collect(Collectors.toList()));
     }
 
     /**
@@ -142,8 +137,11 @@ public class UniqueRoomList implements Iterable<Room> {
         if (!roomsAreUnique(rooms)) {
             throw new DuplicateRoomException();
         }
-
-        internalList.setAll(rooms);
+        // We need to clear and add the cloned rooms in order to create a deep copy. Needed for tests to pass.
+        internalList.clear();
+        for (Room r: rooms) {
+            internalList.add(r.cloneRoom());
+        }
     }
 
     /**
@@ -164,7 +162,7 @@ public class UniqueRoomList implements Iterable<Room> {
     /**
      * Returns true if the room's first booking is active.
      */
-    public boolean isRoomBookingActive(RoomNumber roomNumber) {
+    public boolean hasActiveBooking(RoomNumber roomNumber) {
         return internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).hasActiveBooking();
     }
 

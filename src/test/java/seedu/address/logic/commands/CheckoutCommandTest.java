@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -26,14 +26,12 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_validCheckout_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_072;
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_001_TODAY_TOMORROW;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), 
-            model.getUniqueRoomList());
-        expectedModel.checkinRoom(roomNumberToCheckout);
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.checkoutRoom(roomNumberToCheckout);
         expectedModel.commitAddressBook();
 
@@ -42,10 +40,10 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_invalidCheckoutNoActiveBooking_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_099;
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_099_TOMORROW_NEXT_WEEK;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
-        
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_BOOKING_ROOM_CHECKOUT, 
+
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_BOOKING_ROOM_CHECKOUT,
             roomNumberToCheckout);
 
         assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
@@ -53,14 +51,14 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_invalidCheckoutUnoccupiedRoom_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_088;
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_002_TODAY_NEXT_WEEK;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_UNOCCUPIED_ROOM_CHECKOUT, roomNumberToCheckout);
 
         assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
     }
-    
+
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() {
         // to be completed after AddressBook is refactored
@@ -73,14 +71,14 @@ public class CheckoutCommandTest {
 
     @Test
     public void equals() {
-        CheckoutCommand checkoutFirstCommand = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001);
-        CheckoutCommand checkoutSecondCommand = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_002);
+        CheckoutCommand checkoutFirstCommand = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001_TODAY_TOMORROW);
+        CheckoutCommand checkoutSecondCommand = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_002_TODAY_NEXT_WEEK);
 
         // same object -> returns true
         assertTrue(checkoutFirstCommand.equals(checkoutFirstCommand));
 
         // same values -> returns true
-        CheckoutCommand deleteFirstCommandCopy = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001);
+        CheckoutCommand deleteFirstCommandCopy = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001_TODAY_TOMORROW);
         assertTrue(checkoutFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false

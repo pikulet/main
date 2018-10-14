@@ -1,9 +1,9 @@
 package seedu.address.model.room;
 
-import seedu.address.commons.core.index.Index;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import seedu.address.commons.core.index.Index;
 
 /**
  * Represents a Room's room number in the address book.
@@ -13,8 +13,8 @@ public class RoomNumber {
 
     public static final String MAX_ROOM_NUMBER = "100";
     public static final String MESSAGE_ROOM_NUMBER_CONSTRAINTS =
-            String.format("Room Number should be a string that only contain numbers from 001 to %s, and it should " +
-                    "not be blank", MAX_ROOM_NUMBER);
+            String.format("Room Number should be a string that only contain numbers from 001 to %s, and it should "
+                + "not be blank", MAX_ROOM_NUMBER);
 
     /*
      * The first character of the address must not be a whitespace,
@@ -41,7 +41,7 @@ public class RoomNumber {
     public static boolean isValidRoomNumber(String test) {
         return test.matches(ROOM_NUMBER_VALIDATION_REGEX);
     }
-    
+
     public Index getRoomNumberAsIndex() {
         return Index.fromOneBased(Integer.parseInt(value));
     }

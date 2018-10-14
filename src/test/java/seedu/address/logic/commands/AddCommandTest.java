@@ -22,7 +22,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.room.booking.Booking;
 import seedu.address.testutil.GuestBuilder;
 
 public class AddCommandTest {
@@ -165,31 +165,29 @@ public class AddCommandTest {
         public void commitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
-        
+
         @Override
         public void checkinRoom(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
         }
 
-        /*
-        @Override
-        public void checkoutRoom(RoomNumber roomNumber) {
-        public RoomList getRoomList(){
-            throw new AssertionError("This method should not be called.");
-        }*/
-
         @Override
         public void checkoutRoom(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void commitRoomList() {
+        public boolean isCheckedIn(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public UniqueRoomList getUniqueRoomList() {
+        public boolean hasActiveBooking(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addBooking(RoomNumber roomNumber, Booking booking) {
             throw new AssertionError("This method should not be called.");
         }
     }

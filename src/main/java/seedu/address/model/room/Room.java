@@ -2,15 +2,14 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.person.Guest;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
-import seedu.address.model.person.Guest;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
@@ -27,20 +26,23 @@ public abstract class Room {
 
     // Data fields
     protected final Capacity capacity;
-    protected final Expenses expenses;
-    protected final Bookings bookings;
+    protected final Expenses expenses = new Expenses();
+    protected final Bookings bookings = new Bookings();
     protected final Set<Tag> tags = new HashSet<>();
 
     /**
      * All parameters must be non-null.
-     * Note: {@code expenses}, or {@code bookings} may be empty, but not null.
      */
-    protected Room(RoomNumber roomNumber, Capacity capacity, Expenses expenses, Bookings bookings) {
+    protected Room(RoomNumber roomNumber, Capacity capacity) {
         requireAllNonNull(roomNumber, capacity, expenses, bookings);
         this.roomNumber = roomNumber;
         this.capacity = capacity;
-        this.expenses = expenses;
-        this.bookings = bookings;
+    }
+
+    protected Room(Room room) {
+        this(room.getRoomNumber(), room.getCapacity());
+        // this.expenses.setExpenses(room.getExpenses()); // to be implemented when Expenses is implemented
+        this.bookings.setBookings(room.getBookings());
     }
 
     public RoomNumber getRoomNumber() {
@@ -68,10 +70,33 @@ public abstract class Room {
     }
 
     /**
+     * Clones this room with a deep copied Bookings object
+     */
+    public abstract <T extends Room> T cloneRoom();
+
+    /**
      * Adds a booking to this room's list of bookings
      */
     public void addBooking(Booking booking) {
         bookings.add(booking);
+    }
+
+    /**
+     * Update a booking with the edited booking
+     */
+    public void updateBooking(Booking target, Booking editedBooking) {
+        bookings.setBooking(target, editedBooking);
+    }
+
+    /**
+     * Reset this room's bookings
+     */
+    public void resetBookings(Bookings replacementBookings) {
+        bookings.setBookings(replacementBookings);
+    }
+
+    public void resetExpenses(Expenses expenses) {
+        // to be filled in once Expenses is done by
     }
 
     /**
@@ -101,7 +126,10 @@ public abstract class Room {
             throw new OccupiedRoomCheckinException();
         }
         Booking firstBooking = bookings.getFirstBooking();
-        firstBooking.checkIn();
+        // For tests to pass, we need to deep copy the booking here and replace it with its updated version
+        Booking updatedFirstBooking = new Booking(firstBooking);
+        updatedFirstBooking.checkIn();
+        updateBooking(firstBooking, updatedFirstBooking);
     }
 
     /**

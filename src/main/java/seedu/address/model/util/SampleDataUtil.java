@@ -1,11 +1,8 @@
 package seedu.address.model.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -14,14 +11,10 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.room.UniqueRoomList;
-import seedu.address.model.room.booking.Bookings;
-import seedu.address.model.room.DoubleRoom;
-import seedu.address.model.room.Expenses;
-import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.SingleRoom;
-import seedu.address.model.room.SuiteRoom;
+import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -51,11 +44,31 @@ public class SampleDataUtil {
         };
     }
 
+    /**
+     * Returns a room list initialized with the maximum number of rooms as set in RoomNumber class
+     */
+    public static UniqueRoomList getSampleRooms() {
+        return new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
+    }
+
+    /**
+     * Returns a room list initialized with the maximum number of rooms, and 1 sample booking for testing
+     * DELETE WHEN TESTED IN UNIT TESTS
+     */
+    public static UniqueRoomList getSampleRoomsWithSampleBooking() {
+        UniqueRoomList roomList = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
+        roomList.addBooking(new RoomNumber("001"),
+            new Booking(getSamplePersons()[0],
+            new BookingPeriod("01/01/2019", "02/01/2019")));
+        return roomList;
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Guest sampleGuest : getSamplePersons()) {
             sampleAb.addPerson(sampleGuest);
         }
+        sampleAb.setRooms(getSampleRooms().asUnmodifiableObservableList());
         return sampleAb;
     }
 

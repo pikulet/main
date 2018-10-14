@@ -68,7 +68,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      * @param date A date of the correct format.
      * @return True if given date is of correct format and can be constructed into LocalDate object, false otherwise.
      */
-    private static boolean parsableDate(String date) {
+    public static boolean parsableDate(String date) {
         try {
             parseDate(date);
             return true;
@@ -150,7 +150,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     public int hashCode() {
         return Objects.hash(startDate, endDate);
     }
-    
+
     @Override
     public int compareTo(BookingPeriod other) {
         return startDate.compareTo(other.startDate);

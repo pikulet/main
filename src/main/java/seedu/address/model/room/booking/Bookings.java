@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
-import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
 
 /**
@@ -21,7 +20,7 @@ import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
  * Booking being added or updated does not overlap any existing ones in Bookings.
  * However, the removal of a Booking uses Booking#equals(Object) so
  * as to ensure that the Booking with exactly the same fields will be removed.
- * 
+ *
  * A sorted list of bookings is also maintained to support viewing of bookings in chronological order.
  * Note: SortedList only provides a sorted view of the list. Any changes to the list must be made through the underlying
  * ObservableList.
@@ -34,6 +33,18 @@ public class Bookings implements Iterable<Booking> {
 
     private final ObservableList<Booking> internalList = FXCollections.observableArrayList();
     private final SortedList<Booking> sortedList = new SortedList<>(internalList);
+
+    /**
+     * Initializes an empty bookings object
+     */
+    public Bookings() {}
+
+    /**
+     * Copies the internal list of the given bookings object
+     */
+    public Bookings(Bookings bookings) {
+        this.internalList.setAll(bookings.internalList);
+    }
 
     /**
      * Returns true if the list canAcceptBooking an equivalent Booking as the given argument.
@@ -61,6 +72,9 @@ public class Bookings implements Iterable<Booking> {
      * Gets the first booking in the list
      */
     public Booking getFirstBooking() {
+        if (sortedList.isEmpty()) {
+            throw new NullPointerException("There are no bookings.");
+        }
         return sortedList.get(0);
     }
 
@@ -90,8 +104,6 @@ public class Bookings implements Iterable<Booking> {
     /**
      * Replaces the Booking {@code target} in the list with {@code editedBooking}.
      * {@code target} must exist in the list.
-     * The Booking identity of {@code editedBooking} must not be the same as another existing
-     * Booking in the list.
      */
     public void setBooking(Booking target, Booking editedBooking) {
         requireAllNonNull(target, editedBooking);
@@ -101,7 +113,7 @@ public class Bookings implements Iterable<Booking> {
             throw new BookingNotFoundException();
         }
 
-        if (canAcceptBooking(editedBooking)) {
+        if (!target.isSameBooking(editedBooking) && !canAcceptBooking(editedBooking)) {
             throw new OverlappingBookingException();
         }
 

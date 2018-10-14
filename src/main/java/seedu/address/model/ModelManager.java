@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -16,6 +15,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.booking.Booking;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -109,7 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Returns an unmodifiable view of the list of {@code Room} backed by the internal list of
-     * {@code UniqueRoomList}
+     * {@code versionedAddressBook}
      */
     @Override
     public ObservableList<Room> getFilteredRoomList() {
@@ -168,41 +168,29 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredGuests.equals(other.filteredGuests);
     }
-    
+
     @Override
     public void checkinRoom(RoomNumber roomNumber) {
-        rooms.checkinRoom(roomNumber);
-    }
-
-    //=========== Filtered Room List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Room} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-    @Override
-    public ObservableList<Room> getFilteredRoomList() {
-        return FXCollections.unmodifiableObservableList(filteredRooms);
+        versionedAddressBook.checkinRoom(roomNumber);
     }
 
     @Override
-    public void updateFilteredRoomList(Predicate<Room> predicate) {
-        requireNonNull(predicate);
-        filteredRooms.setPredicate(predicate);
-    }
-
-    @Override
-    public void checkoutRoom(RoomNumber roomNumber) {}
-
     public void checkoutRoom(RoomNumber roomNumber) {
-        rooms.checkoutRoom(roomNumber);
+        versionedAddressBook.checkoutRoom(roomNumber);
     }
-    
+
     @Override
-    public void commitRoomList() {}
-    
+    public boolean isCheckedIn(RoomNumber roomNumber) {
+        return versionedAddressBook.isRoomCheckedIn(roomNumber);
+    }
+
     @Override
-    public UniqueRoomList getUniqueRoomList() {
-        return rooms;
+    public boolean hasActiveBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.hasActiveBooking(roomNumber);
+    }
+
+    @Override
+    public void addBooking(RoomNumber roomNumber, Booking booking) {
+        versionedAddressBook.addBooking(roomNumber, booking);
     }
 }
