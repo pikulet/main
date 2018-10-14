@@ -96,6 +96,12 @@ public class AddressBookTest {
         addressBook.getPersonList().remove(0);
     }
 
+    @Test
+    public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getMenuMap().put("1", new ExpenseType("1", "-", 0));
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose guests list can violate interface constraints.
      */
