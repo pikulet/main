@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +23,12 @@ public class Menu {
     }
 
     public Menu(Menu other) {
+        requireNonNull(other);
         numberToType = new HashMap<>(other.numberToType);
     }
 
     public void setMenu(Map<String, ExpenseType> other) {
+        requireNonNull(other);
         numberToType.putAll(other);
     }
 
@@ -33,10 +37,12 @@ public class Menu {
     }
 
     public boolean isValidMenuNumber(String item) {
+        requireNonNull(item);
         return numberToType.containsKey(item);
     }
 
     public ExpenseType getExpenseType(String item) {
+        requireNonNull(item);
         if (!isValidMenuNumber(item)) {
             throw new ItemNotFoundException();
         }

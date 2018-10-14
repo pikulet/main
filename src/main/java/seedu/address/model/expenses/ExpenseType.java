@@ -1,11 +1,6 @@
 package seedu.address.model.expenses;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import seedu.address.model.Menu;
-import seedu.address.model.expenses.exceptions.ItemNotFoundException;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Contains all the different types of expenses available at the hotel.
@@ -25,6 +20,7 @@ public class ExpenseType {
      * @param cost The cost of the item.
      */
     public ExpenseType(String number, String name, double cost) {
+        requireAllNonNull(number, name);
         itemNumber = number;
         itemName = name;
         itemCost = cost;

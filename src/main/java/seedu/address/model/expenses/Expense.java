@@ -1,5 +1,8 @@
 package seedu.address.model.expenses;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.time.LocalDateTime;
 
 import seedu.address.model.expenses.exceptions.ItemNotFoundException;
@@ -20,6 +23,7 @@ public class Expense {
      * @param cost The monetary value of the expense.
      */
     public Expense(ExpenseType type, double cost) {
+        requireNonNull(type);
         this.type = type;
         this.cost = cost;
         this.date = LocalDateTime.now();
@@ -33,12 +37,14 @@ public class Expense {
      * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
     public Expense(ExpenseType type) {
+        requireNonNull(type);
         this.type = type;
         this.cost = this.type.getItemCost();
         this.date = LocalDateTime.now();
     }
 
     public Expense(ExpenseType type, double cost, LocalDateTime date) {
+        requireAllNonNull(type, date);
         this.type = type;
         this.cost = cost;
         this.date = date;

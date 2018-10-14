@@ -91,6 +91,9 @@ public class SampleDataUtil {
         for (Guest sampleGuest : getSamplePersons()) {
             sampleAb.addPerson(sampleGuest);
         }
+        for (Room sampleRoom : getSampleRooms()) {
+            sampleAb.addRoom(sampleRoom);
+        }
         sampleAb.setMenu(getSampleMenuMap());
         return sampleAb;
     }

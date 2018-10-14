@@ -1,5 +1,7 @@
 package seedu.address.model.expenses;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +21,8 @@ public class Expenses {
     }
 
     public Expenses(List<Expense> expenseList) {
-        this.expenseList = expenseList;
+        requireNonNull(expenseList);
+        this.expenseList = new LinkedList<>(expenseList);
     }
 
     /**
@@ -29,6 +32,7 @@ public class Expenses {
      * @param newExpense The new expense incurred.
      */
     public void addExpense(Expense newExpense) {
+        requireNonNull(newExpense);
         expenseList.add(0, newExpense);
     }
 
