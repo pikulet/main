@@ -12,7 +12,7 @@ import seedu.address.model.room.booking.BookingPeriod;
 public class BookingBuilder {
 
     public static final Guest DEFAULT_GUEST = new GuestBuilder().build();
-    public static final BookingPeriod DEFAULT_BOOKING_PERIOD =
+    public static final BookingPeriod DEFAULT_BOOKING_PERIOD_TODAY_TOMORROW =
         new BookingPeriod(LocalDate.now().format(BookingPeriod.FORMAT),
             LocalDate.now().plusDays(1).format(BookingPeriod.FORMAT));
     public static final Boolean DEFAULT_CHECKIN = false;
@@ -23,7 +23,7 @@ public class BookingBuilder {
 
     public BookingBuilder() {
         guest = DEFAULT_GUEST;
-        bookingPeriod = DEFAULT_BOOKING_PERIOD;
+        bookingPeriod = DEFAULT_BOOKING_PERIOD_TODAY_TOMORROW;
         checkIn = DEFAULT_CHECKIN;
     }
 

@@ -16,9 +16,20 @@ public class TypicalBookings {
     public static final Booking TOMORROW_NEXTWEEK = new BookingBuilder()
         .withBookingPeriod(TypicalBookingPeriods.TOMORROW_NEXTWEEK).build();
 
-    public static Bookings getTypicalBookings() {
+    public static Bookings getTypicalBookingsTodayTomorrow() {
         Bookings bookings = new Bookings();
         bookings.add(TODAY_TOMORROW);
+        return bookings;
+    }
+
+    public static Bookings getTypicalBookingsTodayNextWeek() {
+        Bookings bookings = new Bookings();
+        bookings.add(TODAY_NEXTWEEK);
+        return bookings;
+    }
+
+    public static Bookings getTypicalBookingsTomorrowNextWeek() {
+        Bookings bookings = new Bookings();
         bookings.add(TOMORROW_NEXTWEEK);
         return bookings;
     }

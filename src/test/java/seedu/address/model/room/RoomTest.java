@@ -8,22 +8,63 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HANDICAP;
 import static seedu.address.testutil.TypicalRooms.DOUBLE_002;
 import static seedu.address.testutil.TypicalRooms.SINGLE_001;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
+import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookings;
 
 public class RoomTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    
+    public Room testRoomWithTodayBooking;
+    public Room testRoomWithTomorrowBooking;
+    public Room testRoomWithoutBooking;
+    
+    @Before
+    public void initialize() {
+        testRoomWithTodayBooking = new RoomBuilder()
+            .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+        testRoomWithTomorrowBooking = new RoomBuilder()
+            .withBookings(TypicalBookings.getTypicalBookingsTomorrowNextWeek()).build();
+        testRoomWithoutBooking = new RoomBuilder().build();
+    }
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         Room room = new RoomBuilder().build();
         thrown.expect(UnsupportedOperationException.class);
         room.getTags().remove(0);
+    }
+
+    @Test
+    public void checkIn_success() {
+        testRoomWithTodayBooking.checkIn();
+        assertTrue(testRoomWithTodayBooking.isCheckedIn());
+    }
+
+    @Test
+    public void checkIn_noBooking_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        testRoomWithoutBooking.checkIn();
+    }
+
+    @Test
+    public void checkIn_noActiveBooking_throwsNoActiveBookingException() {
+        thrown.expect(NoActiveBookingException.class);
+        testRoomWithTomorrowBooking.checkIn();
+    }
+
+    @Test
+    public void checkIn_occupiedRoomCheckin_throwsOccupiedRoomCheckinException() {
+        testRoomWithTodayBooking.checkIn();
+        thrown.expect(OccupiedRoomCheckinException.class);
+        testRoomWithTodayBooking.checkIn();
     }
 
     @Test
@@ -49,7 +90,7 @@ public class RoomTest {
         */
 
         // same room number, different bookings -> returns true
-        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookings()).build();
+        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
         assertTrue(SINGLE_001.isSameRoom(editedSingle001));
 
         // same room number, different tags -> return true
@@ -90,7 +131,7 @@ public class RoomTest {
         */
 
         // different bookings -> returns false
-        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookings()).build();
+        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
         assertFalse(SINGLE_001.equals(editedSingle001));
 
         // different tags -> returns false

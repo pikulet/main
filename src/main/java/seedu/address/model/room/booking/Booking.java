@@ -66,7 +66,7 @@ public class Booking implements Comparable<Booking> {
         return bookingPeriod;
     }
 
-    public boolean isCheckedIn() {
+    public Boolean isCheckedIn() {
         return checkIn;
     }
 
@@ -144,7 +144,7 @@ public class Booking implements Comparable<Booking> {
         Booking otherBooking = (Booking) other;
         return otherBooking.getGuest().equals(getGuest())
                 && otherBooking.getBookingPeriod().equals(getBookingPeriod())
-                && (otherBooking.isCheckedIn() == isCheckedIn());
+                && (otherBooking.isCheckedIn().equals(isCheckedIn()));
     }
 
     @Override
