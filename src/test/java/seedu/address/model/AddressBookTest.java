@@ -11,7 +11,9 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +21,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
@@ -113,6 +116,12 @@ public class AddressBookTest {
         public ObservableList<Room> getRoomList() {
             return rooms;
         }
+
+        @Override
+        public Menu getMenu() { return new Menu(); }
+
+        @Override
+        public Map<String, ExpenseType> getMenuMap() { return new HashMap<>(); }
     }
 
 }
