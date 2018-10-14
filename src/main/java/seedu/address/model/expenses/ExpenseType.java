@@ -12,6 +12,9 @@ public class ExpenseType {
     private final String itemName;
     private final double itemCost;
 
+    public static final String MESSAGE_NUMBER_EMPTY = "The given number is empty.";
+    public static final String MESSAGE_NAME_EMPTY = "The given name is empty.";
+
     /**
      * Constructor for an {@code ExpenseType} object.
      *
@@ -21,6 +24,12 @@ public class ExpenseType {
      */
     public ExpenseType(String number, String name, double cost) {
         requireAllNonNull(number, name);
+        if (number.equals("")) {
+            throw new IllegalArgumentException(MESSAGE_NUMBER_EMPTY);
+        }
+        if (name.equals("")) {
+            throw new IllegalArgumentException(MESSAGE_NAME_EMPTY);
+        }
         itemNumber = number;
         itemName = name;
         itemCost = cost;
