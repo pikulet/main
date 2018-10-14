@@ -49,8 +49,8 @@ public class XmlAdaptedExpenseTest {
     @Test
     public void toModelType_emptyItem_throwsIllegalArgumentException() {
         XmlAdaptedExpense testExpense = new XmlAdaptedExpense("", 1, VALID_DATETIME);
-        Assert.assertThrows(IllegalArgumentException.class, ExpenseType.MESSAGE_NUMBER_EMPTY,
-                () -> testExpense.toModelType(VALID_MENU));
+        Assert.assertThrows(IllegalArgumentException.class,
+                ExpenseType.MESSAGE_NUMBER_EMPTY, () -> testExpense.toModelType(VALID_MENU));
     }
 
     @Test

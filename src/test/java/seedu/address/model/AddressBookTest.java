@@ -124,10 +124,14 @@ public class AddressBookTest {
         }
 
         @Override
-        public Menu getMenu() { return new Menu(); }
+        public Menu getMenu() {
+            return new Menu();
+        }
 
         @Override
-        public Map<String, ExpenseType> getMenuMap() { return new HashMap<>(); }
+        public Map<String, ExpenseType> getMenuMap() {
+            return new HashMap<>();
+        }
     }
 
 }

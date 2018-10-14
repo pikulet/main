@@ -10,7 +10,7 @@ import seedu.address.testutil.Assert;
 public class ExpenseTest {
 
     private final Expense validExpense = new Expense(
-            new ExpenseType("1", "-", 1),0,
+            new ExpenseType("1", "-", 1), 0,
             LocalDateTime.parse("01/01/2018 12:34", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
 
     @Test
@@ -18,8 +18,8 @@ public class ExpenseTest {
         Assert.assertThrows(NullPointerException.class, () -> new Expense(null));
         Assert.assertThrows(NullPointerException.class, () -> new Expense(null, 0));
         Assert.assertThrows(NullPointerException.class, () -> new Expense(null, 0, LocalDateTime.now()));
-        Assert.assertThrows(NullPointerException.class,
-                () -> new Expense(new ExpenseType("1", "-", 0), 0, null));
+        Assert.assertThrows(NullPointerException.class, () ->
+                new Expense(new ExpenseType("1", "-", 0), 0, null));
     }
 
     @Test

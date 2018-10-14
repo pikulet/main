@@ -16,10 +16,10 @@ public class ExpenseTypeTest {
 
     @Test
     public void constructor_emptyString_throwsIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, ExpenseType.MESSAGE_NUMBER_EMPTY,
-                () -> new ExpenseType("", "-", 0));
-        Assert.assertThrows(IllegalArgumentException.class, ExpenseType.MESSAGE_NAME_EMPTY,
-                () -> new ExpenseType("1", "", 0));
+        Assert.assertThrows(IllegalArgumentException.class,
+                ExpenseType.MESSAGE_NUMBER_EMPTY, () -> new ExpenseType("", "-", 0));
+        Assert.assertThrows(IllegalArgumentException.class,
+                ExpenseType.MESSAGE_NAME_EMPTY, () -> new ExpenseType("1", "", 0));
     }
 
     @Test

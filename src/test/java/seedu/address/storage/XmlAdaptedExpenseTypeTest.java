@@ -24,6 +24,7 @@ public class XmlAdaptedExpenseTypeTest {
         }
     }
 
+    @Test
     public void toModelType_emptyNumber_throwsIllegalArgumentException() {
         XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("", "-", 0.0);
         Assert.assertThrows(IllegalArgumentException.class, ExpenseType.MESSAGE_NUMBER_EMPTY, testType::toModelType);
