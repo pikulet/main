@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Menu;
 import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
@@ -20,7 +21,6 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
 import seedu.address.model.room.SuiteRoom;
-import seedu.address.model.expenses.Expenses;
 import seedu.address.model.tag.Tag;
 
 /**

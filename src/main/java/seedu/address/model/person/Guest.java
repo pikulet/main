@@ -4,12 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.expenses.Expense;
-import seedu.address.model.expenses.Expenses;
 import seedu.address.model.tag.Tag;
 
 /**

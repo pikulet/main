@@ -76,7 +76,9 @@ public abstract class Room {
         return expenses;
     }
 
-    public List<Expense> getExpensesList() { return expenses.getExpensesList(); }
+    public List<Expense> getExpensesList() {
+        return expenses.getExpensesList();
+    }
 
     public Reservations getReservations() {
         return reservations;

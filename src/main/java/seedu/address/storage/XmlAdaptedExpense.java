@@ -13,15 +13,15 @@ import seedu.address.model.expenses.ExpenseType;
  */
 public class XmlAdaptedExpense {
 
+    public static final String EXPENSETYPE_UNKNOWN_NAME = "Unknown";
+    public static final double EXPENSETYPE_UNKNOWN_COST = 0;
+
     @XmlElement (required = true)
     private String item;
     @XmlElement (required = true)
     private double cost;
     @XmlElement (required = true)
     private String datetime;
-
-    public static final String EXPENSETYPE_UNKNOWN_NAME = "Unknown";
-    public static final double EXPENSETYPE_UNKNOWN_COST = 0;
 
     /**
      * Constructs an XmlAdaptedExpense.

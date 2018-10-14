@@ -2,8 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -152,7 +150,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public Menu getMenu() { return menu; }
+    public Menu getMenu() {
+        return menu;
+    }
 
     @Override
     public Map<String, ExpenseType> getMenuMap() {

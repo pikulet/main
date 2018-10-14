@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.Menu;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.expenses.Expenses;

@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Menu;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Guest;

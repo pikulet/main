@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 
@@ -36,6 +35,11 @@ public class Menu {
         return Collections.unmodifiableMap(numberToType);
     }
 
+    /**
+     * Checks that the given item number exists in the menu.
+     * @param item The item number to check.
+     * @return True if the item number is in the menu, false otherwise.
+     */
     public boolean isValidMenuNumber(String item) {
         requireNonNull(item);
         return numberToType.containsKey(item);
