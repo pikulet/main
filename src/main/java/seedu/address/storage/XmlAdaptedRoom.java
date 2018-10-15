@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Menu;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Expenses;
-import seedu.address.model.person.Guest;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Room;
@@ -38,8 +37,8 @@ public class XmlAdaptedRoom {
     @XmlElement(required = true)
     private Integer capacity;
 
-    private List<XmlAdaptedBooking> bookings = new ArrayList<>();
     @XmlElement(required = true)
+    private List<XmlAdaptedBooking> bookings = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedExpense> expenses = new ArrayList<>();
     @XmlElement
@@ -52,26 +51,6 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom() {}
 
     /**
-     * Constructs an {@code XmlAdaptedRoom} with the given room details.
-     */
-    public XmlAdaptedRoom(String roomNumber, String capacity, List<XmlAdaptedExpense> expenses,
-                          String reservations, List<XmlAdaptedPerson> guests, List<XmlAdaptedTag> tagged) {
-        this.roomNumber = roomNumber;
-        this.capacity = capacity;
-        this.reservations = reservations;
-
-        if (guests != null) {
-            this.guests = new ArrayList<>(guests);
-        }
-        if (tagged != null) {
-            this.tagged = new ArrayList<>(tagged);
-        }
-        if (expenses != null) {
-            this.expenses = new ArrayList<>(expenses);
-        }
-    }
-
-    /**
      * Converts a given room into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedRoom
@@ -79,9 +58,10 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
         capacity = source.getCapacity().getValue();
-        expenses = source.getExpenses().toString();
-        bookings.addAll(source.getBookings().asUnmodifiableSortedList().stream().map(XmlAdaptedBooking::new).collect
-            (Collectors.toList()));
+        expenses.addAll(source.getExpenses().getExpensesList().stream().map(XmlAdaptedExpense::new)
+            .collect(Collectors.toList()));
+        bookings.addAll(source.getBookings().asUnmodifiableSortedList().stream().map(XmlAdaptedBooking::new)
+            .collect(Collectors.toList()));
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -101,11 +81,6 @@ public class XmlAdaptedRoom {
         final List<Expense> expenseList = new ArrayList<>();
         for (XmlAdaptedExpense expense : expenses) {
             expenseList.add(expense.toModelType(menu));
-        }
-
-        final List<Guest> modelGuests = new ArrayList<>();
-        for (XmlAdaptedPerson guest : guests) {
-            modelGuests.add(guest.toModelType());
         }
 
         if (roomNumber == null) {
