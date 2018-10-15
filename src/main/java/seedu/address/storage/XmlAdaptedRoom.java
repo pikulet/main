@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Menu;
+import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
@@ -36,9 +38,9 @@ public class XmlAdaptedRoom {
     private Integer capacity;
 
     @XmlElement(required = true)
-    private String expenses;
-    @XmlElement(required = true)
     private List<XmlAdaptedBooking> bookings = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedExpense> expenses = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -56,9 +58,10 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
         capacity = source.getCapacity().getValue();
-        expenses = source.getExpenses().toString();
-        bookings.addAll(source.getBookings().asUnmodifiableSortedList().stream().map(XmlAdaptedBooking::new).collect
-            (Collectors.toList()));
+        expenses.addAll(source.getExpenses().getExpensesList().stream().map(XmlAdaptedExpense::new)
+            .collect(Collectors.toList()));
+        bookings.addAll(source.getBookings().asUnmodifiableSortedList().stream().map(XmlAdaptedBooking::new)
+            .collect(Collectors.toList()));
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -69,10 +72,15 @@ public class XmlAdaptedRoom {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted room
      */
-    public Room toModelType() throws IllegalValueException {
+    public Room toModelType(Menu menu) throws IllegalValueException {
         final List<Tag> roomTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             roomTags.add(tag.toModelType());
+        }
+
+        final List<Expense> expenseList = new ArrayList<>();
+        for (XmlAdaptedExpense expense : expenses) {
+            expenseList.add(expense.toModelType(menu));
         }
 
         if (roomNumber == null) {
@@ -102,7 +110,7 @@ public class XmlAdaptedRoom {
             modelBookings.add(booking);
         }
 
-        final Expenses modelExpenses = new Expenses();
+        final Expenses modelExpenses = new Expenses(expenseList);
 
         final Set<Tag> modelTags = new HashSet<>(roomTags);
 

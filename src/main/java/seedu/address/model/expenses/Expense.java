@@ -1,6 +1,9 @@
 package seedu.address.model.expenses;
 
-import java.util.Date;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.time.LocalDateTime;
 
 import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 
@@ -10,39 +13,41 @@ import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 public class Expense {
 
     private final double cost;
-    private final String item;
-    private final Date date;
+    private final ExpenseType type;
+    private final LocalDateTime date;
 
     /**
      * Constructs an {@code Expense} object.
      *
-     * @param item The product or service exchanged for with this expense.
+     * @param type The menu number of the product or service exchanged for with this expense.
      * @param cost The monetary value of the expense.
-     * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
-    public Expense(String item, double cost) throws ItemNotFoundException {
-        if (!ExpenseType.isValidMenuNumber(item)) {
-            throw new ItemNotFoundException();
-        }
+    public Expense(ExpenseType type, double cost) {
+        requireNonNull(type);
+        this.type = type;
         this.cost = cost;
-        this.item = item;
-        this.date = new Date();
+        this.date = LocalDateTime.now();
     }
 
     /**
      * Constructs an {@code Expense} object.
      * Used if the user is charging the base price and hence does not need to manually enter a price.
      *
-     * @param item The product or service exchanged for with this expense.
+     * @param type The product or service exchanged for with this expense.
      * @throws ItemNotFoundException if the item's menu number does not exist in the menu.
      */
-    public Expense(String item) {
-        if (!ExpenseType.isValidMenuNumber(item)) {
-            throw new ItemNotFoundException();
-        }
-        this.cost = ExpenseType.getItemPrice(item);
-        this.item = item;
-        this.date = new Date();
+    public Expense(ExpenseType type) {
+        requireNonNull(type);
+        this.type = type;
+        this.cost = this.type.getItemCost();
+        this.date = LocalDateTime.now();
+    }
+
+    public Expense(ExpenseType type, double cost, LocalDateTime date) {
+        requireAllNonNull(type, date);
+        this.type = type;
+        this.cost = cost;
+        this.date = date;
     }
 
     /**
@@ -55,21 +60,21 @@ public class Expense {
     }
 
     /**
-     * Provides the menu number of the item purchased in this expense.
+     * Provides the expense type of the item purchased in this expense.
      *
-     * @return The product or service exchanged for with this expense.
+     * @return The ExpenseType object of the product or service exchanged for with this expense.
      */
-    public String getItemNumber() {
-        return item;
+    public ExpenseType getExpenseType() {
+        return type;
     }
 
     /**
      * Provides the name of the item purchased in this expense.
      *
-     * @return The product or service exchanged for with this expense.
+     * @return The name of the product or service exchanged for with this expense.
      */
     public String getItemName() {
-        return ExpenseType.getItemName(item);
+        return type.getItemName();
     }
 
     /**
@@ -77,7 +82,7 @@ public class Expense {
      *
      * @return The date and time of this transaction.
      */
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -92,7 +97,7 @@ public class Expense {
 
     @Override
     public String toString() {
-        return cost + " spent on " + item + " on " + getDateString();
+        return cost + " spent on " + type.getItemName() + " on " + getDateString();
     }
 
     @Override
@@ -100,7 +105,7 @@ public class Expense {
         return other == this // short circuit if same object
                 || (other instanceof Expenses // instanceof handles nulls
                 && cost == ((Expense) other).cost
-                && item.equals(((Expense) other).item)
+                && type.equals(((Expense) other).type)
                 && date.equals(((Expense) other).date)); // state check
     }
 

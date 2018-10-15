@@ -1,79 +1,69 @@
 package seedu.address.model.expenses;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import seedu.address.model.expenses.exceptions.ItemNotFoundException;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Contains all the different types of expenses available at the hotel.
  * All products and services have a unique menu number.
+ * ExpenseType objects will only be created when the menu is read from the hard disk.
  */
 public class ExpenseType {
 
-    public static final Map<String, String> NUMBER_TO_NAME;
-    public static final Map<String, Double> NUMBER_TO_PRICE;
+    public static final String MESSAGE_NUMBER_EMPTY = "The given number is empty.";
+    public static final String MESSAGE_NAME_EMPTY = "The given name is empty.";
 
-    static {
-        Map<String, String> numberToNameDummy = new HashMap<>();
-        Map<String, Double> numberToPriceDummy = new HashMap<>();
-        numberToNameDummy.put("RS01", "RS: Red wine");
-        numberToNameDummy.put("RS02", "RS: Beef Steak");
-        numberToNameDummy.put("RS03", "RS: Massage");
-        numberToNameDummy.put("SP99", "SP: Pool entrance fee");
-        numberToNameDummy.put("GY99", "GY: Gym entrance fee");
-        numberToNameDummy.put("MB01", "Minibar: Coke");
-        numberToNameDummy.put("MB02", "Minibar: Mineral water");
-        numberToNameDummy.put("MB03", "Minibar: Beer");
-        numberToPriceDummy.put("RS01", 50.00);
-        numberToPriceDummy.put("RS02", 70.00);
-        numberToPriceDummy.put("RS03", 100.00);
-        numberToPriceDummy.put("SP99", 4.00);
-        numberToPriceDummy.put("GY99", 10.00);
-        numberToPriceDummy.put("MB01", 3.00);
-        numberToPriceDummy.put("MB02", 3.00);
-        numberToPriceDummy.put("MB03", 7.00);
-        NUMBER_TO_NAME = Collections.unmodifiableMap(numberToNameDummy);
-        NUMBER_TO_PRICE = Collections.unmodifiableMap(numberToPriceDummy);
-    }
+    private final String itemNumber;
+    private final String itemName;
+    private final double itemCost;
 
     /**
-     * Checks if a given menu number exists in the menu.
-     * String does not have to be case-sensitive.
+     * Constructor for an {@code ExpenseType} object.
      *
-     * @param menuNumber The menu number to be tested.
-     * @return True if the menuNumber exists in the menu, false otherwise.
+     * @param number The menu number of the item.
+     * @param name The name of the item.
+     * @param cost The cost of the item.
      */
-    public static boolean isValidMenuNumber(String menuNumber) {
-        return NUMBER_TO_NAME.containsKey(menuNumber);
-    }
-
-    /**
-     * Returns the name of the item associated with the given menu number.
-     *
-     * @param menuNumber The menu number of the item.
-     * @return The name of the item.
-     * @throws ItemNotFoundException if the user provides a non-existent menu number.
-     */
-    public static String getItemName(String menuNumber) throws ItemNotFoundException {
-        if (!isValidMenuNumber(menuNumber)) {
-            throw new ItemNotFoundException();
+    public ExpenseType(String number, String name, double cost) {
+        requireAllNonNull(number, name);
+        if (number.equals("")) {
+            throw new IllegalArgumentException(MESSAGE_NUMBER_EMPTY);
         }
-        return NUMBER_TO_NAME.get(menuNumber);
+        if (name.equals("")) {
+            throw new IllegalArgumentException(MESSAGE_NAME_EMPTY);
+        }
+        itemNumber = number;
+        itemName = name;
+        itemCost = cost;
     }
 
-    /**
-     * Returns the price of the item associated with the given menu number.
-     *
-     * @param menuNumber The menu number of the item.
-     * @return The price of the item.
-     * @throws ItemNotFoundException if the user provides a non-existent menu number.
-     */
-    public static double getItemPrice(String menuNumber) throws ItemNotFoundException {
-        if (!isValidMenuNumber(menuNumber)) {
-            throw new ItemNotFoundException();
-        }
-        return NUMBER_TO_PRICE.get(menuNumber);
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public double getItemCost() {
+        return itemCost;
+    }
+
+    @Override
+    public String toString() {
+        return itemNumber + " " + itemName + " $" + itemCost;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExpenseType // instanceof handles nulls
+                && itemNumber.equals(((ExpenseType) other).itemNumber)
+                && itemName.equals(((ExpenseType) other).itemName)
+                && itemCost == ((ExpenseType) other).itemCost); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return itemNumber.hashCode();
     }
 }
