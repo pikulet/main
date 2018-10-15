@@ -106,12 +106,17 @@ public interface Model {
     /**
      * Returns true if the room identified by its room number is checked in.
      */
-    boolean isCheckedIn(RoomNumber roomNumber);
+    boolean isRoomCheckedIn(RoomNumber roomNumber);
+
+    /**
+     * Returns true if the room's bookings is non-empty
+     */
+    boolean roomHasBooking(RoomNumber roomNumber);
 
     /**
      * Returns true if the room's first booking is active.
      */
-    boolean hasActiveBooking(RoomNumber roomNumber);
+    boolean roomHasActiveBooking(RoomNumber roomNumber);
 
     /**
      * Add a booking to a room identified by its room number.

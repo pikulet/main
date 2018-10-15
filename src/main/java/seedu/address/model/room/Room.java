@@ -97,6 +97,13 @@ public abstract class Room {
     }
 
     /**
+     * Removes all expired bookings from the list.
+     */
+    public void clearExpiredBookings() {
+        bookings.clearExpiredBookings();
+    }
+
+    /**
      * Reset this room's bookings
      */
     public void resetBookings(Bookings replacementBookings) {
@@ -113,6 +120,13 @@ public abstract class Room {
     public boolean isCheckedIn() {
         Booking firstBooking = bookings.getFirstBooking();
         return firstBooking.isCheckedIn();
+    }
+
+    /**
+     * Returns true if this room's bookings is non-empty
+     */
+    public boolean hasBooking() {
+        return !bookings.isEmpty();
     }
 
     /**

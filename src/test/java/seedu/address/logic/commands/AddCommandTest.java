@@ -177,12 +177,17 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean isCheckedIn(RoomNumber roomNumber) {
+        public boolean isRoomCheckedIn(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasActiveBooking(RoomNumber roomNumber) {
+        public boolean roomHasBooking(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean roomHasActiveBooking(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
         }
 

@@ -8,32 +8,29 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HANDICAP;
 import static seedu.address.testutil.TypicalRooms.DOUBLE_002;
 import static seedu.address.testutil.TypicalRooms.SINGLE_001;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
+import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookings;
 
 public class RoomTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
-    public Room testRoomWithTodayBooking;
-    public Room testRoomWithTomorrowBooking;
-    public Room testRoomWithoutBooking;
-    
-    @Before
-    public void initialize() {
-        testRoomWithTodayBooking = new RoomBuilder()
-            .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
-        testRoomWithTomorrowBooking = new RoomBuilder()
-            .withBookings(TypicalBookings.getTypicalBookingsTomorrowNextWeek()).build();
-        testRoomWithoutBooking = new RoomBuilder().build();
-    }
+
+    private final Room testRoomWithLastWeekYesterdayBooking = new RoomBuilder()
+        .withBookings(TypicalBookings.getTypicalBookingsLastWeekYesterday()).build();
+    private final Room testRoomWithYesterdayTodayBooking = new RoomBuilder()
+        .withBookings(TypicalBookings.getTypicalBookingsYesterdayToday()).build();
+    private final Room testRoomWithTodayTomorrowBooking = new RoomBuilder()
+        .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+    private final Room testRoomWithTomorrowNextWeekBooking = new RoomBuilder()
+        .withBookings(TypicalBookings.getTypicalBookingsTomorrowNextWeek()).build();
+    private final Room testRoomWithoutBooking = new RoomBuilder().build();
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -43,9 +40,34 @@ public class RoomTest {
     }
 
     @Test
-    public void checkIn_success() {
-        testRoomWithTodayBooking.checkIn();
-        assertTrue(testRoomWithTodayBooking.isCheckedIn());
+    public void checkIn_expiredBooking_throwsNoActiveBookingException() {
+        thrown.expect(NoActiveBookingException.class);
+        testRoomWithLastWeekYesterdayBooking.checkIn();
+    }
+
+    @Test
+    public void checkIn_yesterdayToday_success() {
+        testRoomWithYesterdayTodayBooking.checkIn();
+        assertTrue(testRoomWithYesterdayTodayBooking.isCheckedIn());
+    }
+
+    @Test
+    public void checkIn_todayTomorrow_success() {
+        testRoomWithTodayTomorrowBooking.checkIn();
+        assertTrue(testRoomWithTodayTomorrowBooking.isCheckedIn());
+    }
+
+    @Test
+    public void checkIn_upcomingBooking_throwsNoActiveBookingException() {
+        thrown.expect(NoActiveBookingException.class);
+        testRoomWithTomorrowNextWeekBooking.checkIn();
+    }
+
+    @Test
+    public void checkIn_occupiedRoomCheckin_throwsOccupiedRoomCheckinException() {
+        testRoomWithTodayTomorrowBooking.checkIn();
+        thrown.expect(OccupiedRoomCheckinException.class);
+        testRoomWithTodayTomorrowBooking.checkIn();
     }
 
     @Test
@@ -55,16 +77,41 @@ public class RoomTest {
     }
 
     @Test
-    public void checkIn_noActiveBooking_throwsNoActiveBookingException() {
+    public void checkOut_expiredBooking_throwsNoActiveBookingException() {
         thrown.expect(NoActiveBookingException.class);
-        testRoomWithTomorrowBooking.checkIn();
+        testRoomWithLastWeekYesterdayBooking.checkout();
     }
 
     @Test
-    public void checkIn_occupiedRoomCheckin_throwsOccupiedRoomCheckinException() {
-        testRoomWithTodayBooking.checkIn();
-        thrown.expect(OccupiedRoomCheckinException.class);
-        testRoomWithTodayBooking.checkIn();
+    public void checkOut_yesterdayTodaysuccess() {
+        testRoomWithYesterdayTodayBooking.checkIn();
+        testRoomWithYesterdayTodayBooking.checkout();
+        assertTrue(testRoomWithYesterdayTodayBooking.equals(testRoomWithoutBooking));
+    }
+
+    @Test
+    public void checkOut_todayTomorrowsuccess() {
+        testRoomWithTodayTomorrowBooking.checkIn();
+        testRoomWithTodayTomorrowBooking.checkout();
+        assertTrue(testRoomWithTodayTomorrowBooking.equals(testRoomWithoutBooking));
+    }
+
+    @Test
+    public void checkOut_upcomingBooking_throwsNoActiveBookingException() {
+        thrown.expect(NoActiveBookingException.class);
+        testRoomWithTomorrowNextWeekBooking.checkout();
+    }
+
+    @Test
+    public void checkOut_unoccupiedRoomCheckOut_throwsUnoccupiedRoomCheckoutException() {
+        thrown.expect(UnoccupiedRoomCheckoutException.class);
+        testRoomWithTodayTomorrowBooking.checkout();
+    }
+
+    @Test
+    public void checkOut_noBooking_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        testRoomWithoutBooking.checkout();
     }
 
     @Test
@@ -90,7 +137,8 @@ public class RoomTest {
         */
 
         // same room number, different bookings -> returns true
-        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow())
+            .build();
         assertTrue(SINGLE_001.isSameRoom(editedSingle001));
 
         // same room number, different tags -> return true
@@ -131,7 +179,8 @@ public class RoomTest {
         */
 
         // different bookings -> returns false
-        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow())
+            .build();
         assertFalse(SINGLE_001.equals(editedSingle001));
 
         // different tags -> returns false

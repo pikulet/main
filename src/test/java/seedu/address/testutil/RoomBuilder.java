@@ -48,7 +48,7 @@ public class RoomBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Room} that we are building.
+     * Sets the {@code RoomNumber} of the {@code Room} that we are building.
      */
     public RoomBuilder withRoomNumber(String roomNumber) {
         this.roomNumber = new RoomNumber(roomNumber);
@@ -64,7 +64,7 @@ public class RoomBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Room} that we are building.
+     * Sets the {@code Capacity} of the {@code Room} that we are building.
      */
     public RoomBuilder withCapacity(int capacity) {
         this.capacity = new Capacity(capacity);
@@ -72,7 +72,7 @@ public class RoomBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Room} that we are building.
+     * Sets the {@code Expenses} of the {@code Room} that we are building.
      */
     public RoomBuilder withExpenses(Expenses expenses) {
         this.expenses = new Expenses(expenses);
@@ -80,7 +80,7 @@ public class RoomBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Room} that we are building.
+     * Sets the {@code Bookings} of the {@code Room} that we are building.
      */
     public RoomBuilder withBookings(Bookings bookings) {
         this.bookings = new Bookings(bookings);
@@ -91,14 +91,13 @@ public class RoomBuilder {
      * Builds the room type depending on the capacity
      */
     public Room build() {
-        switch(capacity.getValue()) {
-        case 1:
+        if (capacity.equals(SingleRoom.CAPACITY_SINGLE_ROOM)) {
             return new SingleRoom(this.roomNumber, this.expenses, this.bookings, this.tags);
-        case 2:
+        } else if (capacity.equals(DoubleRoom.CAPACITY_DOUBLE_ROOM)) {
             return new DoubleRoom(this.roomNumber, this.expenses, this.bookings, this.tags);
-        case 5:
+        } else if (capacity.equals(SuiteRoom.CAPACITY_SUITE_ROOM)) {
             return new SuiteRoom(this.roomNumber, this.expenses, this.bookings, this.tags);
-        default:
+        } else {
             throw new IllegalArgumentException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
         }
     }

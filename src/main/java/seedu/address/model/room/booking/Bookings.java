@@ -69,10 +69,17 @@ public class Bookings implements Iterable<Booking> {
     }
 
     /**
+     * Returns true if there are no bookings
+     */
+    public boolean isEmpty() {
+        return internalList.isEmpty();
+    }
+
+    /**
      * Gets the first booking in the list
      */
     public Booking getFirstBooking() {
-        if (sortedList.isEmpty()) {
+        if (isEmpty()) {
             throw new NullPointerException("There are no bookings.");
         }
         return sortedList.get(0);
@@ -99,6 +106,13 @@ public class Bookings implements Iterable<Booking> {
         if (!internalList.remove(toRemove)) {
             throw new BookingNotFoundException();
         }
+    }
+
+    /**
+     * Removes all expired bookings from the list.
+     */
+    public void clearExpiredBookings() {
+        internalList.removeIf(Booking::isExpired);
     }
 
     /**

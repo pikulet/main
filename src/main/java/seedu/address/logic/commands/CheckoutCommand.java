@@ -22,8 +22,9 @@ public class CheckoutCommand extends Command {
     public static final String MESSAGE_CHECKOUT_ROOM_SUCCESS = "Checked out Room: %1$s";
     public static final String MESSAGE_UNOCCUPIED_ROOM_CHECKOUT = "Cannot checkout Room %1$s, as it is not checked-in"
         + " yet.";
-    public static final String MESSAGE_NO_ACTIVE_BOOKING_ROOM_CHECKOUT = "Cannot checkout Room %1$s, as it does not "
+    public static final String MESSAGE_NO_ACTIVE_ROOM_BOOKING_CHECKOUT = "Cannot checkout Room %1$s, as it does not "
         + "have an active booking.";
+    public static final String MESSAGE_NO_ROOM_BOOKING = "Room %1$s has no bookings.";
 
     private final RoomNumber roomNumber;
 
@@ -35,10 +36,13 @@ public class CheckoutCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         // roomNumber is guaranteed to be a valid room number after parsing.
-        if (!model.hasActiveBooking(roomNumber)) {
-            throw new CommandException(String.format(MESSAGE_NO_ACTIVE_BOOKING_ROOM_CHECKOUT, roomNumber));
+        if (!model.roomHasBooking(roomNumber)) {
+            throw new CommandException(String.format(MESSAGE_NO_ROOM_BOOKING, roomNumber));
         }
-        if (!model.isCheckedIn(roomNumber)) {
+        if (!model.roomHasActiveBooking(roomNumber)) {
+            throw new CommandException(String.format(MESSAGE_NO_ACTIVE_ROOM_BOOKING_CHECKOUT, roomNumber));
+        }
+        if (!model.isRoomCheckedIn(roomNumber)) {
             throw new CommandException(String.format(MESSAGE_UNOCCUPIED_ROOM_CHECKOUT, roomNumber));
         }
         model.checkoutRoom(roomNumber);

@@ -7,7 +7,7 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 
 /**
- * A utility class to help with building Room objects.
+ * A utility class to help with building Booking objects.
  */
 public class BookingBuilder {
 
@@ -28,7 +28,7 @@ public class BookingBuilder {
     }
 
     /**
-     * Initializes the RoomBuilder with the data of {@code roomToCopy}.
+     * Initializes the BookingBuilder with the data of {@code bookingToCopy}.
      */
     public BookingBuilder(Booking bookingToCopy) {
         guest = bookingToCopy.getGuest();
@@ -37,7 +37,7 @@ public class BookingBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Room} that we are building.
+     * Sets the {@code Guest} of the {@code Booking} that we are building.
      */
     public BookingBuilder withGuest(Guest guest) {
         this.guest = new Guest(guest);
@@ -45,7 +45,7 @@ public class BookingBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Room} that we are building.
+     * Sets the {@code BookingPeriod} of the {@code Booking} that we are building.
      */
     public BookingBuilder withBookingPeriod(BookingPeriod bookingPeriod) {
         this.bookingPeriod = new BookingPeriod(bookingPeriod);
@@ -53,7 +53,7 @@ public class BookingBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Room} that we are building.
+     * Sets the {@code Boolean} of the {@code Booking} that we are building.
      */
     public BookingBuilder withCheckIn(boolean checkIn) {
         this.checkIn = checkIn;

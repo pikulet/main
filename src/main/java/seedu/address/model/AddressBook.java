@@ -138,10 +138,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns true if the room's bookings is non-empty
+     */
+    public boolean roomHasBooking(RoomNumber roomNumber) {
+        return rooms.roomHasBooking(roomNumber);
+    }
+
+    /**
      * Returns true if the room's first booking is active.
      */
-    public boolean hasActiveBooking(RoomNumber roomNumber) {
-        return rooms.hasActiveBooking(roomNumber);
+    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
+        return rooms.roomHasActiveBooking(roomNumber);
     }
 
     /**

@@ -145,39 +145,58 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     /**
+     * Returns the room according to the room number
+     */
+    private Room getRoom(RoomNumber roomNumber) {
+        requireNonNull(roomNumber);
+        for (Room room : internalList) {
+            if (room.getRoomNumber().equals(roomNumber)) {
+                return room;
+            }
+        }
+        throw new RoomNotFoundException();
+    }
+
+    /**
      * Add a booking to a room identified by its room number.
      */
     public void addBooking(RoomNumber roomNumber, Booking booking) {
-        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased())
-            .addBooking(booking);
+        getRoom(roomNumber).addBooking(booking);
     }
 
     /**
      * Returns true if the room identified by its room number is checked in.
      */
     public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-        return internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).isCheckedIn();
+        return getRoom(roomNumber).isCheckedIn();
+    }
+
+    /**
+     * Returns true if the room's bookings is non-empty
+     */
+    public boolean roomHasBooking(RoomNumber roomNumber) {
+        return getRoom(roomNumber).hasBooking();
     }
 
     /**
      * Returns true if the room's first booking is active.
      */
-    public boolean hasActiveBooking(RoomNumber roomNumber) {
-        return internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).hasActiveBooking();
+    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
+        return getRoom(roomNumber).hasActiveBooking();
     }
 
     /**
      * Checks in the room using its room number
      */
     public void checkinRoom(RoomNumber roomNumber) {
-        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkIn();
+        getRoom(roomNumber).checkIn();
     }
 
     /**
      * Checks out a room using its room number
      */
     public void checkoutRoom(RoomNumber roomNumber) {
-        internalList.get(roomNumber.getRoomNumberAsIndex().getZeroBased()).checkout();
+        getRoom(roomNumber).checkout();
     }
 
     /**

@@ -22,7 +22,7 @@ public class CheckoutCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "001", new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001_TODAY_TOMORROW));
+        assertParseSuccess(parser, "001", new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001));
     }
 
     @Test

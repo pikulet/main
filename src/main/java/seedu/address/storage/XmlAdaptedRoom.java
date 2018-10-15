@@ -91,6 +91,7 @@ public class XmlAdaptedRoom {
         if (!Capacity.isValidCapacity(capacity)) {
             throw new IllegalValueException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
         }
+        final Capacity modelCapacity = new Capacity(capacity);
 
         final Bookings modelBookings = new Bookings();
         for (XmlAdaptedBooking b : bookings) {
@@ -105,29 +106,24 @@ public class XmlAdaptedRoom {
 
         final Set<Tag> modelTags = new HashSet<>(roomTags);
 
-        switch(capacity) {
-        case 1:
+        if (modelCapacity.equals(SingleRoom.CAPACITY_SINGLE_ROOM)) {
             SingleRoom singleRoom = new SingleRoom(modelRoomNumber);
             singleRoom.resetBookings(modelBookings);
             singleRoom.resetExpenses(modelExpenses);
             return singleRoom;
-
-        case 2:
+        } else if (modelCapacity.equals(DoubleRoom.CAPACITY_DOUBLE_ROOM)) {
             DoubleRoom doubleRoom = new DoubleRoom(modelRoomNumber);
             doubleRoom.resetBookings(modelBookings);
             doubleRoom.resetExpenses(modelExpenses);
             return doubleRoom;
-
-        case 5:
+        } else if (modelCapacity.equals(SuiteRoom.CAPACITY_SUITE_ROOM)) {
             SuiteRoom suiteRoom = new SuiteRoom(modelRoomNumber);
             suiteRoom.resetBookings(modelBookings);
             suiteRoom.resetExpenses(modelExpenses);
             return suiteRoom;
-
-        default:
+        } else {
             throw new IllegalValueException(String.format(MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY, capacity));
         }
-
     }
 
     @Override

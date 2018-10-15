@@ -1,8 +1,10 @@
 package seedu.address.testutil;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Room;
-import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
 import seedu.address.model.room.SuiteRoom;
 import seedu.address.model.room.UniqueRoomList;
@@ -12,43 +14,45 @@ import seedu.address.model.room.UniqueRoomList;
  */
 public class TypicalRooms {
 
-    private static final int CAPACITY_SINGLE_ROOM = SingleRoom.CAPACITY_SINGLE_ROOM.getValue();
-    private static final int CAPACITY_DOUBLE_ROOM = DoubleRoom.CAPACITY_DOUBLE_ROOM.getValue();
-    private static final int CAPACITY_SUITE_ROOM = SuiteRoom.CAPACITY_SUITE_ROOM.getValue();
+    private static final int CAPACITY_SINGLE_ROOM = SingleRoom.getCapacityValue();
+    private static final int CAPACITY_DOUBLE_ROOM = DoubleRoom.getCapacityValue();
+    private static final int CAPACITY_SUITE_ROOM = SuiteRoom.getCapacityValue();
 
     public static final Room SINGLE_001 = new RoomBuilder()
-        .withRoomNumber("001").withCapacity(CAPACITY_SINGLE_ROOM)
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_001.toString()).withCapacity(CAPACITY_SINGLE_ROOM)
         .build();
 
     public static final Room DOUBLE_002 = new RoomBuilder()
-        .withRoomNumber("002").withCapacity(CAPACITY_DOUBLE_ROOM)
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_002.toString()).withCapacity(CAPACITY_DOUBLE_ROOM)
         .build();
 
     public static final Room SUITE_010 = new RoomBuilder()
-        .withRoomNumber("010").withCapacity(CAPACITY_SUITE_ROOM)
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_010.toString()).withCapacity(CAPACITY_SUITE_ROOM)
         .build();
 
     public static final Room SINGLE_011 = new RoomBuilder()
-        .withRoomNumber("011").withCapacity(CAPACITY_SINGLE_ROOM)
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_011.toString()).withCapacity(CAPACITY_SINGLE_ROOM)
         .build();
 
     public static final Room DOUBLE_012 = new RoomBuilder()
-        .withRoomNumber("012").withCapacity(CAPACITY_DOUBLE_ROOM)
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_012.toString()).withCapacity(CAPACITY_DOUBLE_ROOM)
         .build();
 
     public static final Room SUITE_020 = new RoomBuilder()
-        .withRoomNumber("020").withCapacity(CAPACITY_SUITE_ROOM)
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_020.toString()).withCapacity(CAPACITY_SUITE_ROOM)
         .build();
 
+    public static List<Room> getTypicalRooms() {
+        return Arrays.asList(SINGLE_001, DOUBLE_002, SUITE_010, SINGLE_011, DOUBLE_012, SUITE_020);
+    }
+
     /**
-     * Returns an {@code UniqueRoomList} with all the typical rooms.
+     * Returns a {@code UniqueRoomList} with all the typical rooms.
+     * Note: All rooms do not have bookings or expenses. Use @Before in tests to initialize bookings and expenses.
      */
     public static UniqueRoomList getTypicalUniqueRoomList() {
-        UniqueRoomList rooms = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
-        rooms.addBooking(TypicalRoomNumbers.ROOM_NUMBER_001_TODAY_TOMORROW, TypicalBookings.TODAY_TOMORROW);
-        rooms.checkinRoom(TypicalRoomNumbers.ROOM_NUMBER_001_TODAY_TOMORROW);
-        rooms.addBooking(TypicalRoomNumbers.ROOM_NUMBER_002_TODAY_NEXT_WEEK, TypicalBookings.TODAY_NEXTWEEK);
-        rooms.addBooking(TypicalRoomNumbers.ROOM_NUMBER_099_TOMORROW_NEXT_WEEK, TypicalBookings.TOMORROW_NEXTWEEK);
-        return rooms;
+        UniqueRoomList uniqueRoomList = new UniqueRoomList();
+        uniqueRoomList.setRooms(getTypicalRooms());
+        return uniqueRoomList;
     }
 }

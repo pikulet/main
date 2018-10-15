@@ -28,6 +28,10 @@ public class DoubleRoom extends Room {
         super(doubleRoom);
     }
 
+    public static int getCapacityValue() {
+        return CAPACITY_DOUBLE_ROOM.getValue();
+    }
+
     @Override
     public DoubleRoom cloneRoom() {
         return new DoubleRoom(this);

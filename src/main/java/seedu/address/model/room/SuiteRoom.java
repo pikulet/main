@@ -31,6 +31,10 @@ public class SuiteRoom extends Room {
         super(suiteRoom);
     }
 
+    public static int getCapacityValue() {
+        return CAPACITY_SUITE_ROOM.getValue();
+    }
+
     @Override
     public SuiteRoom cloneRoom() {
         return new SuiteRoom(this);

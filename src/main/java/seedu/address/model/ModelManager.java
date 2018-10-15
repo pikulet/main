@@ -172,25 +172,32 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void checkinRoom(RoomNumber roomNumber) {
         versionedAddressBook.checkinRoom(roomNumber);
+        indicateAddressBookChanged();
     }
 
     @Override
     public void checkoutRoom(RoomNumber roomNumber) {
         versionedAddressBook.checkoutRoom(roomNumber);
+        indicateAddressBookChanged();
     }
 
     @Override
-    public boolean isCheckedIn(RoomNumber roomNumber) {
+    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
         return versionedAddressBook.isRoomCheckedIn(roomNumber);
     }
 
+    public boolean roomHasBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.roomHasBooking(roomNumber);
+    }
+
     @Override
-    public boolean hasActiveBooking(RoomNumber roomNumber) {
-        return versionedAddressBook.hasActiveBooking(roomNumber);
+    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.roomHasActiveBooking(roomNumber);
     }
 
     @Override
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedAddressBook.addBooking(roomNumber, booking);
+        indicateAddressBookChanged();
     }
 }
