@@ -75,7 +75,7 @@ public class RoomBuilder {
      * Sets the {@code Expenses} of the {@code Room} that we are building.
      */
     public RoomBuilder withExpenses(Expenses expenses) {
-        this.expenses = new Expenses(expenses);
+        this.expenses = new Expenses(expenses.getExpensesList());
         return this;
     }
 

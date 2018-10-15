@@ -11,7 +11,9 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +21,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
@@ -93,6 +96,12 @@ public class AddressBookTest {
         addressBook.getPersonList().remove(0);
     }
 
+    @Test
+    public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getMenuMap().put("1", new ExpenseType("1", "-", 0));
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose guests list can violate interface constraints.
      */
@@ -112,6 +121,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Room> getRoomList() {
             return rooms;
+        }
+
+        @Override
+        public Menu getMenu() {
+            return new Menu();
+        }
+
+        @Override
+        public Map<String, ExpenseType> getMenuMap() {
+            return new HashMap<>();
         }
     }
 
