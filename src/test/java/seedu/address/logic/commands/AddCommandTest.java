@@ -22,7 +22,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.room.booking.Booking;
+import seedu.address.testutil.GuestBuilder;
 
 public class AddCommandTest {
 
@@ -42,7 +43,7 @@ public class AddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Guest validGuest = new PersonBuilder().build();
+        Guest validGuest = new GuestBuilder().build();
 
         CommandResult commandResult = new AddCommand(validGuest).execute(modelStub, commandHistory);
 
@@ -53,7 +54,7 @@ public class AddCommandTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        Guest validGuest = new PersonBuilder().build();
+        Guest validGuest = new GuestBuilder().build();
         AddCommand addCommand = new AddCommand(validGuest);
         ModelStub modelStub = new ModelStubWithPerson(validGuest);
 
@@ -64,8 +65,8 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
-        Guest alice = new PersonBuilder().withName("Alice").build();
-        Guest bob = new PersonBuilder().withName("Bob").build();
+        Guest alice = new GuestBuilder().withName("Alice").build();
+        Guest bob = new GuestBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -165,12 +166,10 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        /*
         @Override
-        public void checkoutRoom(RoomNumber roomNumber) {
-        public RoomList getRoomList(){
+        public void checkinRoom(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
-        }*/
+        }
 
         @Override
         public void checkoutRoom(RoomNumber roomNumber) {
@@ -178,7 +177,27 @@ public class AddCommandTest {
         }
 
         @Override
-        public void commitRoomList() {
+        public boolean isRoomCheckedIn(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean roomHasBooking(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean roomHasActiveBooking(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addBooking(RoomNumber roomNumber, Booking booking) {
             throw new AssertionError("This method should not be called.");
         }
     }

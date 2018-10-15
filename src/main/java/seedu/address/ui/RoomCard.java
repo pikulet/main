@@ -33,7 +33,7 @@ public class RoomCard extends UiPart<Region> {
     @FXML
     private Label expenses;
     @FXML
-    private Label reservations;
+    private Label bookings;
     @FXML
     private FlowPane occupant;
     @FXML
@@ -45,8 +45,7 @@ public class RoomCard extends UiPart<Region> {
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
         expenses.setText("Expenses: " + room.getExpenses().toString());
-        reservations.setText("Reservations: " + room.getReservations().toString());
-        room.getOccupant().forEach(guest -> occupant.getChildren().add(new Label(guest.getName().toString())));
+        bookings.setText("Bookings: " + room.getBookings().toString());
         room.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

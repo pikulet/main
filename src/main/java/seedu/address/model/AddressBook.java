@@ -10,7 +10,9 @@ import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.UniqueGuestList;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.room.booking.Booking;
 
 /**
  * Wraps all data at the address-book level
@@ -126,8 +128,56 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.rooms.setRooms(rooms);
     }
 
+    /**
+     * Add a booking to a room identified by its room number.
+     */
+    public void addBooking(RoomNumber roomNumber, Booking booking) {
+        rooms.addBooking(roomNumber, booking);
+    }
     public void setMenu(Map<String, ExpenseType> menu) {
         this.menu.setMenu(menu);
+    }
+
+    /**
+     * Returns true if the room identified by its room number is checked in.
+     */
+    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
+        return rooms.isRoomCheckedIn(roomNumber);
+    }
+
+    /**
+     * Returns true if the room's bookings is non-empty
+     */
+    public boolean roomHasBooking(RoomNumber roomNumber) {
+        return rooms.roomHasBooking(roomNumber);
+    }
+
+    /**
+     * Returns true if the room's first booking is active.
+     */
+    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
+        return rooms.roomHasActiveBooking(roomNumber);
+    }
+
+    /**
+     * Returns true if the room's first booking is active or expired
+     */
+    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
+        return rooms.roomHasActiveOrExpiredBooking(roomNumber);
+    }
+
+    /**
+     * Checks in the room using its room number
+     */
+    public void checkinRoom(RoomNumber roomNumber) {
+        rooms.checkinRoom(roomNumber);
+    }
+
+    /**
+     * Checks out a room using its room number
+     */
+    public void checkoutRoom(RoomNumber roomNumber) {
+        rooms.checkoutRoom(roomNumber);
     }
 
     //// util methods

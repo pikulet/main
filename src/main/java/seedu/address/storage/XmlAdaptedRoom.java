@@ -16,11 +16,12 @@ import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.DoubleRoom;
-import seedu.address.model.room.Reservations;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
 import seedu.address.model.room.SuiteRoom;
+import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,18 +30,18 @@ import seedu.address.model.tag.Tag;
 public class XmlAdaptedRoom {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Room's %s field is missing!";
+    public static final String MESSAGE_OVERLAPPING_BOOKING = "Room contains overlapping bookings!";
+    public static final String MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY = "No such rooms with the capacity %d exists.";
 
     @XmlElement(required = true)
     private String roomNumber;
     @XmlElement(required = true)
-    private String capacity;
+    private Integer capacity;
 
+    private List<XmlAdaptedBooking> bookings = new ArrayList<>();
+    @XmlElement(required = true)
     @XmlElement
     private List<XmlAdaptedExpense> expenses = new ArrayList<>();
-    @XmlElement
-    private String reservations;
-    @XmlElement
-    private List<XmlAdaptedPerson> guests = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -77,14 +78,10 @@ public class XmlAdaptedRoom {
      */
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
-        capacity = source.getCapacity().toString();
-        expenses = source.getExpensesList().stream()
-                .map(XmlAdaptedExpense::new)
-                .collect(Collectors.toList());
-        reservations = source.getReservations().toString();
-        guests = source.getOccupant().stream()
-                .map(XmlAdaptedPerson::new)
-                .collect(Collectors.toList());
+        capacity = source.getCapacity().getValue();
+        expenses = source.getExpenses().toString();
+        bookings.addAll(source.getBookings().asUnmodifiableSortedList().stream().map(XmlAdaptedBooking::new).collect
+            (Collectors.toList()));
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -115,35 +112,51 @@ public class XmlAdaptedRoom {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName()));
         }
+        if (!RoomNumber.isValidRoomNumber(roomNumber)) {
+            throw new IllegalValueException(RoomNumber.MESSAGE_ROOM_NUMBER_CONSTRAINTS);
+        }
         final RoomNumber modelRoomNumber = new RoomNumber(roomNumber);
 
         if (capacity == null) {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName()));
         }
-        final Capacity modelCapacity = new Capacity(Integer.parseInt(capacity));
+        if (!Capacity.isValidCapacity(capacity)) {
+            throw new IllegalValueException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
+        }
+        final Capacity modelCapacity = new Capacity(capacity);
+
+        final Bookings modelBookings = new Bookings();
+        for (XmlAdaptedBooking b : bookings) {
+            Booking booking = b.toModelType();
+            if (modelBookings.canAcceptBooking(booking)) {
+                throw new IllegalValueException(MESSAGE_OVERLAPPING_BOOKING);
+            }
+            modelBookings.add(booking);
+        }
 
         final Expenses modelExpenses = new Expenses(expenseList);
 
-        final Reservations modelReservations = new Reservations();
-
         final Set<Tag> modelTags = new HashSet<>(roomTags);
 
-        switch(Integer.parseInt(capacity)) {
-        case 1:
-            return new SingleRoom(modelRoomNumber, modelGuests, modelExpenses, modelReservations);
-
-        case 2:
-            return new DoubleRoom(modelRoomNumber, modelGuests, modelExpenses, modelReservations);
-
-        case 5:
-            return new SuiteRoom(modelRoomNumber, modelGuests, modelExpenses, modelReservations);
-
-        default:
-            throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName()));
+        if (modelCapacity.equals(SingleRoom.CAPACITY_SINGLE_ROOM)) {
+            SingleRoom singleRoom = new SingleRoom(modelRoomNumber);
+            singleRoom.setBookings(modelBookings);
+            singleRoom.resetExpenses(modelExpenses);
+            return singleRoom;
+        } else if (modelCapacity.equals(DoubleRoom.CAPACITY_DOUBLE_ROOM)) {
+            DoubleRoom doubleRoom = new DoubleRoom(modelRoomNumber);
+            doubleRoom.setBookings(modelBookings);
+            doubleRoom.resetExpenses(modelExpenses);
+            return doubleRoom;
+        } else if (modelCapacity.equals(SuiteRoom.CAPACITY_SUITE_ROOM)) {
+            SuiteRoom suiteRoom = new SuiteRoom(modelRoomNumber);
+            suiteRoom.setBookings(modelBookings);
+            suiteRoom.resetExpenses(modelExpenses);
+            return suiteRoom;
+        } else {
+            throw new IllegalValueException(String.format(MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY, capacity));
         }
-
     }
 
     @Override
@@ -160,7 +173,7 @@ public class XmlAdaptedRoom {
         return Objects.equals(roomNumber, otherRoom.roomNumber)
                 && Objects.equals(capacity, otherRoom.capacity)
                 && Objects.equals(expenses, otherRoom.expenses)
-                && Objects.equals(reservations, otherRoom.reservations)
+                && Objects.equals(bookings, otherRoom.bookings)
                 && tagged.equals(otherRoom.tagged);
     }
 }

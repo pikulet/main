@@ -15,6 +15,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.booking.Booking;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -104,6 +105,23 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGuests.setPredicate(predicate);
     }
 
+    //=========== Filtered Room List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Room} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Room> getFilteredRoomList() {
+        return FXCollections.unmodifiableObservableList(filteredRooms);
+    }
+
+    @Override
+    public void updateFilteredRoomList(Predicate<Room> predicate) {
+        requireNonNull(predicate);
+        filteredRooms.setPredicate(predicate);
+    }
+
     //=========== Undo/Redo =================================================================================
 
     @Override
@@ -151,26 +169,41 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredGuests.equals(other.filteredGuests);
     }
 
-    //=========== Filtered Room List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Room} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
     @Override
-    public ObservableList<Room> getFilteredRoomList() {
-        return FXCollections.unmodifiableObservableList(filteredRooms);
+    public void checkinRoom(RoomNumber roomNumber) {
+        versionedAddressBook.checkinRoom(roomNumber);
+        indicateAddressBookChanged();
     }
 
     @Override
-    public void updateFilteredRoomList(Predicate<Room> predicate) {
-        requireNonNull(predicate);
-        filteredRooms.setPredicate(predicate);
+    public void checkoutRoom(RoomNumber roomNumber) {
+        versionedAddressBook.checkoutRoom(roomNumber);
+        indicateAddressBookChanged();
     }
 
     @Override
-    public void checkoutRoom(RoomNumber roomNumber) {}
+    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
+        return versionedAddressBook.isRoomCheckedIn(roomNumber);
+    }
+
+    public boolean roomHasBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.roomHasBooking(roomNumber);
+    }
 
     @Override
-    public void commitRoomList() {}
+    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.roomHasActiveBooking(roomNumber);
+    }
+
+
+    @Override
+    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.roomHasActiveOrExpiredBooking(roomNumber);
+    }
+
+    @Override
+    public void addBooking(RoomNumber roomNumber, Booking booking) {
+        versionedAddressBook.addBooking(roomNumber, booking);
+        indicateAddressBookChanged();
+    }
 }
