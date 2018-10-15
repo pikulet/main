@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -58,14 +59,16 @@ public class SampleDataUtil {
 
     /**
      * Returns a room list initialized with the maximum number of rooms, and 1 sample booking for testing
+     * Use to see if xml file reflects changes
      * DELETE WHEN TESTED IN UNIT TESTS
      */
-    public static UniqueRoomList getSampleRoomsWithSampleBooking() {
+    public static List<Room> getSampleRoomsWithSampleBookingAndExpenses() {
         UniqueRoomList roomList = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
         roomList.addBooking(new RoomNumber("001"),
             new Booking(getSamplePersons()[0],
-            new BookingPeriod("01/01/2019", "02/01/2019")));
-        return roomList;
+            new BookingPeriod(LocalDate.now().format(BookingPeriod.FORMAT), 
+                LocalDate.now().plusDays(1).format(BookingPeriod.FORMAT))));
+        return roomList.asUnmodifiableObservableList();
     }
 
     public static Map<String, ExpenseType> getSampleMenuMap() {
