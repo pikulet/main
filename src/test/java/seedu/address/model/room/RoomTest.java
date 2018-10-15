@@ -13,8 +13,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
+import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
-import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookings;
 
@@ -24,6 +24,8 @@ public class RoomTest {
 
     private final Room testRoomWithLastWeekYesterdayBooking = new RoomBuilder()
         .withBookings(TypicalBookings.getTypicalBookingsLastWeekYesterday()).build();
+    private final Room testRoomWithLastWeekYesterdayBookingCheckedIn = new RoomBuilder()
+        .withBookings(TypicalBookings.getTypicalBookingsLastWeekYesterdayCheckedIn()).build();
     private final Room testRoomWithYesterdayTodayBooking = new RoomBuilder()
         .withBookings(TypicalBookings.getTypicalBookingsYesterdayToday()).build();
     private final Room testRoomWithTodayTomorrowBooking = new RoomBuilder()
@@ -77,9 +79,9 @@ public class RoomTest {
     }
 
     @Test
-    public void checkOut_expiredBooking_throwsNoActiveBookingException() {
-        thrown.expect(NoActiveBookingException.class);
-        testRoomWithLastWeekYesterdayBooking.checkout();
+    public void checkOut_lastweekYesterday_success() {
+        testRoomWithLastWeekYesterdayBookingCheckedIn.checkout();
+        assertTrue(testRoomWithLastWeekYesterdayBookingCheckedIn.equals(testRoomWithoutBooking));
     }
 
     @Test
@@ -98,14 +100,8 @@ public class RoomTest {
 
     @Test
     public void checkOut_upcomingBooking_throwsNoActiveBookingException() {
-        thrown.expect(NoActiveBookingException.class);
+        thrown.expect(NoActiveOrExpiredBookingException.class);
         testRoomWithTomorrowNextWeekBooking.checkout();
-    }
-
-    @Test
-    public void checkOut_unoccupiedRoomCheckOut_throwsUnoccupiedRoomCheckoutException() {
-        thrown.expect(UnoccupiedRoomCheckoutException.class);
-        testRoomWithTodayTomorrowBooking.checkout();
     }
 
     @Test

@@ -195,6 +195,12 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.roomHasActiveBooking(roomNumber);
     }
 
+
+    @Override
+    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
+        return versionedAddressBook.roomHasActiveOrExpiredBooking(roomNumber);
+    }
+
     @Override
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedAddressBook.addBooking(roomNumber, booking);

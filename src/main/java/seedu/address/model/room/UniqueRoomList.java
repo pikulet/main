@@ -186,6 +186,13 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     /**
+     * Returns true if the room's first booking is active or expired
+     */
+    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
+        return getRoom(roomNumber).hasActiveOrExpiredBooking();
+    }
+
+    /**
      * Checks in the room using its room number
      */
     public void checkinRoom(RoomNumber roomNumber) {

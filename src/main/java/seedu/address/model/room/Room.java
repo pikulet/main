@@ -12,8 +12,8 @@ import seedu.address.model.person.Guest;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
+import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
-import seedu.address.model.room.exceptions.UnoccupiedRoomCheckoutException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -138,7 +138,15 @@ public abstract class Room {
     }
 
     /**
-     * Checks in the guest in the first booking of this room
+     * Returns true if room's first booking is active or expired
+     */
+    public boolean hasActiveOrExpiredBooking() {
+        Booking firstBooking = bookings.getFirstBooking();
+        return firstBooking.isActiveOrExpired();
+    }
+
+    /**
+     * Checks in the first booking of this room and its occupant
      */
     public void checkIn() {
         if (!hasActiveBooking()) {
@@ -159,11 +167,8 @@ public abstract class Room {
      * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
      */
     public void checkout() {
-        if (!hasActiveBooking()) {
-            throw new NoActiveBookingException();
-        }
-        if (!isCheckedIn()) {
-            throw new UnoccupiedRoomCheckoutException();
+        if (!hasActiveOrExpiredBooking()) {
+            throw new NoActiveOrExpiredBookingException();
         }
         Booking firstBooking = bookings.getFirstBooking();
         Guest guest = firstBooking.getGuest();

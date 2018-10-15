@@ -152,6 +152,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns true if the room's first booking is active or expired
+     */
+    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
+        return rooms.roomHasActiveOrExpiredBooking(roomNumber);
+    }
+
+    /**
      * Checks in the room using its room number
      */
     public void checkinRoom(RoomNumber roomNumber) {

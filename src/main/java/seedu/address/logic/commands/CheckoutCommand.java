@@ -20,10 +20,8 @@ public class CheckoutCommand extends Command {
             + "Example: " + COMMAND_WORD + " 001";
 
     public static final String MESSAGE_CHECKOUT_ROOM_SUCCESS = "Checked out Room: %1$s";
-    public static final String MESSAGE_UNOCCUPIED_ROOM_CHECKOUT = "Cannot checkout Room %1$s, as it is not checked-in"
-        + " yet.";
-    public static final String MESSAGE_NO_ACTIVE_ROOM_BOOKING_CHECKOUT = "Cannot checkout Room %1$s, as it does not "
-        + "have an active booking.";
+    public static final String MESSAGE_NO_ACTIVE_OR_EXPIRED_ROOM_BOOKING_CHECKOUT =
+        "Cannot checkout Room %1$s, as it does not have an active or expired booking.";
     public static final String MESSAGE_NO_ROOM_BOOKING = "Room %1$s has no bookings.";
 
     private final RoomNumber roomNumber;
@@ -39,11 +37,8 @@ public class CheckoutCommand extends Command {
         if (!model.roomHasBooking(roomNumber)) {
             throw new CommandException(String.format(MESSAGE_NO_ROOM_BOOKING, roomNumber));
         }
-        if (!model.roomHasActiveBooking(roomNumber)) {
-            throw new CommandException(String.format(MESSAGE_NO_ACTIVE_ROOM_BOOKING_CHECKOUT, roomNumber));
-        }
-        if (!model.isRoomCheckedIn(roomNumber)) {
-            throw new CommandException(String.format(MESSAGE_UNOCCUPIED_ROOM_CHECKOUT, roomNumber));
+        if (!model.roomHasActiveOrExpiredBooking(roomNumber)) {
+            throw new CommandException(String.format(MESSAGE_NO_ACTIVE_OR_EXPIRED_ROOM_BOOKING_CHECKOUT, roomNumber));
         }
         model.checkoutRoom(roomNumber);
         model.commitAddressBook();

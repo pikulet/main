@@ -107,6 +107,13 @@ public class Booking implements Comparable<Booking> {
     }
 
     /**
+     * Checks if this booking is active or expired
+     */
+    public boolean isActiveOrExpired() {
+        return isActive() || isExpired();
+    }
+
+    /**
      * Checks if this booking includes the given date
      */
     public boolean includesDate(LocalDate date) {

@@ -38,18 +38,21 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_invalidCheckoutExpiredBooking_throwsCommandException() {
+    public void execute_invalidCheckoutExpiredBookingLastweekYesterday_success() {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_001;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_ROOM_BOOKING_CHECKOUT,
-            roomNumberToCheckout);
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
 
-        assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.checkoutRoom(roomNumberToCheckout);
+        expectedModel.commitAddressBook();
+
+        assertCommandSuccess(checkoutCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_validCheckoutYesterdayToday_success() {
+    public void execute_validCheckoutActiveBookingYesterdayToday_success() {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_002;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
@@ -63,7 +66,7 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_validCheckoutTodayTomorrow_success() {
+    public void execute_validCheckoutActiveBookingTodayTomorrow_success() {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
@@ -81,18 +84,8 @@ public class CheckoutCommandTest {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_ROOM_BOOKING_CHECKOUT,
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_OR_EXPIRED_ROOM_BOOKING_CHECKOUT,
             roomNumberToCheckout);
-
-        assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
-    }
-
-    @Test
-    public void execute_invalidCheckoutUnoccupiedRoom_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_012;
-        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
-
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_UNOCCUPIED_ROOM_CHECKOUT, roomNumberToCheckout);
 
         assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
     }
