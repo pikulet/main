@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -63,24 +64,33 @@ public class SampleDataUtil {
      * DELETE WHEN TESTED IN UNIT TESTS
      */
     public static List<Room> getSampleRoomsWithSampleBookingAndExpenses() {
-        UniqueRoomList roomList = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
-        roomList.addBooking(new RoomNumber("001"),
+        UniqueRoomList uniqueRoomList = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
+        uniqueRoomList.addBooking(new RoomNumber("001"),
             new Booking(getSamplePersons()[0],
             new BookingPeriod(LocalDate.now().format(BookingPeriod.FORMAT), 
                 LocalDate.now().plusDays(1).format(BookingPeriod.FORMAT))));
-        return roomList.asUnmodifiableObservableList();
+        uniqueRoomList.addExpense(new RoomNumber("001"), new Expense(getSampleExpenseTypes()[0]));
+        return uniqueRoomList.asUnmodifiableObservableList();
+    }
+    
+    public static ExpenseType[] getSampleExpenseTypes() {
+        return new ExpenseType[] {
+            new ExpenseType("RS01", "Room service: Red wine", 50),
+            new ExpenseType("RS02", "Room service: Beef steak", 70),
+            new ExpenseType("RS03", "Room service: Thai massage", 100),
+            new ExpenseType("SP01", "Swimming pool: Entry", 5),
+            new ExpenseType("MB01", "Minibar: Coca cola", 3),
+            new ExpenseType("MB02", "Minibar: Sprite", 3),
+            new ExpenseType("MB03", "Minibar: Tiger beer", 6),
+            new ExpenseType("MB04", "Minibar: Mineral water", 3),
+        };
     }
 
     public static Map<String, ExpenseType> getSampleMenuMap() {
         HashMap<String, ExpenseType> sampleMenuMap = new HashMap<>();
-        sampleMenuMap.put("RS01", new ExpenseType("RS01", "Room service: Red wine", 50));
-        sampleMenuMap.put("RS02", new ExpenseType("RS02", "Room service: Beef steak", 70));
-        sampleMenuMap.put("RS03", new ExpenseType("RS03", "Room service: Thai massage", 100));
-        sampleMenuMap.put("SP01", new ExpenseType("SP01", "Swimming pool: Entry", 5));
-        sampleMenuMap.put("MB01", new ExpenseType("MB01", "Minibar: Coca cola", 3));
-        sampleMenuMap.put("MB02", new ExpenseType("MB02", "Minibar: Sprite", 3));
-        sampleMenuMap.put("MB03", new ExpenseType("MB03", "Minibar: Tiger beer", 6));
-        sampleMenuMap.put("MB04", new ExpenseType("MB04", "Minibar: Mineral water", 3));
+        for (ExpenseType expenseType : getSampleExpenseTypes()) {
+            sampleMenuMap.put(expenseType.getItemNumber(), expenseType);
+        }
         return sampleMenuMap;
     }
 
