@@ -1,11 +1,16 @@
 package seedu.address.model.util;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.expenses.ExpenseType;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
@@ -63,12 +68,29 @@ public class SampleDataUtil {
         return roomList;
     }
 
+    public static Map<String, ExpenseType> getSampleMenuMap() {
+        HashMap<String, ExpenseType> sampleMenuMap = new HashMap<>();
+        sampleMenuMap.put("RS01", new ExpenseType("RS01", "Room service: Red wine", 50));
+        sampleMenuMap.put("RS02", new ExpenseType("RS02", "Room service: Beef steak", 70));
+        sampleMenuMap.put("RS03", new ExpenseType("RS03", "Room service: Thai massage", 100));
+        sampleMenuMap.put("SP01", new ExpenseType("SP01", "Swimming pool: Entry", 5));
+        sampleMenuMap.put("MB01", new ExpenseType("MB01", "Minibar: Coca cola", 3));
+        sampleMenuMap.put("MB02", new ExpenseType("MB02", "Minibar: Sprite", 3));
+        sampleMenuMap.put("MB03", new ExpenseType("MB03", "Minibar: Tiger beer", 6));
+        sampleMenuMap.put("MB04", new ExpenseType("MB04", "Minibar: Mineral water", 3));
+        return sampleMenuMap;
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Guest sampleGuest : getSamplePersons()) {
             sampleAb.addPerson(sampleGuest);
         }
         sampleAb.setRooms(getSampleRooms().asUnmodifiableObservableList());
+        for (Room sampleRoom : getSampleRooms()) {
+            sampleAb.addRoom(sampleRoom);
+        }
+        sampleAb.setMenu(getSampleMenuMap());
         return sampleAb;
     }
 
