@@ -21,6 +21,7 @@ import seedu.address.model.person.Guest;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.testutil.TypicalBookings;
 import seedu.address.testutil.TypicalRoomNumbers;
+import seedu.address.testutil.TypicalRooms;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -31,20 +32,9 @@ public class CheckoutCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
-    @Before
-    public void initialize() {
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_001, TypicalBookings.LASTWEEK_YESTERDAY);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_002, TypicalBookings.YESTERDAY_TODAY);
-        model.checkinRoom(TypicalRoomNumbers.ROOM_NUMBER_002);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_010, TypicalBookings.TODAY_TOMORROW);
-        model.checkinRoom(TypicalRoomNumbers.ROOM_NUMBER_010);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_011, TypicalBookings.TOMORROW_NEXTWEEK);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_012, TypicalBookings.TODAY_TOMORROW);
-    }
-
     @Test
     public void execute_invalidCheckoutExpiredBookingLastweekYesterday_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_001;
+        RoomNumber roomNumberToCheckout = TypicalRooms.SINGLE_001.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -58,7 +48,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_validCheckoutActiveBookingYesterdayToday_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_002;
+        RoomNumber roomNumberToCheckout = TypicalRooms.DOUBLE_002.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -72,7 +62,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_validCheckoutActiveBookingTodayTomorrow_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
+        RoomNumber roomNumberToCheckout = TypicalRooms.SUITE_010.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -86,7 +76,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_invalidCheckoutUpcomingBooking_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        RoomNumber roomNumberToCheckout = TypicalRooms.SINGLE_011.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_OR_EXPIRED_ROOM_BOOKING_CHECKOUT,
@@ -97,7 +87,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_invalidCheckoutNoBooking_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_020;
+        RoomNumber roomNumberToCheckout = TypicalRooms.SUITE_020.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ROOM_BOOKING, roomNumberToCheckout);
@@ -107,10 +97,8 @@ public class CheckoutCommandTest {
 
     @Test
     public void executeUndoRedo_validCheckout_success() throws Exception {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
+        RoomNumber roomNumberToCheckout = TypicalRooms.SUITE_010.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
-
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.checkoutRoom(roomNumberToCheckout);
@@ -129,7 +117,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void executeUndoRedo_invalidCheckout_failure() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_020;
+        RoomNumber roomNumberToCheckout = TypicalRooms.SUITE_020.getRoomNumber();
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ROOM_BOOKING, roomNumberToCheckout);
@@ -139,31 +127,6 @@ public class CheckoutCommandTest {
         // single address book state in model -> undoCommand and redoCommand fail
         assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
         assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
-    }
-    
-    @Test
-    public void executeUndoRedo_validCheckout_correctState() throws Exception {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
-        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
-
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.checkoutRoom(roomNumberToCheckout);
-        expectedModel.commitAddressBook();
-
-        checkoutCommand.execute(model, commandHistory);
-
-        // undo -> reverts addressbook back to previous state and room's bookings to show all bookings
-        expectedModel.undoAddressBook();
-        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-        
-        // State should have changed such that it is different before and after checkout
-        assertNotEquals(expectedModel, model);
-
-        // redo -> same first room checked out again
-        expectedModel.redoAddressBook();
-        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test

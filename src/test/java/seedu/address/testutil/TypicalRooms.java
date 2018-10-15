@@ -53,6 +53,13 @@ public class TypicalRooms {
     public static UniqueRoomList getTypicalUniqueRoomList() {
         UniqueRoomList uniqueRoomList = new UniqueRoomList();
         uniqueRoomList.setRooms(getTypicalRooms());
+        uniqueRoomList.addBooking(SINGLE_001.getRoomNumber(), TypicalBookings.LASTWEEK_YESTERDAY);
+        uniqueRoomList.addBooking(DOUBLE_002.getRoomNumber(), TypicalBookings.YESTERDAY_TODAY);
+        uniqueRoomList.checkinRoom(DOUBLE_002.getRoomNumber());
+        uniqueRoomList.addBooking(SUITE_010.getRoomNumber(), TypicalBookings.TODAY_TOMORROW);
+        uniqueRoomList.checkinRoom(SUITE_010.getRoomNumber());
+        uniqueRoomList.addBooking(SINGLE_011.getRoomNumber(), TypicalBookings.TOMORROW_NEXTWEEK);
+        uniqueRoomList.addBooking(DOUBLE_012.getRoomNumber(), TypicalBookings.TODAY_TOMORROW);
         return uniqueRoomList;
     }
 }
