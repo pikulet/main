@@ -39,7 +39,7 @@ public class ExpenseTest {
 
     @Test
     public void getDate() {
-        assert validExpense.getDate().equals(LocalDateTime.parse("01/01/2018 12:34",
+        assert validExpense.getDateTime().equals(LocalDateTime.parse("01/01/2018 12:34",
                 DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
     }
 }

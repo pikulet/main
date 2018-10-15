@@ -50,7 +50,7 @@ public class XmlAdaptedExpense {
     public XmlAdaptedExpense(Expense source) {
         this.item = source.getExpenseType().getItemNumber();
         this.cost = source.getCost();
-        this.datetime = source.getDateString();
+        this.datetime = source.getDateTimeString();
     }
 
     /**

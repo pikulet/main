@@ -27,7 +27,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
         "^(0[1-9]|[1-2]\\d|3[0-1])\\/(0[1-9]|1[0-2])\\/(\\d\\d\\d\\d)$";
 
     /**
-     * Standard date format used for this hotel.
+     * Standard date format used for this hotel's bookings.
      */
     public static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 

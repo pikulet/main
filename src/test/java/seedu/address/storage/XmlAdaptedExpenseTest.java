@@ -33,7 +33,7 @@ public class XmlAdaptedExpenseTest {
         XmlAdaptedExpense testExpense = new XmlAdaptedExpense(VALID_ITEM, 1, VALID_DATETIME);
         Expense convertedExpense = testExpense.toModelType(VALID_MENU);
         assertEquals(convertedExpense.getExpenseType(), VALID_MENU.getExpenseType(VALID_ITEM));
-        assertEquals(convertedExpense.getDate(), LocalDateTime.parse(VALID_DATETIME));
+        assertEquals(convertedExpense.getDateTime(), LocalDateTime.parse(VALID_DATETIME));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class XmlAdaptedExpenseTest {
         ExpenseType unknownType = new ExpenseType(INVALID_ITEM,
                 XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_NAME, XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_COST);
         assertEquals(convertedExpense.getExpenseType(), unknownType);
-        assertEquals(convertedExpense.getDate(), LocalDateTime.parse(VALID_DATETIME));
+        assertEquals(convertedExpense.getDateTime(), LocalDateTime.parse(VALID_DATETIME));
     }
 
     @Test
