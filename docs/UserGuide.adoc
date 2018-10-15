@@ -172,6 +172,7 @@ List all available rooms today
 * `list -r -a 09/12/18 10/12/18` +
 Lists rooms that are available from 091218 101218. Input dates must be in DD/MM/YY format.
 
+
 === Selecting a guest : `select`
 
 Selects the guest/room identified by the index number used in the displayed list. +
@@ -207,7 +208,7 @@ Marks the given room for maintenance +
 Format: `service rm/709 mt/wiring`
 
 mt refers to the type of maintenance required.
-Room will not be available for booking or reservation whilst in this state.
+Room will not be available for booking whilst in this state.
 
 === Listing entered commands : `history`
 

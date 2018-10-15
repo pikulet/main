@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INDEX;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_074;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -25,7 +25,7 @@ public class AssignCommandParserTest {
     public void parse_allFieldsPresent_success() {
         AssignCommand expectedAssignCommand =
                 new AssignCommand(Index.fromOneBased(Integer.valueOf(VALID_INDEX)),
-                        new RoomNumber(VALID_ROOM));
+                        new RoomNumber(VALID_ROOM_NUMBER_074));
 
         // whitespace only preamble
         assertParseSuccess(parser,
@@ -41,10 +41,10 @@ public class AssignCommandParserTest {
         assertParseFailure(parser, VALID_INDEX + ROOM_DESC_BOB, expectedMessage);
 
         // missing room prefix
-        assertParseFailure(parser, INDEX_DESC_BOB + VALID_ROOM, expectedMessage);
+        assertParseFailure(parser, INDEX_DESC_BOB + VALID_ROOM_NUMBER_074, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_INDEX + VALID_ROOM, expectedMessage);
+        assertParseFailure(parser, VALID_INDEX + VALID_ROOM_NUMBER_074, expectedMessage);
     }
 
     @Test
