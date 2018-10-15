@@ -25,11 +25,6 @@ public class Expenses {
         this.expenseList = new LinkedList<>(expenseList);
     }
 
-    public Expenses(Expenses expenses) {
-        this();
-        this.expenseList.addAll(expenses.expenseList);
-    }
-
     /**
      * Adds a new {@code Expense} to the current expenses.
      * New expense is added in front as it is more likely that recent expenses are accessed.

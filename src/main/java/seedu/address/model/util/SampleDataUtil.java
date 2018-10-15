@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ExpenseType;
-import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Booking;
@@ -52,8 +52,8 @@ public class SampleDataUtil {
     /**
      * Returns a room list initialized with the maximum number of rooms as set in RoomNumber class
      */
-    public static UniqueRoomList getSampleRooms() {
-        return new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
+    public static List<Room> getSampleRooms() {
+        return new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER).asUnmodifiableObservableList();
     }
 
     /**
@@ -86,10 +86,7 @@ public class SampleDataUtil {
         for (Guest sampleGuest : getSamplePersons()) {
             sampleAb.addPerson(sampleGuest);
         }
-        sampleAb.setRooms(getSampleRooms().asUnmodifiableObservableList());
-        for (Room sampleRoom : getSampleRooms()) {
-            sampleAb.addRoom(sampleRoom);
-        }
+        sampleAb.setRooms(getSampleRooms());
         sampleAb.setMenu(getSampleMenuMap());
         return sampleAb;
     }
