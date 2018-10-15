@@ -12,6 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
@@ -39,6 +40,79 @@ public class RoomTest {
         Room room = new RoomBuilder().build();
         thrown.expect(UnsupportedOperationException.class);
         room.getTags().remove(0);
+    }
+
+    @Test
+    public void addBooking() {
+        Booking bookingToAdd = testRoomWithTodayTomorrowBooking.getBookings().getFirstBooking();
+        testRoomWithoutBooking.addBooking(bookingToAdd);
+        assertTrue(testRoomWithoutBooking.equals(testRoomWithTodayTomorrowBooking));
+    }
+
+    @Test
+    public void updateBooking() {
+        Booking originalBooking = testRoomWithTodayTomorrowBooking.getBookings().getFirstBooking();
+        Booking editedBooking = testRoomWithTomorrowNextWeekBooking.getBookings().getFirstBooking();
+        testRoomWithTodayTomorrowBooking.updateBooking(originalBooking, editedBooking);
+        assertTrue(testRoomWithTodayTomorrowBooking.equals(testRoomWithTomorrowNextWeekBooking));
+    }
+
+    @Test
+    public void setBookings() {
+        testRoomWithTodayTomorrowBooking.setBookings(testRoomWithYesterdayTodayBooking.getBookings());
+        assertTrue(testRoomWithTodayTomorrowBooking.equals(testRoomWithYesterdayTodayBooking));
+    }
+
+    @Test
+    public void isCheckedIn() {
+        assertFalse(testRoomWithLastWeekYesterdayBooking.isCheckedIn());
+        assertTrue(testRoomWithLastWeekYesterdayBookingCheckedIn.isCheckedIn());
+        assertFalse(testRoomWithYesterdayTodayBooking.isCheckedIn());
+        assertFalse(testRoomWithTodayTomorrowBooking.isCheckedIn());
+        assertFalse(testRoomWithTomorrowNextWeekBooking.isCheckedIn());
+    }
+
+    @Test
+    public void isCheckedIn_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        testRoomWithoutBooking.isCheckedIn();
+    }
+
+    @Test
+    public void hasBooking() {
+        assertTrue(testRoomWithLastWeekYesterdayBooking.hasBooking());
+        assertTrue(testRoomWithYesterdayTodayBooking.hasBooking());
+        assertTrue(testRoomWithTodayTomorrowBooking.hasBooking());
+        assertTrue(testRoomWithTomorrowNextWeekBooking.hasBooking());
+        assertFalse(testRoomWithoutBooking.hasBooking());
+    }
+
+    @Test
+    public void hasActiveBooking() {
+        assertFalse(testRoomWithLastWeekYesterdayBooking.hasActiveBooking());
+        assertTrue(testRoomWithYesterdayTodayBooking.hasActiveBooking());
+        assertTrue(testRoomWithTodayTomorrowBooking.hasActiveBooking());
+        assertFalse(testRoomWithTomorrowNextWeekBooking.hasActiveBooking());
+    }
+
+    @Test
+    public void hasActiveBooking_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        testRoomWithoutBooking.hasActiveBooking();
+    }
+
+    @Test
+    public void hasActiveOrExpiredBooking() {
+        assertTrue(testRoomWithLastWeekYesterdayBooking.hasActiveOrExpiredBooking());
+        assertTrue(testRoomWithYesterdayTodayBooking.hasActiveOrExpiredBooking());
+        assertTrue(testRoomWithTodayTomorrowBooking.hasActiveOrExpiredBooking());
+        assertFalse(testRoomWithTomorrowNextWeekBooking.hasActiveOrExpiredBooking());
+    }
+
+    @Test
+    public void hasActiveOrExpiredBooking_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        testRoomWithoutBooking.hasActiveOrExpiredBooking();
     }
 
     @Test

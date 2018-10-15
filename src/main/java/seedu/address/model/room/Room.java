@@ -106,7 +106,7 @@ public abstract class Room {
     /**
      * Reset this room's bookings
      */
-    public void resetBookings(Bookings replacementBookings) {
+    public void setBookings(Bookings replacementBookings) {
         bookings.setBookings(replacementBookings);
     }
 

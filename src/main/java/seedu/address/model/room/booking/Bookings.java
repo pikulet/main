@@ -47,11 +47,27 @@ public class Bookings implements Iterable<Booking> {
     }
 
     /**
-     * Returns true if the list canAcceptBooking an equivalent Booking as the given argument.
+     * Returns true if the given booking overlaps with any existing booking in the list
      */
     public boolean canAcceptBooking(Booking toCheck) {
         requireNonNull(toCheck);
         return internalList.stream().anyMatch(toCheck::isOverlapping);
+    }
+
+    /**
+     * Returns true if the given booking overlaps with any existing booking in the list, excluding the one it replaces
+     */
+    public boolean canAcceptIfReplaceBooking(Booking toReplace, Booking toCheck) {
+        requireAllNonNull(toReplace, toCheck);
+        for (Booking booking : internalList) {
+            if (booking.equals(toReplace)) {
+                continue;
+            }
+            if (booking.isOverlapping(toCheck)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -127,7 +143,7 @@ public class Bookings implements Iterable<Booking> {
             throw new BookingNotFoundException();
         }
 
-        if (!target.isSameBooking(editedBooking) && !canAcceptBooking(editedBooking)) {
+        if (!target.isSameBooking(editedBooking) && !canAcceptIfReplaceBooking(target, editedBooking)) {
             throw new OverlappingBookingException();
         }
 

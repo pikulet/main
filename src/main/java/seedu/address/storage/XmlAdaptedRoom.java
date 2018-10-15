@@ -108,17 +108,17 @@ public class XmlAdaptedRoom {
 
         if (modelCapacity.equals(SingleRoom.CAPACITY_SINGLE_ROOM)) {
             SingleRoom singleRoom = new SingleRoom(modelRoomNumber);
-            singleRoom.resetBookings(modelBookings);
+            singleRoom.setBookings(modelBookings);
             singleRoom.resetExpenses(modelExpenses);
             return singleRoom;
         } else if (modelCapacity.equals(DoubleRoom.CAPACITY_DOUBLE_ROOM)) {
             DoubleRoom doubleRoom = new DoubleRoom(modelRoomNumber);
-            doubleRoom.resetBookings(modelBookings);
+            doubleRoom.setBookings(modelBookings);
             doubleRoom.resetExpenses(modelExpenses);
             return doubleRoom;
         } else if (modelCapacity.equals(SuiteRoom.CAPACITY_SUITE_ROOM)) {
             SuiteRoom suiteRoom = new SuiteRoom(modelRoomNumber);
-            suiteRoom.resetBookings(modelBookings);
+            suiteRoom.setBookings(modelBookings);
             suiteRoom.resetExpenses(modelExpenses);
             return suiteRoom;
         } else {
