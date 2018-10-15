@@ -64,6 +64,10 @@ public class XmlAdaptedExpenseType {
         if (itemCost == null) {
             throw new IllegalValueException(MESSAGE_COST_MISSING);
         }
-        return new ExpenseType(itemNumber, itemName, itemCost);
+        try {
+            return new ExpenseType(itemNumber, itemName, itemCost);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(iae.getMessage());
+        }
     }
 }

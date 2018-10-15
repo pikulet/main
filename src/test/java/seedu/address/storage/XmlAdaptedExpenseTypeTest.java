@@ -25,15 +25,15 @@ public class XmlAdaptedExpenseTypeTest {
     }
 
     @Test
-    public void toModelType_emptyNumber_throwsIllegalArgumentException() {
+    public void toModelType_emptyNumber_throwsIllegalValueException() {
         XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("", "-", 0.0);
-        Assert.assertThrows(IllegalArgumentException.class, ExpenseType.MESSAGE_NUMBER_EMPTY, testType::toModelType);
+        Assert.assertThrows(IllegalValueException.class, ExpenseType.MESSAGE_NUMBER_EMPTY, testType::toModelType);
     }
 
     @Test
-    public void toModelType_emptyName_throwsIllegalArgumentException() {
+    public void toModelType_emptyName_throwsIllegalValueException() {
         XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("1", "", 0.0);
-        Assert.assertThrows(IllegalArgumentException.class, ExpenseType.MESSAGE_NAME_EMPTY, testType::toModelType);
+        Assert.assertThrows(IllegalValueException.class, ExpenseType.MESSAGE_NAME_EMPTY, testType::toModelType);
     }
 
     @Test
