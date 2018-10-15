@@ -63,7 +63,7 @@ public class SampleDataUtil {
      * Use to see if xml file reflects changes
      * DELETE WHEN TESTED IN UNIT TESTS
      */
-    public static List<Room> getSampleRoomsWithSampleBookingAndExpenses() {
+    public static List<Room> getSampleRoomsWithBookingsExpenses() {
         UniqueRoomList uniqueRoomList = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
         uniqueRoomList.addBooking(new RoomNumber("001"),
             new Booking(getSamplePersons()[0],

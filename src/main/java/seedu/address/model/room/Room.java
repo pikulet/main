@@ -51,7 +51,7 @@ public abstract class Room {
 
     protected Room(Room room) {
         this(room.getRoomNumber(), room.getCapacity());
-        // this.expenses.setExpenses(room.getExpenses()); // to be implemented when Expenses is implemented
+        this.expenses.setExpenses(room.getExpenses());
         this.bookings.setBookings(room.getBookings());
     }
 
