@@ -8,10 +8,10 @@ import org.junit.Test;
 import seedu.address.testutil.Assert;
 
 public class ExpenseTest {
+    
+    private final LocalDateTime validDateTime = LocalDateTime.parse("01/01/2018 23:59:59", Expense.FORMAT);
 
-    private final Expense validExpense = new Expense(
-            new ExpenseType("1", "-", 1), 0,
-            LocalDateTime.parse("01/01/2018 12:34", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+    private final Expense validExpense = new Expense(new ExpenseType("1", "-", 1), 0, validDateTime);
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -39,7 +39,6 @@ public class ExpenseTest {
 
     @Test
     public void getDate() {
-        assert validExpense.getDateTime().equals(LocalDateTime.parse("01/01/2018 12:34",
-                DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        assert validExpense.getDateTime().equals(validDateTime);
     }
 }
