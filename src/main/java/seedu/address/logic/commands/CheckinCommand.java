@@ -43,7 +43,7 @@ public class CheckinCommand extends Command {
         if (!model.roomHasActiveBooking(roomNumber)) {
             throw new CommandException(String.format(MESSAGE_NO_ACTIVE_BOOKING_CHECKIN, roomNumber));
         }
-        if (!model.isRoomCheckedIn(roomNumber)) {
+        if (model.isRoomCheckedIn(roomNumber)) {
             throw new CommandException(String.format(MESSAGE_OCCUPIED_ROOM_CHECKIN, roomNumber));
         }
         model.checkinRoom(roomNumber);
