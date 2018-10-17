@@ -14,7 +14,7 @@ import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 public class Expense {
 
     /**
-     * Standard date-time format used for this hotel's expenses 
+     * Standard date-time format used for this hotel's expenses
      */
     public static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
 
