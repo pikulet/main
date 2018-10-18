@@ -3,7 +3,7 @@ package seedu.address.model.room;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CAPACITY_DOUBLE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_074;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HANDICAP;
 import static seedu.address.testutil.TypicalRooms.DOUBLE_002;
 import static seedu.address.testutil.TypicalRooms.SINGLE_001;
@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookings;
@@ -73,8 +74,8 @@ public class RoomTest {
     }
 
     @Test
-    public void isCheckedIn_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void isCheckedIn_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.isCheckedIn();
     }
 
@@ -96,8 +97,8 @@ public class RoomTest {
     }
 
     @Test
-    public void hasActiveBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void hasActiveBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.hasActiveBooking();
     }
 
@@ -110,8 +111,8 @@ public class RoomTest {
     }
 
     @Test
-    public void hasActiveOrExpiredBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void hasActiveOrExpiredBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.hasActiveOrExpiredBooking();
     }
 
@@ -147,8 +148,8 @@ public class RoomTest {
     }
 
     @Test
-    public void checkIn_noBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void checkIn_noBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.checkIn();
     }
 
@@ -179,8 +180,8 @@ public class RoomTest {
     }
 
     @Test
-    public void checkOut_noBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void checkOut_noBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.checkout();
     }
 
@@ -235,7 +236,7 @@ public class RoomTest {
         assertFalse(SINGLE_001.equals(DOUBLE_002));
 
         // different room number -> returns false
-        Room editedSingle001 = new RoomBuilder(SINGLE_001).withRoomNumber(VALID_ROOM_NUMBER_074).build();
+        Room editedSingle001 = new RoomBuilder(SINGLE_001).withRoomNumber(VALID_ROOM_NUMBER_BOB).build();
         assertFalse(SINGLE_001.equals(editedSingle001));
 
         // different capacity -> returns false

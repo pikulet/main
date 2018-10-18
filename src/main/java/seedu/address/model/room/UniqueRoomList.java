@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.expenses.Expense;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.exceptions.DuplicateRoomException;
 import seedu.address.model.room.exceptions.RoomNotFoundException;
@@ -161,7 +162,8 @@ public class UniqueRoomList implements Iterable<Room> {
      * Add a booking to a room identified by its room number.
      */
     public void addBooking(RoomNumber roomNumber, Booking booking) {
-        getRoom(roomNumber).addBooking(booking);
+        Room roomToAdd = getRoom(roomNumber);
+        roomToAdd.addBooking(booking);
     }
 
     /**
@@ -204,6 +206,13 @@ public class UniqueRoomList implements Iterable<Room> {
      */
     public void checkoutRoom(RoomNumber roomNumber) {
         getRoom(roomNumber).checkout();
+    }
+
+    /**
+     * Adds an expense to the room using its room number
+     */
+    public void addExpense(RoomNumber roomNumber, Expense expense) {
+        getRoom(roomNumber).addExpense(expense);
     }
 
     /**
