@@ -413,6 +413,40 @@ This `Booking` is then added to the `Room` with the `RoomNumber` specified.
 
 We do not record the `Room` details in the `Guest` to minimise coupling.
 
+// tag::expenses[]
+=== Expense, Expenses and ExpenseType
+In Concierge, users will be given the feature of tracking the expenditure of each individual
+guest, in order to facilitate checkout charges. Hence, the three classes, `Expenses`, `Expense`
+and `ExpenseType` have been created for this purpose. In addition, the hotel also has a menu of
+goods and services available.
+
+==== Current Implementation
+`ExpenseType` objects are essentially immutable objects that represent a single item or service
+being sold at the hotel. An `ExpenseType` object contains information about its menu number,
+usual price, and description. The main purpose of this class is for convenience; users may
+charge a customer by simply providing the menu number of the item and the cost and description
+of the item will be able to be referenced. `ExpenseType` information is stored in a `Menu`
+object, which is then stored on the hard disk, since users should have the ability to modify
+the menu at any time. The `Menu` object is internally represented with a `HashMap<String, ExpenseType>`,
+with the menu number as keys and the `ExpenseType` objects as values. This allows for the
+serialisation of the `Menu` into XML, since `HashMap` is supported by JAXB.
+* **Alternative 1: Use a List<ExpenseType> to store the menu.** While there may be negligible
+differences for a small menu, searching for an `ExpenseType` object still takes linear time
+and there may be significant performance drops for a large menu.
+
+An `Expense` object contains information about one individual expenditure by a guest. An
+`Expense` object encapsulates the cost, `ExpenseType` of the item bought, and the date and time
+of expenditure.
+
+The `Expenses` object is essentially a `List<Expense>`. Every room contains an `Expenses`
+object, to represent the collection of all the expenses of the guests in the room.
+* **Alternative 1: Use a `List<Expense>` object**: Defining the `Expenses` class allows us
+to restrict access to the collection, and only allow certain methods such as adding an
+`Expense` or displaying on screen.
+* **Alternative 2: Use a `Set<Expense>` object**: Having the expenses ordered (e.g.
+chronologically) will be useful for generating a nice view of all the expenses incurred.
+// end::dataencryption[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
