@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.expenses.Expense;
@@ -15,6 +16,7 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.model.tag.Tag;
 
@@ -150,6 +152,16 @@ public abstract class Room {
         Booking firstBooking = bookings.getFirstBooking();
         return firstBooking.isActiveOrExpired();
     }
+    
+    public Optional<Booking> getFirstBooking() {
+        Booking firstBooking;
+        try {
+            firstBooking = bookings.getFirstBooking();
+        } catch (NoBookingException e){
+            firstBooking = null;
+        }
+        return Optional.of(firstBooking);
+    }
 
     /**
      * Add an expense to this room's expenses
@@ -238,8 +250,7 @@ public abstract class Room {
         builder.append("Room: ")
                 .append(getRoomNumber())
                 .append(" Capacity: ")
-                .append(getCapacity())
-                .append(" Registered Guest: ");
+                .append(getCapacity());
         builder.append(" Bookings: ")
                 .append(getBookings())
                 .append(" Tags: ");
