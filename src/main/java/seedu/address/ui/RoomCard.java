@@ -5,8 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.booking.Booking;
 
@@ -34,7 +32,7 @@ public class RoomCard extends UiPart<Region> {
     @FXML
     private Label capacity;
     @FXML
-    private Label expenses; 
+    private Label expenses;
     @FXML
     private FlowPane bookings;
     @FXML

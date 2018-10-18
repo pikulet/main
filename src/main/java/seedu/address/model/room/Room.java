@@ -152,12 +152,12 @@ public abstract class Room {
         Booking firstBooking = bookings.getFirstBooking();
         return firstBooking.isActiveOrExpired();
     }
-    
+
     public Optional<Booking> getFirstBooking() {
         Booking firstBooking;
         try {
             firstBooking = bookings.getFirstBooking();
-        } catch (NoBookingException e){
+        } catch (NoBookingException e) {
             firstBooking = null;
         }
         return Optional.ofNullable(firstBooking);

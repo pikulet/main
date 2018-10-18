@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Contains all of the expenses incurred by the guests of a given room.
