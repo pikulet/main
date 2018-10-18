@@ -160,7 +160,7 @@ public abstract class Room {
         } catch (NoBookingException e){
             firstBooking = null;
         }
-        return Optional.of(firstBooking);
+        return Optional.ofNullable(firstBooking);
     }
 
     /**
@@ -250,8 +250,10 @@ public abstract class Room {
         builder.append("Room: ")
                 .append(getRoomNumber())
                 .append(" Capacity: ")
-                .append(getCapacity());
-        builder.append(" Bookings: ")
+                .append(getCapacity())
+                .append("Expenses: ")
+                .append(getExpenses())
+                .append(" Bookings: ")
                 .append(getBookings())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

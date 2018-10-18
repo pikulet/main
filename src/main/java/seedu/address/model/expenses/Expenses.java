@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Contains all of the expenses incurred by the guests of a given room.
@@ -51,6 +52,20 @@ public class Expenses {
 
     public List<Expense> getExpensesList() {
         return Collections.unmodifiableList(expenseList);
+    }
+
+    /**
+     * Get the total cost of all the expenses
+     */
+    public double getTotalCost() {
+        return expenseList.stream().map(Expense::getCost).mapToDouble(Double::doubleValue).sum();
+    }
+
+    /**
+     * Get the total cost of all the expenses as a string
+     */
+    public String toStringTotalCost() {
+        return Double.toString(getTotalCost());
     }
 
     @Override
