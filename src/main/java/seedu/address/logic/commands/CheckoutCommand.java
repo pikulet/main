@@ -6,6 +6,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.ui.UiManager;
 
 /**
  * Check out a room identified using its room number and remove its registered guest from the guest list.
@@ -31,7 +32,8 @@ public class CheckoutCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history,
+                                 UiManager uiManager) throws CommandException {
         requireNonNull(model);
         // roomNumber is guaranteed to be a valid room number after parsing.
         if (!model.roomHasBooking(roomNumber)) {

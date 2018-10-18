@@ -26,6 +26,7 @@ import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.UiManager;
 
 /**
  * Edits the details of an existing guest in the address book.
@@ -67,7 +68,8 @@ public class EditCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history,
+                                 UiManager uiManager) throws CommandException {
         requireNonNull(model);
         List<Guest> lastShownList = model.getFilteredPersonList();
 

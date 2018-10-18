@@ -13,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
+import seedu.address.ui.UiManager;
 
 /**
  * The main LogicManager of the app.
@@ -24,8 +25,11 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
 
-    public LogicManager(Model model) {
+    private UiManager uiManager;
+
+    public LogicManager(Model model){
         this.model = model;
+        this.uiManager = null;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
     }
@@ -35,7 +39,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            return command.execute(model, history);
+            return command.execute(model, history, uiManager);
         } finally {
             history.add(commandText);
         }
@@ -54,5 +58,10 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public void setUIManager(UiManager uiManager){
+        this.uiManager = uiManager;
     }
 }

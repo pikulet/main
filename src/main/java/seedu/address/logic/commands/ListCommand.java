@@ -10,6 +10,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_NO_ROOMS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
+import seedu.address.ui.UiManager;
 
 /**
  * Lists all persons in the address book to the user.
@@ -39,16 +40,19 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history, UiManager uiManager) {
         requireNonNull(model);
         if (splitString[0].equals(PREFIX_GUEST.toString())) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             model.updateFilteredRoomList(PREDICATE_SHOW_NO_ROOMS);
+            uiManager.showPersonList();
         } else if (splitString[0].equals(PREFIX_ROOM.toString())) {
             model.updateFilteredPersonList(PREDICATE_SHOW_NO_PERSONS);
             model.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+            uiManager.showRoomList();
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
 }

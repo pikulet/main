@@ -11,6 +11,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -34,15 +35,12 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private RoomListPanel roomListPanel;
+    private PersonDetailedPanel personDetailedPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
-
-    @FXML
-    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -61,6 +59,15 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox personListBox;
+
+    @FXML
+    private VBox roomListBox;
+
+    //@FXML
+    //private StackPane personDetailedPanelPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -121,11 +128,9 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Fills up all the placeholders of this window.
+     * Initial state only displays guest list.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -140,6 +145,12 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        /*
+        personDetailedPanel = new PersonDetailedPanel(logic.getFilteredPersonList());
+        personDetailedPanelPlaceholder.getChildren().add(personDetailedPanel.getRoot());*/
+
+        this.showPersonList();
     }
 
     void hide() {
@@ -202,8 +213,21 @@ public class MainWindow extends UiPart<Stage> {
         return roomListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    /**
+     * Sets visibility / disables UI elements to display correct lists.
+     */
+    public void showPersonList() {
+        roomListBox.setDisable(true);
+        roomListBox.setVisible(false);
+        personListBox.setDisable(false);
+        personListBox.setVisible(true);
+    }
+
+    public void showRoomList() {
+        roomListBox.setDisable(false);
+        roomListBox.setVisible(true);
+        personListBox.setDisable(true);
+        personListBox.setVisible(false);
     }
 
     @Subscribe

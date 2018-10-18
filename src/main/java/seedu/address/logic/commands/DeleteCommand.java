@@ -10,6 +10,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Guest;
+import seedu.address.ui.UiManager;
 
 /**
  * Deletes a guest identified using it's displayed index from the address book.
@@ -32,7 +33,8 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history,
+                                 UiManager uiManager) throws CommandException {
         requireNonNull(model);
         List<Guest> lastShownList = model.getFilteredPersonList();
 

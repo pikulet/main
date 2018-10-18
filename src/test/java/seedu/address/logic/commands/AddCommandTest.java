@@ -45,7 +45,7 @@ public class AddCommandTest {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Guest validGuest = new GuestBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validGuest).execute(modelStub, commandHistory);
+        CommandResult commandResult = new AddCommand(validGuest).execute(modelStub, commandHistory, null);
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validGuest), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validGuest), modelStub.personsAdded);
@@ -60,7 +60,7 @@ public class AddCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
-        addCommand.execute(modelStub, commandHistory);
+        addCommand.execute(modelStub, commandHistory, null);
     }
 
     @Test

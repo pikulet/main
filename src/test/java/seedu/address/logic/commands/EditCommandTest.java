@@ -163,7 +163,7 @@ public class EditCommandTest {
         expectedModel.commitAddressBook();
 
         // edit -> first guest edited
-        editCommand.execute(model, commandHistory);
+        editCommand.execute(model, commandHistory, null);
 
         // undo -> reverts addressbook back to previous state and filtered guest list to show all persons
         expectedModel.undoAddressBook();
@@ -208,7 +208,7 @@ public class EditCommandTest {
         expectedModel.commitAddressBook();
 
         // edit -> edits second guest in unfiltered guest list / first guest in filtered guest list
-        editCommand.execute(model, commandHistory);
+        editCommand.execute(model, commandHistory, null);
 
         // undo -> reverts addressbook back to previous state and filtered guest list to show all persons
         expectedModel.undoAddressBook();

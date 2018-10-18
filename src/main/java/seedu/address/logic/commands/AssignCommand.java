@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.ui.UiManager;
 
 /**
  * Assigns a guest to a room.
@@ -36,7 +37,8 @@ public class AssignCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history ,
+                                 UiManager uiManager) throws CommandException {
         requireNonNull(model);
         List<Guest> lastShownList = model.getFilteredPersonList();
 
