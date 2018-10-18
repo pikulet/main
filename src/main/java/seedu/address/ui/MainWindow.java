@@ -66,8 +66,8 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private VBox roomListBox;
 
-    //@FXML
-    //private StackPane personDetailedPanelPlaceholder;
+    @FXML
+    private StackPane personDetailedPanelPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -146,9 +146,8 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        /*
-        personDetailedPanel = new PersonDetailedPanel(logic.getFilteredPersonList());
-        personDetailedPanelPlaceholder.getChildren().add(personDetailedPanel.getRoot());*/
+        personDetailedPanel = new PersonDetailedPanel();
+        personDetailedPanelPlaceholder.getChildren().add(personDetailedPanel.getRoot());
 
         this.showPersonList();
     }

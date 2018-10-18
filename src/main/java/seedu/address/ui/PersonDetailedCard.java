@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import seedu.address.model.person.Guest;
 
 /**
@@ -27,9 +28,9 @@ public class PersonDetailedCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label header;
     @FXML
-    private Label id;
+    private Label name;
     @FXML
     private Label phone;
     @FXML
@@ -39,10 +40,10 @@ public class PersonDetailedCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonDetailedCard(Guest guest, int displayedIndex) {
+    public PersonDetailedCard(Guest guest) {
         super(FXML);
         this.guest = guest;
-        id.setText(displayedIndex + ". ");
+        header.setText("Guest Details:");
         name.setText(guest.getName().fullName);
         phone.setText(guest.getPhone().value);
         address.setText(guest.getAddress().value);
@@ -64,7 +65,6 @@ public class PersonDetailedCard extends UiPart<Region> {
 
         // state check
         PersonDetailedCard card = (PersonDetailedCard) other;
-        return id.getText().equals(card.id.getText())
-                && guest.equals(card.guest);
+        return guest.equals(card.guest);
     }
 }
