@@ -206,7 +206,7 @@ Charges a room service to a room  +
 Format: `service r/ROOM_NUMBER svc/SERVICE_TYPE`
 
 ****
-* SERVICE_TYPE refers to the serial number given to each type of service offered by the hotel. 
+* SERVICE_TYPE refers to the serial number given to each type of service offered by the hotel.
 * This could be room service, on-demand video streaming, bath supplies, mini bar, etc.
 ****
 
