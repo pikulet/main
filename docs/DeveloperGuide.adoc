@@ -401,8 +401,8 @@ Assuming there is a booking already added to room 001,
 . `VersionedAddressBook#checkinRoom` will call `UniqueRoomList#checkinRoom`
 . `UniqueRoomList#checkinRoom` will call `UniqueRoomList#getRoom` to get the room using its RoomNumber, followed by
 `Room#checkin`
-. `Room#checkin` will 
-.. throw `NoBookingException` if the room has no bookings 
+. `Room#checkin` will
+.. throw `NoBookingException` if the room has no bookings
 .. throw `NoActiveBookingException` if the room has no active bookings
 .. throw `OccupiedRoomCheckInException` if the room's active booking is already checked in
 .. update the active booking as checked-in
@@ -410,7 +410,7 @@ Assuming there is a booking already added to room 001,
 * The user executes `checkout 001` when the guest leaves.
 . The `checkout` command follows step 1 to 4 of the `checkin` command, just replace occurences of "checkin" to "checkout"
 . `Room#checkout` will
-.. throw `NoBookingException` if the room has no bookings 
+.. throw `NoBookingException` if the room has no bookings
 .. throw `NoActiveOrExpiredBookingException` if the room has no active or expired bookings
 .. delete the first booking from the list of bookings
 
@@ -422,7 +422,7 @@ Assuming there is a booking already added to room 001,
 ** Pros: Natural, because the receptionist will only check-in guests who have a booking during their booking period, not before or after (even if the receptionist forgets).
 On the other hand, receptionist may forget to checkout a guest on the system, resulting in an expired booking. Thus, we allow checking out of a room with an expired booking.
 Checkout acts as a delete booking feature, since it ignores the check-in status of a room's active booking.
-[NOTE] 
+[NOTE]
 The ability to delete upcoming bookings is planned for v1.3.
 ** Cons: Have to check for many exceptions.
 * **Alternative 2:** Check-in only the active booking, and check-out only active booking.
