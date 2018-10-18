@@ -171,6 +171,13 @@ public abstract class Room {
     }
 
     /**
+     * Add an expense to this room's expenses
+     */
+    public void addExpense(Expense expense) {
+        expenses.addExpense(expense);
+    }
+
+    /**
      * Checks in the first booking of this room and its occupant
      */
     public void checkIn() {
