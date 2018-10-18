@@ -23,7 +23,7 @@ public class CommandArchive {
      * Takes in the userInputHistory string, extracts the latest command and writes it to commandFile.txt with a
      */
     public static void stringToFile (String inputString) {
-        File commandHistory = new File("commandFile.txt");
+        File commandHistory = new File("data/commandFile.txt");
         String latestUserCommand = inputString.substring(0, inputString.indexOf('\n'));
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy " + "HH:mm:ss  ").format(new java.util.Date());
 
