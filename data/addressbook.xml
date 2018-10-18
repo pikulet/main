@@ -60,6 +60,11 @@
             </bookingPeriod>
             <checkin>true</checkin>
         </bookings>
+        <expenses>
+            <item>RS01</item>
+            <cost>50.0</cost>
+            <datetime>16/10/2018 03:23:42</datetime>
+        </expenses>
     </rooms>
     <rooms>
         <roomNumber>002</roomNumber>
