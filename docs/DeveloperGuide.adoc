@@ -373,6 +373,72 @@ from the user.
 2. Does not utilise the existing infrastructure and data found in the base level program class `CommandHistory` and
 hence would require more effort to implement.
 
+// tag::checkin[]
+=== Room Check-in/Checkout feature
+==== Current Implementation
+
+The room check-in and checkout features are facilitated by `UniqueRoomList`.
+The logic that supports the check-in and checkout operations reside in the classes in the `Room` and `Booking` packages.
+
+* `UniqueRoomList#checkin(RoomNumber)` -- Checks in the active booking of the room identified by the given room number
+* `UniqueRoomList#checkout(RoomNumber)` -- Checks out the first booking in the list of bookings of the room identified by the given room number.
+
+Note:
+
+* Active booking refers to a booking that includes today's date.
+* The room maintains a sorted list of bookings. The first booking refers to the first in chronological order.
+* A room can be checked out regardless of its checked-in status. Thus, `checkout` doubles as a command to delete bookings.
+
+These operations are exposed in the `Model` interface as `Model#checkin()` and `Model#checkout()` respectively.
+
+Given below is an example usage scenario and how the check-in/checkout mechanism behaves at each step.
+
+Assuming there is a booking already added to room 001,
+
+* The user executes `checkin 001` when the guest arrives.
+. The `checkin` command takes in a `RoomNumber` argument and calls `Model#checkinRoom` as such: `Model.checkinRoom(roomNumber)`
+. `ModelManager#checkinRoom` (which implements Model) will call `VersionedAddressBook#checkinRoom`
+. `VersionedAddressBook#checkinRoom` will call `UniqueRoomList#checkinRoom`
+. `UniqueRoomList#checkinRoom` will call `UniqueRoomList#getRoom` to get the room using its RoomNumber, followed by
+`Room#checkin`
+. `Room#checkin` will
+.. throw `NoBookingException` if the room has no bookings
+.. throw `NoActiveBookingException` if the room has no active bookings
+.. throw `OccupiedRoomCheckInException` if the room's active booking is already checked in
+.. update the active booking as checked-in
+
+* The user executes `checkout 001` when the guest leaves.
+. The `checkout` command follows step 1 to 4 of the `checkin` command, just replace occurences of "checkin" to "checkout"
+. `Room#checkout` will
+.. throw `NoBookingException` if the room has no bookings
+.. throw `NoActiveOrExpiredBookingException` if the room has no active or expired bookings
+.. delete the first booking from the list of bookings
+
+==== Design Considerations
+
+===== Aspect: How check-in/checkout executes
+
+* **Alternative 1 (current choice):** Check-in only the active booking, and check-out only the first expired or active booking regardless of check-in status.
+** Pros: Natural, because the receptionist will only check-in guests who have a booking during their booking period, not before or after (even if the receptionist forgets).
+On the other hand, receptionist may forget to checkout a guest on the system, resulting in an expired booking. Thus, we allow checking out of a room with an expired booking.
+Checkout acts as a delete booking feature, since it ignores the check-in status of a room's active booking.
+[NOTE]
+The ability to delete upcoming bookings is planned for v1.3.
+** Cons: Have to check for many exceptions.
+* **Alternative 2:** Check-in only the active booking, and check-out only active booking.
+** Pros: Stricter checks on check-in/checkout, leading to less chance of error.
+** Cons: Many various real-life situations to consider.
+
+===== Aspect: Immutability of check-in command
+
+* **Alternative 1 (current choice):** Check-in a room by creating a new copy of the room with the check-in flag set to true.
+** Pros: Debugging is easy. Consistent with the rest of the application.
+** Cons: Check-in method becomes unintuitive, since a new room is returned from the operation, instead of a void method simply setting the room property.
+* **Alternative 2:** Check-in a room by changing its check-in flag to true.
+** Pros: Check-in method is intuitive, and does not return a new room.
+** Cons: Harder to debug. Tests also become troublesome since changes are made to the same referenced room.
+// tag::checkin[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
