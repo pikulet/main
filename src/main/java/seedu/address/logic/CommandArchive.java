@@ -1,20 +1,17 @@
 package seedu.address.logic;
 
-import seedu.address.commons.util.FileUtil;
-import seedu.address.model.expenses.Expense;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import seedu.address.commons.util.FileUtil;
+import seedu.address.model.expenses.Expense;
 
 /**
  * Append all commands that user entered into command archive
