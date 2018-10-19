@@ -127,12 +127,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void checkinRoom(RoomNumber roomNumber) {
         versionedAddressBook.checkinRoom(roomNumber);
+        updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         indicateAddressBookChanged();
     }
 
     @Override
     public void checkoutRoom(RoomNumber roomNumber) {
         versionedAddressBook.checkoutRoom(roomNumber);
+        updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         indicateAddressBookChanged();
     }
 
@@ -159,6 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedAddressBook.addBooking(roomNumber, booking);
+        updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         indicateAddressBookChanged();
     }
 
