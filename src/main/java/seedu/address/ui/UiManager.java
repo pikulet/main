@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GUEST;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -14,6 +17,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.ListingChangedEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -117,13 +121,24 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    @Subscribe
+    private void handleListingChangeEvent(ListingChangedEvent event){
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        if(event.getFlag() == PREFIX_GUEST.toString()){
+            showPersonList();
+        } else if (event.getFlag() == PREFIX_ROOM.toString()){
+            showRoomList();
+        }
+    }
+
     //==================== UI Visibility Settings =============================================================
 
-    public void showPersonList() {
+    private void showPersonList() {
         mainWindow.showPersonList();
     }
 
-    public void showRoomList() {
+    private void showRoomList() {
         mainWindow.showRoomList();
     }
 }

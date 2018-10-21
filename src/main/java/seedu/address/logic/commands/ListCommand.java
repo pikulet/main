@@ -8,9 +8,11 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ROOMS;
 import static seedu.address.model.Model.PREDICATE_SHOW_NO_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_NO_ROOMS;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.ui.UiManager;
+import seedu.address.commons.events.ui.ListingChangedEvent;
+
 
 /**
  * Lists all persons in the address book to the user.
@@ -40,16 +42,18 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, UiManager uiManager) {
+    public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
+
         if (splitString[0].equals(PREFIX_GUEST.toString())) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             model.updateFilteredRoomList(PREDICATE_SHOW_NO_ROOMS);
-            uiManager.showPersonList();
+            EventsCenter.getInstance().post(new ListingChangedEvent(PREFIX_GUEST.toString()));
+
         } else if (splitString[0].equals(PREFIX_ROOM.toString())) {
             model.updateFilteredPersonList(PREDICATE_SHOW_NO_PERSONS);
             model.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
-            uiManager.showRoomList();
+            EventsCenter.getInstance().post(new ListingChangedEvent(PREFIX_ROOM.toString()));
         }
 
         return new CommandResult(MESSAGE_SUCCESS);

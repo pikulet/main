@@ -25,11 +25,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
 
-    private UiManager uiManager;
-
     public LogicManager(Model model){
         this.model = model;
-        this.uiManager = null;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
     }
@@ -39,7 +36,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            return command.execute(model, history, uiManager);
+            return command.execute(model, history);
         } finally {
             history.add(commandText);
         }
@@ -58,10 +55,5 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
-    }
-
-    @Override
-    public void setUIManager(UiManager uiManager){
-        this.uiManager = uiManager;
     }
 }

@@ -68,8 +68,7 @@ public class EditCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history,
-                                 UiManager uiManager) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Guest> lastShownList = model.getFilteredPersonList();
 

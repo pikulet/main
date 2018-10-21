@@ -29,7 +29,4 @@ public interface Logic {
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
-
-    /** Function required to setup UiManager on LogicManager after UI init */
-    void setUIManager(UiManager uiManager);
 }

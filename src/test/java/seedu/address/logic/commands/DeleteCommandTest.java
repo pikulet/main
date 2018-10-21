@@ -90,7 +90,7 @@ public class DeleteCommandTest {
         expectedModel.commitAddressBook();
 
         // delete -> first guest deleted
-        deleteCommand.execute(model, commandHistory, null);
+        deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered guest list to show all persons
         expectedModel.undoAddressBook();
@@ -132,7 +132,7 @@ public class DeleteCommandTest {
         expectedModel.commitAddressBook();
 
         // delete -> deletes second guest in unfiltered guest list / first guest in filtered guest list
-        deleteCommand.execute(model, commandHistory, null);
+        deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered guest list to show all persons
         expectedModel.undoAddressBook();
