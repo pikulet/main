@@ -5,15 +5,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
 import seedu.address.model.person.Guest;
 
 /**
  * An UI component that displays information of a {@code Guest}.
  */
-public class PersonDetailedCard extends UiPart<Region> {
+public class GuestCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonDetailedCard.fxml";
+    private static final String FXML = "GuestListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -28,26 +27,21 @@ public class PersonDetailedCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label header;
-    @FXML
     private Label name;
+    @FXML
+    private Label id;
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
     private FlowPane tags;
 
-    public PersonDetailedCard(Guest guest) {
+
+    public GuestCard(Guest guest, int displayedIndex) {
         super(FXML);
         this.guest = guest;
-        header.setText("Guest Details:");
+        id.setText(displayedIndex + ". ");
         name.setText(guest.getName().fullName);
         phone.setText(guest.getPhone().value);
-        address.setText(guest.getAddress().value);
-        email.setText(guest.getEmail().value);
         guest.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
@@ -59,12 +53,13 @@ public class PersonDetailedCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonDetailedCard)) {
+        if (!(other instanceof GuestCard)) {
             return false;
         }
 
         // state check
-        PersonDetailedCard card = (PersonDetailedCard) other;
-        return guest.equals(card.guest);
+        GuestCard card = (GuestCard) other;
+        return id.getText().equals(card.id.getText())
+                && guest.equals(card.guest);
     }
 }

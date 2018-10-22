@@ -26,7 +26,6 @@ import seedu.address.model.person.Guest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-import seedu.address.ui.UiManager;
 
 /**
  * Edits the details of an existing guest in the address book.

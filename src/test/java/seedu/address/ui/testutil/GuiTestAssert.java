@@ -5,24 +5,35 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.GuestDetailedCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.RoomCardHandle;
+import guitests.guihandles.RoomDetailedCardHandle;
 import seedu.address.model.person.Guest;
+import seedu.address.model.room.Room;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
     /**
-     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard} for guests.
      */
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getTags(), actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard} for rooms.
+     */
+    public static void assertCardEquals(RoomCardHandle expectedCard, RoomCardHandle actualCard) {
+        assertEquals(expectedCard.getRoomNumber(), actualCard.getRoomNumber());
+        assertEquals(expectedCard.getCapacity(), actualCard.getCapacity());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -32,9 +43,38 @@ public class GuiTestAssert {
     public static void assertCardDisplaysPerson(Guest expectedGuest, PersonCardHandle actualCard) {
         assertEquals(expectedGuest.getName().fullName, actualCard.getName());
         assertEquals(expectedGuest.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedGuest.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedGuest.getAddress().value, actualCard.getAddress());
         assertEquals(expectedGuest.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedGuest}.
+     */
+    public static void assertCardDisplaysDetailedGuest(Guest expectedGuest, GuestDetailedCardHandle actualCard) {
+        assertEquals(expectedGuest.getName().fullName, actualCard.getName());
+        assertEquals(expectedGuest.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedGuest.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedRoom}.
+     */
+    public static void assertCardDisplaysRoom(Room expectedRoom, RoomCardHandle actualCard) {
+        assertEquals("Room: " + expectedRoom.getRoomNumber(), actualCard.getRoomNumber());
+        assertEquals("Capacity: " + expectedRoom.getCapacity(), actualCard.getCapacity());
+        assertEquals(expectedRoom.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedRoom}.
+     */
+    public static void assertCardDisplaysDetailedRoom(Room expectedRoom, RoomDetailedCardHandle actualCard) {
+        assertEquals("Room: " + expectedRoom.getRoomNumber(), actualCard.getRoomNumber());
+        assertEquals("Capacity: " + expectedRoom.getCapacity(), actualCard.getCapacity());
+        assertEquals("Expenses: " + expectedRoom.getExpenses().toStringTotalCost(), actualCard.getExpenses());
+        assertEquals(expectedRoom.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 

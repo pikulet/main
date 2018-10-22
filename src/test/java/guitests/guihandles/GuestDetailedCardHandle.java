@@ -13,24 +13,23 @@ import seedu.address.model.person.Guest;
 /**
  * Provides a handle to a guest card in the guest list panel.
  */
-public class PersonCardHandle extends NodeHandle<Node> {
-    private static final String ID_FIELD_ID = "#id";
+public class GuestDetailedCardHandle extends NodeHandle<Node> {
     private static final String NAME_FIELD_ID = "#name";
     private static final String PHONE_FIELD_ID = "#phone";
+    private static final String EMAIL_FIELD_ID = "#email";
     private static final String TAGS_FIELD_ID = "#tags";
 
-    private final Label idLabel;
     private final Label nameLabel;
     private final Label phoneLabel;
+    private final Label emailLabel;
     private final List<Label> tagLabels;
 
-    public PersonCardHandle(Node cardNode) {
+    public GuestDetailedCardHandle(Node cardNode) {
         super(cardNode);
 
-        idLabel = getChildNode(ID_FIELD_ID);
         nameLabel = getChildNode(NAME_FIELD_ID);
         phoneLabel = getChildNode(PHONE_FIELD_ID);
-
+        emailLabel = getChildNode(EMAIL_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         tagLabels = tagsContainer
@@ -40,16 +39,16 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
-    public String getId() {
-        return idLabel.getText();
-    }
-
     public String getName() {
         return nameLabel.getText();
     }
 
     public String getPhone() {
         return phoneLabel.getText();
+    }
+
+    public String getEmail() {
+        return emailLabel.getText();
     }
 
     public List<String> getTags() {
@@ -65,6 +64,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public boolean equals(Guest guest) {
         return getName().equals(guest.getName().fullName)
                 && getPhone().equals(guest.getPhone().value)
+                && getEmail().equals(guest.getEmail())
                 && ImmutableMultiset.copyOf(getTags()).equals(ImmutableMultiset.copyOf(guest.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.toList())));

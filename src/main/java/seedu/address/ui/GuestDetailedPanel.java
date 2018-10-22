@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,33 +14,34 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Guest;
 
-import java.util.logging.Logger;
-
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of one guest.
  */
-public class PersonDetailedPanel extends UiPart<Region> {
-    private static final String FXML = "PersonDetailedPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonDetailedPanel.class);
+public class GuestDetailedPanel extends UiPart<Region> {
+    private static final String FXML = "GuestDetailedPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(GuestDetailedPanel.class);
 
     @FXML
-    private ListView<Guest> personDetailedView;
+    private ListView<Guest> guestDetailedView;
 
-    public PersonDetailedPanel() {
+    public GuestDetailedPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
     }
 
-
-    private void displayGuestDetails(Guest guest) {
+    /**
+     * Sets the details of a {@code Guest} by adding into the {@code ListView<Guest>} list to be
+     * displayed via UI.
+     */
+    public void setGuestDetails(Guest guest) {
         ObservableList<Guest> guestList = FXCollections.observableArrayList();
         guestList.add(guest);
-        personDetailedView.setItems(guestList);
-        personDetailedView.setCellFactory(listView -> new PersonListViewCell());
+        guestDetailedView.setItems(guestList);
+        guestDetailedView.setCellFactory(listView -> new PersonListViewCell());
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Guest} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Guest} using a {@code GuestDetailedCard}.
      */
     class PersonListViewCell extends ListCell<Guest> {
         @Override
@@ -48,15 +52,19 @@ public class PersonDetailedPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonDetailedCard(guest).getRoot());
+                setGraphic(new GuestDetailedCard(guest).getRoot());
             }
         }
     }
 
+    /**
+     * Event handler when a guest is selected on the left panel to display detailed information on
+     * the right panel.
+     */
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        displayGuestDetails(event.getNewSelection());
+        setGuestDetails(event.getNewSelection());
     }
 
 }

@@ -18,27 +18,27 @@ import seedu.address.model.person.Guest;
 /**
  * Panel containing the list of persons.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class GuestListPanel extends UiPart<Region> {
+    private static final String FXML = "GuestListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(GuestListPanel.class);
 
     @FXML
-    private ListView<Guest> personListView;
+    private ListView<Guest> guestListView;
 
-    public PersonListPanel(ObservableList<Guest> guestList) {
+    public GuestListPanel(ObservableList<Guest> guestList) {
         super(FXML);
         setConnections(guestList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<Guest> guestList) {
-        personListView.setItems(guestList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        guestListView.setItems(guestList);
+        guestListView.setCellFactory(listView -> new GuestListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        personListView.getSelectionModel().selectedItemProperty()
+        guestListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in guest list panel changed to : '" + newValue + "'");
@@ -48,12 +48,12 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code GuestCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            personListView.scrollTo(index);
-            personListView.getSelectionModel().clearAndSelect(index);
+            guestListView.scrollTo(index);
+            guestListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
@@ -64,9 +64,9 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Guest} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Guest} using a {@code GuestCard}.
      */
-    class PersonListViewCell extends ListCell<Guest> {
+    class GuestListViewCell extends ListCell<Guest> {
         @Override
         protected void updateItem(Guest guest, boolean empty) {
             super.updateItem(guest, empty);
@@ -75,7 +75,7 @@ public class PersonListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonCard(guest, getIndex() + 1).getRoot());
+                setGraphic(new GuestCard(guest, getIndex() + 1).getRoot());
             }
         }
     }

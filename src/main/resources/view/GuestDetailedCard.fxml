@@ -15,7 +15,7 @@
     </columnConstraints>
     <VBox alignment="TOP_LEFT" minHeight="100" maxHeight = "200" GridPane.columnIndex="0">
       <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
+        <Insets top="5" right="5" bottom="5" left="10" />
       </padding>
         <HBox spacing="5" alignment="TOP_LEFT">
             <Label fx:id="header" text="\$first" styleClass="cell_header"/>

@@ -122,23 +122,33 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Subscribe
-    private void handleListingChangeEvent(ListingChangedEvent event){
+    private void handleListingChangeEvent(ListingChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        if(event.getFlag() == PREFIX_GUEST.toString()){
-            showPersonList();
-        } else if (event.getFlag() == PREFIX_ROOM.toString()){
+        if (event.getFlag() == PREFIX_GUEST.toString()) {
+            showGuestList();
+            showGuestDetailedPanel();
+        } else if (event.getFlag() == PREFIX_ROOM.toString()) {
             showRoomList();
+            showRoomDetailedPanel();
         }
     }
 
-    //==================== UI Visibility Settings =============================================================
+    //==================== UI Visibility Functions ============================================================
 
-    private void showPersonList() {
-        mainWindow.showPersonList();
+    private void showGuestList() {
+        mainWindow.showGuestList();
     }
 
     private void showRoomList() {
         mainWindow.showRoomList();
+    }
+
+    private void showGuestDetailedPanel() {
+        mainWindow.showGuestDetailedPanel();
+    }
+
+    private void showRoomDetailedPanel() {
+        mainWindow.showRoomDetailedPanel();
     }
 }

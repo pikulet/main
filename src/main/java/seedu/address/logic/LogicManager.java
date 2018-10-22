@@ -13,7 +13,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
-import seedu.address.ui.UiManager;
 
 /**
  * The main LogicManager of the app.
@@ -25,7 +24,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
 
-    public LogicManager(Model model){
+    public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
@@ -43,7 +42,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Guest> getFilteredPersonList() {
+    public ObservableList<Guest> getFilteredGuestList() {
         return model.getFilteredPersonList();
     }
 

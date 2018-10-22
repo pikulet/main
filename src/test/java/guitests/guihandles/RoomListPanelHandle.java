@@ -6,38 +6,38 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Guest;
+import seedu.address.model.room.Room;
 
 /**
- * Provides a handle for {@code GuestListPanel} containing the list of {@code GuestCard}.
+ * Provides a handle for {@code RoomListPanel} containing the list of {@code RoomCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<Guest>> {
-    public static final String PERSON_LIST_VIEW_ID = "#guestListView";
+public class RoomListPanelHandle extends NodeHandle<ListView<Room>> {
+    public static final String PERSON_LIST_VIEW_ID = "#roomListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 
-    private Optional<Guest> lastRememberedSelectedPersonCard;
+    private Optional<Room> lastRememberedSelectedRoomCard;
 
-    public PersonListPanelHandle(ListView<Guest> personListPanelNode) {
-        super(personListPanelNode);
+    public RoomListPanelHandle(ListView<Room> roomListPanelNode) {
+        super(roomListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code PersonCardHandle}.
+     * Returns a handle to the selected {@code RoomCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public PersonCardHandle getHandleToSelectedCard() {
-        List<Guest> selectedGuestList = getRootNode().getSelectionModel().getSelectedItems();
+    public RoomCardHandle getHandleToSelectedCard() {
+        List<Room> selectedRoomList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (selectedGuestList.size() != 1) {
-            throw new AssertionError("Guest list size expected 1.");
+        if (selectedRoomList.size() != 1) {
+            throw new AssertionError("Room list size expected 1.");
         }
 
         return getAllCardNodes().stream()
-                .map(PersonCardHandle::new)
-                .filter(handle -> handle.equals(selectedGuestList.get(0)))
+                .map(RoomCardHandle::new)
+                .filter(handle -> handle.equals(selectedRoomList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -53,7 +53,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Guest>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<Guest> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Room> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -65,13 +65,13 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Guest>> {
     /**
      * Navigates the listview to display {@code guest}.
      */
-    public void navigateToCard(Guest guest) {
-        if (!getRootNode().getItems().contains(guest)) {
-            throw new IllegalArgumentException("Guest does not exist.");
+    public void navigateToCard(Room room) {
+        if (!getRootNode().getItems().contains(room)) {
+            throw new IllegalArgumentException("Room does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(guest);
+            getRootNode().scrollTo(room);
         });
         guiRobot.pauseForHuman();
     }
@@ -91,25 +91,25 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Guest>> {
     }
 
     /**
-     * Selects the {@code GuestCard} at {@code index} in the list.
+     * Selects the {@code RoomCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 
     /**
-     * Returns the guest card handle of a guest associated with the {@code index} in the list.
+     * Returns the room card handle of a room associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public PersonCardHandle getPersonCardHandle(int index) {
+    public RoomCardHandle getRoomCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(PersonCardHandle::new)
-                .filter(handle -> handle.equals(getPerson(index)))
+                .map(RoomCardHandle::new)
+                .filter(handle -> handle.equals(getRoom(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private Guest getPerson(int index) {
+    private Room getRoom(int index) {
         return getRootNode().getItems().get(index);
     }
 
@@ -123,15 +123,15 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Guest>> {
     }
 
     /**
-     * Remembers the selected {@code GuestCard} in the list.
+     * Remembers the selected {@code RoomCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
-        List<Guest> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public void rememberSelectedRoomCard() {
+        List<Room> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedPersonCard = Optional.empty();
+            lastRememberedSelectedRoomCard = Optional.empty();
         } else {
-            lastRememberedSelectedPersonCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedRoomCard = Optional.of(selectedItems.get(0));
         }
     }
 
@@ -139,14 +139,14 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Guest>> {
      * Returns true if the selected {@code GuestCard} is different from the value remembered by the most recent
      * {@code rememberSelectedPersonCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
-        List<Guest> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public boolean isSelectedRoomCardChanged() {
+        List<Room> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedPersonCard.isPresent();
+            return lastRememberedSelectedRoomCard.isPresent();
         } else {
-            return !lastRememberedSelectedPersonCard.isPresent()
-                    || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedRoomCard.isPresent()
+                    || !lastRememberedSelectedRoomCard.get().equals(selectedItems.get(0));
         }
     }
 

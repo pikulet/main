@@ -49,11 +49,11 @@
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
           <StackPane VBox.vgrow="NEVER" fx:id="displayRegion" styleClass="pane-with-border"
                      minHeight="500" prefHeight="900" maxHeight="900">
-            <VBox fx:id="personListBox" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+            <VBox fx:id="guestListBox" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+              <StackPane fx:id="guestListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
             </VBox>
             <VBox fx:id="roomListBox" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
               <padding>
@@ -67,11 +67,17 @@
           </StackPane>
           <StackPane VBox.vgrow="NEVER" fx:id="SelectionRegion" styleClass="pane-with-border"
                      minHeight="500" prefHeight="900" maxHeight="900">
-            <VBox fx:id="selectedElementPanel" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+            <VBox fx:id="guestDetailedBox" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-                <StackPane fx:id="personDetailedPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+              <StackPane fx:id="guestDetailedPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <VBox fx:id="roomDetailedBox" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+                <StackPane fx:id="roomDetailedPanelPlaceholder" VBox.vgrow="ALWAYS"/>
             </VBox>
             <padding>
               <Insets top="5" right="10" bottom="5" left="10" />

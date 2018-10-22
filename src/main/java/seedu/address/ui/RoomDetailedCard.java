@@ -11,9 +11,9 @@ import seedu.address.model.room.booking.Booking;
 /**
  * An UI component that displays information of a {@code Room}.
  */
-public class RoomCard extends UiPart<Region> {
+public class RoomDetailedCard extends UiPart<Region> {
 
-    private static final String FXML = "RoomListCard.fxml";
+    private static final String FXML = "RoomDetailedCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -28,9 +28,13 @@ public class RoomCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label header;
+    @FXML
     private Label roomNumber;
     @FXML
     private Label capacity;
+    @FXML
+    private Label expenses;
     @FXML
     private FlowPane bookings;
     @FXML
@@ -38,13 +42,15 @@ public class RoomCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public RoomCard(Room room) {
+    public RoomDetailedCard(Room room) {
         super(FXML);
         this.room = room;
+        header.setText("Room Details:");
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
+        expenses.setText("Expenses: " + room.getExpenses().toStringTotalCost());
         bookings.getChildren().add(new Label("Current booking:\n" + room.getFirstBooking()
-            .map(Booking::toStringShortDescription).orElse("")));
+                .map(Booking::toStringShortDescription).orElse("")));
         room.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
@@ -56,12 +62,12 @@ public class RoomCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RoomCard)) {
+        if (!(other instanceof RoomDetailedCard)) {
             return false;
         }
 
         // state check
-        RoomCard card = (RoomCard) other;
+        RoomDetailedCard card = (RoomDetailedCard) other;
         return roomNumber.getText().equals(card.roomNumber.getText())
                 && room.equals(card.room);
     }

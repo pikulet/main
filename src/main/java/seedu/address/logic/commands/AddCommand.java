@@ -15,15 +15,12 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Guest;
-<<<<<<< HEAD
-import seedu.address.ui.UiManager;
-=======
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
 import seedu.address.model.room.exceptions.RoomNotFoundException;
->>>>>>> upstream/master
+
 
 /**
  * Adds a guest to the address book.

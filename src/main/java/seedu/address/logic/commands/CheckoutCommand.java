@@ -6,7 +6,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.ui.UiManager;
 
 /**
  * Check out a room identified using its room number and remove its registered guest from the guest list.

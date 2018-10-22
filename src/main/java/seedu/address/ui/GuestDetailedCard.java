@@ -10,9 +10,9 @@ import seedu.address.model.person.Guest;
 /**
  * An UI component that displays information of a {@code Guest}.
  */
-public class PersonCard extends UiPart<Region> {
+public class GuestDetailedCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "GuestDetailedCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -27,21 +27,27 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label header;
     @FXML
-    private Label id;
+    private Label name;
     @FXML
     private Label phone;
     @FXML
     private Label address;
+    @FXML
+    private Label email;
+    @FXML
+    private FlowPane tags;
 
-    public PersonCard(Guest guest, int displayedIndex) {
+    public GuestDetailedCard(Guest guest) {
         super(FXML);
         this.guest = guest;
-        id.setText(displayedIndex + ". ");
+        header.setText("Guest Details:");
         name.setText(guest.getName().fullName);
         phone.setText(guest.getPhone().value);
         address.setText(guest.getAddress().value);
+        email.setText(guest.getEmail().value);
+        guest.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     @Override
@@ -52,13 +58,12 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof GuestDetailedCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
-                && guest.equals(card.guest);
+        GuestDetailedCard card = (GuestDetailedCard) other;
+        return guest.equals(card.guest);
     }
 }

@@ -6,7 +6,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
-import seedu.address.ui.UiManager;
 
 /**
  * API of the Logic component
@@ -22,7 +21,7 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Guest> getFilteredPersonList();
+    ObservableList<Guest> getFilteredGuestList();
 
     /** Returns an unmodifiable view of the filtered list of rooms */
     ObservableList<Room> getFilteredRoomList();

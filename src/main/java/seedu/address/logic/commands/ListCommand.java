@@ -9,10 +9,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_NO_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_NO_ROOMS;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ListingChangedEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.commons.events.ui.ListingChangedEvent;
-
 
 /**
  * Lists all persons in the address book to the user.
@@ -30,7 +29,7 @@ public class ListCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_ROOM;
 
-    private String[] splitString;
+    private final String[] splitString;
 
     /**
      * Creates a ListCommand to handle listing of guests/rooms and other flags
@@ -57,6 +56,13 @@ public class ListCommand extends Command {
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ListCommand // instanceof handles nulls
+                && splitString[0].equals(((ListCommand) other).splitString[0]));
     }
 
 }
