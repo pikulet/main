@@ -502,8 +502,8 @@ We do not record the `Room` details in the `Guest` to minimise coupling.
 === Expense, Expenses and ExpenseType
 In Concierge, users will be given the feature of tracking the expenditure of each individual
 guest, in order to facilitate checkout charges. Hence, the three classes, `Expenses`, `Expense`
-and `ExpenseType` have been created for this purpose. In addition, the hotel also has a menu of
-goods and services available.
+and `ExpenseType` have been created for this purpose. In addition, the hotel also has a
+`menu` of goods and services available.
 
 ==== Current Implementation
 `ExpenseType` objects are essentially immutable objects that represent a single item or service
@@ -515,6 +515,7 @@ object, which is then stored on the hard disk, since users should have the abili
 the menu at any time. The `Menu` object is internally represented with a `HashMap<String, ExpenseType>`,
 with the menu number as keys and the `ExpenseType` objects as values. This allows for the
 serialisation of the `Menu` into XML, since `HashMap` is supported by JAXB.
+
 * **Alternative 1: Use a List<ExpenseType> to store the menu.** While there may be negligible
 differences for a small menu, searching for an `ExpenseType` object still takes linear time
 and there may be significant performance drops for a large menu.
@@ -525,6 +526,7 @@ of expenditure.
 
 The `Expenses` object is essentially a `List<Expense>`. Every room contains an `Expenses`
 object, to represent the collection of all the expenses of the guests in the room.
+
 * **Alternative 1: Use a `List<Expense>` object**: Defining the `Expenses` class allows us
 to restrict access to the collection, and only allow certain methods such as adding an
 `Expense` or displaying on screen.
