@@ -512,7 +512,7 @@ usual price, and description. The main purpose of this class is for convenience;
 charge a customer by simply providing the menu number of the item and the cost and description
 of the item will be able to be referenced. `ExpenseType` information is stored in a `Menu`
 object, which is then stored on the hard disk, since users should have the ability to modify
-the menu at any time. The `Menu` object is internally represented with a `HashMap<String, ExpenseType>`,
+the menu manually. The `Menu` object is internally represented with a `HashMap<String, ExpenseType>`,
 with the menu number as keys and the `ExpenseType` objects as values. This allows for the
 serialisation of the `Menu` into XML, since `HashMap` is supported by JAXB.
 
@@ -532,7 +532,36 @@ to restrict access to the collection, and only allow certain methods such as add
 `Expense` or displaying on screen.
 * **Alternative 2: Use a `Set<Expense>` object**: Having the expenses ordered (e.g.
 chronologically) will be useful for generating a nice view of all the expenses incurred.
-// end::dataencryption[]
+
+Here is a simple UML describing the roles of these classes.
+image::expense_uml.png[width="600"]
+
+==== Design Considerations
+
+===== Aspect: Immutability of Menu
+While it is conceivable that the items sold may change from time to time,
+for various reasons such as unpopularity or seasonal products, giving users
+the ability to add and remove items from the menu may result in more
+problems than benefits. We expect that alterations to the menu will not be
+performed frequently, and that the majority of our users, receptionists,
+will not be required to add and remove items to the menu. The menu also does
+not have to be altered during operational hours. Hence, by making
+`Menu` immutable, we eliminate the possibility of making accidental or
+unwarranted changes to the menu. The only method to modify `Menu` would
+thus be through the XML file, which we believe is suitable for these
+purposes.
+
+===== Aspect: Immutability of ExpenseType
+The `ExpenseType` object is meant to hold the default values of the name and
+price of each item. In other words, since an `Expense` object references an
+`ExpenseType` object, the `Expense` object is allowed to have a cost that
+is different from the cost in the corresponding `ExpenseType` object, to
+account for cases such as the guest having a personalised discount due to
+the usage of vouchers or certain credit cards. Thus, ExpenseType does not
+need to be modified by users in the application. Nonetheless, it is still
+possible to modify the default information through editing the XML file.
+
+// end::expense[]
 
 == Documentation
 
