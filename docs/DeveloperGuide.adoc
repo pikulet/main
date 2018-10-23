@@ -534,6 +534,7 @@ to restrict access to the collection, and only allow certain methods such as add
 chronologically) will be useful for generating a nice view of all the expenses incurred.
 
 Here is a simple UML describing the roles of these classes.
+
 image::expense_uml.png[width="600"]
 
 ==== Design Considerations
