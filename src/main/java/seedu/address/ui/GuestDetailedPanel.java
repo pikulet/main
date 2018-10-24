@@ -11,8 +11,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Guest;
+import seedu.address.commons.events.ui.GuestPanelSelectionChangedEvent;
+import seedu.address.model.guest.Guest;
 
 /**
  * Panel containing the list of one guest.
@@ -37,13 +37,13 @@ public class GuestDetailedPanel extends UiPart<Region> {
         ObservableList<Guest> guestList = FXCollections.observableArrayList();
         guestList.add(guest);
         guestDetailedView.setItems(guestList);
-        guestDetailedView.setCellFactory(listView -> new PersonListViewCell());
+        guestDetailedView.setCellFactory(listView -> new GuestListViewCell());
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Guest} using a {@code GuestDetailedCard}.
      */
-    class PersonListViewCell extends ListCell<Guest> {
+    class GuestListViewCell extends ListCell<Guest> {
         @Override
         protected void updateItem(Guest guest, boolean empty) {
             super.updateItem(guest, empty);
@@ -62,7 +62,7 @@ public class GuestDetailedPanel extends UiPart<Region> {
      * the right panel.
      */
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleGuestPanelSelectionChangedEvent(GuestPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setGuestDetails(event.getNewSelection());
     }

@@ -51,7 +51,7 @@ public class RoomCardTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedRoom} correctly and matches
+     * Asserts that {@code roomCard} displays the details of {@code expectedRoom} correctly and matches
      * {@code expectedId}.
      */
     private void assertCardDisplay(RoomCard roomCard, Room expectedRoom) {

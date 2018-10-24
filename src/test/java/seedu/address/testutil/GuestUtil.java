@@ -12,8 +12,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Guest;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.model.guest.Guest;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
@@ -21,14 +21,14 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class for Guest.
  */
-public class PersonUtil {
+public class GuestUtil {
 
     /**
      * Returns an add command string for adding the {@code guest}.
      */
     public static String getAddCommand(Guest guest, RoomNumber roomNumber,
                                        BookingPeriod bookingPeriod) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(guest) + " "
+        return AddCommand.COMMAND_WORD + " " + getGuestDetails(guest) + " "
                 + getRoomDesc(roomNumber) + " " + getBookingPeriodDesc(bookingPeriod);
     }
 
@@ -51,7 +51,7 @@ public class PersonUtil {
     /**
      * Returns the part of command string for the given {@code guest}'s details.
      */
-    public static String getPersonDetails(Guest guest) {
+    public static String getGuestDetails(Guest guest) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + guest.getName().fullName + " ");
         sb.append(PREFIX_PHONE + guest.getPhone().value + " ");
@@ -64,9 +64,9 @@ public class PersonUtil {
     }
 
     /**
-     * Returns the part of command string for the given {@code EditPersonDescriptor}'s details.
+     * Returns the part of command string for the given {@code EditGuestDescriptor}'s details.
      */
-    public static String getEditPersonDescriptorDetails(EditPersonDescriptor descriptor) {
+    public static String getEditGuestDescriptorDetails(EditCommand.EditGuestDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));

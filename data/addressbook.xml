@@ -1,448 +1,448 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
-    <guests>
+    <guest>
         <name>Alex Yeoh</name>
         <phone>87438807</phone>
         <email>alexyeoh@example.com</email>
         <address>Blk 30 Geylang Street 29, #06-40</address>
         <tagged>friends</tagged>
-    </guests>
-    <guests>
+    </guest>
+    <guest>
         <name>Bernice Yu</name>
         <phone>99272758</phone>
         <email>berniceyu@example.com</email>
         <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
-    </guests>
-    <guests>
+    </guest>
+    <guest>
         <name>Charlotte Oliveiro</name>
         <phone>93210283</phone>
         <email>charlotte@example.com</email>
         <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
         <tagged>neighbours</tagged>
-    </guests>
-    <guests>
+    </guest>
+    <guest>
         <name>David Li</name>
         <phone>91031282</phone>
         <email>lidavid@example.com</email>
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
         <tagged>family</tagged>
-    </guests>
-    <guests>
+    </guest>
+    <guest>
         <name>Irfan Ibrahim</name>
         <phone>92492021</phone>
         <email>irfan@example.com</email>
         <address>Blk 47 Tampines Street 20, #17-35</address>
         <tagged>classmates</tagged>
-    </guests>
-    <guests>
+    </guest>
+    <guest>
         <name>Roy Balakrishnan</name>
         <phone>92624417</phone>
         <email>royb@example.com</email>
         <address>Blk 45 Aljunied Street 85, #11-31</address>
         <tagged>colleagues</tagged>
-    </guests>
-    <rooms>
+    </guest>
+    <room>
         <roomNumber>001</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>002</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>003</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>004</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>005</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>006</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>007</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>008</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>009</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>010</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>011</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>012</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>013</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>014</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>015</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>016</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>017</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>018</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>019</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>020</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>021</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>022</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>023</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>024</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>025</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>026</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>027</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>028</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>029</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>030</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>031</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>032</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>033</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>034</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>035</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>036</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>037</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>038</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>039</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>040</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>041</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>042</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>043</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>044</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>045</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>046</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>047</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>048</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>049</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>050</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>051</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>052</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>053</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>054</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>055</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>056</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>057</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>058</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>059</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>060</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>061</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>062</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>063</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>064</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>065</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>066</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>067</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>068</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>069</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>070</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>071</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>072</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>073</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>074</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>075</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>076</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>077</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>078</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>079</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>080</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>081</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>082</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>083</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>084</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>085</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>086</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>087</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>088</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>089</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>090</roomNumber>
         <capacity>5</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>091</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>092</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>093</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>094</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>095</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>096</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>097</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>098</roomNumber>
         <capacity>2</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>099</roomNumber>
         <capacity>1</capacity>
-    </rooms>
-    <rooms>
+    </room>
+    <room>
         <roomNumber>100</roomNumber>
         <capacity>5</capacity>
-    </rooms>
+    </room>
     <menu>
         <entry>
             <key>RS03</key>

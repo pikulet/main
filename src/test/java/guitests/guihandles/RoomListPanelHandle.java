@@ -137,7 +137,7 @@ public class RoomListPanelHandle extends NodeHandle<ListView<Room>> {
 
     /**
      * Returns true if the selected {@code GuestCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * {@code rememberSelectedGuestCard()} call.
      */
     public boolean isSelectedRoomCardChanged() {
         List<Room> selectedItems = getRootNode().getSelectionModel().getSelectedItems();

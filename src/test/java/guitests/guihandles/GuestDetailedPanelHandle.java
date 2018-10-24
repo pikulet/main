@@ -4,13 +4,13 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Guest;
+import seedu.address.model.guest.Guest;
 
 /**
  * Provides a handle for {@code GuestListPanel} containing the list of {@code GuestCard}.
  */
 public class GuestDetailedPanelHandle extends NodeHandle<ListView<Guest>> {
-    public static final String PERSON_LIST_VIEW_ID = "#guestDetailedView";
+    public static final String GUEST_LIST_VIEW_ID = "#guestDetailedView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 
@@ -50,12 +50,12 @@ public class GuestDetailedPanelHandle extends NodeHandle<ListView<Guest>> {
 
         return getAllCardNodes().stream()
                 .map(GuestDetailedCardHandle::new)
-                .filter(handle -> handle.equals(getPerson(index)))
+                .filter(handle -> handle.equals(getGuest(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private Guest getPerson(int index) {
+    private Guest getGuest(int index) {
         return getRootNode().getItems().get(index);
     }
 }

@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.guest;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalGuests.ALICE;
+import static seedu.address.testutil.TypicalGuests.BOB;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class GuestTest {
     }
 
     @Test
-    public void isSamePerson() {
+    public void isSameGuest() {
         // same object -> returns true
         assertTrue(ALICE.isSameGuest(ALICE));
 

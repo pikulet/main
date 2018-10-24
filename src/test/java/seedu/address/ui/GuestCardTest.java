@@ -3,12 +3,12 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysGuest;
 
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import seedu.address.model.person.Guest;
+import guitests.guihandles.GuestCardHandle;
+import seedu.address.model.guest.Guest;
 import seedu.address.testutil.GuestBuilder;
 
 public class GuestCardTest extends GuiUnitTest {
@@ -55,18 +55,18 @@ public class GuestCardTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedGuest} correctly and matches
+     * Asserts that {@code guestCard} displays the details of {@code expectedGuest} correctly and matches
      * {@code expectedId}.
      */
     private void assertCardDisplay(GuestCard guestCard, Guest expectedGuest, int expectedId) {
         guiRobot.pauseForHuman();
+        GuestCardHandle guestCardHandle = new GuestCardHandle(guestCard.getRoot());
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(guestCard.getRoot());
 
         // verify id is displayed correctly
-        assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
+        assertEquals(Integer.toString(expectedId) + ". ", guestCardHandle.getId());
 
         // verify guest details are displayed correctly
-        assertCardDisplaysPerson(expectedGuest, personCardHandle);
+        assertCardDisplaysGuest(expectedGuest, guestCardHandle);
     }
 }

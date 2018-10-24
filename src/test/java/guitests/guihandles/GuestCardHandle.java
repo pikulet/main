@@ -8,12 +8,12 @@ import com.google.common.collect.ImmutableMultiset;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.Guest;
+import seedu.address.model.guest.Guest;
 
 /**
  * Provides a handle to a guest card in the guest list panel.
  */
-public class PersonCardHandle extends NodeHandle<Node> {
+public class GuestCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String PHONE_FIELD_ID = "#phone";
@@ -24,7 +24,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label phoneLabel;
     private final List<Label> tagLabels;
 
-    public PersonCardHandle(Node cardNode) {
+    public GuestCardHandle(Node cardNode) {
         super(cardNode);
 
         idLabel = getChildNode(ID_FIELD_ID);

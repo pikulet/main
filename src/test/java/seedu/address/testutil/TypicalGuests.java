@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.person.Guest;
-import seedu.address.model.person.UniqueGuestList;
+import seedu.address.model.guest.Guest;
+import seedu.address.model.guest.UniqueGuestList;
 
 /**
  * A utility class containing a list of {@code Guest} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalGuests {
 
     public static final Guest ALICE = new GuestBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
@@ -60,15 +60,15 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalGuests() {} // prevents instantiation
 
-    public static List<Guest> getTypicalPersons() {
+    public static List<Guest> getTypicalGuests() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     public static UniqueGuestList getTypicalUniqueGuestList() {
         UniqueGuestList uniqueGuestList = new UniqueGuestList();
-        uniqueGuestList.setGuests(getTypicalPersons());
+        uniqueGuestList.setGuests(getTypicalGuests());
         return uniqueGuestList;
     }
 }

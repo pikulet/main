@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalGuests.getTypicalGuests;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysDetailedGuest;
 
 import org.junit.Before;
@@ -11,15 +11,15 @@ import guitests.guihandles.GuestDetailedCardHandle;
 import guitests.guihandles.GuestDetailedPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Guest;
+import seedu.address.commons.events.ui.GuestPanelSelectionChangedEvent;
+import seedu.address.model.guest.Guest;
 
 
 public class GuestDetailedPanelTest extends GuiUnitTest {
     private static final ObservableList<Guest> TYPICAL_GUESTS =
-            FXCollections.observableList(getTypicalPersons());
+            FXCollections.observableList(getTypicalGuests());
 
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private GuestPanelSelectionChangedEvent selectionChangedEventStub;
 
     private GuestDetailedPanel guestDetailedPanel;
     private GuestDetailedPanelHandle guestDetailedPanelHandle;
@@ -30,13 +30,13 @@ public class GuestDetailedPanelTest extends GuiUnitTest {
         uiPartRule.setUiPart(guestDetailedPanel);
 
         guestDetailedPanelHandle = new GuestDetailedPanelHandle(getChildNode(guestDetailedPanel.getRoot(),
-                GuestDetailedPanelHandle.PERSON_LIST_VIEW_ID));
+                GuestDetailedPanelHandle.GUEST_LIST_VIEW_ID));
     }
 
     @Test
     public void display() throws Exception {
         for (int i = 0; i < TYPICAL_GUESTS.size(); i++) {
-            selectionChangedEventStub = new PersonPanelSelectionChangedEvent(TYPICAL_GUESTS.get(i));
+            selectionChangedEventStub = new GuestPanelSelectionChangedEvent(TYPICAL_GUESTS.get(i));
             postNow(selectionChangedEventStub);
 
             Guest expectedGuest = TYPICAL_GUESTS.get(i);

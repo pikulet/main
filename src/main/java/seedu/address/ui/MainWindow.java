@@ -259,6 +259,10 @@ public class MainWindow extends UiPart<Stage> {
         roomDetailedBox.setVisible(true);
     }
 
+    public GuestListPanel getGuestListPanel() {
+        return guestListPanel;
+    }
+
     public boolean isGuestListVisible() {
         return guestListBox.isVisible();
     }

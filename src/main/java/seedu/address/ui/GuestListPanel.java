@@ -11,12 +11,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.GuestPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Guest;
+import seedu.address.model.guest.Guest;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of guests.
  */
 public class GuestListPanel extends UiPart<Region> {
     private static final String FXML = "GuestListPanel.fxml";
@@ -42,7 +42,7 @@ public class GuestListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in guest list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new GuestPanelSelectionChangedEvent(newValue));
                     }
                 });
     }

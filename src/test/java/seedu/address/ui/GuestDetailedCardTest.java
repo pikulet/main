@@ -7,7 +7,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysDetailed
 import org.junit.Test;
 
 import guitests.guihandles.GuestDetailedCardHandle;
-import seedu.address.model.person.Guest;
+import seedu.address.model.guest.Guest;
 import seedu.address.testutil.GuestBuilder;
 
 public class GuestDetailedCardTest extends GuiUnitTest {
