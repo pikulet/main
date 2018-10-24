@@ -219,7 +219,6 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-
     /**
      * UI Visibility Function - Enables guest-related list, disables room-related list UI elements
      */
@@ -258,6 +257,14 @@ public class MainWindow extends UiPart<Stage> {
         guestDetailedBox.setVisible(false);
         roomDetailedBox.setDisable(false);
         roomDetailedBox.setVisible(true);
+    }
+
+    public boolean isGuestListVisible() {
+        return guestListBox.isVisible();
+    }
+
+    public boolean isRoomListVisible() {
+        return roomListBox.isVisible();
     }
 
     @Subscribe

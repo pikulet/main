@@ -12,7 +12,7 @@ import seedu.address.model.room.Room;
  * Provides a handle for {@code RoomListPanel} containing the list of {@code RoomCard}.
  */
 public class RoomListPanelHandle extends NodeHandle<ListView<Room>> {
-    public static final String PERSON_LIST_VIEW_ID = "#roomListView";
+    public static final String ROOM_LIST_VIEW_ID = "#roomListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 

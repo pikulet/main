@@ -58,6 +58,8 @@ public class RoomListPanelTest extends GuiUnitTest {
         uiPartRule.setUiPart(roomListPanel);
 
         roomListPanelHandle = new RoomListPanelHandle(getChildNode(roomListPanel.getRoot(),
-                RoomListPanelHandle.PERSON_LIST_VIEW_ID));
+                RoomListPanelHandle.ROOM_LIST_VIEW_ID));
     }
+
+
 }

@@ -13,6 +13,7 @@ import guitests.guihandles.RoomCardHandle;
 import guitests.guihandles.RoomDetailedCardHandle;
 import seedu.address.model.person.Guest;
 import seedu.address.model.room.Room;
+import seedu.address.ui.MainWindow;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -76,6 +77,30 @@ public class GuiTestAssert {
         assertEquals("Expenses: " + expectedRoom.getExpenses().toStringTotalCost(), actualCard.getExpenses());
         assertEquals(expectedRoom.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code mainWindow} guestlist is visible.
+     */
+    public static void assertMainWindowDisplaysGuestList(MainWindow mainWindow) {
+        assertEquals(mainWindow.isGuestListVisible(), true);
+        assertEquals(mainWindow.isRoomListVisible(), false);
+
+        mainWindow.showRoomList();
+        assertEquals(mainWindow.isGuestListVisible(), false);
+        assertEquals(mainWindow.isRoomListVisible(), true);
+    }
+
+    /**
+     * Asserts that {@code mainWindow} roomlist is visible.
+     */
+    public static void assertMainWindowDisplaysRoomList(MainWindow mainWindow) {
+        assertEquals(mainWindow.isGuestListVisible(), false);
+        assertEquals(mainWindow.isRoomListVisible(), true);
+
+        mainWindow.showGuestList();
+        assertEquals(mainWindow.isGuestListVisible(), true);
+        assertEquals(mainWindow.isRoomListVisible(), false);
     }
 
     /**
