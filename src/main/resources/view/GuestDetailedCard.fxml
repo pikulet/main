@@ -24,7 +24,6 @@
         <Label fx:id="name" text="\$first" styleClass="cell_name_label"/>
       </HBox>
       <Label fx:id="phone" styleClass="cell_big_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_big_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_big_label" text="\$email"/>
         <FlowPane fx:id="tags" alignment="TOP_LEFT"/>
     </VBox>
