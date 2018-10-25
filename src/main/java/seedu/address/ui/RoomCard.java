@@ -43,7 +43,7 @@ public class RoomCard extends UiPart<Region> {
         this.room = room;
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
-        bookings.getChildren().add(new Label("Current booking:\n" + room.getFirstBooking()
+        bookings.getChildren().add(new Label("Active booking\n" + room.getFirstBooking()
             .map(Booking::toStringShortDescription).orElse("")));
         room.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
