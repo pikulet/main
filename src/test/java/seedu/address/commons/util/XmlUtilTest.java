@@ -80,7 +80,7 @@ public class XmlUtilTest {
         XmlAdaptedGuest actualGuest = XmlUtil.getDataFromFile(
                 MISSING_GUEST_FIELD_FILE, XmlAdaptedGuestWithRootElement.class);
         XmlAdaptedGuest expectedGuest = new XmlAdaptedGuest(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_TAGS);
         assertEquals(expectedGuest, actualGuest);
     }
 
@@ -89,7 +89,7 @@ public class XmlUtilTest {
         XmlAdaptedGuest actualGuest = XmlUtil.getDataFromFile(
                 INVALID_GUEST_FIELD_FILE, XmlAdaptedGuestWithRootElement.class);
         XmlAdaptedGuest expectedGuest = new XmlAdaptedGuest(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_TAGS);
         assertEquals(expectedGuest, actualGuest);
     }
 
@@ -98,7 +98,7 @@ public class XmlUtilTest {
         XmlAdaptedGuest actualGuest = XmlUtil.getDataFromFile(
                 VALID_GUEST_FILE, XmlAdaptedGuestWithRootElement.class);
         XmlAdaptedGuest expectedGuest = new XmlAdaptedGuest(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_TAGS);
         assertEquals(expectedGuest, actualGuest);
     }
 

@@ -3,7 +3,6 @@ package seedu.address.model.guest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalGuests.ALICE;
 import static seedu.address.testutil.TypicalGuests.BOB;
@@ -46,7 +45,7 @@ public class UniqueGuestListTest {
     @Test
     public void contains_guestWithSameIdentityFieldsInList_returnsTrue() {
         uniqueGuestList.add(ALICE);
-        Guest editedAlice = new GuestBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Guest editedAlice = new GuestBuilder(ALICE).withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(uniqueGuestList.contains(editedAlice));
     }
@@ -94,7 +93,7 @@ public class UniqueGuestListTest {
     @Test
     public void setGuest_editedGuestHasSameIdentity_success() {
         uniqueGuestList.add(ALICE);
-        Guest editedAlice = new GuestBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Guest editedAlice = new GuestBuilder(ALICE).withTags(VALID_TAG_HUSBAND)
                 .build();
         uniqueGuestList.setGuest(ALICE, editedAlice);
         UniqueGuestList expectedUniqueGuestList = new UniqueGuestList();
