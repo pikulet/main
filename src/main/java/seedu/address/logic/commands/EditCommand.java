@@ -27,7 +27,7 @@ import seedu.address.model.guest.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing guest in the address book.
+ * Edits the details of an existing guest in Concierge.
  */
 public class EditCommand extends Command {
 
@@ -48,7 +48,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_GUEST_SUCCESS = "Edited Guest: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_GUEST = "This guest already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_GUEST = "This guest already exists in Concierge.";
 
     private final Index index;
     private final EditGuestDescriptor editGuestDescriptor;

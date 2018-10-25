@@ -34,7 +34,7 @@ public class VersionedConcierge extends Concierge {
     }
 
     /**
-     * Restores the address book to its previous state.
+     * Restores Concierge to its previous state.
      */
     public void undo() {
         if (!canUndo()) {
@@ -45,7 +45,7 @@ public class VersionedConcierge extends Concierge {
     }
 
     /**
-     * Restores the address book to its previously undone state.
+     * Restores Concierge to its previously undone state.
      */
     public void redo() {
         if (!canRedo()) {

@@ -7,7 +7,7 @@ import seedu.address.model.Concierge;
 import seedu.address.model.Model;
 
 /**
- * Clears the address book.
+ * Clears Concierge.
  */
 public class ClearCommand extends Command {
 

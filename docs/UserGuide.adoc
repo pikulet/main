@@ -251,7 +251,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `checkin`, `checkout`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Concierge's content (`add`, `checkin`, `checkout`, `delete`, `edit` and `clear`).
 ====
 
 Examples:

@@ -102,7 +102,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
                 + TAG_DESC_FRIEND + ROOM_DESC_001 + DATE_START_DESC_AMY + DATE_END_DESC_AMY;
         assertCommandSuccess(command, guestToAdd, roomNumberToAdd, bookingPeriodToAdd);
 
-        /* Case: add a guest with all fields same as another guest in the address book except phone and email
+        /* Case: add a guest with all fields same as another guest in Concierge except phone and email
          * -> added
          */
         guestToAdd = new GuestBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();

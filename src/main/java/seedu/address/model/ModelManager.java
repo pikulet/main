@@ -18,7 +18,7 @@ import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of Concierge data.
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);

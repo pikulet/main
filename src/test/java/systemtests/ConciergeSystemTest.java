@@ -126,7 +126,7 @@ public abstract class ConciergeSystemTest {
     }
 
     /**
-     * Displays all guests in the address book.
+     * Displays all guests in Concierge.
      */
     protected void showAllGuests() {
         executeCommand(ListCommand.COMMAND_WORD + " -g");
@@ -151,7 +151,7 @@ public abstract class ConciergeSystemTest {
     }
 
     /**
-     * Deletes all guests in the address book.
+     * Deletes all guests in Concierge.
      */
     protected void deleteAllGuests() {
         executeCommand(ClearCommand.COMMAND_WORD);

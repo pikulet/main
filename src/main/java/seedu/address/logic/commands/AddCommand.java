@@ -23,7 +23,7 @@ import seedu.address.model.room.exceptions.RoomNotFoundException;
 
 
 /**
- * Adds a guest to the address book.
+ * Adds a guest to Concierge.
  */
 public class AddCommand extends Command {
 
@@ -52,7 +52,7 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS =
             "New guest added: %1$s \nAssigned to room: %2$s \n\tfrom %3$s";
-    public static final String MESSAGE_DUPLICATE_GUEST = "This guest already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_GUEST = "This guest already exists in Concierge";
 
     private final Guest guestToAdd;
     private final RoomNumber roomNumberToAdd;

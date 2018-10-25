@@ -4,7 +4,7 @@ import seedu.address.model.Concierge;
 import seedu.address.model.guest.Guest;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building Concierge objects.
  * Example usage: <br>
  *     {@code Concierge ab = new ConciergeBuilder().withGuest("John", "Doe").build();}
  */

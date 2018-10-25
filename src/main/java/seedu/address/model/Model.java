@@ -28,26 +28,26 @@ public interface Model {
     // =========== Methods for guest. =========================================
 
     /**
-     * Returns true if a guest with the same identity as {@code guest} exists in the address book.
+     * Returns true if a guest with the same identity as {@code guest} exists in Concierge.
      */
     boolean hasGuest(Guest guest);
 
     /**
      * Deletes the given guest.
-     * The guest must exist in the address book.
+     * The guest must exist in Concierge.
      */
     void deleteGuest(Guest target);
 
     /**
      * Adds the given guest.
-     * {@code guest} must not already exist in the address book.
+     * {@code guest} must not already exist in Concierge.
      */
     void addGuest(Guest guest);
 
     /**
      * Replaces the given guest {@code target} with {@code editedGuest}.
-     * {@code target} must exist in the address book.
-     * The guest identity of {@code editedGuest} must not be the same as another existing guest in the address book.
+     * {@code target} must exist in Concierge.
+     * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge.
      */
     void updateGuest(Guest target, Guest editedGuest);
 
