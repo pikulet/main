@@ -16,7 +16,7 @@ import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Booking;
 
 /**
- * Wraps all data at the address-book level
+ * Wraps all data at the Concierge level
  * Duplicates are not allowed (by .isSameGuest comparison)
  */
 public class Concierge implements ReadOnlyConcierge {
