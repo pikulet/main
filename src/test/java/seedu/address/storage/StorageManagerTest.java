@@ -32,9 +32,9 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlConciergeStorage addressBookStorage = new XmlConciergeStorage(getTempFilePath("ab"));
+        XmlConciergeStorage conciergeStorage = new XmlConciergeStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(conciergeStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -57,7 +57,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void conciergeReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlConciergeStorage} class.
@@ -94,7 +94,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveConcierge(ReadOnlyConcierge addressBook, Path filePath) throws IOException {
+        public void saveConcierge(ReadOnlyConcierge concierge, Path filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

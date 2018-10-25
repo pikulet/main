@@ -18,9 +18,9 @@ import seedu.address.testutil.ConciergeBuilder;
 
 public class VersionedConciergeTest {
 
-    private final ReadOnlyConcierge addressBookWithAmy = new ConciergeBuilder().withGuest(AMY).build();
-    private final ReadOnlyConcierge addressBookWithBob = new ConciergeBuilder().withGuest(BOB).build();
-    private final ReadOnlyConcierge addressBookWithCarl = new ConciergeBuilder().withGuest(CARL).build();
+    private final ReadOnlyConcierge conciergeWithAmy = new ConciergeBuilder().withGuest(AMY).build();
+    private final ReadOnlyConcierge conciergeWithBob = new ConciergeBuilder().withGuest(BOB).build();
+    private final ReadOnlyConcierge conciergeWithCarl = new ConciergeBuilder().withGuest(CARL).build();
     private final ReadOnlyConcierge emptyConcierge = new ConciergeBuilder().build();
 
     @Test
@@ -37,19 +37,19 @@ public class VersionedConciergeTest {
     @Test
     public void commit_multipleConciergePointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
 
         versionedConcierge.commit();
         assertConciergeListStatus(versionedConcierge,
-                Arrays.asList(emptyConcierge, addressBookWithAmy, addressBookWithBob),
-                addressBookWithBob,
+                Arrays.asList(emptyConcierge, conciergeWithAmy, conciergeWithBob),
+                conciergeWithBob,
                 Collections.emptyList());
     }
 
     @Test
     public void commit_multipleConciergePointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
         versionedConcierge.commit();
@@ -62,7 +62,7 @@ public class VersionedConciergeTest {
     @Test
     public void canUndo_multipleConciergePointerAtEndOfStateList_returnsTrue() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
 
         assertTrue(versionedConcierge.canUndo());
     }
@@ -70,7 +70,7 @@ public class VersionedConciergeTest {
     @Test
     public void canUndo_multipleConciergePointerAtStartOfStateList_returnsTrue() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
         assertTrue(versionedConcierge.canUndo());
@@ -86,7 +86,7 @@ public class VersionedConciergeTest {
     @Test
     public void canUndo_multipleConciergePointerAtStartOfStateList_returnsFalse() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
         assertFalse(versionedConcierge.canUndo());
@@ -95,7 +95,7 @@ public class VersionedConciergeTest {
     @Test
     public void canRedo_multipleConciergePointerNotAtEndOfStateList_returnsTrue() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
         assertTrue(versionedConcierge.canRedo());
@@ -104,7 +104,7 @@ public class VersionedConciergeTest {
     @Test
     public void canRedo_multipleConciergePointerAtStartOfStateList_returnsTrue() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
         assertTrue(versionedConcierge.canRedo());
@@ -120,7 +120,7 @@ public class VersionedConciergeTest {
     @Test
     public void canRedo_multipleConciergePointerAtEndOfStateList_returnsFalse() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
 
         assertFalse(versionedConcierge.canRedo());
     }
@@ -128,26 +128,26 @@ public class VersionedConciergeTest {
     @Test
     public void undo_multipleConciergePointerAtEndOfStateList_success() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
 
         versionedConcierge.undo();
         assertConciergeListStatus(versionedConcierge,
                 Collections.singletonList(emptyConcierge),
-                addressBookWithAmy,
-                Collections.singletonList(addressBookWithBob));
+                conciergeWithAmy,
+                Collections.singletonList(conciergeWithBob));
     }
 
     @Test
     public void undo_multipleConciergePointerNotAtStartOfStateList_success() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
         versionedConcierge.undo();
         assertConciergeListStatus(versionedConcierge,
                 Collections.emptyList(),
                 emptyConcierge,
-                Arrays.asList(addressBookWithAmy, addressBookWithBob));
+                Arrays.asList(conciergeWithAmy, conciergeWithBob));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class VersionedConciergeTest {
     @Test
     public void undo_multipleConciergePointerAtStartOfStateList_throwsNoUndoableStateException() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
         assertThrows(VersionedConcierge.NoUndoableStateException.class, versionedConcierge::undo);
@@ -169,27 +169,27 @@ public class VersionedConciergeTest {
     @Test
     public void redo_multipleConciergePointerNotAtEndOfStateList_success() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
         versionedConcierge.redo();
         assertConciergeListStatus(versionedConcierge,
-                Arrays.asList(emptyConcierge, addressBookWithAmy),
-                addressBookWithBob,
+                Arrays.asList(emptyConcierge, conciergeWithAmy),
+                conciergeWithBob,
                 Collections.emptyList());
     }
 
     @Test
     public void redo_multipleConciergePointerAtStartOfStateList_success() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
         versionedConcierge.redo();
         assertConciergeListStatus(versionedConcierge,
                 Collections.singletonList(emptyConcierge),
-                addressBookWithAmy,
-                Collections.singletonList(addressBookWithBob));
+                conciergeWithAmy,
+                Collections.singletonList(conciergeWithBob));
     }
 
     @Test
@@ -202,17 +202,17 @@ public class VersionedConciergeTest {
     @Test
     public void redo_multipleConciergePointerAtEndOfStateList_throwsNoRedoableStateException() {
         VersionedConcierge versionedConcierge = prepareConciergeList(
-                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+                emptyConcierge, conciergeWithAmy, conciergeWithBob);
 
         assertThrows(VersionedConcierge.NoRedoableStateException.class, versionedConcierge::redo);
     }
 
     @Test
     public void equals() {
-        VersionedConcierge versionedConcierge = prepareConciergeList(addressBookWithAmy, addressBookWithBob);
+        VersionedConcierge versionedConcierge = prepareConciergeList(conciergeWithAmy, conciergeWithBob);
 
         // same values -> returns true
-        VersionedConcierge copy = prepareConciergeList(addressBookWithAmy, addressBookWithBob);
+        VersionedConcierge copy = prepareConciergeList(conciergeWithAmy, conciergeWithBob);
         assertTrue(versionedConcierge.equals(copy));
 
         // same object -> returns true
@@ -225,12 +225,12 @@ public class VersionedConciergeTest {
         assertFalse(versionedConcierge.equals(1));
 
         // different state list -> returns false
-        VersionedConcierge differentConciergeList = prepareConciergeList(addressBookWithBob, addressBookWithCarl);
+        VersionedConcierge differentConciergeList = prepareConciergeList(conciergeWithBob, conciergeWithCarl);
         assertFalse(versionedConcierge.equals(differentConciergeList));
 
         // different current pointer index -> returns false
         VersionedConcierge differentCurrentStatePointer = prepareConciergeList(
-                addressBookWithAmy, addressBookWithBob);
+                conciergeWithAmy, conciergeWithBob);
         shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
         assertFalse(versionedConcierge.equals(differentCurrentStatePointer));
     }
@@ -272,15 +272,15 @@ public class VersionedConciergeTest {
     }
 
     /**
-     * Creates and returns a {@code VersionedConcierge} with the {@code addressBookStates} added into it, and the
+     * Creates and returns a {@code VersionedConcierge} with the {@code conciergeStates} added into it, and the
      * {@code VersionedConcierge#currentStatePointer} at the end of list.
      */
-    private VersionedConcierge prepareConciergeList(ReadOnlyConcierge... addressBookStates) {
-        assertFalse(addressBookStates.length == 0);
+    private VersionedConcierge prepareConciergeList(ReadOnlyConcierge... conciergeStates) {
+        assertFalse(conciergeStates.length == 0);
 
-        VersionedConcierge versionedConcierge = new VersionedConcierge(addressBookStates[0]);
-        for (int i = 1; i < addressBookStates.length; i++) {
-            versionedConcierge.resetData(addressBookStates[i]);
+        VersionedConcierge versionedConcierge = new VersionedConcierge(conciergeStates[0]);
+        for (int i = 1; i < conciergeStates.length; i++) {
+            versionedConcierge.resetData(conciergeStates[i]);
             versionedConcierge.commit();
         }
 

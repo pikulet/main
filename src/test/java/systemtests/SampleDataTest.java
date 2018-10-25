@@ -44,7 +44,7 @@ public class SampleDataTest extends ConciergeSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+    public void concierge_dataFileDoesNotExist_loadSampleData() {
         Guest[] expectedList = SampleDataUtil.getSampleGuests();
         assertListMatching(getGuestListPanel(), expectedList);
     }

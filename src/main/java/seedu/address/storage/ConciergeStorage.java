@@ -32,14 +32,14 @@ public interface ConciergeStorage {
 
     /**
      * Saves the given {@link ReadOnlyConcierge} to the storage.
-     * @param addressBook cannot be null.
+     * @param concierge cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveConcierge(ReadOnlyConcierge addressBook) throws IOException;
+    void saveConcierge(ReadOnlyConcierge concierge) throws IOException;
 
     /**
      * @see #saveConcierge(ReadOnlyConcierge)
      */
-    void saveConcierge(ReadOnlyConcierge addressBook, Path filePath) throws IOException;
+    void saveConcierge(ReadOnlyConcierge concierge, Path filePath) throws IOException;
 
 }

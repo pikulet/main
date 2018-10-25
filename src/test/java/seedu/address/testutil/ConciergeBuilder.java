@@ -10,25 +10,25 @@ import seedu.address.model.guest.Guest;
  */
 public class ConciergeBuilder {
 
-    private Concierge addressBook;
+    private Concierge concierge;
 
     public ConciergeBuilder() {
-        addressBook = new Concierge();
+        concierge = new Concierge();
     }
 
-    public ConciergeBuilder(Concierge addressBook) {
-        this.addressBook = addressBook;
+    public ConciergeBuilder(Concierge concierge) {
+        this.concierge = concierge;
     }
 
     /**
      * Adds a new {@code Guest} to the {@code Concierge} that we are building.
      */
     public ConciergeBuilder withGuest(Guest guest) {
-        addressBook.addGuest(guest);
+        concierge.addGuest(guest);
         return this;
     }
 
     public Concierge build() {
-        return addressBook;
+        return concierge;
     }
 }

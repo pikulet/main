@@ -62,8 +62,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        ConciergeStorage addressBookStorage = new XmlConciergeStorage(userPrefs.getConciergeFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        ConciergeStorage conciergeStorage = new XmlConciergeStorage(userPrefs.getConciergeFilePath());
+        storage = new StorageManager(conciergeStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -82,14 +82,14 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyConcierge> addressBookOptional;
+        Optional<ReadOnlyConcierge> conciergeOptional;
         ReadOnlyConcierge initialData;
         try {
-            addressBookOptional = storage.readConcierge();
-            if (!addressBookOptional.isPresent()) {
+            conciergeOptional = storage.readConcierge();
+            if (!conciergeOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample Concierge");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleConcierge);
+            initialData = conciergeOptional.orElseGet(SampleDataUtil::getSampleConcierge);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty Concierge");
             initialData = new Concierge();

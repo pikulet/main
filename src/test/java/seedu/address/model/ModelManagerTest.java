@@ -47,13 +47,13 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        Concierge addressBook = new ConciergeBuilder().withGuest(ALICE).withGuest(BENSON).build();
+        Concierge concierge = new ConciergeBuilder().withGuest(ALICE).withGuest(BENSON).build();
         Concierge differentConcierge = new Concierge();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        modelManager = new ModelManager(concierge, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(concierge, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -65,13 +65,13 @@ public class ModelManagerTest {
         // different types -> returns false
         assertFalse(modelManager.equals(5));
 
-        // different addressBook -> returns false
+        // different concierge -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentConcierge, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredGuestList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(concierge, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
@@ -79,6 +79,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setConciergeFilePath(Paths.get("differentFilePath"));
-        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        assertTrue(modelManager.equals(new ModelManager(concierge, differentUserPrefs)));
     }
 }

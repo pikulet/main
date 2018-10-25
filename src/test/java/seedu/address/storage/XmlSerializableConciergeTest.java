@@ -28,9 +28,9 @@ public class XmlSerializableConciergeTest {
     public void toModelType_typicalGuestsFile_success() throws Exception {
         XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(TYPICAL_GUESTS_FILE,
                 XmlSerializableConcierge.class);
-        Concierge addressBookFromFile = dataFromFile.toModelType();
+        Concierge conciergeFromFile = dataFromFile.toModelType();
         Concierge typicalGuestsConcierge = getTypicalConcierge();
-        assertEquals(addressBookFromFile, typicalGuestsConcierge);
+        assertEquals(conciergeFromFile, typicalGuestsConcierge);
     }
 
     @Test

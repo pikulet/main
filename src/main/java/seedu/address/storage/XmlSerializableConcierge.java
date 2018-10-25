@@ -62,30 +62,30 @@ public class XmlSerializableConcierge {
      * {@code XmlAdaptedGuest / XmlAdaptedRoom}
      */
     public Concierge toModelType() throws IllegalValueException {
-        Concierge addressBook = new Concierge();
+        Concierge concierge = new Concierge();
         for (XmlAdaptedGuest p : guests) {
             Guest guest = p.toModelType();
-            if (addressBook.hasGuest(guest)) {
+            if (concierge.hasGuest(guest)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_GUEST);
             }
-            addressBook.addGuest(guest);
+            concierge.addGuest(guest);
         }
 
         HashMap<String, ExpenseType> newMenu = new HashMap<>();
         for (Map.Entry<String, XmlAdaptedExpenseType> mapping : menu.entrySet()) {
             newMenu.put(mapping.getKey(), mapping.getValue().toModelType());
         }
-        addressBook.setMenu(newMenu);
+        concierge.setMenu(newMenu);
 
         for (XmlAdaptedRoom r : rooms) {
-            Room room = r.toModelType(addressBook.getMenu());
-            if (addressBook.hasRoom(room)) {
+            Room room = r.toModelType(concierge.getMenu());
+            if (concierge.hasRoom(room)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM);
             }
-            addressBook.addRoom(room);
+            concierge.addRoom(room);
         }
 
-        return addressBook;
+        return concierge;
     }
 
     @Override

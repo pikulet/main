@@ -28,7 +28,7 @@ public interface Storage extends ConciergeStorage, UserPrefsStorage {
     Optional<ReadOnlyConcierge> readConcierge() throws DataConversionException, IOException;
 
     @Override
-    void saveConcierge(ReadOnlyConcierge addressBook) throws IOException;
+    void saveConcierge(ReadOnlyConcierge concierge) throws IOException;
 
     /**
      * Saves the current version of the Address Book to the hard disk.

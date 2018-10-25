@@ -28,15 +28,15 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Room> filteredRooms;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given concierge and userPrefs.
      */
-    public ModelManager(ReadOnlyConcierge addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyConcierge concierge, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(concierge, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + concierge + " and user prefs " + userPrefs);
 
-        versionedConcierge = new VersionedConcierge(addressBook);
+        versionedConcierge = new VersionedConcierge(concierge);
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());
         filteredRooms = new FilteredList<>(versionedConcierge.getRoomList());
     }

@@ -8,14 +8,14 @@ import java.util.List;
  */
 public class VersionedConcierge extends Concierge {
 
-    private final List<ReadOnlyConcierge> addressBookStateList;
+    private final List<ReadOnlyConcierge> conciergeStateList;
     private int currentStatePointer;
 
     public VersionedConcierge(ReadOnlyConcierge initialState) {
         super(initialState);
 
-        addressBookStateList = new ArrayList<>();
-        addressBookStateList.add(new Concierge(initialState));
+        conciergeStateList = new ArrayList<>();
+        conciergeStateList.add(new Concierge(initialState));
         currentStatePointer = 0;
     }
 
@@ -25,12 +25,12 @@ public class VersionedConcierge extends Concierge {
      */
     public void commit() {
         removeStatesAfterCurrentPointer();
-        addressBookStateList.add(new Concierge(this));
+        conciergeStateList.add(new Concierge(this));
         currentStatePointer++;
     }
 
     private void removeStatesAfterCurrentPointer() {
-        addressBookStateList.subList(currentStatePointer + 1, addressBookStateList.size()).clear();
+        conciergeStateList.subList(currentStatePointer + 1, conciergeStateList.size()).clear();
     }
 
     /**
@@ -41,7 +41,7 @@ public class VersionedConcierge extends Concierge {
             throw new NoUndoableStateException();
         }
         currentStatePointer--;
-        resetData(addressBookStateList.get(currentStatePointer));
+        resetData(conciergeStateList.get(currentStatePointer));
     }
 
     /**
@@ -52,7 +52,7 @@ public class VersionedConcierge extends Concierge {
             throw new NoRedoableStateException();
         }
         currentStatePointer++;
-        resetData(addressBookStateList.get(currentStatePointer));
+        resetData(conciergeStateList.get(currentStatePointer));
     }
 
     /**
@@ -66,7 +66,7 @@ public class VersionedConcierge extends Concierge {
      * Returns true if {@code redo()} has address book states to redo.
      */
     public boolean canRedo() {
-        return currentStatePointer < addressBookStateList.size() - 1;
+        return currentStatePointer < conciergeStateList.size() - 1;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class VersionedConcierge extends Concierge {
 
         // state check
         return super.equals(otherVersionedConcierge)
-                && addressBookStateList.equals(otherVersionedConcierge.addressBookStateList)
+                && conciergeStateList.equals(otherVersionedConcierge.conciergeStateList)
                 && currentStatePointer == otherVersionedConcierge.currentStatePointer;
     }
 
@@ -94,7 +94,7 @@ public class VersionedConcierge extends Concierge {
      */
     public static class NoUndoableStateException extends RuntimeException {
         private NoUndoableStateException() {
-            super("Current state pointer at start of addressBookState list, unable to undo.");
+            super("Current state pointer at start of conciergeState list, unable to undo.");
         }
     }
 
@@ -103,7 +103,7 @@ public class VersionedConcierge extends Concierge {
      */
     public static class NoRedoableStateException extends RuntimeException {
         private NoRedoableStateException() {
-            super("Current state pointer at end of addressBookState list, unable to redo.");
+            super("Current state pointer at end of conciergeState list, unable to redo.");
         }
     }
 }

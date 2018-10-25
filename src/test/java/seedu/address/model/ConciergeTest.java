@@ -31,24 +31,24 @@ public class ConciergeTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final Concierge addressBook = new Concierge();
+    private final Concierge concierge = new Concierge();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getGuestList());
+        assertEquals(Collections.emptyList(), concierge.getGuestList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        addressBook.resetData(null);
+        concierge.resetData(null);
     }
 
     @Test
     public void resetData_withValidReadOnlyConcierge_replacesData() {
         Concierge newData = getTypicalConcierge();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+        concierge.resetData(newData);
+        assertEquals(newData, concierge);
     }
 
     @Test
@@ -61,44 +61,44 @@ public class ConciergeTest {
         ConciergeStub newData = new ConciergeStub(newGuests, null);
 
         thrown.expect(DuplicateGuestException.class);
-        addressBook.resetData(newData);
+        concierge.resetData(newData);
     }
 
     @Test
     public void hasGuest_nullGuest_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        addressBook.hasGuest(null);
+        concierge.hasGuest(null);
     }
 
     @Test
     public void hasGuest_guestNotInConcierge_returnsFalse() {
-        assertFalse(addressBook.hasGuest(ALICE));
+        assertFalse(concierge.hasGuest(ALICE));
     }
 
     @Test
     public void hasGuest_guestInConcierge_returnsTrue() {
-        addressBook.addGuest(ALICE);
-        assertTrue(addressBook.hasGuest(ALICE));
+        concierge.addGuest(ALICE);
+        assertTrue(concierge.hasGuest(ALICE));
     }
 
     @Test
     public void hasGuest_guestWithSameIdentityFieldsInConcierge_returnsTrue() {
-        addressBook.addGuest(ALICE);
+        concierge.addGuest(ALICE);
         Guest editedAlice = new GuestBuilder(ALICE).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(addressBook.hasGuest(editedAlice));
+        assertTrue(concierge.hasGuest(editedAlice));
     }
 
     @Test
     public void getGuestList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getGuestList().remove(0);
+        concierge.getGuestList().remove(0);
     }
 
     @Test
     public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getMenuMap().put("1", new ExpenseType("1", "-", 0));
+        concierge.getMenuMap().put("1", new ExpenseType("1", "-", 0));
     }
 
     /**

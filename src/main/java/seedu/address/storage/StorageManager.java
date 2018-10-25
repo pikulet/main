@@ -21,13 +21,13 @@ import seedu.address.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private ConciergeStorage addressBookStorage;
+    private ConciergeStorage conciergeStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(ConciergeStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ConciergeStorage conciergeStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.conciergeStorage = conciergeStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -53,29 +53,29 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public Path getConciergeFilePath() {
-        return addressBookStorage.getConciergeFilePath();
+        return conciergeStorage.getConciergeFilePath();
     }
 
     @Override
     public Optional<ReadOnlyConcierge> readConcierge() throws DataConversionException, IOException {
-        return readConcierge(addressBookStorage.getConciergeFilePath());
+        return readConcierge(conciergeStorage.getConciergeFilePath());
     }
 
     @Override
     public Optional<ReadOnlyConcierge> readConcierge(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readConcierge(filePath);
+        return conciergeStorage.readConcierge(filePath);
     }
 
     @Override
-    public void saveConcierge(ReadOnlyConcierge addressBook) throws IOException {
-        saveConcierge(addressBook, addressBookStorage.getConciergeFilePath());
+    public void saveConcierge(ReadOnlyConcierge concierge) throws IOException {
+        saveConcierge(concierge, conciergeStorage.getConciergeFilePath());
     }
 
     @Override
-    public void saveConcierge(ReadOnlyConcierge addressBook, Path filePath) throws IOException {
+    public void saveConcierge(ReadOnlyConcierge concierge, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveConcierge(addressBook, filePath);
+        conciergeStorage.saveConcierge(concierge, filePath);
     }
 
 

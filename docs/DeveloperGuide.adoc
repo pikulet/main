@@ -244,7 +244,7 @@ This section describes some noteworthy details on how certain features are imple
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by `VersionedConcierge`.
-It extends `Concierge` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
+It extends `Concierge` with an undo/redo history, stored internally as an `conciergeStateList` and `currentStatePointer`.
 Additionally, it implements the following operations:
 
 * `VersionedConcierge#commit()` -- Saves the current address book state in its history.
@@ -259,16 +259,16 @@ Step 1. The user launches the application for the first time. The `VersionedConc
 
 image::UndoRedoStartingStateListDiagram.png[width="800"]
 
-Step 2. The user executes `delete 5` command to delete the 5th guest in the address book. The `delete` command calls `Model#commitConcierge()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th guest in the address book. The `delete` command calls `Model#commitConcierge()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `conciergeStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
 
-Step 3. The user executes `add n/David ...` to add a new guest. The `add` command also calls `Model#commitConcierge()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David ...` to add a new guest. The `add` command also calls `Model#commitConcierge()`, causing another modified address book state to be saved into the `conciergeStateList`.
 
 image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
 
 [NOTE]
-If a command fails its execution, it will not call `Model#commitConcierge()`, so the address book state will not be saved into the `addressBookStateList`.
+If a command fails its execution, it will not call `Model#commitConcierge()`, so the address book state will not be saved into the `conciergeStateList`.
 
 Step 4. The user now decides that adding the guest was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoConcierge()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
@@ -284,13 +284,13 @@ image::UndoRedoSequenceDiagram.png[width="800"]
 The `redo` command does the opposite -- it calls `Model#redoConcierge()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
 
 [NOTE]
-If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore. The `redo` command uses `Model#canRedoConcierge()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the `currentStatePointer` is at index `conciergeStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore. The `redo` command uses `Model#canRedoConcierge()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitConcierge()`, `Model#undoConcierge()` or `Model#redoConcierge()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitConcierge()`, `Model#undoConcierge()` or `Model#redoConcierge()`. Thus, the `conciergeStateList` remains unchanged.
 
 image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
 
-Step 6. The user executes `clear`, which calls `Model#commitConcierge()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitConcierge()`. Since the `currentStatePointer` is not pointing at the end of the `conciergeStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
 
 image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
 
@@ -1112,7 +1112,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`].
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the guest will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `concierge.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedGuest` class
 We now have `Remark` s for `Guest` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedGuest.java[`XmlAdaptedGuest`] to include a `Remark` field so that it will be saved.

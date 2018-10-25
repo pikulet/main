@@ -61,20 +61,20 @@ public class XmlConciergeStorage implements ConciergeStorage {
     }
 
     @Override
-    public void saveConcierge(ReadOnlyConcierge addressBook) throws IOException {
-        saveConcierge(addressBook, filePath);
+    public void saveConcierge(ReadOnlyConcierge concierge) throws IOException {
+        saveConcierge(concierge, filePath);
     }
 
     /**
      * Similar to {@link #saveConcierge(ReadOnlyConcierge)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveConcierge(ReadOnlyConcierge addressBook, Path filePath) throws IOException {
-        requireNonNull(addressBook);
+    public void saveConcierge(ReadOnlyConcierge concierge, Path filePath) throws IOException {
+        requireNonNull(concierge);
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        XmlFileStorage.saveDataToFile(filePath, new XmlSerializableConcierge(addressBook));
+        XmlFileStorage.saveDataToFile(filePath, new XmlSerializableConcierge(concierge));
     }
 
 }

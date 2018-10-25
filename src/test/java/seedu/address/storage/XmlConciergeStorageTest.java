@@ -106,12 +106,12 @@ public class XmlConciergeStorageTest {
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code concierge} at the specified {@code filePath}.
      */
-    private void saveConcierge(ReadOnlyConcierge addressBook, String filePath) {
+    private void saveConcierge(ReadOnlyConcierge concierge, String filePath) {
         try {
             new XmlConciergeStorage(Paths.get(filePath))
-                    .saveConcierge(addressBook, addToTestDataPathIfNotNull(filePath));
+                    .saveConcierge(concierge, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
