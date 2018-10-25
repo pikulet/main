@@ -22,7 +22,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.guest.Guest;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableConcierge;
 
 public class GuestListPanelTest extends GuiUnitTest {
     private static final ObservableList<Guest> TYPICAL_GUESTS =
@@ -81,9 +81,9 @@ public class GuestListPanelTest extends GuiUnitTest {
      */
     private ObservableList<Guest> createBackingList(int guestCount) throws Exception {
         Path xmlFile = createXmlFileWithGuests(guestCount);
-        XmlSerializableAddressBook xmlAddressBook =
-                XmlUtil.getDataFromFile(xmlFile, XmlSerializableAddressBook.class);
-        return FXCollections.observableArrayList(xmlAddressBook.toModelType().getGuestList());
+        XmlSerializableConcierge xmlConcierge =
+                XmlUtil.getDataFromFile(xmlFile, XmlSerializableConcierge.class);
+        return FXCollections.observableArrayList(xmlConcierge.toModelType().getGuestList());
     }
 
     /**

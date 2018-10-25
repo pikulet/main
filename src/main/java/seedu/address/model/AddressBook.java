@@ -19,7 +19,7 @@ import seedu.address.model.room.booking.Booking;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .isSameGuest comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class Concierge implements ReadOnlyConcierge {
 
     private final UniqueGuestList guests;
     private final UniqueRoomList rooms;
@@ -37,12 +37,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         menu = new Menu();
     }
 
-    public AddressBook() {}
+    public Concierge() {}
 
     /**
-     * Creates an AddressBook using the Guests in the {@code toBeCopied}
+     * Creates an Concierge using the Guests in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public Concierge(ReadOnlyConcierge toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -100,7 +100,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
+     * Removes {@code key} from this {@code Concierge}.
      * {@code key} must exist in the address book.
      */
     public void removeGuest(Guest key) {
@@ -164,9 +164,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     //=========== Reset data =============================================================
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Concierge} with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyConcierge newData) {
         requireNonNull(newData);
 
         setGuests(newData.getGuestList());
@@ -231,8 +231,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && guests.equals(((AddressBook) other).guests));
+                || (other instanceof Concierge // instanceof handles nulls
+                && guests.equals(((Concierge) other).guests));
     }
 
     @Override

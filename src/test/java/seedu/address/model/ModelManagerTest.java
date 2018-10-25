@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.guest.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.ConciergeBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -29,12 +29,12 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasGuest_guestNotInAddressBook_returnsFalse() {
+    public void hasGuest_guestNotInConcierge_returnsFalse() {
         assertFalse(modelManager.hasGuest(ALICE));
     }
 
     @Test
-    public void hasGuest_guestInAddressBook_returnsTrue() {
+    public void hasGuest_guestInConcierge_returnsTrue() {
         modelManager.addGuest(ALICE);
         assertTrue(modelManager.hasGuest(ALICE));
     }
@@ -47,8 +47,8 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withGuest(ALICE).withGuest(BENSON).build();
-        AddressBook differentAddressBook = new AddressBook();
+        Concierge addressBook = new ConciergeBuilder().withGuest(ALICE).withGuest(BENSON).build();
+        Concierge differentConcierge = new Concierge();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
@@ -66,7 +66,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentConcierge, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
@@ -78,7 +78,7 @@ public class ModelManagerTest {
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setConciergeFilePath(Paths.get("differentFilePath"));
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
 }

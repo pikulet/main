@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 import static seedu.address.testutil.TypicalGuests.ALICE;
 
 import java.util.Arrays;
@@ -26,12 +26,12 @@ import seedu.address.model.guest.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
 import seedu.address.testutil.GuestBuilder;
 
-public class AddressBookTest {
+public class ConciergeTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBook addressBook = new AddressBook();
+    private final Concierge addressBook = new Concierge();
 
     @Test
     public void constructor() {
@@ -45,8 +45,8 @@ public class AddressBookTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
+    public void resetData_withValidReadOnlyConcierge_replacesData() {
+        Concierge newData = getTypicalConcierge();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }
@@ -58,7 +58,7 @@ public class AddressBookTest {
                 .build();
         List<Guest> newGuests = Arrays.asList(ALICE, editedAlice);
 
-        AddressBookStub newData = new AddressBookStub(newGuests, null);
+        ConciergeStub newData = new ConciergeStub(newGuests, null);
 
         thrown.expect(DuplicateGuestException.class);
         addressBook.resetData(newData);
@@ -71,18 +71,18 @@ public class AddressBookTest {
     }
 
     @Test
-    public void hasGuest_guestNotInAddressBook_returnsFalse() {
+    public void hasGuest_guestNotInConcierge_returnsFalse() {
         assertFalse(addressBook.hasGuest(ALICE));
     }
 
     @Test
-    public void hasGuest_guestInAddressBook_returnsTrue() {
+    public void hasGuest_guestInConcierge_returnsTrue() {
         addressBook.addGuest(ALICE);
         assertTrue(addressBook.hasGuest(ALICE));
     }
 
     @Test
-    public void hasGuest_guestWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    public void hasGuest_guestWithSameIdentityFieldsInConcierge_returnsTrue() {
         addressBook.addGuest(ALICE);
         Guest editedAlice = new GuestBuilder(ALICE).withTags(VALID_TAG_HUSBAND)
                 .build();
@@ -102,13 +102,13 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose guests list can violate interface constraints.
+     * A stub ReadOnlyConcierge whose guests list can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class ConciergeStub implements ReadOnlyConcierge {
         private final ObservableList<Guest> guests = FXCollections.observableArrayList();
         private final ObservableList<Room> rooms = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Guest> guests, Collection<Room> rooms) {
+        ConciergeStub(Collection<Guest> guests, Collection<Room> rooms) {
             this.guests.setAll(guests);
         }
 

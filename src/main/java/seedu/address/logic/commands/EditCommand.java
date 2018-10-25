@@ -83,7 +83,7 @@ public class EditCommand extends Command {
 
         model.updateGuest(guestToEdit, editedGuest);
         model.updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
-        model.commitAddressBook();
+        model.commitConcierge();
         return new CommandResult(String.format(MESSAGE_EDIT_GUEST_SUCCESS, editedGuest));
     }
 

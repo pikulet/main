@@ -14,285 +14,285 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.ConciergeBuilder;
 
-public class VersionedAddressBookTest {
+public class VersionedConciergeTest {
 
-    private final ReadOnlyAddressBook addressBookWithAmy = new AddressBookBuilder().withGuest(AMY).build();
-    private final ReadOnlyAddressBook addressBookWithBob = new AddressBookBuilder().withGuest(BOB).build();
-    private final ReadOnlyAddressBook addressBookWithCarl = new AddressBookBuilder().withGuest(CARL).build();
-    private final ReadOnlyAddressBook emptyAddressBook = new AddressBookBuilder().build();
+    private final ReadOnlyConcierge addressBookWithAmy = new ConciergeBuilder().withGuest(AMY).build();
+    private final ReadOnlyConcierge addressBookWithBob = new ConciergeBuilder().withGuest(BOB).build();
+    private final ReadOnlyConcierge addressBookWithCarl = new ConciergeBuilder().withGuest(CARL).build();
+    private final ReadOnlyConcierge emptyConcierge = new ConciergeBuilder().build();
 
     @Test
-    public void commit_singleAddressBook_noStatesRemovedCurrentStateSaved() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(emptyAddressBook);
+    public void commit_singleConcierge_noStatesRemovedCurrentStateSaved() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(emptyConcierge);
 
-        versionedAddressBook.commit();
-        assertAddressBookListStatus(versionedAddressBook,
-                Collections.singletonList(emptyAddressBook),
-                emptyAddressBook,
+        versionedConcierge.commit();
+        assertConciergeListStatus(versionedConcierge,
+                Collections.singletonList(emptyConcierge),
+                emptyConcierge,
                 Collections.emptyList());
     }
 
     @Test
-    public void commit_multipleAddressBookPointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
+    public void commit_multipleConciergePointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
 
-        versionedAddressBook.commit();
-        assertAddressBookListStatus(versionedAddressBook,
-                Arrays.asList(emptyAddressBook, addressBookWithAmy, addressBookWithBob),
+        versionedConcierge.commit();
+        assertConciergeListStatus(versionedConcierge,
+                Arrays.asList(emptyConcierge, addressBookWithAmy, addressBookWithBob),
                 addressBookWithBob,
                 Collections.emptyList());
     }
 
     @Test
-    public void commit_multipleAddressBookPointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+    public void commit_multipleConciergePointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
-        versionedAddressBook.commit();
-        assertAddressBookListStatus(versionedAddressBook,
-                Collections.singletonList(emptyAddressBook),
-                emptyAddressBook,
+        versionedConcierge.commit();
+        assertConciergeListStatus(versionedConcierge,
+                Collections.singletonList(emptyConcierge),
+                emptyConcierge,
                 Collections.emptyList());
     }
 
     @Test
-    public void canUndo_multipleAddressBookPointerAtEndOfStateList_returnsTrue() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
+    public void canUndo_multipleConciergePointerAtEndOfStateList_returnsTrue() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
 
-        assertTrue(versionedAddressBook.canUndo());
+        assertTrue(versionedConcierge.canUndo());
     }
 
     @Test
-    public void canUndo_multipleAddressBookPointerAtStartOfStateList_returnsTrue() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
+    public void canUndo_multipleConciergePointerAtStartOfStateList_returnsTrue() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
-        assertTrue(versionedAddressBook.canUndo());
+        assertTrue(versionedConcierge.canUndo());
     }
 
     @Test
-    public void canUndo_singleAddressBook_returnsFalse() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(emptyAddressBook);
+    public void canUndo_singleConcierge_returnsFalse() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(emptyConcierge);
 
-        assertFalse(versionedAddressBook.canUndo());
+        assertFalse(versionedConcierge.canUndo());
     }
 
     @Test
-    public void canUndo_multipleAddressBookPointerAtStartOfStateList_returnsFalse() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+    public void canUndo_multipleConciergePointerAtStartOfStateList_returnsFalse() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
-        assertFalse(versionedAddressBook.canUndo());
+        assertFalse(versionedConcierge.canUndo());
     }
 
     @Test
-    public void canRedo_multipleAddressBookPointerNotAtEndOfStateList_returnsTrue() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
+    public void canRedo_multipleConciergePointerNotAtEndOfStateList_returnsTrue() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
-        assertTrue(versionedAddressBook.canRedo());
+        assertTrue(versionedConcierge.canRedo());
     }
 
     @Test
-    public void canRedo_multipleAddressBookPointerAtStartOfStateList_returnsTrue() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+    public void canRedo_multipleConciergePointerAtStartOfStateList_returnsTrue() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
-        assertTrue(versionedAddressBook.canRedo());
+        assertTrue(versionedConcierge.canRedo());
     }
 
     @Test
-    public void canRedo_singleAddressBook_returnsFalse() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(emptyAddressBook);
+    public void canRedo_singleConcierge_returnsFalse() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(emptyConcierge);
 
-        assertFalse(versionedAddressBook.canRedo());
+        assertFalse(versionedConcierge.canRedo());
     }
 
     @Test
-    public void canRedo_multipleAddressBookPointerAtEndOfStateList_returnsFalse() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
+    public void canRedo_multipleConciergePointerAtEndOfStateList_returnsFalse() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
 
-        assertFalse(versionedAddressBook.canRedo());
+        assertFalse(versionedConcierge.canRedo());
     }
 
     @Test
-    public void undo_multipleAddressBookPointerAtEndOfStateList_success() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
+    public void undo_multipleConciergePointerAtEndOfStateList_success() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
 
-        versionedAddressBook.undo();
-        assertAddressBookListStatus(versionedAddressBook,
-                Collections.singletonList(emptyAddressBook),
+        versionedConcierge.undo();
+        assertConciergeListStatus(versionedConcierge,
+                Collections.singletonList(emptyConcierge),
                 addressBookWithAmy,
                 Collections.singletonList(addressBookWithBob));
     }
 
     @Test
-    public void undo_multipleAddressBookPointerNotAtStartOfStateList_success() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
+    public void undo_multipleConciergePointerNotAtStartOfStateList_success() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
-        versionedAddressBook.undo();
-        assertAddressBookListStatus(versionedAddressBook,
+        versionedConcierge.undo();
+        assertConciergeListStatus(versionedConcierge,
                 Collections.emptyList(),
-                emptyAddressBook,
+                emptyConcierge,
                 Arrays.asList(addressBookWithAmy, addressBookWithBob));
     }
 
     @Test
-    public void undo_singleAddressBook_throwsNoUndoableStateException() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(emptyAddressBook);
+    public void undo_singleConcierge_throwsNoUndoableStateException() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(emptyConcierge);
 
-        assertThrows(VersionedAddressBook.NoUndoableStateException.class, versionedAddressBook::undo);
+        assertThrows(VersionedConcierge.NoUndoableStateException.class, versionedConcierge::undo);
     }
 
     @Test
-    public void undo_multipleAddressBookPointerAtStartOfStateList_throwsNoUndoableStateException() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+    public void undo_multipleConciergePointerAtStartOfStateList_throwsNoUndoableStateException() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
-        assertThrows(VersionedAddressBook.NoUndoableStateException.class, versionedAddressBook::undo);
+        assertThrows(VersionedConcierge.NoUndoableStateException.class, versionedConcierge::undo);
     }
 
     @Test
-    public void redo_multipleAddressBookPointerNotAtEndOfStateList_success() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
+    public void redo_multipleConciergePointerNotAtEndOfStateList_success() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
 
-        versionedAddressBook.redo();
-        assertAddressBookListStatus(versionedAddressBook,
-                Arrays.asList(emptyAddressBook, addressBookWithAmy),
+        versionedConcierge.redo();
+        assertConciergeListStatus(versionedConcierge,
+                Arrays.asList(emptyConcierge, addressBookWithAmy),
                 addressBookWithBob,
                 Collections.emptyList());
     }
 
     @Test
-    public void redo_multipleAddressBookPointerAtStartOfStateList_success() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+    public void redo_multipleConciergePointerAtStartOfStateList_success() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 2);
 
-        versionedAddressBook.redo();
-        assertAddressBookListStatus(versionedAddressBook,
-                Collections.singletonList(emptyAddressBook),
+        versionedConcierge.redo();
+        assertConciergeListStatus(versionedConcierge,
+                Collections.singletonList(emptyConcierge),
                 addressBookWithAmy,
                 Collections.singletonList(addressBookWithBob));
     }
 
     @Test
-    public void redo_singleAddressBook_throwsNoRedoableStateException() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(emptyAddressBook);
+    public void redo_singleConcierge_throwsNoRedoableStateException() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(emptyConcierge);
 
-        assertThrows(VersionedAddressBook.NoRedoableStateException.class, versionedAddressBook::redo);
+        assertThrows(VersionedConcierge.NoRedoableStateException.class, versionedConcierge::redo);
     }
 
     @Test
-    public void redo_multipleAddressBookPointerAtEndOfStateList_throwsNoRedoableStateException() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
+    public void redo_multipleConciergePointerAtEndOfStateList_throwsNoRedoableStateException() {
+        VersionedConcierge versionedConcierge = prepareConciergeList(
+                emptyConcierge, addressBookWithAmy, addressBookWithBob);
 
-        assertThrows(VersionedAddressBook.NoRedoableStateException.class, versionedAddressBook::redo);
+        assertThrows(VersionedConcierge.NoRedoableStateException.class, versionedConcierge::redo);
     }
 
     @Test
     public void equals() {
-        VersionedAddressBook versionedAddressBook = prepareAddressBookList(addressBookWithAmy, addressBookWithBob);
+        VersionedConcierge versionedConcierge = prepareConciergeList(addressBookWithAmy, addressBookWithBob);
 
         // same values -> returns true
-        VersionedAddressBook copy = prepareAddressBookList(addressBookWithAmy, addressBookWithBob);
-        assertTrue(versionedAddressBook.equals(copy));
+        VersionedConcierge copy = prepareConciergeList(addressBookWithAmy, addressBookWithBob);
+        assertTrue(versionedConcierge.equals(copy));
 
         // same object -> returns true
-        assertTrue(versionedAddressBook.equals(versionedAddressBook));
+        assertTrue(versionedConcierge.equals(versionedConcierge));
 
         // null -> returns false
-        assertFalse(versionedAddressBook.equals(null));
+        assertFalse(versionedConcierge.equals(null));
 
         // different types -> returns false
-        assertFalse(versionedAddressBook.equals(1));
+        assertFalse(versionedConcierge.equals(1));
 
         // different state list -> returns false
-        VersionedAddressBook differentAddressBookList = prepareAddressBookList(addressBookWithBob, addressBookWithCarl);
-        assertFalse(versionedAddressBook.equals(differentAddressBookList));
+        VersionedConcierge differentConciergeList = prepareConciergeList(addressBookWithBob, addressBookWithCarl);
+        assertFalse(versionedConcierge.equals(differentConciergeList));
 
         // different current pointer index -> returns false
-        VersionedAddressBook differentCurrentStatePointer = prepareAddressBookList(
+        VersionedConcierge differentCurrentStatePointer = prepareConciergeList(
                 addressBookWithAmy, addressBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
-        assertFalse(versionedAddressBook.equals(differentCurrentStatePointer));
+        shiftCurrentStatePointerLeftwards(versionedConcierge, 1);
+        assertFalse(versionedConcierge.equals(differentCurrentStatePointer));
     }
 
     /**
-     * Asserts that {@code versionedAddressBook} is currently pointing at {@code expectedCurrentState},
-     * states before {@code versionedAddressBook#currentStatePointer} is equal to {@code expectedStatesBeforePointer},
-     * and states after {@code versionedAddressBook#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
+     * Asserts that {@code versionedConcierge} is currently pointing at {@code expectedCurrentState},
+     * states before {@code versionedConcierge#currentStatePointer} is equal to {@code expectedStatesBeforePointer},
+     * and states after {@code versionedConcierge#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
      */
-    private void assertAddressBookListStatus(VersionedAddressBook versionedAddressBook,
-                                             List<ReadOnlyAddressBook> expectedStatesBeforePointer,
-                                             ReadOnlyAddressBook expectedCurrentState,
-                                             List<ReadOnlyAddressBook> expectedStatesAfterPointer) {
+    private void assertConciergeListStatus(VersionedConcierge versionedConcierge,
+                                             List<ReadOnlyConcierge> expectedStatesBeforePointer,
+                                             ReadOnlyConcierge expectedCurrentState,
+                                             List<ReadOnlyConcierge> expectedStatesAfterPointer) {
         // check state currently pointing at is correct
-        assertEquals(new AddressBook(versionedAddressBook), expectedCurrentState);
+        assertEquals(new Concierge(versionedConcierge), expectedCurrentState);
 
         // shift pointer to start of state list
-        while (versionedAddressBook.canUndo()) {
-            versionedAddressBook.undo();
+        while (versionedConcierge.canUndo()) {
+            versionedConcierge.undo();
         }
 
         // check states before pointer are correct
-        for (ReadOnlyAddressBook expectedAddressBook : expectedStatesBeforePointer) {
-            assertEquals(expectedAddressBook, new AddressBook(versionedAddressBook));
-            versionedAddressBook.redo();
+        for (ReadOnlyConcierge expectedConcierge : expectedStatesBeforePointer) {
+            assertEquals(expectedConcierge, new Concierge(versionedConcierge));
+            versionedConcierge.redo();
         }
 
         // check states after pointer are correct
-        for (ReadOnlyAddressBook expectedAddressBook : expectedStatesAfterPointer) {
-            versionedAddressBook.redo();
-            assertEquals(expectedAddressBook, new AddressBook(versionedAddressBook));
+        for (ReadOnlyConcierge expectedConcierge : expectedStatesAfterPointer) {
+            versionedConcierge.redo();
+            assertEquals(expectedConcierge, new Concierge(versionedConcierge));
         }
 
         // check that there are no more states after pointer
-        assertFalse(versionedAddressBook.canRedo());
+        assertFalse(versionedConcierge.canRedo());
 
         // revert pointer to original position
-        expectedStatesAfterPointer.forEach(unused -> versionedAddressBook.undo());
+        expectedStatesAfterPointer.forEach(unused -> versionedConcierge.undo());
     }
 
     /**
-     * Creates and returns a {@code VersionedAddressBook} with the {@code addressBookStates} added into it, and the
-     * {@code VersionedAddressBook#currentStatePointer} at the end of list.
+     * Creates and returns a {@code VersionedConcierge} with the {@code addressBookStates} added into it, and the
+     * {@code VersionedConcierge#currentStatePointer} at the end of list.
      */
-    private VersionedAddressBook prepareAddressBookList(ReadOnlyAddressBook... addressBookStates) {
+    private VersionedConcierge prepareConciergeList(ReadOnlyConcierge... addressBookStates) {
         assertFalse(addressBookStates.length == 0);
 
-        VersionedAddressBook versionedAddressBook = new VersionedAddressBook(addressBookStates[0]);
+        VersionedConcierge versionedConcierge = new VersionedConcierge(addressBookStates[0]);
         for (int i = 1; i < addressBookStates.length; i++) {
-            versionedAddressBook.resetData(addressBookStates[i]);
-            versionedAddressBook.commit();
+            versionedConcierge.resetData(addressBookStates[i]);
+            versionedConcierge.commit();
         }
 
-        return versionedAddressBook;
+        return versionedConcierge;
     }
 
     /**
-     * Shifts the {@code versionedAddressBook#currentStatePointer} by {@code count} to the left of its list.
+     * Shifts the {@code versionedConcierge#currentStatePointer} by {@code count} to the left of its list.
      */
-    private void shiftCurrentStatePointerLeftwards(VersionedAddressBook versionedAddressBook, int count) {
+    private void shiftCurrentStatePointerLeftwards(VersionedConcierge versionedConcierge, int count) {
         for (int i = 0; i < count; i++) {
-            versionedAddressBook.undo();
+            versionedConcierge.undo();
         }
     }
 }

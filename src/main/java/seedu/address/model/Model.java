@@ -20,10 +20,10 @@ public interface Model {
 
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyConcierge newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the Concierge */
+    ReadOnlyConcierge getConcierge();
 
     // =========== Methods for guest. =========================================
 
@@ -117,25 +117,25 @@ public interface Model {
     /**
      * Returns true if the model has previous address book states to restore.
      */
-    boolean canUndoAddressBook();
+    boolean canUndoConcierge();
 
     /**
      * Returns true if the model has undone address book states to restore.
      */
-    boolean canRedoAddressBook();
+    boolean canRedoConcierge();
 
     /**
      * Restores the model's address book to its previous state.
      */
-    void undoAddressBook();
+    void undoConcierge();
 
     /**
      * Restores the model's address book to its previously undone state.
      */
-    void redoAddressBook();
+    void redoConcierge();
 
     /**
      * Saves the current address book state for undo/redo.
      */
-    void commitAddressBook();
+    void commitConcierge();
 }

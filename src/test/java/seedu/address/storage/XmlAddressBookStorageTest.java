@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 import static seedu.address.testutil.TypicalGuests.ALICE;
 import static seedu.address.testutil.TypicalGuests.HOON;
 import static seedu.address.testutil.TypicalGuests.IDA;
@@ -17,11 +17,11 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.Concierge;
+import seedu.address.model.ReadOnlyConcierge;
 
-public class XmlAddressBookStorageTest {
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlAddressBookStorageTest");
+public class XmlConciergeStorageTest {
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlConciergeStorageTest");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -30,13 +30,13 @@ public class XmlAddressBookStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() throws Exception {
+    public void readConcierge_nullFilePath_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        readAddressBook(null);
+        readConcierge(null);
     }
 
-    private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
-        return new XmlAddressBookStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+    private java.util.Optional<ReadOnlyConcierge> readConcierge(String filePath) throws Exception {
+        return new XmlConciergeStorage(Paths.get(filePath)).readConcierge(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -47,14 +47,14 @@ public class XmlAddressBookStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.xml").isPresent());
+        assertFalse(readConcierge("NonExistentFile.xml").isPresent());
     }
 
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
-        readAddressBook("NotXmlFormatAddressBook.xml");
+        readConcierge("NotXmlFormatConcierge.xml");
 
         /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
          * That means you should not have more than one exception test in one method
@@ -62,65 +62,65 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void readAddressBook_invalidAddressBook_throwDataConversionException() throws Exception {
+    public void readConcierge_invalidConcierge_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidGuestAddressBook.xml");
+        readConcierge("invalidGuestConcierge.xml");
     }
 
     @Test
-    public void readAddressBook_invalidAndValidAddressBook_throwDataConversionException() throws Exception {
+    public void readConcierge_invalidAndValidConcierge_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidAndValidGuestAddressBook.xml");
+        readConcierge("invalidAndValidGuestConcierge.xml");
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
-        Path filePath = testFolder.getRoot().toPath().resolve("TempAddressBook.xml");
-        AddressBook original = getTypicalAddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+    public void readAndSaveConcierge_allInOrder_success() throws Exception {
+        Path filePath = testFolder.getRoot().toPath().resolve("TempConcierge.xml");
+        Concierge original = getTypicalConcierge();
+        XmlConciergeStorage xmlConciergeStorage = new XmlConciergeStorage(filePath);
 
         //Save in new file and read back
-        xmlAddressBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new AddressBook(readBack));
+        xmlConciergeStorage.saveConcierge(original, filePath);
+        ReadOnlyConcierge readBack = xmlConciergeStorage.readConcierge(filePath).get();
+        assertEquals(original, new Concierge(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addGuest(HOON);
         original.removeGuest(ALICE);
-        xmlAddressBookStorage.saveAddressBook(original, filePath);
-        readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new AddressBook(readBack));
+        xmlConciergeStorage.saveConcierge(original, filePath);
+        readBack = xmlConciergeStorage.readConcierge(filePath).get();
+        assertEquals(original, new Concierge(readBack));
 
         //Save and read without specifying file path
         original.addGuest(IDA);
-        xmlAddressBookStorage.saveAddressBook(original); //file path not specified
-        readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
-        assertEquals(original, new AddressBook(readBack));
+        xmlConciergeStorage.saveConcierge(original); //file path not specified
+        readBack = xmlConciergeStorage.readConcierge().get(); //file path not specified
+        assertEquals(original, new Concierge(readBack));
 
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveConcierge_nullConcierge_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(null, "SomeFile.xml");
+        saveConcierge(null, "SomeFile.xml");
     }
 
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
+    private void saveConcierge(ReadOnlyConcierge addressBook, String filePath) {
         try {
-            new XmlAddressBookStorage(Paths.get(filePath))
-                    .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlConciergeStorage(Paths.get(filePath))
+                    .saveConcierge(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() {
+    public void saveConcierge_nullFilePath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(new AddressBook(), null);
+        saveConcierge(new Concierge(), null);
     }
 
 

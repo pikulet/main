@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.Concierge;
+import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.guest.Email;
@@ -24,7 +24,7 @@ import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code Concierge} with sample data.
  */
 public class SampleDataUtil {
     public static Guest[] getSampleGuests() {
@@ -89,8 +89,8 @@ public class SampleDataUtil {
         return sampleMenuMap;
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
+    public static ReadOnlyConcierge getSampleConcierge() {
+        Concierge sampleAb = new Concierge();
         for (Guest sampleGuest : getSampleGuests()) {
             sampleAb.addGuest(sampleGuest);
         }

@@ -88,7 +88,7 @@ public class AddCommand extends Command {
             throw new CommandException(e.getMessage());
         }
 
-        model.commitAddressBook();
+        model.commitConcierge();
         return new CommandResult(String.format(MESSAGE_SUCCESS, guestToAdd,
                 roomNumberToAdd, bookingToAdd.getBookingPeriod()));
     }
