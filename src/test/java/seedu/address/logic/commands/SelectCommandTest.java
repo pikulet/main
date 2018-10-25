@@ -64,7 +64,7 @@ public class SelectCommandTest {
         showGuestAtIndex(expectedModel, INDEX_FIRST_GUEST);
 
         Index outOfBoundsIndex = INDEX_SECOND_GUEST;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of Concierge list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getConcierge().getGuestList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_GUEST_DISPLAYED_INDEX);

@@ -160,7 +160,7 @@ public class CommandTestUtil {
 
     /**
      * Updates {@code model}'s filtered list to show only the guest at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * {@code model}'s Concierge.
      */
     public static void showGuestAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredGuestList().size());
@@ -173,7 +173,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first guest in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first guest in {@code model}'s filtered list from {@code model}'s Concierge.
      */
     public static void deleteFirstGuest(Model model) {
         Guest firstGuest = model.getFilteredGuestList().get(0);

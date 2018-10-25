@@ -107,7 +107,7 @@ public class EditCommandSystemTest extends ConciergeSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered guest list, edit index within bounds of address book and guest list -> edited */
+        /* Case: filtered guest list, edit index within bounds of Concierge and guest list -> edited */
         showGuestsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_GUEST;
         assertTrue(index.getZeroBased() < getModel().getFilteredGuestList().size());
@@ -116,7 +116,7 @@ public class EditCommandSystemTest extends ConciergeSystemTest {
         editedGuest = new GuestBuilder(guestToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedGuest);
 
-        /* Case: filtered guest list, edit index within bounds of address book but out of bounds of guest list
+        /* Case: filtered guest list, edit index within bounds of Concierge but out of bounds of guest list
          * -> rejected
          */
         showGuestsWithName(KEYWORD_MATCHING_MEIER);

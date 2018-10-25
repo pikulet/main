@@ -34,7 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(concierge, userPrefs);
 
-        logger.fine("Initializing with address book: " + concierge + " and user prefs " + userPrefs);
+        logger.fine("Initializing with Concierge: " + concierge + " and user prefs " + userPrefs);
 
         versionedConcierge = new VersionedConcierge(concierge);
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());

@@ -24,7 +24,7 @@ public class FindCommandSystemTest extends ConciergeSystemTest {
 
     @Test
     public void find() {
-        /* Case: find multiple guests in address book, command with leading spaces and trailing spaces
+        /* Case: find multiple guests in Concierge, command with leading spaces and trailing spaces
          * -> 2 guests found
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
@@ -46,23 +46,23 @@ public class FindCommandSystemTest extends ConciergeSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple guests in address book, 2 keywords -> 2 guests found */
+        /* Case: find multiple guests in Concierge, 2 keywords -> 2 guests found */
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
         ModelHelper.setFilteredGuestList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple guests in address book, 2 keywords in reversed order -> 2 guests found */
+        /* Case: find multiple guests in Concierge, 2 keywords in reversed order -> 2 guests found */
         command = FindCommand.COMMAND_WORD + " Daniel Benson";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple guests in address book, 2 keywords with 1 repeat -> 2 guests found */
+        /* Case: find multiple guests in Concierge, 2 keywords with 1 repeat -> 2 guests found */
         command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple guests in address book, 2 matching keywords and 1 non-matching keyword
+        /* Case: find multiple guests in Concierge, 2 matching keywords and 1 non-matching keyword
          * -> 2 guests found
          */
         command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
@@ -79,39 +79,39 @@ public class FindCommandSystemTest extends ConciergeSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: find guest in address book, keyword is same as name but of different case -> 1 guest found */
+        /* Case: find guest in Concierge, keyword is same as name but of different case -> 1 guest found */
         command = FindCommand.COMMAND_WORD + " MeIeR";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find guest in address book, keyword is substring of name -> 0 guests found */
+        /* Case: find guest in Concierge, keyword is substring of name -> 0 guests found */
         command = FindCommand.COMMAND_WORD + " Mei";
         ModelHelper.setFilteredGuestList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find guest in address book, name is substring of keyword -> 0 guests found */
+        /* Case: find guest in Concierge, name is substring of keyword -> 0 guests found */
         command = FindCommand.COMMAND_WORD + " Meiers";
         ModelHelper.setFilteredGuestList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find guest not in address book -> 0 guests found */
+        /* Case: find guest not in Concierge -> 0 guests found */
         command = FindCommand.COMMAND_WORD + " Mark";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of guest in address book -> 0 guests found */
+        /* Case: find phone number of guest in Concierge -> 0 guests found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of guest in address book -> 0 persons found */
+        /* Case: find email of guest in Concierge -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of guest in address book -> 0 guests found */
+        /* Case: find tags of guest in Concierge -> 0 guests found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
@@ -126,7 +126,7 @@ public class FindCommandSystemTest extends ConciergeSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
-        /* Case: find guest in empty address book -> 0 guests found */
+        /* Case: find guest in empty Concierge -> 0 guests found */
         deleteAllGuests();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();

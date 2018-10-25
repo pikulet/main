@@ -25,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns address book in the file or an empty address book
+     * Returns Concierge in the file or an empty Concierge
      */
     public static XmlSerializableConcierge loadDataFromSaveFile(Path file) throws DataConversionException,
                                                                             FileNotFoundException {

@@ -54,14 +54,14 @@ public class SelectCommandSystemTest extends ConciergeSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered guest list, select index within bounds of address book but out of bounds of guest list
+        /* Case: filtered guest list, select index within bounds of Concierge but out of bounds of guest list
          * -> rejected
          */
         showGuestsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getConcierge().getGuestList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_GUEST_DISPLAYED_INDEX);
 
-        /* Case: filtered guest list, select index within bounds of address book and guest list -> selected */
+        /* Case: filtered guest list, select index within bounds of Concierge and guest list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredGuestList().size());
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
@@ -92,7 +92,7 @@ public class SelectCommandSystemTest extends ConciergeSystemTest {
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: select from empty address book -> rejected */
+        /* Case: select from empty Concierge -> rejected */
         deleteAllGuests();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_GUEST.getOneBased(),
                 MESSAGE_INVALID_GUEST_DISPLAYED_INDEX);

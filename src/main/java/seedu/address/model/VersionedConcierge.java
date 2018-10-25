@@ -56,14 +56,14 @@ public class VersionedConcierge extends Concierge {
     }
 
     /**
-     * Returns true if {@code undo()} has address book states to undo.
+     * Returns true if {@code undo()} has Concierge states to undo.
      */
     public boolean canUndo() {
         return currentStatePointer > 0;
     }
 
     /**
-     * Returns true if {@code redo()} has address book states to redo.
+     * Returns true if {@code redo()} has Concierge states to redo.
      */
     public boolean canRedo() {
         return currentStatePointer < conciergeStateList.size() - 1;

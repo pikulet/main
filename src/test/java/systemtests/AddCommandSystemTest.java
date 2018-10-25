@@ -69,7 +69,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a guest without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a guest without tags to a non-empty Concierge, command with leading spaces and trailing spaces
          * -> added
          */
         Guest guestToAdd = AMY;
@@ -94,7 +94,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a guest with all fields same as another guest in the
-        address book except name and room -> added */
+        Concierge except name and room -> added */
         guestToAdd = new GuestBuilder(AMY).withName(VALID_NAME_BOB).build();
         roomNumberToAdd = TypicalRoomNumbers.ROOM_NUMBER_001;
         bookingPeriodToAdd = TypicalBookingPeriods.BOOKING_PERIOD_AMY;

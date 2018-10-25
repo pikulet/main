@@ -115,27 +115,27 @@ public interface Model {
     /* =========== Methods for undo and redo. =================================
 
     /**
-     * Returns true if the model has previous address book states to restore.
+     * Returns true if the model has previous Concierge states to restore.
      */
     boolean canUndoConcierge();
 
     /**
-     * Returns true if the model has undone address book states to restore.
+     * Returns true if the model has undone Concierge states to restore.
      */
     boolean canRedoConcierge();
 
     /**
-     * Restores the model's address book to its previous state.
+     * Restores the model's Concierge to its previous state.
      */
     void undoConcierge();
 
     /**
-     * Restores the model's address book to its previously undone state.
+     * Restores the model's Concierge to its previously undone state.
      */
     void redoConcierge();
 
     /**
-     * Saves the current address book state for undo/redo.
+     * Saves the current Concierge state for undo/redo.
      */
     void commitConcierge();
 }
