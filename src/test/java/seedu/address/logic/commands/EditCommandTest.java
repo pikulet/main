@@ -165,7 +165,7 @@ public class EditCommandTest {
         // edit -> first guest edited
         editCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered guest list to show all guests
+        // undo -> reverts concierge back to previous state and filtered guest list to show all guests
         expectedModel.undoConcierge();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
@@ -210,7 +210,7 @@ public class EditCommandTest {
         // edit -> edits second guest in unfiltered guest list / first guest in filtered guest list
         editCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered guest list to show all guests
+        // undo -> reverts concierge back to previous state and filtered guest list to show all guests
         expectedModel.undoConcierge();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 

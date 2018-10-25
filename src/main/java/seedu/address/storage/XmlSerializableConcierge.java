@@ -19,7 +19,7 @@ import seedu.address.model.room.Room;
 /**
  * An Immutable Concierge that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "concierge")
 public class XmlSerializableConcierge {
 
     public static final String MESSAGE_DUPLICATE_GUEST = "Guest list contains duplicate guest(s).";
@@ -57,7 +57,7 @@ public class XmlSerializableConcierge {
     }
 
     /**
-     * Converts this addressbook into the model's {@code Concierge} object.
+     * Converts this concierge into the model's {@code Concierge} object.
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedGuest / XmlAdaptedRoom}
      */

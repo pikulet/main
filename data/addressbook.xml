@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<concierge>
     <guests>
         <name>Alex Yeoh</name>
         <phone>87438807</phone>
@@ -509,4 +509,4 @@
             </value>
         </entry>
     </menu>
-</addressbook>
+</concierge>

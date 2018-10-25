@@ -9,11 +9,11 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores concierge data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given concierge data to the specified file.
      */
     public static void saveDataToFile(Path file, XmlSerializableConcierge concierge)
             throws FileNotFoundException {

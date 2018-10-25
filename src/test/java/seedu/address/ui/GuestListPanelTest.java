@@ -93,7 +93,7 @@ public class GuestListPanelTest extends GuiUnitTest {
     private Path createXmlFileWithGuests(int guestCount) throws Exception {
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-        builder.append("<addressbook>\n");
+        builder.append("<concierge>\n");
         for (int i = 0; i < guestCount; i++) {
             builder.append("<guest>\n");
             builder.append("<name>").append(i).append("a</name>\n");
@@ -102,7 +102,7 @@ public class GuestListPanelTest extends GuiUnitTest {
             builder.append("<address>a</address>\n");
             builder.append("</guest>\n");
         }
-        builder.append("</addressbook>\n");
+        builder.append("</concierge>\n");
 
         Path manyGuestsFile = Paths.get(TEST_DATA_FOLDER + "manyGuests.xml");
         FileUtil.createFile(manyGuestsFile);
