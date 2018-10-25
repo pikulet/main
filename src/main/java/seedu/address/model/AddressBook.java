@@ -193,7 +193,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return guests.asUnmodifiableObservableList();
     }
 
-
     @Override
     public ObservableList<Room> getRoomList() {
         return rooms.asUnmodifiableObservableList();
