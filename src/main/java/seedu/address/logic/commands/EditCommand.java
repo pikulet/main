@@ -20,7 +20,6 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.guest.Address;
 import seedu.address.model.guest.Email;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.Name;
@@ -28,7 +27,7 @@ import seedu.address.model.guest.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing guest in the address book.
+ * Edits the details of an existing guest in Concierge.
  */
 public class EditCommand extends Command {
 
@@ -49,7 +48,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_GUEST_SUCCESS = "Edited Guest: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_GUEST = "This guest already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_GUEST = "This guest already exists in Concierge.";
 
     private final Index index;
     private final EditGuestDescriptor editGuestDescriptor;
@@ -84,7 +83,7 @@ public class EditCommand extends Command {
 
         model.updateGuest(guestToEdit, editedGuest);
         model.updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
-        model.commitAddressBook();
+        model.commitConcierge();
         return new CommandResult(String.format(MESSAGE_EDIT_GUEST_SUCCESS, editedGuest));
     }
 
@@ -98,10 +97,9 @@ public class EditCommand extends Command {
         Name updatedName = editGuestDescriptor.getName().orElse(guestToEdit.getName());
         Phone updatedPhone = editGuestDescriptor.getPhone().orElse(guestToEdit.getPhone());
         Email updatedEmail = editGuestDescriptor.getEmail().orElse(guestToEdit.getEmail());
-        Address updatedAddress = editGuestDescriptor.getAddress().orElse(guestToEdit.getAddress());
         Set<Tag> updatedTags = editGuestDescriptor.getTags().orElse(guestToEdit.getTags());
 
-        return new Guest(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Guest(updatedName, updatedPhone, updatedEmail, updatedTags);
     }
 
     @Override
@@ -130,7 +128,6 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
         private Set<Tag> tags;
 
         public EditGuestDescriptor() {}
@@ -143,7 +140,6 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
             setTags(toCopy.tags);
         }
 
@@ -151,7 +147,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, tags);
         }
 
         public void setName(Name name) {
@@ -176,14 +172,6 @@ public class EditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
         }
 
         /**
@@ -221,7 +209,6 @@ public class EditCommand extends Command {
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
         }
     }

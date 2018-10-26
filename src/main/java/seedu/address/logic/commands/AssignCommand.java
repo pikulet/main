@@ -45,7 +45,7 @@ public class AssignCommand extends Command {
         }
 
         Guest guestToAssign = lastShownList.get(targetIndex.getZeroBased());
-        model.commitAddressBook();
+        model.commitConcierge();
 
         return new CommandResult(String.format(MESSAGE_ASSIGN_GUEST_SUCCESS, guestToAssign));
     }

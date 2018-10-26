@@ -3,7 +3,7 @@ package systemtests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
@@ -33,15 +33,15 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Concierge;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
 /**
- * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
+ * A system test class for Concierge, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class AddressBookSystemTest {
+public abstract class ConciergeSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -76,8 +76,8 @@ public abstract class AddressBookSystemTest {
     /**
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
-    protected AddressBook getInitialData() {
-        return getTypicalAddressBook();
+    protected Concierge getInitialData() {
+        return getTypicalConcierge();
     }
 
     /**
@@ -126,11 +126,11 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all guests in the address book.
+     * Displays all guests in Concierge.
      */
     protected void showAllGuests() {
         executeCommand(ListCommand.COMMAND_WORD + " -g");
-        assertEquals(getModel().getAddressBook().getGuestList().size(), getModel().getFilteredGuestList().size());
+        assertEquals(getModel().getConcierge().getGuestList().size(), getModel().getFilteredGuestList().size());
     }
 
 
@@ -139,7 +139,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showGuestsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredGuestList().size() < getModel().getAddressBook().getGuestList().size());
+        assertTrue(getModel().getFilteredGuestList().size() < getModel().getConcierge().getGuestList().size());
     }
 
     /**
@@ -151,11 +151,11 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Deletes all guests in the address book.
+     * Deletes all guests in Concierge.
      */
     protected void deleteAllGuests() {
         executeCommand(ClearCommand.COMMAND_WORD);
-        assertEquals(0, getModel().getAddressBook().getGuestList().size());
+        assertEquals(0, getModel().getConcierge().getGuestList().size());
     }
 
     /**
@@ -168,7 +168,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
 
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(new AddressBook(expectedModel.getAddressBook()), testApp.readStorageAddressBook());
+        assertEquals(new Concierge(expectedModel.getConcierge()), testApp.readStorageConcierge());
         assertListMatching(getGuestListPanel(), expectedModel.getFilteredGuestList());
     }
 

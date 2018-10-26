@@ -14,7 +14,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 
 /**
- * Lists all guests in the address book to the user.
+ * Lists all guests in Concierge to the user.
  */
 public class ListCommand extends Command {
 
