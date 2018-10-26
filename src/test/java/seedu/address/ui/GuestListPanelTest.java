@@ -22,7 +22,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.guest.Guest;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableConcierge;
 
 public class GuestListPanelTest extends GuiUnitTest {
     private static final ObservableList<Guest> TYPICAL_GUESTS =
@@ -81,9 +81,9 @@ public class GuestListPanelTest extends GuiUnitTest {
      */
     private ObservableList<Guest> createBackingList(int guestCount) throws Exception {
         Path xmlFile = createXmlFileWithGuests(guestCount);
-        XmlSerializableAddressBook xmlAddressBook =
-                XmlUtil.getDataFromFile(xmlFile, XmlSerializableAddressBook.class);
-        return FXCollections.observableArrayList(xmlAddressBook.toModelType().getGuestList());
+        XmlSerializableConcierge xmlConcierge =
+                XmlUtil.getDataFromFile(xmlFile, XmlSerializableConcierge.class);
+        return FXCollections.observableArrayList(xmlConcierge.toModelType().getGuestList());
     }
 
     /**
@@ -93,7 +93,7 @@ public class GuestListPanelTest extends GuiUnitTest {
     private Path createXmlFileWithGuests(int guestCount) throws Exception {
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-        builder.append("<addressbook>\n");
+        builder.append("<concierge>\n");
         for (int i = 0; i < guestCount; i++) {
             builder.append("<guest>\n");
             builder.append("<name>").append(i).append("a</name>\n");
@@ -102,7 +102,7 @@ public class GuestListPanelTest extends GuiUnitTest {
             builder.append("<address>a</address>\n");
             builder.append("</guest>\n");
         }
-        builder.append("</addressbook>\n");
+        builder.append("</concierge>\n");
 
         Path manyGuestsFile = Paths.get(TEST_DATA_FOLDER + "manyGuests.xml");
         FileUtil.createFile(manyGuestsFile);

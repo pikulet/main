@@ -10,17 +10,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.Concierge;
+import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable Concierge that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
-public class XmlSerializableAddressBook {
+@XmlRootElement(name = "concierge")
+public class XmlSerializableConcierge {
 
     public static final String MESSAGE_DUPLICATE_GUEST = "Guest list contains duplicate guest(s).";
     public static final String MESSAGE_DUPLICATE_ROOM = "Room list contains duplicate room(s)";
@@ -35,10 +35,10 @@ public class XmlSerializableAddressBook {
     private HashMap<String, XmlAdaptedExpenseType> menu;
 
     /**
-     * Creates an empty XmlSerializableAddressBook.
+     * Creates an empty XmlSerializableConcierge.
      * This empty constructor is required for marshalling.
      */
-    public XmlSerializableAddressBook() {
+    public XmlSerializableConcierge() {
         guests = new ArrayList<>();
         rooms = new ArrayList<>();
         menu = new HashMap<>();
@@ -47,7 +47,7 @@ public class XmlSerializableAddressBook {
     /**
      * Conversion
      */
-    public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
+    public XmlSerializableConcierge(ReadOnlyConcierge src) {
         this();
         guests.addAll(src.getGuestList().stream().map(XmlAdaptedGuest::new).collect(Collectors.toList()));
         rooms.addAll(src.getRoomList().stream().map(XmlAdaptedRoom::new).collect(Collectors.toList()));
@@ -57,35 +57,35 @@ public class XmlSerializableAddressBook {
     }
 
     /**
-     * Converts this addressbook into the model's {@code AddressBook} object.
+     * Converts this concierge into the model's {@code Concierge} object.
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedGuest / XmlAdaptedRoom}
      */
-    public AddressBook toModelType() throws IllegalValueException {
-        AddressBook addressBook = new AddressBook();
+    public Concierge toModelType() throws IllegalValueException {
+        Concierge concierge = new Concierge();
         for (XmlAdaptedGuest p : guests) {
             Guest guest = p.toModelType();
-            if (addressBook.hasGuest(guest)) {
+            if (concierge.hasGuest(guest)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_GUEST);
             }
-            addressBook.addGuest(guest);
+            concierge.addGuest(guest);
         }
 
         HashMap<String, ExpenseType> newMenu = new HashMap<>();
         for (Map.Entry<String, XmlAdaptedExpenseType> mapping : menu.entrySet()) {
             newMenu.put(mapping.getKey(), mapping.getValue().toModelType());
         }
-        addressBook.setMenu(newMenu);
+        concierge.setMenu(newMenu);
 
         for (XmlAdaptedRoom r : rooms) {
-            Room room = r.toModelType(addressBook.getMenu());
-            if (addressBook.hasRoom(room)) {
+            Room room = r.toModelType(concierge.getMenu());
+            if (concierge.hasRoom(room)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM);
             }
-            addressBook.addRoom(room);
+            concierge.addRoom(room);
         }
 
-        return addressBook;
+        return concierge;
     }
 
     @Override
@@ -94,9 +94,9 @@ public class XmlSerializableAddressBook {
             return true;
         }
 
-        if (!(other instanceof XmlSerializableAddressBook)) {
+        if (!(other instanceof XmlSerializableConcierge)) {
             return false;
         }
-        return guests.equals(((XmlSerializableAddressBook) other).guests);
+        return guests.equals(((XmlSerializableConcierge) other).guests);
     }
 }

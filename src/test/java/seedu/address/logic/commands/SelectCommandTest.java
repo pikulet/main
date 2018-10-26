@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showGuestAtIndex;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GUEST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GUEST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_GUEST;
@@ -30,8 +30,8 @@ public class SelectCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalConcierge(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalConcierge(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -64,8 +64,8 @@ public class SelectCommandTest {
         showGuestAtIndex(expectedModel, INDEX_FIRST_GUEST);
 
         Index outOfBoundsIndex = INDEX_SECOND_GUEST;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getGuestList().size());
+        // ensures that outOfBoundIndex is still in bounds of Concierge list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getConcierge().getGuestList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_GUEST_DISPLAYED_INDEX);
     }

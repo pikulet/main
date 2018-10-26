@@ -20,34 +20,34 @@ public interface Model {
 
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyConcierge newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the Concierge */
+    ReadOnlyConcierge getConcierge();
 
     // =========== Methods for guest. =========================================
 
     /**
-     * Returns true if a guest with the same identity as {@code guest} exists in the address book.
+     * Returns true if a guest with the same identity as {@code guest} exists in Concierge.
      */
     boolean hasGuest(Guest guest);
 
     /**
      * Deletes the given guest.
-     * The guest must exist in the address book.
+     * The guest must exist in Concierge.
      */
     void deleteGuest(Guest target);
 
     /**
      * Adds the given guest.
-     * {@code guest} must not already exist in the address book.
+     * {@code guest} must not already exist in Concierge.
      */
     void addGuest(Guest guest);
 
     /**
      * Replaces the given guest {@code target} with {@code editedGuest}.
-     * {@code target} must exist in the address book.
-     * The guest identity of {@code editedGuest} must not be the same as another existing guest in the address book.
+     * {@code target} must exist in Concierge.
+     * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge.
      */
     void updateGuest(Guest target, Guest editedGuest);
 
@@ -115,27 +115,27 @@ public interface Model {
     /* =========== Methods for undo and redo. =================================
 
     /**
-     * Returns true if the model has previous address book states to restore.
+     * Returns true if the model has previous Concierge states to restore.
      */
-    boolean canUndoAddressBook();
+    boolean canUndoConcierge();
 
     /**
-     * Returns true if the model has undone address book states to restore.
+     * Returns true if the model has undone Concierge states to restore.
      */
-    boolean canRedoAddressBook();
+    boolean canRedoConcierge();
 
     /**
-     * Restores the model's address book to its previous state.
+     * Restores the model's Concierge to its previous state.
      */
-    void undoAddressBook();
+    void undoConcierge();
 
     /**
-     * Restores the model's address book to its previously undone state.
+     * Restores the model's Concierge to its previously undone state.
      */
-    void redoAddressBook();
+    void redoConcierge();
 
     /**
-     * Saves the current address book state for undo/redo.
+     * Saves the current Concierge state for undo/redo.
      */
-    void commitAddressBook();
+    void commitConcierge();
 }
