@@ -61,7 +61,7 @@ import seedu.address.testutil.GuestUtil;
 import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalRoomNumbers;
 
-public class AddCommandSystemTest extends AddressBookSystemTest {
+public class AddCommandSystemTest extends ConciergeSystemTest {
 
     @Test
     public void add() {
@@ -69,7 +69,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a guest without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a guest without tags to a non-empty Concierge, command with leading spaces and trailing spaces
          * -> added
          */
         Guest guestToAdd = AMY;
@@ -94,7 +94,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a guest with all fields same as another guest in the
-        address book except name and room -> added */
+        Concierge except name and room -> added */
         guestToAdd = new GuestBuilder(AMY).withName(VALID_NAME_BOB).build();
         roomNumberToAdd = TypicalRoomNumbers.ROOM_NUMBER_001;
         bookingPeriodToAdd = TypicalBookingPeriods.BOOKING_PERIOD_AMY;
@@ -102,7 +102,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + TAG_DESC_FRIEND + ROOM_DESC_001 + DATE_START_DESC_AMY + DATE_END_DESC_AMY;
         assertCommandSuccess(command, guestToAdd, roomNumberToAdd, bookingPeriodToAdd);
 
-        /* Case: add a guest with all fields same as another guest in the address book except phone and email
+        /* Case: add a guest with all fields same as another guest in Concierge except phone and email
          * -> added
          */
         guestToAdd = new GuestBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
@@ -230,8 +230,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Guest guestToAdd,
                                       RoomNumber roomNumberToAdd,
@@ -289,8 +289,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * 4. {@code Storage} and {@code GuestListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

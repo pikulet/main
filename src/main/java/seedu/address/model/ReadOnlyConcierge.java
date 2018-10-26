@@ -8,9 +8,9 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of an Concierge
  */
-public interface ReadOnlyAddressBook {
+public interface ReadOnlyConcierge {
 
     /**
      * Returns an unmodifiable view of the guest list.

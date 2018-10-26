@@ -11,7 +11,7 @@ import seedu.address.model.Model;
 import seedu.address.model.guest.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all guests in address book whose name contains any of the
+ * Finds and lists all guests in Concierge whose name contains any of the
  * argument keywords. Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {

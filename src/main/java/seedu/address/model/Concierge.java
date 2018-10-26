@@ -16,10 +16,10 @@ import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Booking;
 
 /**
- * Wraps all data at the address-book level
+ * Wraps all data at the Concierge level
  * Duplicates are not allowed (by .isSameGuest comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class Concierge implements ReadOnlyConcierge {
 
     private final UniqueGuestList guests;
     private final UniqueRoomList rooms;
@@ -37,12 +37,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         menu = new Menu();
     }
 
-    public AddressBook() {}
+    public Concierge() {}
 
     /**
-     * Creates an AddressBook using the Guests in the {@code toBeCopied}
+     * Creates an Concierge using the Guests in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public Concierge(ReadOnlyConcierge toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -81,8 +81,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a guest to the address book.
-     * The guest must not already exist in the address book.
+     * Adds a guest to Concierge.
+     * The guest must not already exist in Concierge.
      */
     public void addGuest(Guest g) {
         guests.add(g);
@@ -90,8 +90,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given guest {@code target} in the list with {@code editedGuest}.
-     * {@code target} must exist in the address book.
-     * The guest identity of {@code editedGuest} must not be the same as another existing guest in the address book.
+     * {@code target} must exist in Concierge.
+     * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge.
      */
     public void updateGuest(Guest target, Guest editedGuest) {
         requireNonNull(editedGuest);
@@ -100,8 +100,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Removes {@code key} from this {@code Concierge}.
+     * {@code key} must exist in Concierge.
      */
     public void removeGuest(Guest key) {
         guests.remove(key);
@@ -110,8 +110,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     //=========== Room operations =============================================================
 
     /**
-     * Adds a room to the address book.
-     * The room must not already exist in the address book.
+     * Adds a room to Concierge.
+     * The room must not already exist in Concierge.
      */
     public void addRoom(Room r) {
         rooms.add(r);
@@ -164,9 +164,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     //=========== Reset data =============================================================
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Concierge} with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyConcierge newData) {
         requireNonNull(newData);
 
         setGuests(newData.getGuestList());
@@ -177,7 +177,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //=========== Boolean checkers =============================================================
 
     /**
-     * Returns true if a guest with the same identity as {@code guest} exists in the address book.
+     * Returns true if a guest with the same identity as {@code guest} exists in Concierge.
      */
     public boolean hasGuest(Guest guest) {
         requireNonNull(guest);
@@ -185,7 +185,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns true if a room with the same identity as {@code room} exists in the address book.
+     * Returns true if a room with the same identity as {@code room} exists in Concierge.
      */
     public boolean hasRoom(Room room) {
         requireNonNull(room);
@@ -231,8 +231,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && guests.equals(((AddressBook) other).guests));
+                || (other instanceof Concierge // instanceof handles nulls
+                && guests.equals(((Concierge) other).guests));
     }
 
     @Override

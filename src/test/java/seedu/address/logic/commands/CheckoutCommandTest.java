@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import seedu.address.testutil.TypicalRoomNumbers;
  */
 public class CheckoutCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalConcierge(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Before
@@ -47,9 +47,9 @@ public class CheckoutCommandTest {
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
         expectedModel.checkoutRoom(roomNumberToCheckout);
-        expectedModel.commitAddressBook();
+        expectedModel.commitConcierge();
 
         assertCommandSuccess(checkoutCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -61,9 +61,9 @@ public class CheckoutCommandTest {
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
         expectedModel.checkoutRoom(roomNumberToCheckout);
-        expectedModel.commitAddressBook();
+        expectedModel.commitConcierge();
 
         assertCommandSuccess(checkoutCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -75,9 +75,9 @@ public class CheckoutCommandTest {
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
         expectedModel.checkoutRoom(roomNumberToCheckout);
-        expectedModel.commitAddressBook();
+        expectedModel.commitConcierge();
 
         assertCommandSuccess(checkoutCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -105,12 +105,12 @@ public class CheckoutCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() {
-        // to be completed after AddressBook is refactored
+        // to be completed after Concierge is refactored
     }
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        // to be completed after AddressBook is refactored
+        // to be completed after Concierge is refactored
     }
 
     @Test

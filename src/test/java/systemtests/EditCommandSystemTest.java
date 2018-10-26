@@ -46,7 +46,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.GuestBuilder;
 import seedu.address.testutil.GuestUtil;
 
-public class EditCommandSystemTest extends AddressBookSystemTest {
+public class EditCommandSystemTest extends ConciergeSystemTest {
 
     @Test
     public void edit() {
@@ -81,7 +81,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit a guest with new values same as another guest's values but with different name -> edited */
-        assertTrue(getModel().getAddressBook().getGuestList().contains(BOB));
+        assertTrue(getModel().getConcierge().getGuestList().contains(BOB));
         index = INDEX_SECOND_GUEST;
         assertNotEquals(getModel().getFilteredGuestList().get(index.getZeroBased()), BOB);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -107,7 +107,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered guest list, edit index within bounds of address book and guest list -> edited */
+        /* Case: filtered guest list, edit index within bounds of Concierge and guest list -> edited */
         showGuestsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_GUEST;
         assertTrue(index.getZeroBased() < getModel().getFilteredGuestList().size());
@@ -116,11 +116,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedGuest = new GuestBuilder(guestToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedGuest);
 
-        /* Case: filtered guest list, edit index within bounds of address book but out of bounds of guest list
+        /* Case: filtered guest list, edit index within bounds of Concierge but out of bounds of guest list
          * -> rejected
          */
         showGuestsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getGuestList().size();
+        int invalidIndex = getModel().getConcierge().getGuestList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_GUEST_DISPLAYED_INDEX);
 
@@ -179,7 +179,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: edit a guest with new values same as another guest's values -> rejected */
         executeCommand(GuestUtil.getAddCommand(BOB, ROOM_NUMBER_BOB, BOOKING_PERIOD_BOB));
-        assertTrue(getModel().getAddressBook().getGuestList().contains(BOB));
+        assertTrue(getModel().getConcierge().getGuestList().contains(BOB));
         index = INDEX_FIRST_GUEST;
         assertFalse(getModel().getFilteredGuestList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -248,9 +248,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 4. Asserts that the status bar's sync status changes.<br>
      * 5. Asserts that the command box has the default style class.<br>
      * Verifications 1 and 2 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * {@code ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ConciergeSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -273,8 +273,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 3. Asserts that the browser url, selected card and status bar remain unchanged.<br>
      * 4. Asserts that the command box has the error style.<br>
      * Verifications 1 and 2 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ConciergeSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

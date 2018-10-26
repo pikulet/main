@@ -37,11 +37,11 @@ import seedu.address.testutil.EditGuestDescriptorBuilder;
 import seedu.address.testutil.GuestBuilder;
 import seedu.address.testutil.GuestUtil;
 
-public class AddressBookParserTest {
+public class ConciergeParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final ConciergeParser parser = new ConciergeParser();
 
     @Test
     public void parseCommand_add() throws Exception {

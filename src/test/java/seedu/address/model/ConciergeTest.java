@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 import static seedu.address.testutil.TypicalGuests.ALICE;
 
 import java.util.Arrays;
@@ -26,29 +26,29 @@ import seedu.address.model.guest.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
 import seedu.address.testutil.GuestBuilder;
 
-public class AddressBookTest {
+public class ConciergeTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBook addressBook = new AddressBook();
+    private final Concierge concierge = new Concierge();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getGuestList());
+        assertEquals(Collections.emptyList(), concierge.getGuestList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        addressBook.resetData(null);
+        concierge.resetData(null);
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+    public void resetData_withValidReadOnlyConcierge_replacesData() {
+        Concierge newData = getTypicalConcierge();
+        concierge.resetData(newData);
+        assertEquals(newData, concierge);
     }
 
     @Test
@@ -58,57 +58,57 @@ public class AddressBookTest {
                 .build();
         List<Guest> newGuests = Arrays.asList(ALICE, editedAlice);
 
-        AddressBookStub newData = new AddressBookStub(newGuests, null);
+        ConciergeStub newData = new ConciergeStub(newGuests, null);
 
         thrown.expect(DuplicateGuestException.class);
-        addressBook.resetData(newData);
+        concierge.resetData(newData);
     }
 
     @Test
     public void hasGuest_nullGuest_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        addressBook.hasGuest(null);
+        concierge.hasGuest(null);
     }
 
     @Test
-    public void hasGuest_guestNotInAddressBook_returnsFalse() {
-        assertFalse(addressBook.hasGuest(ALICE));
+    public void hasGuest_guestNotInConcierge_returnsFalse() {
+        assertFalse(concierge.hasGuest(ALICE));
     }
 
     @Test
-    public void hasGuest_guestInAddressBook_returnsTrue() {
-        addressBook.addGuest(ALICE);
-        assertTrue(addressBook.hasGuest(ALICE));
+    public void hasGuest_guestInConcierge_returnsTrue() {
+        concierge.addGuest(ALICE);
+        assertTrue(concierge.hasGuest(ALICE));
     }
 
     @Test
-    public void hasGuest_guestWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        addressBook.addGuest(ALICE);
+    public void hasGuest_guestWithSameIdentityFieldsInConcierge_returnsTrue() {
+        concierge.addGuest(ALICE);
         Guest editedAlice = new GuestBuilder(ALICE).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(addressBook.hasGuest(editedAlice));
+        assertTrue(concierge.hasGuest(editedAlice));
     }
 
     @Test
     public void getGuestList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getGuestList().remove(0);
+        concierge.getGuestList().remove(0);
     }
 
     @Test
     public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getMenuMap().put("1", new ExpenseType("1", "-", 0));
+        concierge.getMenuMap().put("1", new ExpenseType("1", "-", 0));
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose guests list can violate interface constraints.
+     * A stub ReadOnlyConcierge whose guests list can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class ConciergeStub implements ReadOnlyConcierge {
         private final ObservableList<Guest> guests = FXCollections.observableArrayList();
         private final ObservableList<Room> rooms = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Guest> guests, Collection<Room> rooms) {
+        ConciergeStub(Collection<Guest> guests, Collection<Room> rooms) {
             this.guests.setAll(guests);
         }
 
