@@ -30,23 +30,23 @@ public class Expenses {
      * New expense is added in front as it is more likely that recent expenses are accessed.
      *
      * @param newExpense The new expense incurred.
+     * @return A new Expenses object with the new expense.
      */
-    public void addExpense(Expense newExpense) {
+    public Expenses addExpense(Expense newExpense) {
         requireNonNull(newExpense);
-        expenseList.add(0, newExpense);
-    }
-
-    public void setExpenses(Expenses expenses) {
-        this.expenseList.clear();
-        this.expenseList.addAll(expenses.expenseList);
+        List<Expense> newList = new LinkedList<>(expenseList);
+        newList.add(0, newExpense);
+        return new Expenses(newList);
     }
 
     /**
      * Clears all of the expense records when called.
      * Usually called when guests have checked out.
+     *
+     * @return An Expenses object with no expenses.
      */
-    public void clearExpenses() {
-        expenseList.clear();
+    public Expenses clearExpenses() {
+        return new Expenses();
     }
 
     public List<Expense> getExpensesList() {
