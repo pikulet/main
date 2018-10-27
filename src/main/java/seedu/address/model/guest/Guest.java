@@ -106,9 +106,9 @@ public class Guest {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
+                .append(" | Phone: ")
                 .append(getPhone())
-                .append(" Email: ")
+                .append(" | Email: ")
                 .append(getEmail());
         return builder.toString();
     }

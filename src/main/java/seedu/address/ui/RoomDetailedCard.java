@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.Optional;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -8,8 +10,6 @@ import javafx.scene.layout.Region;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
-
-import java.util.Optional;
 
 /**
  * An UI component that displays information of a {@code Room}.
@@ -53,8 +53,8 @@ public class RoomDetailedCard extends UiPart<Region> {
         capacity.setText("Capacity: " + room.getCapacity().toString());
         expenses.setText("Expenses: " + room.getExpenses().toStringTotalCost());
         Optional<Booking> activeBooking = room.getActiveBooking();
-        bookings.getChildren().add(new Label("Active booking:\n" + 
-                activeBooking.map(Booking::toStringShortDescription).orElse("")));
+        bookings.getChildren().add(new Label("Active booking:\n"
+                + activeBooking.map(Booking::toString).orElse("")));
         Bookings allOtherBookings = room.getBookings();
         if (activeBooking.isPresent()) {
             allOtherBookings = allOtherBookings.remove(activeBooking.get());
