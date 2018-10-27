@@ -13,7 +13,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.commons.events.ui.RoomPanelSelectionChangedEvent;
-import seedu.address.model.Concierge;
 import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.room.Room;
 
