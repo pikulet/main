@@ -4,6 +4,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -59,21 +60,14 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if given string can be parsed into LocalDates using the formatter, 
+     * and if startDate is strictly before endDate. Thus, startDate CANNOT BE EQUALS to endDate
      */
-    public static boolean isValidBookingPeriod(String testStartDate, String testEndDate) {
-        return parsableDate(testStartDate) && parsableDate(testEndDate);
-    }
-
-    /**
-     * Checks whether the given date can be constructed into {@code LocalDate} object.
-     * @param date A date of the correct format.
-     * @return True if given date is of correct format and can be constructed into LocalDate object, false otherwise.
-     */
-    public static boolean parsableDate(String date) {
+    public static boolean isValidBookingPeriod(String startDate, String endDate) {
         try {
-            parseDate(date);
-            return true;
+            LocalDate start = parseDate(startDate);
+            LocalDate end = parseDate(endDate);
+            return start.isBefore(end);
         } catch (DateTimeParseException e) {
             return false;
         }
@@ -95,7 +89,8 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      * @return True if there is any overlap, false otherwise.
      */
     public boolean isOverlapping(BookingPeriod other) {
-        return this.equals(other) || (startDate.isBefore(other.endDate) && other.startDate.isBefore(this.endDate));
+        return this.equals(other) 
+                || (startDate.isBefore(other.endDate) && other.startDate.isBefore(this.endDate));
     }
 
     /**
