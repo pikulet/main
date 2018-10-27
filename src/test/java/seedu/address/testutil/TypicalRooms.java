@@ -1,10 +1,8 @@
 package seedu.address.testutil;
 
-import java.util.Arrays;
-import java.util.List;
-
 import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.SingleRoom;
 import seedu.address.model.room.SuiteRoom;
 import seedu.address.model.room.UniqueRoomList;
@@ -42,24 +40,23 @@ public class TypicalRooms {
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_020.toString()).withCapacity(CAPACITY_SUITE_ROOM)
         .build();
 
-    public static List<Room> getTypicalRooms() {
-        return Arrays.asList(SINGLE_001, DOUBLE_002, SUITE_010, SINGLE_011, DOUBLE_012, SUITE_020);
-    }
+    public static final Room SINGLE_023 = new RoomBuilder()
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_023.toString()).withCapacity(CAPACITY_SINGLE_ROOM)
+        .build();
+
+    public static final Room DOUBLE_024 = new RoomBuilder()
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_024.toString()).withCapacity(CAPACITY_DOUBLE_ROOM)
+        .build();
+
+    public static final Room SUITE_099 = new RoomBuilder()
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_099.toString()).withCapacity(CAPACITY_SUITE_ROOM)
+        .build();
 
     /**
      * Returns a {@code UniqueRoomList} with all the typical rooms.
      * Note: All rooms do not have bookings or expenses. Use @Before in tests to initialize bookings and expenses.
      */
     public static UniqueRoomList getTypicalUniqueRoomList() {
-        UniqueRoomList uniqueRoomList = new UniqueRoomList();
-        uniqueRoomList.setRooms(getTypicalRooms());
-        uniqueRoomList.addBooking(SINGLE_001.getRoomNumber(), TypicalBookings.LASTWEEK_YESTERDAY);
-        uniqueRoomList.addBooking(DOUBLE_002.getRoomNumber(), TypicalBookings.YESTERDAY_TODAY);
-        uniqueRoomList.checkinRoom(DOUBLE_002.getRoomNumber());
-        uniqueRoomList.addBooking(SUITE_010.getRoomNumber(), TypicalBookings.TODAY_TOMORROW);
-        uniqueRoomList.checkinRoom(SUITE_010.getRoomNumber());
-        uniqueRoomList.addBooking(SINGLE_011.getRoomNumber(), TypicalBookings.TOMORROW_NEXTWEEK);
-        uniqueRoomList.addBooking(DOUBLE_012.getRoomNumber(), TypicalBookings.TODAY_TOMORROW);
-        return uniqueRoomList;
+        return new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
     }
 }

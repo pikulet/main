@@ -16,7 +16,8 @@ public class CheckoutCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Checks out the room identified by the room number, and remove its registered guest from guest list.\n"
-            + "Parameters: ROOM_NUMBER (must be a 3-digit positive integer from 001 to 100)\n"
+            + "Parameters: ROOM_NUMBER (must be a 3-digit positive integer from 001 to "
+            + RoomNumber.MAX_ROOM_NUMBER + " )\n"
             + "Example: " + COMMAND_WORD + " 001";
 
     public static final String MESSAGE_CHECKOUT_ROOM_SUCCESS = "Checked out Room: %1$s";
@@ -41,7 +42,7 @@ public class CheckoutCommand extends Command {
             throw new CommandException(String.format(MESSAGE_NO_ACTIVE_OR_EXPIRED_ROOM_BOOKING_CHECKOUT, roomNumber));
         }
         model.checkoutRoom(roomNumber);
-        model.commitAddressBook();
+        model.commitConcierge();
         return new CommandResult(String.format(MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumber));
     }
 

@@ -3,10 +3,8 @@ package seedu.address.model.room;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CAPACITY_DOUBLE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_074;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HANDICAP;
-import static seedu.address.testutil.TypicalRooms.DOUBLE_002;
-import static seedu.address.testutil.TypicalRooms.SINGLE_001;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +13,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookings;
@@ -45,22 +44,16 @@ public class RoomTest {
     @Test
     public void addBooking() {
         Booking bookingToAdd = testRoomWithTodayTomorrowBooking.getBookings().getFirstBooking();
-        testRoomWithoutBooking.addBooking(bookingToAdd);
-        assertTrue(testRoomWithoutBooking.equals(testRoomWithTodayTomorrowBooking));
+        Room editedRoom = testRoomWithoutBooking.addBooking(bookingToAdd);
+        assertTrue(editedRoom.equals(testRoomWithTodayTomorrowBooking));
     }
 
     @Test
     public void updateBooking() {
         Booking originalBooking = testRoomWithTodayTomorrowBooking.getBookings().getFirstBooking();
         Booking editedBooking = testRoomWithTomorrowNextWeekBooking.getBookings().getFirstBooking();
-        testRoomWithTodayTomorrowBooking.updateBooking(originalBooking, editedBooking);
-        assertTrue(testRoomWithTodayTomorrowBooking.equals(testRoomWithTomorrowNextWeekBooking));
-    }
-
-    @Test
-    public void setBookings() {
-        testRoomWithTodayTomorrowBooking.setBookings(testRoomWithYesterdayTodayBooking.getBookings());
-        assertTrue(testRoomWithTodayTomorrowBooking.equals(testRoomWithYesterdayTodayBooking));
+        Room editedRoom = testRoomWithTodayTomorrowBooking.updateBooking(originalBooking, editedBooking);
+        assertTrue(editedRoom.equals(testRoomWithTomorrowNextWeekBooking));
     }
 
     @Test
@@ -73,18 +66,18 @@ public class RoomTest {
     }
 
     @Test
-    public void isCheckedIn_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void isCheckedIn_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.isCheckedIn();
     }
 
     @Test
-    public void hasBooking() {
-        assertTrue(testRoomWithLastWeekYesterdayBooking.hasBooking());
-        assertTrue(testRoomWithYesterdayTodayBooking.hasBooking());
-        assertTrue(testRoomWithTodayTomorrowBooking.hasBooking());
-        assertTrue(testRoomWithTomorrowNextWeekBooking.hasBooking());
-        assertFalse(testRoomWithoutBooking.hasBooking());
+    public void hasBookings() {
+        assertTrue(testRoomWithLastWeekYesterdayBooking.hasBookings());
+        assertTrue(testRoomWithYesterdayTodayBooking.hasBookings());
+        assertTrue(testRoomWithTodayTomorrowBooking.hasBookings());
+        assertTrue(testRoomWithTomorrowNextWeekBooking.hasBookings());
+        assertFalse(testRoomWithoutBooking.hasBookings());
     }
 
     @Test
@@ -96,8 +89,8 @@ public class RoomTest {
     }
 
     @Test
-    public void hasActiveBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void hasActiveBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.hasActiveBooking();
     }
 
@@ -110,8 +103,8 @@ public class RoomTest {
     }
 
     @Test
-    public void hasActiveOrExpiredBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void hasActiveOrExpiredBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.hasActiveOrExpiredBooking();
     }
 
@@ -123,14 +116,14 @@ public class RoomTest {
 
     @Test
     public void checkIn_yesterdayToday_success() {
-        testRoomWithYesterdayTodayBooking.checkIn();
-        assertTrue(testRoomWithYesterdayTodayBooking.isCheckedIn());
+        Room editedRoom = testRoomWithYesterdayTodayBooking.checkIn();
+        assertTrue(editedRoom.isCheckedIn());
     }
 
     @Test
     public void checkIn_todayTomorrow_success() {
-        testRoomWithTodayTomorrowBooking.checkIn();
-        assertTrue(testRoomWithTodayTomorrowBooking.isCheckedIn());
+        Room editedRoom = testRoomWithTodayTomorrowBooking.checkIn();
+        assertTrue(editedRoom.isCheckedIn());
     }
 
     @Test
@@ -141,35 +134,33 @@ public class RoomTest {
 
     @Test
     public void checkIn_occupiedRoomCheckin_throwsOccupiedRoomCheckinException() {
-        testRoomWithTodayTomorrowBooking.checkIn();
+        Room editedRoom = testRoomWithTodayTomorrowBooking.checkIn();
         thrown.expect(OccupiedRoomCheckinException.class);
-        testRoomWithTodayTomorrowBooking.checkIn();
+        editedRoom.checkIn();
     }
 
     @Test
-    public void checkIn_noBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void checkIn_noBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.checkIn();
     }
 
     @Test
     public void checkOut_lastweekYesterday_success() {
-        testRoomWithLastWeekYesterdayBookingCheckedIn.checkout();
-        assertTrue(testRoomWithLastWeekYesterdayBookingCheckedIn.equals(testRoomWithoutBooking));
+        Room editedRoom = testRoomWithLastWeekYesterdayBookingCheckedIn.checkout();
+        assertTrue(editedRoom.equals(testRoomWithoutBooking));
     }
 
     @Test
     public void checkOut_yesterdayTodaysuccess() {
-        testRoomWithYesterdayTodayBooking.checkIn();
-        testRoomWithYesterdayTodayBooking.checkout();
-        assertTrue(testRoomWithYesterdayTodayBooking.equals(testRoomWithoutBooking));
+        Room editedRoom = testRoomWithYesterdayTodayBooking.checkIn().checkout();
+        assertTrue(editedRoom.equals(testRoomWithoutBooking));
     }
 
     @Test
     public void checkOut_todayTomorrowsuccess() {
-        testRoomWithTodayTomorrowBooking.checkIn();
-        testRoomWithTodayTomorrowBooking.checkout();
-        assertTrue(testRoomWithTodayTomorrowBooking.equals(testRoomWithoutBooking));
+        Room editedRoom = testRoomWithTodayTomorrowBooking.checkIn().checkout();
+        assertTrue(editedRoom.equals(testRoomWithoutBooking));
     }
 
     @Test
@@ -179,82 +170,84 @@ public class RoomTest {
     }
 
     @Test
-    public void checkOut_noBooking_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void checkOut_noBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.checkout();
     }
 
     @Test
     public void isSameRoom() {
         // same object -> returns true
-        assertTrue(SINGLE_001.isSameRoom(SINGLE_001));
+        assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(testRoomWithTodayTomorrowBooking));
 
         // null -> returns false
-        assertFalse(SINGLE_001.isSameRoom(null));
+        assertFalse(testRoomWithYesterdayTodayBooking.isSameRoom(null));
 
         // different room number -> returns false
-        Room editedSingle001 = new RoomBuilder(SINGLE_001).withRoomNumber("002").build();
-        assertFalse(SINGLE_001.isSameRoom(editedSingle001));
+        Room editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withRoomNumber("002").build();
+        assertFalse(testRoomWithYesterdayTodayBooking.isSameRoom(editedRoom));
 
         // same room number, different capacity -> returns true
-        editedSingle001 = new RoomBuilder(SINGLE_001).withCapacity(VALID_CAPACITY_DOUBLE).build();
-        assertTrue(SINGLE_001.isSameRoom(editedSingle001));
+        editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withCapacity(VALID_CAPACITY_DOUBLE).build();
+        assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedRoom));
 
         /* KIV Expenses
         // same room number, different expenses -> returns true
-        editedSingle001 = new RoomBuilder(SINGLE_001).withExpenses(new Expenses()).build();
-        assertTrue(SINGLE_001.isSameRoom(editedSingle001));
+        editedSingle001 = new RoomBuilder(testRoomWithYesterdayTodayBooking).withExpenses(new Expenses()).build();
+        assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedSingle001));
         */
 
         // same room number, different bookings -> returns true
-        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow())
-            .build();
-        assertTrue(SINGLE_001.isSameRoom(editedSingle001));
+        editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking)
+            .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+        assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedRoom));
 
         // same room number, different tags -> return true
-        editedSingle001 = new RoomBuilder(SINGLE_001).withTags(VALID_TAG_HANDICAP).build();
-        assertTrue(SINGLE_001.isSameRoom(editedSingle001));
+        editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withTags(VALID_TAG_HANDICAP).build();
+        assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedRoom));
     }
 
     @Test
     public void equals() {
         // same values -> returns true
-        Room roomCopy = new RoomBuilder(SINGLE_001).build();
-        assertTrue(SINGLE_001.equals(roomCopy));
+        Room roomCopy = new RoomBuilder(testRoomWithYesterdayTodayBooking).build();
+        assertTrue(testRoomWithYesterdayTodayBooking.equals(roomCopy));
 
         // same object -> returns true
-        assertTrue(SINGLE_001.equals(SINGLE_001));
+        assertTrue(testRoomWithYesterdayTodayBooking.equals(testRoomWithYesterdayTodayBooking));
 
         // null -> returns false
-        assertFalse(SINGLE_001.equals(null));
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(null));
 
         // different type -> returns false
-        assertFalse(SINGLE_001.equals(5));
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(5));
 
         // different guest -> returns false
-        assertFalse(SINGLE_001.equals(DOUBLE_002));
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(testRoomWithTodayTomorrowBooking));
 
         // different room number -> returns false
-        Room editedSingle001 = new RoomBuilder(SINGLE_001).withRoomNumber(VALID_ROOM_NUMBER_074).build();
-        assertFalse(SINGLE_001.equals(editedSingle001));
+        Room editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withRoomNumber(VALID_ROOM_NUMBER_BOB)
+            .build();
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(editedRoom));
 
         // different capacity -> returns false
-        editedSingle001 = new RoomBuilder(SINGLE_001).withCapacity(VALID_CAPACITY_DOUBLE).build();
-        assertFalse(SINGLE_001.equals(editedSingle001));
+        editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withCapacity(VALID_CAPACITY_DOUBLE)
+            .build();
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(editedRoom));
 
         /* KIV Expenses
         // different capacity -> returns false
-        editedSingle001 = new RoomBuilder(SINGLE_001).withExpenses(new Expenses()).build();
-        assertFalse(SINGLE_001.equals(editedSingle001));
+        editedSingle001 = new RoomBuilder(testRoomWithYesterdayTodayBooking).withExpenses(new Expenses()).build();
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(editedSingle001));
         */
 
         // different bookings -> returns false
-        editedSingle001 = new RoomBuilder(SINGLE_001).withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow())
-            .build();
-        assertFalse(SINGLE_001.equals(editedSingle001));
+        editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking)
+            .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(editedRoom));
 
         // different tags -> returns false
-        editedSingle001 = new RoomBuilder(SINGLE_001).withTags(VALID_TAG_HANDICAP).build();
-        assertFalse(SINGLE_001.equals(editedSingle001));
+        editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withTags(VALID_TAG_HANDICAP).build();
+        assertFalse(testRoomWithYesterdayTodayBooking.equals(editedRoom));
     }
 }

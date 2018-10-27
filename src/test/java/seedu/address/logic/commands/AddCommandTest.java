@@ -16,14 +16,17 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Concierge;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Guest;
+import seedu.address.model.ReadOnlyConcierge;
+import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.GuestBuilder;
+import seedu.address.testutil.TypicalBookingPeriods;
+import seedu.address.testutil.TypicalRoomNumbers;
 
 public class AddCommandTest {
 
@@ -35,31 +38,42 @@ public class AddCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullGuest_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        RoomNumber validRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_002;
+        BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
+
+        new AddCommand(null, validRoomNumber, validBookingPeriod);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+    public void execute_guestAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingGuestAdded modelStub = new ModelStubAcceptingGuestAdded();
         Guest validGuest = new GuestBuilder().build();
+        RoomNumber validRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_002;
+        BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
 
-        CommandResult commandResult = new AddCommand(validGuest).execute(modelStub, commandHistory);
+        CommandResult commandResult =
+                new AddCommand(validGuest, validRoomNumber, validBookingPeriod)
+                        .execute(modelStub, commandHistory);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validGuest), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validGuest), modelStub.personsAdded);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validGuest,
+                validRoomNumber, validBookingPeriod), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validGuest), modelStub.guestsAdded);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
+    public void execute_duplicateGuest_throwsCommandException() throws Exception {
         Guest validGuest = new GuestBuilder().build();
-        AddCommand addCommand = new AddCommand(validGuest);
-        ModelStub modelStub = new ModelStubWithPerson(validGuest);
+        RoomNumber validRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_002;
+        BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
+
+        AddCommand addCommand = new AddCommand(validGuest, validRoomNumber, validBookingPeriod);
+        ModelStub modelStub = new ModelStubWithGuest(validGuest);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_GUEST);
         addCommand.execute(modelStub, commandHistory);
     }
 
@@ -67,14 +81,17 @@ public class AddCommandTest {
     public void equals() {
         Guest alice = new GuestBuilder().withName("Alice").build();
         Guest bob = new GuestBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        RoomNumber validRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_002;
+        BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
+
+        AddCommand addAliceCommand = new AddCommand(alice, validRoomNumber, validBookingPeriod);
+        AddCommand addBobCommand = new AddCommand(bob, validRoomNumber, validBookingPeriod);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
+        AddCommand addAliceCommandCopy = new AddCommand(alice, validRoomNumber, validBookingPeriod);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -85,6 +102,7 @@ public class AddCommandTest {
 
         // different guest -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
+
     }
 
     /**
@@ -92,42 +110,42 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Guest guest) {
+        public void addGuest(Guest guest) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyConcierge newData) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
+        public ReadOnlyConcierge getConcierge() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasPerson(Guest guest) {
+        public boolean hasGuest(Guest guest) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Guest target) {
+        public void deleteGuest(Guest target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(Guest target, Guest editedGuest) {
+        public void updateGuest(Guest target, Guest editedGuest) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Guest> getFilteredPersonList() {
+        public ObservableList<Guest> getFilteredGuestList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Guest> predicate) {
+        public void updateFilteredGuestList(Predicate<Guest> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -142,32 +160,32 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean canUndoAddressBook() {
+        public boolean canUndoConcierge() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean canRedoAddressBook() {
+        public boolean canRedoConcierge() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void undoAddressBook() {
+        public void undoConcierge() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void redoAddressBook() {
+        public void redoConcierge() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void commitAddressBook() {
+        public void commitConcierge() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void checkinRoom(RoomNumber roomNumber) {
+        public void checkInRoom(RoomNumber roomNumber) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -205,47 +223,52 @@ public class AddCommandTest {
     /**
      * A Model stub that contains a single guest.
      */
-    private class ModelStubWithPerson extends ModelStub {
+    private class ModelStubWithGuest extends ModelStub {
         private final Guest guest;
 
-        ModelStubWithPerson(Guest guest) {
+        ModelStubWithGuest(Guest guest) {
             requireNonNull(guest);
             this.guest = guest;
         }
 
         @Override
-        public boolean hasPerson(Guest guest) {
+        public boolean hasGuest(Guest guest) {
             requireNonNull(guest);
             return this.guest.isSameGuest(guest);
         }
     }
 
     /**
-     * A Model stub that always accept the guest being added.
+     * A Model stub that always accept the guest and assigns a room to him.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Guest> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingGuestAdded extends ModelStub {
+        final ArrayList<Guest> guestsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Guest guest) {
+        public boolean hasGuest(Guest guest) {
             requireNonNull(guest);
-            return personsAdded.stream().anyMatch(guest::isSameGuest);
+            return guestsAdded.stream().anyMatch(guest::isSameGuest);
         }
 
         @Override
-        public void addPerson(Guest guest) {
+        public void addGuest(Guest guest) {
             requireNonNull(guest);
-            personsAdded.add(guest);
+            guestsAdded.add(guest);
         }
 
         @Override
-        public void commitAddressBook() {
+        public void addBooking(RoomNumber roomNumber, Booking booking) {
             // called by {@code AddCommand#execute()}
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public void commitConcierge() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
+        public ReadOnlyConcierge getConcierge() {
+            return new Concierge();
         }
     }
 

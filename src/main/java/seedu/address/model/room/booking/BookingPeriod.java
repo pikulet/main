@@ -1,7 +1,7 @@
 package seedu.address.model.room.booking;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,27 +9,22 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 /**
- * Represents a Room's booking period in the address book.
+ * Represents a Room's booking period in Concierge.
  * Guarantees: immutable; is valid as declared in
  * {@link #isValidBookingPeriod(String testStartDate,String testEndDate)}
  */
 public class BookingPeriod implements Comparable<BookingPeriod> {
 
     public static final String MESSAGE_BOOKING_PERIOD_CONSTRAINTS =
-            "Booking dates should only contain two 8-digit numbers, each in the form dd/MM/yyyy, "
-                + "should be correct dates according to the calendar, and should not be blank.";
-
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String BOOKING_PERIOD_VALIDATION_REGEX =
-        "^(0[1-9]|[1-2]\\d|3[0-1])\\/(0[1-9]|1[0-2])\\/(\\d\\d\\d\\d)$";
+            "Booking period takes in 2 dates, each of which should be in the form day/month/year. "
+                + "day can be 1 or 2 digits, month can be 1 or 2 digits, year can be 2 or 4 digits. "
+                + "Also, dates should be correct dates according to the calendar, and should not be blank.";
 
     /**
-     * Standard date format used for this hotel.
+     * Standard date format used for this hotel's bookings.
      */
-    public static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter STRING_TO_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/[uuuu][uu]");
+    public static final DateTimeFormatter DATE_TO_STRING_FORMAT = DateTimeFormatter.ofPattern("d/M/u");
 
     public final LocalDate startDate;
     public final LocalDate endDate;
@@ -38,25 +33,10 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      * Constructs a {@code BookingPeriod} that encapsulates the period from start through end date (inclusive).
      */
     public BookingPeriod(String startDate, String endDate) {
-        requireNonNull(startDate);
-        requireNonNull(endDate);
+        requireAllNonNull(startDate, endDate);
         checkArgument(isValidBookingPeriod(startDate, endDate), MESSAGE_BOOKING_PERIOD_CONSTRAINTS);
         this.startDate = parseDate(startDate);
         this.endDate = parseDate(endDate);
-    }
-
-    public BookingPeriod(BookingPeriod toBeCopied) {
-        this(toBeCopied.getStartDateAsFormattedString(), toBeCopied.getEndDateAsFormattedString());
-    }
-
-    /**
-     * Returns true if a given string is a valid name.
-     */
-    public static boolean isValidBookingPeriod(String testStartDate, String testEndDate) {
-        return (testStartDate.matches(BOOKING_PERIOD_VALIDATION_REGEX)
-            && testEndDate.matches(BOOKING_PERIOD_VALIDATION_REGEX))
-            && parsableDate(testStartDate)
-            && parsableDate(testEndDate);
     }
 
     public LocalDate getStartDate() {
@@ -68,11 +48,18 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     }
 
     public String getStartDateAsFormattedString() {
-        return startDate.format(FORMAT);
+        return startDate.format(DATE_TO_STRING_FORMAT);
     }
 
     public String getEndDateAsFormattedString() {
-        return endDate.format(FORMAT);
+        return endDate.format(DATE_TO_STRING_FORMAT);
+    }
+
+    /**
+     * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidBookingPeriod(String testStartDate, String testEndDate) {
+        return parsableDate(testStartDate) && parsableDate(testEndDate);
     }
 
     /**
@@ -95,7 +82,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      * @return {@code LocalDate} object representing the date.
      */
     private static LocalDate parseDate(String date) {
-        return LocalDate.parse(date, FORMAT);
+        return LocalDate.parse(date, STRING_TO_DATE_FORMAT);
     }
 
     /**
@@ -136,7 +123,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     }
 
     /**
-     * Checks if the given date is within this booking period's start and end dates.
+     * Checks if the given date is within this booking period's start and end dates, inclusively
      */
     public boolean includesDate(LocalDate date) {
         return date.compareTo(startDate) >= 0
@@ -145,8 +132,8 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
 
     @Override
     public String toString() {
-        String start = startDate.format(FORMAT);
-        String end = endDate.format(FORMAT);
+        String start = startDate.format(DATE_TO_STRING_FORMAT);
+        String end = endDate.format(DATE_TO_STRING_FORMAT);
         return String.format("%s - %s", start, end);
     }
 
