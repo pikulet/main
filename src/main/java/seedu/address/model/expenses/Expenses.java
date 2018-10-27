@@ -54,17 +54,14 @@ public class Expenses {
     }
 
     /**
-     * Get the total cost of all the expenses
+     * Get the total cost of all the expenses as a string.
      */
-    public double getTotalCost() {
-        return expenseList.stream().map(Expense::getCost).mapToDouble(Double::doubleValue).sum();
-    }
-
-    /**
-     * Get the total cost of all the expenses as a string
-     */
-    public String toStringTotalCost() {
-        return Double.toString(getTotalCost());
+    public String getTotalCost() {
+        Money totalCost = new Money(0, 0);
+        for (Expense e : expenseList) {
+            totalCost = totalCost.add(e.getCost());
+        }
+        return totalCost.toString();
     }
 
     @Override

@@ -48,7 +48,7 @@ public class RoomDetailedCard extends UiPart<Region> {
         header.setText("Room Details:");
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
-        expenses.setText("Expenses: " + room.getExpenses().toStringTotalCost());
+        expenses.setText("Expenses: " + room.getExpenses().getTotalCost());
         bookings.getChildren().add(new Label("Current booking:\n" + room.getFirstBooking()
                 .map(Booking::toStringShortDescription).orElse("")));
         room.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

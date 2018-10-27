@@ -21,7 +21,8 @@ public class ExpensesTest {
 
         // functional programming - should be different object after calling addExpense
         Expenses first = new Expenses();
-        Expenses second = first.addExpense(new Expense(new ExpenseType("1", "-", 0)));
+        Expenses second = first.addExpense(new Expense(new ExpenseType(
+                "1", "-", new Money(0,0))));
         assertFalse(first == second);
 
         // should have different items after adding item
@@ -31,8 +32,8 @@ public class ExpensesTest {
     @Test
     public void clearExpenses() {
         Expenses expenses = new Expenses()
-                .addExpense(new Expense(new ExpenseType("1", "-", 0)))
-                .addExpense(new Expense(new ExpenseType("2", "--", 1)));
+                .addExpense(new Expense(new ExpenseType("1", "-", new Money(0,0))))
+                .addExpense(new Expense(new ExpenseType("2", "--", new Money(1,0))));
         Expenses cleared = expenses.clearExpenses();
 
         // functional programming - should be different object after calling clearExpenses
