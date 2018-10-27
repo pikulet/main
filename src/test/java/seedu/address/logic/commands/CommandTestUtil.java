@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_START;
@@ -100,8 +102,8 @@ public class CommandTestUtil {
     public static final EditCommand.EditGuestDescriptor DESC_AMY;
     public static final EditCommand.EditGuestDescriptor DESC_BOB;
 
-    public static final String VALID_FLAG_ROOM = PREFIX_ROOM.toString();
-    public static final String VALID_FLAG_GUEST = PREFIX_GUEST.toString();
+    public static final String VALID_FLAG_ROOM = FLAG_ROOM.toString();
+    public static final String VALID_FLAG_GUEST = FLAG_GUEST.toString();
 
     static {
         DESC_AMY = new EditGuestDescriptorBuilder().withName(VALID_NAME_AMY)
