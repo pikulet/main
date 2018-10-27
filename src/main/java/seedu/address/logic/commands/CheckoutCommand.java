@@ -11,7 +11,6 @@ import seedu.address.model.Model;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
-import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
 
 /**
@@ -30,8 +29,8 @@ public class CheckoutCommand extends Command {
             + RoomNumber.MAX_ROOM_NUMBER + ")"
             + "[" + PREFIX_DATE_START + "START_DATE " + PREFIX_DATE_START + "END_DATE]"
             + "\n"
-            + "Example: " + COMMAND_WORD + " 001 "
-            + PREFIX_DATE_START + "from/01/01/18 " + PREFIX_DATE_END + "to/02/01/18";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_ROOM + "001 "
+            + PREFIX_DATE_START + "01/01/18 " + PREFIX_DATE_END + "02/01/18";
 
     public static final String MESSAGE_CHECKOUT_ROOM_SUCCESS = "Checked out Room: %1$s";
     public static final String MESSAGE_NO_ROOM_BOOKING = "Room %1$s has no bookings.";

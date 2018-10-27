@@ -14,9 +14,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalBookings;
 import seedu.address.testutil.TypicalRoomNumbers;
-import seedu.address.testutil.TypicalRooms;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -35,15 +36,12 @@ public class CheckoutCommandTest {
         model.checkInRoom(TypicalRoomNumbers.ROOM_NUMBER_002);
 
         model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_010, TypicalBookings.TODAY_TOMORROW);
-        model.checkInRoom(TypicalRoomNumbers.ROOM_NUMBER_010);
-
         model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_011, TypicalBookings.TOMORROW_NEXTWEEK);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_012, TypicalBookings.TODAY_TOMORROW);
     }
 
     @Test
-    public void execute_invalidCheckoutExpiredBookingLastweekYesterday_success() {
-        RoomNumber roomNumberToCheckout = TypicalRooms.SINGLE_001.getRoomNumber();
+    public void execute_validCheckoutExpiredBookingLastweekYesterday_success() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_001;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -56,8 +54,8 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_validCheckoutActiveBookingYesterdayToday_success() {
-        RoomNumber roomNumberToCheckout = TypicalRooms.DOUBLE_002.getRoomNumber();
+    public void execute_validCheckoutBookingCheckedIn_success() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_002;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -70,8 +68,8 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_validCheckoutActiveBookingTodayTomorrow_success() {
-        RoomNumber roomNumberToCheckout = TypicalRooms.SUITE_010.getRoomNumber();
+    public void execute_validCheckoutBookingNotCheckedIn_success() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -84,19 +82,37 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_invalidCheckoutUpcomingBooking_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRooms.SINGLE_011.getRoomNumber();
-        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
+    public void execute_validCheckoutBookingPeriod_success() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        BookingPeriod bookingPeriodToCheckOut = TypicalBookingPeriods.TOMORROW_NEXTWEEK;
+        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, bookingPeriodToCheckOut);
 
-        String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ACTIVE_OR_EXPIRED_ROOM_BOOKING_CHECKOUT,
-            roomNumberToCheckout);
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
+
+        Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
+        expectedModel.checkoutRoom(roomNumberToCheckout, bookingPeriodToCheckOut);
+        expectedModel.commitConcierge();
+
+        assertCommandSuccess(checkoutCommand, model, commandHistory, expectedMessage, expectedModel);
+
+    }
+
+    @Test
+    public void execute_invalidCheckoutBookingPeriod_throwsCommandException() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        BookingPeriod invalidBookingPeriodToCheckOut = TypicalBookingPeriods.TODAY_TOMORROW;
+        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, invalidBookingPeriodToCheckOut);
+
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_BOOKING_NOT_FOUND,
+                roomNumberToCheckout, invalidBookingPeriodToCheckOut);
 
         assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
     }
 
+
     @Test
     public void execute_invalidCheckoutNoBooking_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRooms.SUITE_020.getRoomNumber();
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_020;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ROOM_BOOKING, roomNumberToCheckout);
@@ -105,13 +121,41 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() {
-        // to be completed after Concierge is refactored
+    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        BookingPeriod bookingPeriodToCheckOut = TypicalBookingPeriods.TOMORROW_NEXTWEEK;
+        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, bookingPeriodToCheckOut);
+
+        Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
+        expectedModel.checkoutRoom(roomNumberToCheckout, bookingPeriodToCheckOut);
+        expectedModel.commitConcierge();
+
+        // checkout -> room booking checked out
+        checkoutCommand.execute(model, commandHistory);
+
+        // undo -> reverts concierge back to previous state and filtered room to show all rooms
+        expectedModel.undoConcierge();
+        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // redo -> same room booking checked out
+        expectedModel.redoConcierge();
+        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        // to be completed after Concierge is refactored
+    public void executeUndoRedo_invalidIndexUnfilteredList_failure() throws Exception {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        BookingPeriod invalidBookingPeriodToCheckOut = TypicalBookingPeriods.TODAY_TOMORROW;
+        CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, invalidBookingPeriodToCheckOut);
+
+        String expectedMessage = String.format(CheckoutCommand.MESSAGE_BOOKING_NOT_FOUND,
+            roomNumberToCheckout, invalidBookingPeriodToCheckOut);
+
+        assertCommandFailure(checkoutCommand, model, commandHistory, expectedMessage);
+
+        // single Concierge state in model -> undoCommand and redoCommand fail
+        assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
+        assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
     }
 
     @Test

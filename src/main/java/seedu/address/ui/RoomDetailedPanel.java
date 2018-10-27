@@ -75,6 +75,9 @@ public class RoomDetailedPanel extends UiPart<Region> {
     @Subscribe
     private void handleRoomListChangedEvent(RoomListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (displayedRoomList.isEmpty()) {
+            return;
+        }
         Room displayedRoom = displayedRoomList.get(0);
         ObservableList<Room> changedRoomList = event.getRoomList();
         for (Room room : changedRoomList) {

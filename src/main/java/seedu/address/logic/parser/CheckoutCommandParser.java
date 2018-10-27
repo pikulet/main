@@ -25,7 +25,12 @@ public class CheckoutCommandParser implements Parser<CheckoutCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ROOM, PREFIX_DATE_START, PREFIX_DATE_END);
-        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_ROOM) || !argMultimap.getPreamble().isEmpty()) {
+        if (!argMultimap.getValue(PREFIX_ROOM).isPresent()
+                || !argMultimap.getPreamble().isEmpty()
+                || (argMultimap.getValue(PREFIX_DATE_START).isPresent()
+                    && !argMultimap.getValue(PREFIX_DATE_END).isPresent())
+                || (argMultimap.getValue(PREFIX_DATE_END).isPresent()
+                    && !argMultimap.getValue(PREFIX_DATE_START).isPresent())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
         }
         try {
