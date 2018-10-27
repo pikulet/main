@@ -19,20 +19,17 @@ public class Booking implements Comparable<Booking> {
     private final Boolean isCheckedIn;
 
     /**
-     * Guest and BookingPeriod must be present and not null.
+     * Guest and BookingPeriod must be present and not null. Constructs a non-checked-in booking by default
      */
     public Booking(Guest guest, BookingPeriod bookingPeriod) {
-        requireAllNonNull(guest, bookingPeriod);
-        this.guest = guest;
-        this.bookingPeriod = bookingPeriod;
-        this.isCheckedIn = false;
+        this(guest, bookingPeriod, false);
     }
 
     /**
-     * Private constructor used to check-in a booking
+     * Constructs a booking with specified guest, booking period and checked in status
      */
-    public Booking(Guest guest, BookingPeriod bookingPeriod, boolean isCheckedIn) {
-        requireAllNonNull(guest, bookingPeriod);
+    public Booking(Guest guest, BookingPeriod bookingPeriod, Boolean isCheckedIn) {
+        requireAllNonNull(guest, bookingPeriod, isCheckedIn);
         this.guest = guest;
         this.bookingPeriod = bookingPeriod;
         this.isCheckedIn = isCheckedIn;

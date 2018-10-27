@@ -4,7 +4,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -60,7 +59,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     }
 
     /**
-     * Returns true if given string can be parsed into LocalDates using the formatter, 
+     * Returns true if given string can be parsed into LocalDates using the formatter,
      * and if startDate is strictly before endDate. Thus, startDate CANNOT BE EQUALS to endDate
      */
     public static boolean isValidBookingPeriod(String startDate, String endDate) {
@@ -89,7 +88,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      * @return True if there is any overlap, false otherwise.
      */
     public boolean isOverlapping(BookingPeriod other) {
-        return this.equals(other) 
+        return this.equals(other)
                 || (startDate.isBefore(other.endDate) && other.startDate.isBefore(this.endDate));
     }
 
@@ -99,7 +98,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      */
     public boolean isExpired() {
         LocalDate today = LocalDate.now();
-        return startDate.isBefore(today);
+        return endDate.isBefore(today);
     }
 
     /**
@@ -116,7 +115,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      */
     public boolean isUpcoming() {
         LocalDate today = LocalDate.now();
-        return endDate.isAfter(today);
+        return startDate.isAfter(today);
     }
 
     /**
