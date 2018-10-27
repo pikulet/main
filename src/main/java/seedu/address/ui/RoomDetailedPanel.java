@@ -11,7 +11,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.commons.events.ui.RoomPanelSelectionChangedEvent;
+import seedu.address.model.Concierge;
+import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.room.Room;
 
 /**
@@ -65,6 +68,23 @@ public class RoomDetailedPanel extends UiPart<Region> {
     private void handleRoomPanelSelectionChangedEvent(RoomPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setRoomDetails(event.getNewSelection());
+    }
+
+    /**
+     * Event handler to update room details on the right panel whenever Concierge changes
+     */
+    @Subscribe
+    private void handleConciergeChangedEvent(ConciergeChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ObservableList<Room> displayedRoomList = roomDetailedView.getItems();
+        if (displayedRoomList.isEmpty()) {
+            return;
+        }
+        Room displayedRoom = displayedRoomList.get(0);
+        ReadOnlyConcierge changedConcierge = event.data;
+        ObservableList<Room> changedRoomList = changedConcierge.getRoomList();
+        changedRoomList.stream().filter(room -> room.isSameRoom(displayedRoom)).findFirst()
+                .ifPresent(this::setRoomDetails);
     }
 
 }
