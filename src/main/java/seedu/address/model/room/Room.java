@@ -14,7 +14,6 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
-import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.model.tag.Tag;
 
@@ -85,16 +84,10 @@ public abstract class Room {
     }
 
     /**
-     * Returns an {@code Optional} of the first booking of this room
+     * Returns an {@code Optional} of the active booking of this room
      */
-    public Optional<Booking> getFirstBooking() {
-        Booking firstBooking;
-        try {
-            firstBooking = bookings.getFirstBooking();
-        } catch (NoBookingException e) {
-            firstBooking = null;
-        }
-        return Optional.ofNullable(firstBooking);
+    public Optional<Booking> getActiveBooking() {
+        return getBookings().getSortedBookingsSet().stream().filter(Booking::isActive).findFirst();
     }
 
     //=========== Bookings operations =============================================================
