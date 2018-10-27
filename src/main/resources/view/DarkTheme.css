@@ -380,3 +380,18 @@
     -fx-background-radius: 4;
     -fx-font-size: 13;
 }
+
+#otherBookings {
+    -fx-padding: 3 0 3 0;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#otherBookings .label {
+    -fx-text-fill: white;
+    -fx-background-color: #E39338;
+    -fx-padding: 3 5 3 5;
+    -fx-border-radius: 2;
+    -fx-background-radius: 4;
+    -fx-font-size: 13;
+}

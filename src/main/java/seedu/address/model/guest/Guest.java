@@ -109,9 +109,7 @@ public class Guest {
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
-                .append(getEmail())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append(getEmail());
         return builder.toString();
     }
 

@@ -34,8 +34,6 @@ public class RoomCard extends UiPart<Region> {
     @FXML
     private FlowPane bookings;
     @FXML
-    private FlowPane occupant;
-    @FXML
     private FlowPane tags;
 
     public RoomCard(Room room) {
@@ -43,7 +41,7 @@ public class RoomCard extends UiPart<Region> {
         this.room = room;
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
-        bookings.getChildren().add(new Label("Active booking\n" + room.getFirstBooking()
+        bookings.getChildren().add(new Label("Active booking\n" + room.getActiveBooking()
             .map(Booking::toStringShortDescription).orElse("")));
         room.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }

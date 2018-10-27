@@ -7,7 +7,9 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import seedu.address.model.room.Room;
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
+import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
 
@@ -164,7 +166,11 @@ public class Bookings {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        sortedBookingsSet.forEach(builder::append);
+        int index = 1;
+        for (Booking booking : sortedBookingsSet) {
+            builder.append(index).append(". ").append(booking).append("\n");
+            index++;
+        }
         return builder.toString();
     }
 }

@@ -85,16 +85,10 @@ public abstract class Room {
     }
 
     /**
-     * Returns an {@code Optional} of the first booking of this room
+     * Returns an {@code Optional} of the active booking of this room
      */
-    public Optional<Booking> getFirstBooking() {
-        Booking firstBooking;
-        try {
-            firstBooking = bookings.getFirstBooking();
-        } catch (NoBookingException e) {
-            firstBooking = null;
-        }
-        return Optional.ofNullable(firstBooking);
+    public Optional<Booking> getActiveBooking() {
+        return bookings.getSortedBookingsSet().stream().filter(Booking::isActive).findFirst();
     }
 
     //=========== Bookings operations =============================================================
