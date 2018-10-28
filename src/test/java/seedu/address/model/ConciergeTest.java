@@ -99,7 +99,7 @@ public class ConciergeTest {
     @Test
     public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        concierge.getMenuMap().put("1", new ExpenseType("1", "-", new Money(0,0)));
+        concierge.getMenuMap().put("1", new ExpenseType("1", "-", new Money(0, 0)));
     }
 
     /**

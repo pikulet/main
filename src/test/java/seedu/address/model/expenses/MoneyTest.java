@@ -13,9 +13,9 @@ public class MoneyTest {
 
     @Test
     public void constructor_invalidDollarsAndCents_throwsIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Money(123,456));
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Money(123,-45));
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Money(Integer.MIN_VALUE,0));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Money(123, 456));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Money(123, -45));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Money(Integer.MIN_VALUE, 0));
     }
 
     @Test

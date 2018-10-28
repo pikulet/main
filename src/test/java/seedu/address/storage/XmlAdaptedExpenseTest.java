@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Menu;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.ExpenseType;
-import seedu.address.model.expenses.Money;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.ExpenseBuilder;
 
