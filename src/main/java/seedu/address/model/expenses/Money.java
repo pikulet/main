@@ -8,6 +8,8 @@ import seedu.address.model.expenses.exceptions.MoneyLimitExceededException;
 /**
  * Class to represent monetary values.
  * Ensures that prices keyed in for Expense objects are valid.
+ * Range of dollars limited to +/- Integer.MAX_VALUE.
+ * Range does not include Integer.MIN_VALUE to prevent errors when changing signs.
  */
 public class Money {
 
@@ -16,7 +18,7 @@ public class Money {
     //v2.0: implement exchange rates
 
     public Money(int dollars, int cents) {
-        if (cents >= 100) {
+        if (cents >= 100 || cents < 0 || dollars == Integer.MIN_VALUE) {
             throw new IllegalArgumentException();
         }
         this.dollars = dollars;
@@ -42,20 +44,26 @@ public class Money {
      * @return True if the string is in money format, false otherwise.
      */
     public static boolean isValidMoneyFormat(String money) {
-        // check 1: if starts with 0, should be 4 chars long, e.g. 0.45
-        if (money.toCharArray()[0] == '0' && money.length() != 4) {
+        // check 1: if negative value, make a new string without negative sign
+        String positiveMoney = new String(money);
+        if (money.toCharArray()[0] == '-') {
+            positiveMoney = money.substring(1);
+        }
+
+        // check 2: if starts with 0, should be 4 chars long, e.g. 0.45
+        if (positiveMoney.toCharArray()[0] == '0' && positiveMoney.length() != 4) {
             return false;
         }
 
-        // check 2: regex checking
-        String regex = "\\d{1,9}\\.\\d{2}";
-        if (!money.matches(regex)) {
+        // check 3: regex checking
+        String regex = "\\d{1,10}\\.\\d{2}";
+        if (!positiveMoney.matches(regex)) {
             return false;
         }
 
-        // check 3: range checking - dollar part should be within Integer.MAX_VALUE
+        // check 4: range checking
         // assume BigDecimal and BigInteger can hold arbitrarily large numbers
-        BigDecimal d = new BigDecimal(money);
+        BigDecimal d = new BigDecimal(positiveMoney);
         BigInteger i = d.toBigInteger();
         if (i.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == 1) {
             return false;
@@ -65,16 +73,43 @@ public class Money {
     }
 
     public Money add(Money addend) {
-        long newDollars = (long) dollars + (long) addend.dollars;
-        int newCents = cents + addend.cents;
-        if (newCents >= 100) {
-            newCents = newCents % 100;
-            newDollars += 1;
+        long newDollars;
+        int newCents;
+        if (dollars >= 0 && addend.dollars >= 0) {
+            newDollars = (long) dollars + (long) addend.dollars;
+            newCents = cents + addend.cents;
+            if (newCents >= 100) {
+                newCents = newCents % 100;
+                newDollars += 1;
+            }
+            if (newDollars > Integer.MAX_VALUE) {
+                throw new MoneyLimitExceededException();
+            }
+            return new Money((int) newDollars, newCents);
+        } else if (dollars < 0 && addend.dollars < 0) {
+            return (this.flipSign().add(addend.flipSign())).flipSign();
+        } else if (dollars >= 0 && addend.dollars < 0) {
+            newDollars = dollars + addend.dollars;
+            newCents = cents - addend.cents;
+            if (newCents < 0 && newDollars >= 0) {
+                newCents = 100 + newCents;
+                newDollars -= 1;
+            } else if (newCents >= 0 && newDollars < 0) {
+                newCents = 100 - newCents;
+                newDollars += 1;
+            } else if (newCents < 0 && newDollars < 0) {
+                newCents = -1 * newCents;
+            }
+            // don't need to throw MoneyLimitExceededException since it is
+            // impossible to go beyond the range here.
+            return new Money((int) newDollars, newCents);
+        } else {
+            return addend.add(this);
         }
-        if (newDollars > Integer.MAX_VALUE) {
-            throw new MoneyLimitExceededException();
-        }
-        return new Money((int) newDollars, newCents);
+    }
+
+    private Money flipSign() {
+        return new Money(dollars * -1, cents);
     }
 
     @Override
