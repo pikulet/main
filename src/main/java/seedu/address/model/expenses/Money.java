@@ -72,6 +72,11 @@ public class Money {
         return true;
     }
 
+    /**
+     * Creates a new Money object that is the sum of this object and another object.
+     * @param addend The Money object to be added to this Money object.
+     * @return The Money object representing the sum of the two Money objects.
+     */
     public Money add(Money addend) {
         long newDollars;
         int newCents;
