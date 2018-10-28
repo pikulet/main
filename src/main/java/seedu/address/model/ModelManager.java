@@ -16,6 +16,7 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.BookingPeriod;
 
 /**
  * Represents the in-memory model of Concierge data.
@@ -143,6 +144,14 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge.checkoutRoom(roomNumber);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         indicateConciergeChanged();
+    }
+
+    /**
+     * Checks out a room's booking using its room number and the specified booking period
+     */
+    @Override
+    public void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod) {
+        versionedConcierge.checkoutRoom(roomNumber, bookingPeriod);
     }
 
     @Override

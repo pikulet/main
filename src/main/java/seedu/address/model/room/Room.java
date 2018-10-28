@@ -11,9 +11,10 @@ import java.util.Set;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.room.booking.Bookings;
+import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
-import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.model.tag.Tag;
 
@@ -123,15 +124,26 @@ public abstract class Room {
     }
 
     /**
-     * Checks out the first booking of this room and its current occupant.
-     * Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
+     * Checks out the first booking of this room.
+     * KIV: Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
      */
     public Room checkout() {
-        if (!hasActiveOrExpiredBooking()) {
-            throw new NoActiveOrExpiredBookingException();
-        }
         Booking firstBooking = bookings.getFirstBooking();
         return makeRoom(this.roomNumber, this.expenses, bookings.remove(firstBooking), this.tags);
+        // expenses.report(); // weizheng implement this later
+    }
+
+    /**
+     * Checks out the booking identified by the booking period
+     * KIV: Future features to include exporting of receipt, setting room to housekeeping status for __x__ hours.
+     */
+    public Room checkout(BookingPeriod bookingPeriod) {
+        for (Booking booking : bookings.getSortedBookingsSet()) {
+            if (booking.getBookingPeriod().equals(bookingPeriod)) {
+                return makeRoom(this.roomNumber, this.expenses, bookings.remove(booking), this.tags);
+            }
+        }
+        throw new BookingNotFoundException();
         // expenses.report(); // weizheng implement this later
     }
 

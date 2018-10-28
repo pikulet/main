@@ -2,11 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GUEST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -68,9 +69,9 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String ROOM_DESC_001 =
-            " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_001;
+            " " + PREFIX_ROOM + VALID_ROOM_NUMBER_001;
     public static final String ROOM_DESC_020 =
-            " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_020;
+            " " + PREFIX_ROOM + VALID_ROOM_NUMBER_020;
     public static final String ROOM_DESC_AMY = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_AMY;
     public static final String ROOM_DESC_BOB = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_BOB;
     public static final String DATE_START_DESC_AMY =
@@ -100,8 +101,8 @@ public class CommandTestUtil {
     public static final EditCommand.EditGuestDescriptor DESC_AMY;
     public static final EditCommand.EditGuestDescriptor DESC_BOB;
 
-    public static final String VALID_FLAG_ROOM = PREFIX_ROOM.toString();
-    public static final String VALID_FLAG_GUEST = PREFIX_GUEST.toString();
+    public static final String VALID_FLAG_ROOM = FLAG_ROOM.toString();
+    public static final String VALID_FLAG_GUEST = FLAG_GUEST.toString();
 
     static {
         DESC_AMY = new EditGuestDescriptorBuilder().withName(VALID_NAME_AMY)

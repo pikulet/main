@@ -11,11 +11,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
-import seedu.address.model.room.booking.exceptions.NoActiveOrExpiredBookingException;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.testutil.RoomBuilder;
+import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalBookings;
 
 public class RoomTest {
@@ -152,21 +153,27 @@ public class RoomTest {
     }
 
     @Test
-    public void checkOut_yesterdayTodaysuccess() {
+    public void checkOut_yesterdayToday_success() {
         Room editedRoom = testRoomWithYesterdayTodayBooking.checkIn().checkout();
         assertTrue(editedRoom.equals(testRoomWithoutBooking));
     }
 
     @Test
-    public void checkOut_todayTomorrowsuccess() {
+    public void checkOut_todayTomorrow_success() {
         Room editedRoom = testRoomWithTodayTomorrowBooking.checkIn().checkout();
         assertTrue(editedRoom.equals(testRoomWithoutBooking));
     }
 
     @Test
-    public void checkOut_upcomingBooking_throwsNoActiveBookingException() {
-        thrown.expect(NoActiveOrExpiredBookingException.class);
-        testRoomWithTomorrowNextWeekBooking.checkout();
+    public void checkOut_bookingPeriod_success() {
+        Room editedRoom = testRoomWithTodayTomorrowBooking.checkIn().checkout(TypicalBookingPeriods.TODAY_TOMORROW);
+        assertTrue(editedRoom.equals(testRoomWithoutBooking));
+    }
+
+    @Test
+    public void checkOut_bookingPeriodNotFound_throwsBookingNotFoundException() {
+        thrown.expect(BookingNotFoundException.class);
+        testRoomWithTodayTomorrowBooking.checkout(TypicalBookingPeriods.YESTERDAY_TODAY);
     }
 
     @Test

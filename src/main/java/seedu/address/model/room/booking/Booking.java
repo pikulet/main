@@ -154,12 +154,12 @@ public class Booking implements Comparable<Booking> {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BookingPeriod: ")
+        builder.append("Booking period: ")
                 .append(getBookingPeriod())
                 .append("\nGuest: ")
                 .append(getGuest())
                 .append("\nChecked-in: ")
-                .append(getIsCheckedIn() ? "yes" : "no");
+                .append(getIsCheckedIn() ? "Yes" : "No");
         return builder.toString();
     }
 

@@ -14,6 +14,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.BookingPeriod;
 
 /**
  * Wraps all data at the Concierge level
@@ -148,6 +149,14 @@ public class Concierge implements ReadOnlyConcierge {
     public void checkoutRoom(RoomNumber roomNumber) {
         Room room = rooms.getRoom(roomNumber);
         rooms.setRoom(room, room.checkout());
+    }
+
+    /**
+     * Checks out a room's booking using its room number and the specified booking period
+     */
+    public void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod) {
+        Room room = rooms.getRoom(roomNumber);
+        rooms.setRoom(room, room.checkout(bookingPeriod));
     }
 
     public void setMenu(Map<String, ExpenseType> menu) {
