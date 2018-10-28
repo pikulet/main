@@ -17,8 +17,10 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Concierge;
+import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyConcierge;
+import seedu.address.model.expenses.Expense;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
@@ -94,7 +96,8 @@ public class AddCommandTest {
         AddCommand addAliceCommandCopy = new AddCommand(alice, validRoomNumber, validBookingPeriod);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
-        // different types -> returns false
+        // different types ->
+        // returns false
         assertFalse(addAliceCommand.equals(1));
 
         // null -> returns false
@@ -221,6 +224,16 @@ public class AddCommandTest {
 
         @Override
         public void addBooking(RoomNumber roomNumber, Booking booking) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addExpense(RoomNumber roomNumber, Expense expense) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Menu getMenu() {
             throw new AssertionError("This method should not be called.");
         }
     }

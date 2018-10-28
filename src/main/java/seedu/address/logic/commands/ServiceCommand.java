@@ -36,7 +36,7 @@ public class ServiceCommand extends Command {
             + PREFIX_COST + "2.45";
 
     public static final String MESSAGE_SUCCESS =
-            "New expense added to room: %1$s";
+            "New expense added: %1$s\nCharged to room: %2$s";
     public static final String MESSAGE_ROOM_NOT_CHECKED_IN =
             "There are no guests checked in to this room.";
     public static final String MESSAGE_ITEM_NOT_FOUND =
@@ -76,6 +76,6 @@ public class ServiceCommand extends Command {
         }
         model.addExpense(roomNumber, expense);
         model.commitConcierge();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, roomNumber.toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, expense.getItemName(), roomNumber.toString()));
     }
 }
