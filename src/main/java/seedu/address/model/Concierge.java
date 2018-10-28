@@ -111,14 +111,6 @@ public class Concierge implements ReadOnlyConcierge {
     //=========== Room operations =============================================================
 
     /**
-     * Adds a room to Concierge.
-     * The room must not already exist in Concierge.
-     */
-    public void addRoom(Room r) {
-        rooms.add(r);
-    }
-
-    /**
      * Replaces the contents of the room list with {@code rooms}.
      * {@code rooms} must not contain duplicate rooms.
      */
@@ -191,14 +183,6 @@ public class Concierge implements ReadOnlyConcierge {
     public boolean hasGuest(Guest guest) {
         requireNonNull(guest);
         return guests.contains(guest);
-    }
-
-    /**
-     * Returns true if a room with the same identity as {@code room} exists in Concierge.
-     */
-    public boolean hasRoom(Room room) {
-        requireNonNull(room);
-        return rooms.contains(room);
     }
 
     //// util methods

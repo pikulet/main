@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
-import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
 
 /**
@@ -47,10 +46,10 @@ public class TypicalRooms {
         .build();
 
     /**
-     * Returns a {@code UniqueRoomList} with all the typical rooms.
+     * Returns a {@code UniqueRoomList} with all rooms.
      * Note: All rooms do not have bookings or expenses. Use @Before in tests to initialize bookings and expenses.
      */
     public static UniqueRoomList getTypicalUniqueRoomList() {
-        return new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
+        return new UniqueRoomList();
     }
 }
