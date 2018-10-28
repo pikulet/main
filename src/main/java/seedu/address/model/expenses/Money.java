@@ -1,5 +1,8 @@
 package seedu.address.model.expenses;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import seedu.address.model.expenses.exceptions.MoneyLimitExceededException;
 
 /**
@@ -39,15 +42,30 @@ public class Money {
      * @return True if the string is in money format, false otherwise.
      */
     public static boolean isValidMoneyFormat(String money) {
-        // limit dollar part to be under 1 billion, for ease of checking
-        // and also because exceeding 1 billion in expenditure is
-        // very unlikely.
+        // check 1: if starts with 0, should be 4 chars long, e.g. 0.45
+        if (money.toCharArray()[0] == '0' && money.length() != 4) {
+            return false;
+        }
+
+        // check 2: regex checking
         String regex = "\\d{1,9}\\.\\d{2}";
-        return money.matches(regex);
+        if (!money.matches(regex)) {
+            return false;
+        }
+
+        // check 3: range checking - dollar part should be within Integer.MAX_VALUE
+        // assume BigDecimal and BigInteger can hold arbitrarily large numbers
+        BigDecimal d = new BigDecimal(money);
+        BigInteger i = d.toBigInteger();
+        if (i.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == 1) {
+            return false;
+        }
+
+        return true;
     }
 
     public Money add(Money addend) {
-        long newDollars = dollars + addend.dollars;
+        long newDollars = (long) dollars + (long) addend.dollars;
         int newCents = cents + addend.cents;
         if (newCents >= 100) {
             newCents = newCents % 100;
