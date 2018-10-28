@@ -13,7 +13,7 @@ import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 /**
  * Check in a room identified using its room number.
  */
-public class CheckinCommand extends Command {
+public class CheckInCommand extends Command {
 
     public static final String COMMAND_WORD = "checkin";
 
@@ -33,7 +33,7 @@ public class CheckinCommand extends Command {
 
     private final RoomNumber roomNumber;
 
-    public CheckinCommand(RoomNumber roomNumber) {
+    public CheckInCommand(RoomNumber roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -56,7 +56,7 @@ public class CheckinCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof CheckinCommand // instanceof handles nulls
-                && roomNumber.equals(((CheckinCommand) other).roomNumber)); // state check
+                || (other instanceof CheckInCommand // instanceof handles nulls
+                && roomNumber.equals(((CheckInCommand) other).roomNumber)); // state check
     }
 }
