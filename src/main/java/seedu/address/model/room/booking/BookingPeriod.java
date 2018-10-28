@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Objects;
 
 /**
@@ -23,8 +24,10 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     /**
      * Standard date format used for this hotel's bookings.
      */
-    public static final DateTimeFormatter STRING_TO_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/[uuuu][uu]");
-    public static final DateTimeFormatter DATE_TO_STRING_FORMAT = DateTimeFormatter.ofPattern("d/M/u");
+    public static final DateTimeFormatter STRING_TO_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/[uuuu][uu]")
+            .withResolverStyle(ResolverStyle.STRICT);
+    public static final DateTimeFormatter DATE_TO_STRING_FORMAT = DateTimeFormatter.ofPattern("d/M/u")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     public final LocalDate startDate;
     public final LocalDate endDate;
@@ -92,8 +95,7 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
      * @return True if there is any overlap, false otherwise.
      */
     public boolean isOverlapping(BookingPeriod other) {
-        return startDate.isBefore(other.endDate)
-            && other.startDate.isBefore(this.endDate);
+        return this.equals(other) || (startDate.isBefore(other.endDate) && other.startDate.isBefore(this.endDate));
     }
 
     /**

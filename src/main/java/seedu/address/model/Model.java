@@ -7,6 +7,7 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
+import seedu.address.model.room.booking.BookingPeriod;
 
 /**
  * The API of the Model component.
@@ -106,6 +107,11 @@ public interface Model {
      * @param roomNumber
      */
     void checkoutRoom(RoomNumber roomNumber);
+
+    /**
+     * Checks out a room's booking using its room number and the specified booking period
+     */
+    public void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod);
 
     /**
      * Returns true if the room identified by its room number is checked in.

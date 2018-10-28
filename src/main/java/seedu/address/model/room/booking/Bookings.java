@@ -164,7 +164,11 @@ public class Bookings {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        sortedBookingsSet.forEach(builder::append);
+        int index = 1;
+        for (Booking booking : sortedBookingsSet) {
+            builder.append(index).append(". ").append(booking).append("\n\n");
+            index++;
+        }
         return builder.toString();
     }
 }
