@@ -13,6 +13,9 @@ import seedu.address.model.expenses.exceptions.MoneyLimitExceededException;
  */
 public class Money {
 
+    public static final String MESSAGE_MONEY_CONSTRAINTS =
+            "Money should be written with at least one dollars digit and two cents digits.";
+
     private int dollars;
     private int cents;
     //v2.0: implement exchange rates

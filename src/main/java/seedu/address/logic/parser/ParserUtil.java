@@ -6,12 +6,14 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.expenses.Money;
 import seedu.address.model.guest.Email;
 import seedu.address.model.guest.Name;
 import seedu.address.model.guest.Phone;
@@ -139,6 +141,19 @@ public class ParserUtil {
             throw new ParseException(BookingPeriod.MESSAGE_BOOKING_PERIOD_CONSTRAINTS);
         }
         return new BookingPeriod(trimmedStartDate, trimmedEndDate);
+    }
+
+    /**
+     * Parses a cost string that may or may not be present into an {@code Optional<Money>}
+     * @param cost The cost that may or may not be present as an argument.
+     * @return A Money representation of the cost that may or may not be present.
+     * @throws ParseException if the cost is present but in the wrong format.
+     */
+    public static Optional<Money> parseCost(Optional<String> cost) throws ParseException {
+        if (cost.isPresent() && !Money.isValidMoneyFormat(cost.get())) {
+            throw new ParseException(Money.MESSAGE_MONEY_CONSTRAINTS);
+        }
+        return cost.map(s -> new Money(s));
     }
 
     /**

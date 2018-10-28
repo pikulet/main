@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import org.controlsfx.control.PropertySheet;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +15,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ConciergeChangedEvent;
+import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Money;
+import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
@@ -55,6 +61,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyConcierge getConcierge() {
         return versionedConcierge;
+    }
+
+    @Override
+    public Menu getMenu() {
+        return versionedConcierge.getMenu();
     }
 
     /** Raises an event to indicate the model has changed */
@@ -172,6 +183,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
         return versionedConcierge.roomHasActiveOrExpiredBooking(roomNumber);
+    }
+
+    @Override
+    public void addExpense(RoomNumber roomNumber, Expense expense) {
+        versionedConcierge.addExpense(roomNumber, expense);
+        updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        indicateConciergeChanged();
     }
 
     //=========== Undo/Redo =================================================================================

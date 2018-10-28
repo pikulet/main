@@ -1,8 +1,12 @@
 package seedu.address.model;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Money;
+import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
@@ -25,6 +29,9 @@ public interface Model {
 
     /** Returns the Concierge */
     ReadOnlyConcierge getConcierge();
+
+    /** Returns the Menu.*/
+    Menu getMenu();
 
     // =========== Methods for guest. =========================================
 
@@ -85,12 +92,12 @@ public interface Model {
     /**
      * Returns true if the room's first booking is active or upcoming
      */
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber);
+    boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber);
 
     /**
      * Add a booking to a room identified by its room number.
      */
-    public void addBooking(RoomNumber roomNumber, Booking booking);
+    void addBooking(RoomNumber roomNumber, Booking booking);
 
     /**
      *  Displays room list instead of guest list
@@ -111,14 +118,20 @@ public interface Model {
     /**
      * Checks out a room's booking using its room number and the specified booking period
      */
-    public void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod);
+    void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod);
 
     /**
      * Returns true if the room identified by its room number is checked in.
      */
     boolean isRoomCheckedIn(RoomNumber roomNumber);
 
-    /* =========== Methods for undo and redo. =================================
+    /**
+     * Adds an Expense to a room.
+     */
+    void addExpense(RoomNumber roomNumber, Expense expense);
+
+
+    // =========== Methods for undo and redo. =================================
 
     /**
      * Returns true if the model has previous Concierge states to restore.
