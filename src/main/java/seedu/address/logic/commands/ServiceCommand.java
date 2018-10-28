@@ -14,7 +14,6 @@ import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Money;
-import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 import seedu.address.model.room.RoomNumber;
 
 /**
@@ -37,7 +36,7 @@ public class ServiceCommand extends Command {
 
     public static final String MESSAGE_SUCCESS =
             "New expense added: %1$s\nCharged to room: %2$s";
-    public static final String MESSAGE_ROOM_NOT_CHECKED_IN =
+    public static final String MESSAGE_ROOM_HAS_NO_GUEST =
             "There are no guests checked in to this room.";
     public static final String MESSAGE_ITEM_NOT_FOUND =
             "The item was not found in the menu.";
@@ -63,8 +62,8 @@ public class ServiceCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         Menu menu = model.getMenu();
-        if (!model.isRoomCheckedIn(roomNumber)) {
-            throw new CommandException(MESSAGE_ROOM_NOT_CHECKED_IN);
+        if (!model.roomHasBooking(roomNumber) || !model.isRoomCheckedIn(roomNumber)) {
+            throw new CommandException(MESSAGE_ROOM_HAS_NO_GUEST);
         } else if (!menu.isValidMenuNumber(itemNumber)) {
             throw new CommandException(MESSAGE_ITEM_NOT_FOUND);
         }

@@ -167,7 +167,9 @@ public class Concierge implements ReadOnlyConcierge {
      * Adds an expense to the room using its room number
      */
     public void addExpense(RoomNumber roomNumber, Expense expense) {
-        rooms.getRoom(roomNumber).addExpense(expense);
+        Room room = rooms.getRoom(roomNumber);
+        Room editedRoom = room.addExpense(expense);
+        rooms.setRoom(room, editedRoom);
     }
 
     //=========== Reset data =============================================================

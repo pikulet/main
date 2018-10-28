@@ -57,7 +57,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Adding a guest: `add`
 
 Adds a guest to the guest list for the purpose of assigning a room +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] -r ROOM_NUMBER
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] -r ROOM_NUMBER
 from/START_DATE to/END_DATE`
 
 [TIP]
@@ -120,7 +120,7 @@ Deletes the 1st guest in the results of the `find` command.
 === Editing a guest : `edit` [red]#Coming in v1.3#
 
 Edits an existing guest in the guest list. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TAG]...`
 
 ****
 * Edits the guest at the specified `INDEX`. The index refers to the index number shown in the displayed guest list. The index *must be a positive integer* 1, 2, 3, ...
@@ -334,7 +334,7 @@ _{explain how the user can enable/disable data encryption}_
 * *Checkin* : `checkin`
 * *Checkout* : `checkout`
 * *Delete* : `delete INDEX`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [t/TAG]...`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]`
 * *List* : `list`
 * *Select* : `select INDEX`

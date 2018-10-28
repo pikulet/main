@@ -152,8 +152,9 @@ public abstract class Room {
     /**
      * Add an expense to this room's expenses
      */
-    public void addExpense(Expense expense) {
-        expenses.addExpense(expense);
+    public Room addExpense(Expense expense) {
+        Expenses newExpenses = expenses.addExpense(expense);
+        return makeRoom(this.roomNumber, newExpenses, this.bookings, this.tags);
     }
 
     //=========== Boolean checkers =============================================================
