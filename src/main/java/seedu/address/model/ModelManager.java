@@ -198,7 +198,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedConcierge.equals(other.versionedConcierge)
-                && filteredGuests.equals(other.filteredGuests);
+                && filteredGuests.equals(other.filteredGuests)
+                && filteredRooms.equals(other.filteredRooms);
     }
 
 }

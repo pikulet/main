@@ -121,7 +121,7 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+    public void executeUndoRedo_validCheckout_success() throws Exception {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
         BookingPeriod bookingPeriodToCheckOut = TypicalBookingPeriods.TOMORROW_NEXTWEEK;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, bookingPeriodToCheckOut);
@@ -143,7 +143,7 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() throws Exception {
+    public void executeUndoRedo_invalidCheckout_failure() throws Exception {
         RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
         BookingPeriod invalidBookingPeriodToCheckOut = TypicalBookingPeriods.TODAY_TOMORROW;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, invalidBookingPeriodToCheckOut);
