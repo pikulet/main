@@ -96,20 +96,6 @@ public class RoomTest {
     }
 
     @Test
-    public void hasActiveOrExpiredBooking() {
-        assertTrue(testRoomWithLastWeekYesterdayBooking.hasActiveOrExpiredBooking());
-        assertTrue(testRoomWithYesterdayTodayBooking.hasActiveOrExpiredBooking());
-        assertTrue(testRoomWithTodayTomorrowBooking.hasActiveOrExpiredBooking());
-        assertFalse(testRoomWithTomorrowNextWeekBooking.hasActiveOrExpiredBooking());
-    }
-
-    @Test
-    public void hasActiveOrExpiredBooking_throwsNoBookingException() {
-        thrown.expect(NoBookingException.class);
-        testRoomWithoutBooking.hasActiveOrExpiredBooking();
-    }
-
-    @Test
     public void checkIn_expiredBooking_throwsNoActiveBookingException() {
         thrown.expect(NoActiveBookingException.class);
         testRoomWithLastWeekYesterdayBooking.checkIn();

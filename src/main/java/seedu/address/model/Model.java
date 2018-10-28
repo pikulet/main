@@ -83,11 +83,6 @@ public interface Model {
     boolean roomHasActiveBooking(RoomNumber roomNumber);
 
     /**
-     * Returns true if the room's first booking is active or upcoming
-     */
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber);
-
-    /**
      * Add a booking to a room identified by its room number.
      */
     public void addBooking(RoomNumber roomNumber, Booking booking);

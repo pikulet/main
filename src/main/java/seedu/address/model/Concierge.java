@@ -222,13 +222,6 @@ public class Concierge implements ReadOnlyConcierge {
         return rooms.getRoom(roomNumber).hasActiveBooking();
     }
 
-    /**
-     * Returns true if the room's first booking is active or expired
-     */
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).hasActiveOrExpiredBooking();
-    }
-
     //// util methods
 
     @Override

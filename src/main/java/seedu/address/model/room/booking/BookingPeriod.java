@@ -93,29 +93,11 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     }
 
     /**
-     * Checks if this booking period is expired.
-     * Expired means being before today's date.
-     */
-    public boolean isExpired() {
-        LocalDate today = LocalDate.now();
-        return endDate.isBefore(today);
-    }
-
-    /**
      * Checks if this booking period is active now.
      */
     public boolean isActive() {
         LocalDate today = LocalDate.now();
         return includesDate(today);
-    }
-
-    /**
-     * Checks if this booking period is upcoming.
-     * Upcoming is defined as strictly after today's date.
-     */
-    public boolean isUpcoming() {
-        LocalDate today = LocalDate.now();
-        return startDate.isAfter(today);
     }
 
     /**
@@ -148,6 +130,10 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
 
     @Override
     public int compareTo(BookingPeriod other) {
-        return startDate.compareTo(other.startDate);
+        int result = startDate.compareTo(other.startDate);
+        if (result != 0) {
+            return result;
+        }
+        return endDate.compareTo(other.endDate);
     }
 }

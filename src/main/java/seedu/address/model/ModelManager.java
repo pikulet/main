@@ -159,6 +159,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedConcierge.isRoomCheckedIn(roomNumber);
     }
 
+    @Override
     public boolean roomHasBooking(RoomNumber roomNumber) {
         return versionedConcierge.roomHasBookings(roomNumber);
     }
@@ -166,12 +167,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean roomHasActiveBooking(RoomNumber roomNumber) {
         return versionedConcierge.roomHasActiveBooking(roomNumber);
-    }
-
-
-    @Override
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasActiveOrExpiredBooking(roomNumber);
     }
 
     //=========== Undo/Redo =================================================================================

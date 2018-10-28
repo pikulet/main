@@ -36,25 +36,12 @@ public class BookingPeriodTest {
     }
 
     @Test
-    public void isExpired() {
-        assertTrue(LASTWEEK_YESTERDAY.isExpired());
-        assertFalse(YESTERDAY_TODAY.isExpired());
-    }
-
-    @Test
     public void isActive() {
         assertTrue(TODAY_TOMORROW.isActive());
         assertTrue(YESTERDAY_TODAY.isActive());
         assertTrue(TODAY_NEXTWEEK.isActive());
         assertFalse(LASTWEEK_YESTERDAY.isActive());
         assertFalse(TOMORROW_NEXTWEEK.isActive());
-    }
-
-    @Test
-    public void isUpcoming() {
-        assertTrue(TOMORROW_NEXTWEEK.isUpcoming());
-        assertFalse(TODAY_TOMORROW.isUpcoming());
-        assertFalse(LASTWEEK_YESTERDAY.isUpcoming());
     }
 
     @Test
@@ -65,8 +52,9 @@ public class BookingPeriodTest {
 
     @Test
     public void compareTo() {
-        assertTrue(TODAY_TOMORROW.compareTo(TODAY_NEXTWEEK) == 0);
+        assertTrue(TODAY_TOMORROW.compareTo(TODAY_TOMORROW) == 0);
         assertTrue(TODAY_TOMORROW.compareTo(YESTERDAY_TODAY) > 0);
+        assertTrue(TODAY_TOMORROW.compareTo(TODAY_NEXTWEEK) < 0);
         assertTrue(TODAY_TOMORROW.compareTo(TOMORROW_NEXTWEEK) < 0);
     }
 

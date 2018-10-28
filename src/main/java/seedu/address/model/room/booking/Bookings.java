@@ -126,7 +126,7 @@ public class Bookings {
     /**
      * Returns true if the given booking overlaps with any existing booking in the set
      */
-    public boolean canAcceptBooking(Booking toCheck) {
+    private boolean canAcceptBooking(Booking toCheck) {
         requireNonNull(toCheck);
         return sortedBookingsSet.stream().noneMatch(toCheck::isOverlapping);
     }
@@ -134,7 +134,7 @@ public class Bookings {
     /**
      * Returns true if the given booking overlaps with any existing booking in the set, excluding the one it replaces
      */
-    public boolean canAcceptIfReplaceBooking(Booking toReplace, Booking toCheck) {
+    private boolean canAcceptIfReplaceBooking(Booking toReplace, Booking toCheck) {
         requireAllNonNull(toReplace, toCheck);
         return sortedBookingsSet.stream().noneMatch(
             booking -> !booking.equals(toReplace) && booking.isOverlapping(toCheck));
@@ -143,7 +143,7 @@ public class Bookings {
     /**
      * Returns true if {@code Bookings} contains at least one overlapping Booking.
      */
-    public static boolean bookingsAreOverlapping(Set<Booking> bookings) {
+    private static boolean bookingsAreOverlapping(Set<Booking> bookings) {
         return bookings.stream().anyMatch(b1 ->
             bookings.stream().anyMatch(b2 -> !b1.equals(b2) && b1.isOverlapping(b2)));
     }

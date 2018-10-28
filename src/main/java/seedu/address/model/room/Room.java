@@ -182,14 +182,6 @@ public abstract class Room {
     }
 
     /**
-     * Returns true if room's first booking is active or expired
-     */
-    public boolean hasActiveOrExpiredBooking() {
-        Booking firstBooking = bookings.getFirstBooking();
-        return firstBooking.isActive() || firstBooking.isExpired();
-    }
-
-    /**
      * Returns true if both rooms of the same name have the same room number.
      * This defines a weaker notion of equality between two rooms.
      */

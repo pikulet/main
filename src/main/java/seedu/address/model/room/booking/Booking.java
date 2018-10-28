@@ -2,7 +2,6 @@ package seedu.address.model.room.booking;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import seedu.address.model.guest.Guest;
@@ -63,31 +62,10 @@ public class Booking implements Comparable<Booking> {
     }
 
     /**
-     * Checks if this booking is expired.
-     */
-    public boolean isExpired() {
-        return getBookingPeriod().isExpired();
-    }
-
-    /**
      * Checks if this booking is active.
      */
     public boolean isActive() {
         return getBookingPeriod().isActive();
-    }
-
-    /**
-     * Checks if this booking is upcoming.
-     */
-    public boolean isUpcoming() {
-        return getBookingPeriod().isUpcoming();
-    }
-
-    /**
-     * Checks if this booking includes the given date
-     */
-    public boolean includesDate(LocalDate date) {
-        return getBookingPeriod().includesDate(date);
     }
 
     /**
@@ -162,6 +140,14 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public int compareTo(Booking other) {
-        return bookingPeriod.compareTo(other.getBookingPeriod());
+        int result = bookingPeriod.compareTo(other.getBookingPeriod());
+        if (result != 0) {
+            return result;
+        }
+        result = guest.compareTo(other.guest);
+        if (result != 0) {
+            return result;
+        }
+        return isCheckedIn.compareTo(other.isCheckedIn);
     }
 }
