@@ -1,11 +1,15 @@
 package seedu.address.model.room.booking;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalBookings.LASTWEEK_YESTERDAY;
 import static seedu.address.testutil.TypicalBookings.TODAY_NEXTWEEK;
 import static seedu.address.testutil.TypicalBookings.TODAY_TOMORROW;
 import static seedu.address.testutil.TypicalBookings.TOMORROW_NEXTWEEK;
 import static seedu.address.testutil.TypicalGuests.BOB;
 
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -14,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
 import seedu.address.testutil.BookingBuilder;
 
@@ -39,6 +44,24 @@ public class BookingsTest {
         bookingsSet.add(TODAY_NEXTWEEK);
         thrown.expect(OverlappingBookingException.class);
         new Bookings(bookingsSet);
+    }
+
+    @Test
+    public void getFirstBooking_noBooking_throwsNoBookingException() {
+        thrown.expect(NoBookingException.class);
+        bookings.getFirstBooking();
+    }
+
+    @Test
+    public void getActiveBooking_returnsCorrectOptional_success() {
+        Optional<Booking> optionalActiveBooking = bookings.getActiveBooking();
+        assertFalse(optionalActiveBooking.isPresent());
+
+        optionalActiveBooking = bookings.add(LASTWEEK_YESTERDAY).getActiveBooking();
+        assertFalse(optionalActiveBooking.isPresent());
+
+        optionalActiveBooking = bookings.add(TODAY_TOMORROW).getActiveBooking();
+        assertTrue(optionalActiveBooking.isPresent());
     }
 
     @Test

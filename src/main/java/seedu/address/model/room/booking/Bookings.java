@@ -3,6 +3,7 @@ package seedu.address.model.room.booking;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -27,7 +28,7 @@ import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
  */
 public class Bookings {
 
-    public final SortedSet<Booking> sortedBookingsSet;
+    private final SortedSet<Booking> sortedBookingsSet;
 
     /**
      * Constructor for empty bookings set
@@ -57,10 +58,17 @@ public class Bookings {
      * Gets the first booking in the set
      */
     public Booking getFirstBooking() {
-        if (isEmpty()) {
+        if (sortedBookingsSet.isEmpty()) {
             throw new NoBookingException();
         }
         return sortedBookingsSet.first();
+    }
+
+    /**
+     * Returns an {@code Optional} of the active booking of this room
+     */
+    public Optional<Booking> getActiveBooking() {
+        return sortedBookingsSet.stream().filter(Booking::isActive).findFirst();
     }
 
     //=========== Operations =============================================================
@@ -117,10 +125,10 @@ public class Bookings {
     //=========== Boolean checkers =============================================================
 
     /**
-     * Returns true if there are no bookings
+     * Returns true if there are expired bookings
      */
-    public boolean isEmpty() {
-        return sortedBookingsSet.isEmpty();
+    public boolean hasExpiredBookings() {
+        return sortedBookingsSet.stream().anyMatch(Booking::isExpired);
     }
 
     /**
@@ -159,6 +167,34 @@ public class Bookings {
     @Override
     public int hashCode() {
         return sortedBookingsSet.hashCode();
+    }
+
+    /**
+     * Returns the short description of the active booking
+     */
+    public String toStringActiveBookingShortDescription() {
+        return getActiveBooking().map(Booking::toStringShortDescription).orElse("");
+    }
+
+    /**
+     * Returns the full description of the active booking
+     */
+    public String toStringActiveBooking() {
+        return getActiveBooking().map(Booking::toString).orElse("");
+    }
+
+    /**
+     * Returns the full description of all non-active bookings
+     */
+    public String toStringAllOtherBookings() {
+        final StringBuilder builder = new StringBuilder();
+        Bookings allOtherBookings = this;
+        Optional<Booking> optionalActiveBooking = getActiveBooking();
+        if (optionalActiveBooking.isPresent()) {
+            allOtherBookings = this.remove(optionalActiveBooking.get());
+        }
+        builder.append(allOtherBookings);
+        return builder.toString();
     }
 
     @Override

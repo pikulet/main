@@ -93,6 +93,13 @@ public class BookingPeriod implements Comparable<BookingPeriod> {
     }
 
     /**
+     * Checks if this booking period is expired.
+     */
+    public boolean isExpired() {
+        return endDate.isBefore(LocalDate.now());
+    }
+
+    /**
      * Checks if this booking period is active now.
      */
     public boolean isActive() {

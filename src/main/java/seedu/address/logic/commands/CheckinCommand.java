@@ -6,6 +6,9 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.booking.exceptions.ExpiredBookingsFoundException;
+import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
+import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 
 /**
  * Check in a room identified using its room number.
@@ -21,11 +24,12 @@ public class CheckinCommand extends Command {
             + "Example: " + COMMAND_WORD + " 001";
 
     public static final String MESSAGE_CHECKIN_ROOM_SUCCESS = "Checked in Room: %1$s";
+    public static final String MESSAGE_EXPIRED_BOOKINGS_FOUND =
+        "Cannot check in Room %1$s, as it has expired bookings.";
     public static final String MESSAGE_NO_ACTIVE_BOOKING_CHECKIN =
         "Cannot check in Room %1$s, as it does not have an active booking.";
     public static final String MESSAGE_OCCUPIED_ROOM_CHECKIN =
         "Cannot check in Room %1$s, as it is already checked in.";
-    public static final String MESSAGE_NO_ROOM_BOOKING = "Room %1$s has no bookings.";
 
     private final RoomNumber roomNumber;
 
@@ -36,19 +40,17 @@ public class CheckinCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        // roomNumber is guaranteed to be a valid room number after parsing.
-        if (!model.roomHasBooking(roomNumber)) {
-            throw new CommandException(String.format(MESSAGE_NO_ROOM_BOOKING, roomNumber));
-        }
-        if (!model.roomHasActiveBooking(roomNumber)) {
+        try {
+            model.checkInRoom(roomNumber);
+            model.commitConcierge();
+            return new CommandResult(String.format(MESSAGE_CHECKIN_ROOM_SUCCESS, roomNumber));
+        } catch (ExpiredBookingsFoundException e) {
+            throw new CommandException(String.format(MESSAGE_EXPIRED_BOOKINGS_FOUND, roomNumber));
+        } catch (NoActiveBookingException e) {
             throw new CommandException(String.format(MESSAGE_NO_ACTIVE_BOOKING_CHECKIN, roomNumber));
-        }
-        if (model.isRoomCheckedIn(roomNumber)) {
+        } catch (OccupiedRoomCheckinException e) {
             throw new CommandException(String.format(MESSAGE_OCCUPIED_ROOM_CHECKIN, roomNumber));
         }
-        model.checkInRoom(roomNumber);
-        model.commitConcierge();
-        return new CommandResult(String.format(MESSAGE_CHECKIN_ROOM_SUCCESS, roomNumber));
     }
 
     @Override

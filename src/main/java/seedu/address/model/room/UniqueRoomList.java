@@ -41,14 +41,14 @@ public class UniqueRoomList implements Iterable<Room> {
         this.internalList.setAll(Stream.iterate(1, i -> i <= Integer.parseInt(maxRoomNumber), i -> i + 1)
             .map(i -> {
                 RoomNumber roomNumber = new RoomNumber(String.format("%03d", i));
-                if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a SuiteRoom.
-                    return new SuiteRoom(roomNumber);
+                if (i % 10 == 0) { // All rooms with room number that is multiple of 10 is a Suite Room.
+                    return new Room(roomNumber, Capacity.SUITE);
                 }
-                if (i % 2 == 0) { // All rooms with even room number is a DoubleRoom.
-                    return new DoubleRoom(roomNumber);
+                if (i % 2 == 0) { // All rooms with even room number is a Double Room.
+                    return new Room(roomNumber, Capacity.DOUBLE);
                 }
-                // ALl rooms with odd room number is a SingleRoom.
-                return new SingleRoom(roomNumber);
+                // ALl rooms with odd room number is a Single Room.
+                return new Room(roomNumber, Capacity.SINGLE);
             })
             .collect(Collectors.toList()));
     }

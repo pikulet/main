@@ -201,27 +201,6 @@ public class Concierge implements ReadOnlyConcierge {
         return rooms.contains(room);
     }
 
-    /**
-     * Returns true if the room identified by its room number is checked in.
-     */
-    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).isCheckedIn();
-    }
-
-    /**
-     * Returns true if the room's bookings is non-empty
-     */
-    public boolean roomHasBookings(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).hasBookings();
-    }
-
-    /**
-     * Returns true if the room's first booking is active.
-     */
-    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).hasActiveBooking();
-    }
-
     //// util methods
 
     @Override
