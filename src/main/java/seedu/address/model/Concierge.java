@@ -197,8 +197,7 @@ public class Concierge implements ReadOnlyConcierge {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Concierge // instanceof handles nulls
-                && guests.equals(((Concierge) other).guests)
-                && rooms.equals(((Concierge) other).rooms));
+                && guests.equals(((Concierge) other).guests));
     }
 
     @Override

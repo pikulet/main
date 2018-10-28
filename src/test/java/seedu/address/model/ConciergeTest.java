@@ -63,7 +63,7 @@ public class ConciergeTest {
         thrown.expect(DuplicateGuestException.class);
         concierge.resetData(newData);
     }
-    
+
     /*===================== Guests Test =========================================================== */
 
     @Test
@@ -101,7 +101,7 @@ public class ConciergeTest {
 
     // Note: no need to test the other room methods, because they only call the methods that belong to the following
     // class, which have all already been tested in the classes' own tests.
-    
+
     @Test
     public void getRoomList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
@@ -109,7 +109,7 @@ public class ConciergeTest {
     }
 
     /*===================== Menu Test =========================================================== */
-    
+
     @Test
     public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);

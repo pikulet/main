@@ -48,10 +48,10 @@ public class ModelManagerTest {
     }
 
     /*===================== Rooms Test =========================================================== */
-    
+
     // Note: no need to test the other room methods, because they only call the methods that belong to the following
     // class, which have all already been tested in the classes' own tests.
-    
+
     @Test
     public void getFilteredRoomList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
@@ -59,7 +59,7 @@ public class ModelManagerTest {
     }
 
     /*===================== Utils Test =========================================================== */
-    
+
     @Test
     public void equals() {
         Concierge concierge = new ConciergeBuilder().withGuest(ALICE).withGuest(BENSON).build();

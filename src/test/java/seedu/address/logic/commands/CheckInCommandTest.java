@@ -1,22 +1,21 @@
 package seedu.address.logic.commands;
 
-import org.junit.Before;
-import org.junit.Test;
-import seedu.address.logic.CommandHistory;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.testutil.TypicalBookingPeriods;
-import seedu.address.testutil.TypicalBookings;
-import seedu.address.testutil.TypicalRoomNumbers;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.room.RoomNumber;
+import seedu.address.testutil.TypicalBookings;
+import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -102,7 +101,7 @@ public class CheckInCommandTest {
         expectedModel.checkInRoom(roomNumberToCheckIn);
         expectedModel.commitConcierge();
 
-        // checkIn -> room booking checked out
+        // checkIn -> room booking checked in
         checkInCommand.execute(model, commandHistory);
 
         // undo -> reverts concierge back to previous state and filtered room to show all rooms
@@ -119,7 +118,7 @@ public class CheckInCommandTest {
         RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_002;
         CheckInCommand checkInCommand = new CheckInCommand(roomNumberToCheckIn);
 
-        String expectedMessage = String.format(CheckInCommand.MESSAGE_OCCUPIED_ROOM_CHECKIN,roomNumberToCheckIn);
+        String expectedMessage = String.format(CheckInCommand.MESSAGE_OCCUPIED_ROOM_CHECKIN, roomNumberToCheckIn);
 
         assertCommandFailure(checkInCommand, model, commandHistory, expectedMessage);
 
