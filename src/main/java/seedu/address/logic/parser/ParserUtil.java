@@ -150,6 +150,7 @@ public class ParserUtil {
      * @throws ParseException if the cost is present but in the wrong format.
      */
     public static Optional<Money> parseCost(Optional<String> cost) throws ParseException {
+        requireNonNull(cost);
         if (cost.isPresent() && !Money.isValidMoneyFormat(cost.get())) {
             throw new ParseException(Money.MESSAGE_MONEY_CONSTRAINTS);
         }

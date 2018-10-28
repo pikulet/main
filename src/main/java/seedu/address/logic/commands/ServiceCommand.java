@@ -52,7 +52,7 @@ public class ServiceCommand extends Command {
      * @param itemCost The cost of the item
      */
     public ServiceCommand(RoomNumber roomNumber, String itemNumber, Optional<Money> itemCost) {
-        requireAllNonNull(roomNumber, itemNumber);
+        requireAllNonNull(roomNumber, itemNumber, itemCost);
         this.roomNumber = roomNumber;
         this.itemNumber = itemNumber;
         this.itemCost = itemCost;
