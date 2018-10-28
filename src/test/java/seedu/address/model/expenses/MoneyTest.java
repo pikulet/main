@@ -102,5 +102,6 @@ public class MoneyTest {
         assertTrue(d.add(e).equals(new Money(-863, 48)));
         assertTrue(e.add(c).equals(new Money(-81, 46)));
         assertTrue(b.add(f).equals(new Money(-766, 21)));
+        assertTrue(e.add(f).equals(new Money(-1655, 90)));
     }
 }

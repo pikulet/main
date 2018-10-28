@@ -78,43 +78,13 @@ public class Money {
      * @return The Money object representing the sum of the two Money objects.
      */
     public Money add(Money addend) {
-        long newDollars;
-        int newCents;
-        if (dollars >= 0 && addend.dollars >= 0) {
-            newDollars = (long) dollars + (long) addend.dollars;
-            newCents = cents + addend.cents;
-            if (newCents >= 100) {
-                newCents = newCents % 100;
-                newDollars += 1;
-            }
-            if (newDollars > Integer.MAX_VALUE) {
-                throw new MoneyLimitExceededException();
-            }
-            return new Money((int) newDollars, newCents);
-        } else if (dollars < 0 && addend.dollars < 0) {
-            return (this.flipSign().add(addend.flipSign())).flipSign();
-        } else if (dollars >= 0 && addend.dollars < 0) {
-            newDollars = dollars + addend.dollars;
-            newCents = cents - addend.cents;
-            if (newCents < 0 && newDollars >= 0) {
-                newCents = 100 + newCents;
-                newDollars -= 1;
-            } else if (newCents >= 0 && newDollars < 0) {
-                newCents = 100 - newCents;
-                newDollars += 1;
-            } else if (newCents < 0 && newDollars < 0) {
-                newCents = -1 * newCents;
-            }
-            // don't need to throw MoneyLimitExceededException since it is
-            // impossible to go beyond the range here.
-            return new Money((int) newDollars, newCents);
-        } else {
-            return addend.add(this);
+        BigDecimal first = new BigDecimal(this.toString());
+        BigDecimal second = new BigDecimal(addend.toString());
+        BigDecimal sum = first.add(second);
+        if (sum.abs().toBigInteger().compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == 1) {
+            throw new MoneyLimitExceededException();
         }
-    }
-
-    private Money flipSign() {
-        return new Money(dollars * -1, cents);
+        return new Money(sum.setScale(2).toString());
     }
 
     @Override
