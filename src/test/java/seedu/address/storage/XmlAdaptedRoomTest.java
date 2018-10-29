@@ -2,7 +2,10 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedRoom.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.testutil.TypicalGuests.BENSON;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -11,19 +14,12 @@ import seedu.address.model.Menu;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.booking.Booking;
-import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.Assert;
-import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalRooms;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
- * Note: XmlAdaptedRoom contains Capacity, List<XmlAdaptedBooking>, List<XmlAdaptedExpense>, and other fields.
- * We check List<XmlAdaptedBooking> by attempting to call toModelType with a list of overlapping bookings.
+ * Note: XmlAdaptedRoom contains Capacity, List of XmlAdaptedBooking, List of XmlAdaptedExpense, and other fields.
+ * We check List of XmlAdaptedBooking by attempting to call toModelType with a list of overlapping bookings.
  * We do not check XmlAdaptedExpense because there are no restrictions on a list of expenses, unlike bookings.
  * We do not check this field here because JAXB and Unmarshaller can only parse the correct values corresponding to
  * Capacity's enum values, meaning wrong values of Capacity will trigger an exception there, not here.
@@ -31,7 +27,7 @@ import java.util.stream.Collectors;
  * TODO Update this test with actual Menu when WEI ZHENG has implemented it
  */
 public class XmlAdaptedRoomTest {
-    
+
     private static final Room VALID_ROOM = TypicalRooms.SINGLE_001;
     private static final String VALID_ROOM_NUMBER = VALID_ROOM.getRoomNumber().toString();
     private static final Capacity VALID_CAPACITY = VALID_ROOM.getCapacity();
@@ -42,9 +38,9 @@ public class XmlAdaptedRoomTest {
     private static final List<XmlAdaptedTag> VALID_TAGS = VALID_ROOM.getTags()
             .stream().map(XmlAdaptedTag::new).collect(Collectors.toList());
 
-    private static final String INVALID_ROOM_NUMBER = "2018/10/21";
+    private static final String INVALID_ROOM_NUMBER = "01";
     private static final String INVALID_TAG = "#friend";
-    private static final XmlAdaptedBooking INVALID_BOOKING = 
+    private static final XmlAdaptedBooking INVALID_BOOKING =
             new XmlAdaptedBooking(VALID_ROOM.getBookings().getFirstBooking());
 
     // TODO Replace this VALID_MENU_STUB with typical menu once WEI ZHENG has implemented it
@@ -61,7 +57,7 @@ public class XmlAdaptedRoomTest {
     public void toModelType_invalidRoomNumber_throwsIllegalValueException() {
         XmlAdaptedRoom room =
                 new XmlAdaptedRoom(INVALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
-        String expectedMessage = BookingPeriod.MESSAGE_BOOKING_PERIOD_CONSTRAINTS;
+        String expectedMessage = RoomNumber.MESSAGE_ROOM_NUMBER_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
     }
 
@@ -77,7 +73,7 @@ public class XmlAdaptedRoomTest {
     public void toModelType_nullCapacity_throwsIllegalValueException() {
         XmlAdaptedRoom room =
             new XmlAdaptedRoom(VALID_ROOM_NUMBER, null, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
     }
 
@@ -86,32 +82,8 @@ public class XmlAdaptedRoomTest {
         List<XmlAdaptedBooking> invalidBookings = new ArrayList<>(VALID_BOOKINGS);
         invalidBookings.add(INVALID_BOOKING);
         XmlAdaptedRoom room =
-            new XmlAdaptedRoom(INVALID_ROOM_NUMBER, VALID_CAPACITY, invalidBookings, VALID_EXPENSES, VALID_TAGS);
-        String expectedMessage = BookingPeriod.MESSAGE_BOOKING_PERIOD_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
-    }
-
-    @Test
-    public void toModelType_nullBookings_throwsIllegalValueException() {
-        XmlAdaptedRoom room =
-            new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, null, VALID_EXPENSES, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
-    }
-
-    @Test
-    public void toModelType_nullExpenses_throwsIllegalValueException() {
-        XmlAdaptedRoom room =
-            new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, null, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
-    }
-
-    @Test
-    public void toModelType_nullTags_throwsIllegalValueException() {
-        XmlAdaptedRoom room =
-            new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, null);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName());
+            new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, invalidBookings, VALID_EXPENSES, VALID_TAGS);
+        String expectedMessage = XmlAdaptedRoom.MESSAGE_OVERLAPPING_BOOKING;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
     }
 

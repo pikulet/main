@@ -101,7 +101,7 @@ public class XmlAdaptedRoom {
                 modelBookings = modelBookings.add(b.toModelType());
             }
         } catch (OverlappingBookingException e) {
-            throw new IllegalValueException(e.getMessage());
+            throw new IllegalValueException(MESSAGE_OVERLAPPING_BOOKING);
         }
 
         final List<Expense> expenseList = new ArrayList<>();

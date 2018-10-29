@@ -71,15 +71,14 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         Concierge dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableConcierge.class).toModelType();
-        assertEquals(7, dataFromFile.getGuestList().size());
+        assertEquals(4, dataFromFile.getGuestList().size());
     }
 
     @Test
     public void xmlAdaptedGuestFromFile_fileWithMissingGuestField_validResult() throws Exception {
         XmlAdaptedGuest actualGuest = XmlUtil.getDataFromFile(
                 MISSING_GUEST_FIELD_FILE, XmlAdaptedGuestWithRootElement.class);
-        XmlAdaptedGuest expectedGuest = new XmlAdaptedGuest(
-                null, VALID_PHONE, VALID_EMAIL, VALID_TAGS);
+        XmlAdaptedGuest expectedGuest = new XmlAdaptedGuest(null, VALID_PHONE, VALID_EMAIL, VALID_TAGS);
         assertEquals(expectedGuest, actualGuest);
     }
 

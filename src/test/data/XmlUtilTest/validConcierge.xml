@@ -25,50 +25,79 @@
         <email>lidavid@example.com</email>
         <tagged>family</tagged>
     </guests>
-    <guests>
-        <name>Irfan Ibrahim</name>
-        <phone>92492021</phone>
-        <email>irfan@example.com</email>
-        <tagged>classmates</tagged>
-    </guests>
-    <guests>
-        <name>Roy Balakrishnan</name>
-        <phone>92624417</phone>
-        <email>royb@example.com</email>
-        <tagged>colleagues</tagged>
-    </guests>
-    <guests>
-        <name>bodo</name>
-        <phone>123</phone>
-        <email>bodo@bodo</email>
-    </guests>
     <rooms>
         <roomNumber>001</roomNumber>
         <capacity>SINGLE</capacity>
         <bookings>
             <guest>
-                <name>bodo</name>
-                <phone>123</phone>
-                <email>bodo@bodo</email>
+                <name>Alex Yeoh</name>
+                <phone>87438807</phone>
+                <email>alexyeoh@example.com</email>
+                <tagged>friends</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>29/10/2018</startDate>
-                <endDate>30/10/2018</endDate>
+                <startDate>30/10/2018</startDate>
+                <endDate>31/10/2018</endDate>
             </bookingPeriod>
-            <checkin>false</checkin>
+            <isCheckedIn>false</isCheckedIn>
         </bookings>
+        <expenses>
+            <item>RS01</item>
+            <cost>50.00</cost>
+            <datetime>30/10/2018 03:46:21</datetime>
+        </expenses>
     </rooms>
     <rooms>
         <roomNumber>002</roomNumber>
         <capacity>DOUBLE</capacity>
+        <bookings>
+            <guest>
+                <name>Bernice Yu</name>
+                <phone>99272758</phone>
+                <email>berniceyu@example.com</email>
+                <tagged>colleagues</tagged>
+                <tagged>friends</tagged>
+            </guest>
+            <bookingPeriod>
+                <startDate>30/10/2018</startDate>
+                <endDate>1/11/2018</endDate>
+            </bookingPeriod>
+            <isCheckedIn>false</isCheckedIn>
+        </bookings>
     </rooms>
     <rooms>
         <roomNumber>003</roomNumber>
         <capacity>SINGLE</capacity>
+        <bookings>
+            <guest>
+                <name>Charlotte Oliveiro</name>
+                <phone>93210283</phone>
+                <email>charlotte@example.com</email>
+                <tagged>neighbours</tagged>
+            </guest>
+            <bookingPeriod>
+                <startDate>31/10/2018</startDate>
+                <endDate>1/11/2018</endDate>
+            </bookingPeriod>
+            <isCheckedIn>false</isCheckedIn>
+        </bookings>
     </rooms>
     <rooms>
         <roomNumber>004</roomNumber>
         <capacity>DOUBLE</capacity>
+        <bookings>
+            <guest>
+                <name>David Li</name>
+                <phone>91031282</phone>
+                <email>lidavid@example.com</email>
+                <tagged>family</tagged>
+            </guest>
+            <bookingPeriod>
+                <startDate>29/10/2018</startDate>
+                <endDate>1/11/2018</endDate>
+            </bookingPeriod>
+            <isCheckedIn>false</isCheckedIn>
+        </bookings>
     </rooms>
     <rooms>
         <roomNumber>005</roomNumber>
