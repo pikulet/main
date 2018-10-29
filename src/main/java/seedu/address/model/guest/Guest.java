@@ -13,7 +13,7 @@ import seedu.address.model.tag.Tag;
  * Represents a Guest in Concierge.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Guest {
+public class Guest implements Comparable<Guest> {
 
     // Identity fields
     private final Name name;
@@ -111,6 +111,19 @@ public class Guest {
                 .append(" | Email: ")
                 .append(getEmail());
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Guest other) {
+        int result = name.toString().compareTo(other.name.toString());
+        if (result != 0) {
+            return result;
+        }
+        result = phone.toString().compareTo(other.phone.toString());
+        if (result != 0) {
+            return result;
+        }
+        return email.toString().compareTo(other.email.toString());
     }
 
 }

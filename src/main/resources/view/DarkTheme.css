@@ -366,13 +366,13 @@
     -fx-font-size: 11;
 }
 
-#bookings {
+#activeBooking {
     -fx-padding: 3 0 3 0;
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#bookings .label {
+#activeBooking .label {
     -fx-text-fill: white;
     -fx-background-color: #3D997f;
     -fx-padding: 3 5 3 5;
@@ -381,13 +381,13 @@
     -fx-font-size: 13;
 }
 
-#otherBookings {
+#allOtherBookings {
     -fx-padding: 3 0 3 0;
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#otherBookings .label {
+#allOtherBookings .label {
     -fx-text-fill: white;
     -fx-background-color: #E39338;
     -fx-padding: 3 5 3 5;

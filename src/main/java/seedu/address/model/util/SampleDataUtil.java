@@ -45,7 +45,7 @@ public class SampleDataUtil {
      * Returns a room list initialized with the maximum number of rooms as set in RoomNumber class
      */
     public static List<Room> getSampleRooms() {
-        return new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER).asUnmodifiableObservableList();
+        return new UniqueRoomList().asUnmodifiableObservableList();
     }
 
     /**

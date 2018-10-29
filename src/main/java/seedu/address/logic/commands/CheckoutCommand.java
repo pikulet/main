@@ -26,8 +26,8 @@ public class CheckoutCommand extends Command {
             + "If you do not specify a booking period, the first (i.e. earliest) booking will be checked out."
             + "Booking periods must be in dd/MM/yy or dd/MM/yyyy format.\n"
             + "Parameters: " + PREFIX_ROOM + "ROOM_NUMBER (must be a 3-digit positive integer from 001 to "
-            + RoomNumber.MAX_ROOM_NUMBER + ")"
-            + "[" + PREFIX_DATE_START + "START_DATE " + PREFIX_DATE_START + "END_DATE]"
+            + RoomNumber.MAX_ROOM_NUMBER + ") "
+            + "[" + PREFIX_DATE_START + "START_DATE " + PREFIX_DATE_END + "END_DATE]"
             + "\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_ROOM + "001 "
             + PREFIX_DATE_START + "01/01/18 " + PREFIX_DATE_END + "02/01/18";

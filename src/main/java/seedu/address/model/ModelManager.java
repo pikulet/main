@@ -155,26 +155,6 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge.checkoutRoom(roomNumber, bookingPeriod);
     }
 
-    @Override
-    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-        return versionedConcierge.isRoomCheckedIn(roomNumber);
-    }
-
-    public boolean roomHasBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasBookings(roomNumber);
-    }
-
-    @Override
-    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasActiveBooking(roomNumber);
-    }
-
-
-    @Override
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasActiveOrExpiredBooking(roomNumber);
-    }
-
     //=========== Undo/Redo =================================================================================
 
     @Override
