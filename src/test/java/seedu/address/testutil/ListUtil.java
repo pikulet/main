@@ -18,7 +18,7 @@ public class ListUtil {
     }
 
     /**
-     * Returns a list command string to list guests.
+     * Returns a list command string to list rooms.
      */
     public static String getListRoomCommand() {
         return ListCommand.COMMAND_WORD + " " + FLAG_ROOM;
