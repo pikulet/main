@@ -36,30 +36,41 @@ public class TypicalRooms {
     public static final Room DOUBLE_012 = new RoomBuilder()
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_012.toString())
         .withCapacity(Capacity.DOUBLE)
-        .withBookings(TypicalBookings.getTypicalBookingsTodayNextWeek())
+        .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrowCheckedIn())
         .build();
 
     public static final Room SUITE_020 = new RoomBuilder()
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_020.toString())
         .withCapacity(Capacity.SUITE)
-        .withBookings(TypicalBookings.getTypicalBookingsTomorrowNextWeek())
+        .withBookings(TypicalBookings.getTypicalBookingsTodayNextWeek())
         .build();
-    
+
     public static final Room SINGLE_021 = new RoomBuilder()
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_021.toString())
         .withCapacity(Capacity.SINGLE)
-        .withBookings(TypicalBookings.getMultipleBookingsSet1())
+        .withBookings(TypicalBookings.getTypicalBookingsTomorrowNextWeek())
         .build();
 
     public static final Room DOUBLE_022 = new RoomBuilder()
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_022.toString())
         .withCapacity(Capacity.DOUBLE)
+        .withBookings(TypicalBookings.getMultipleBookingsSet1())
+        .build();
+
+    public static final Room SUITE_030 = new RoomBuilder()
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_030.toString())
+        .withCapacity(Capacity.SUITE)
         .withBookings(TypicalBookings.getMultipleBookingsSet2())
+        .build();
+
+    public static final Room SINGLE_031 = new RoomBuilder()
+        .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_031.toString())
+        .withCapacity(Capacity.SINGLE)
         .build();
 
     /**
      * Returns a {@code UniqueRoomList} with all rooms.
-     * Note: All rooms do not have bookings or expenses. 
+     * Note: All rooms do not have bookings or expenses.
      * Use @Before in tests to initialize bookings and expenses. However, if you use @Before, make sure to
      * do `model = new Model(model.getConcierge(), new UserPrefs())` at the end of the @Before block. This is to
      * ensure the model's versionedConcierge has an empty initial state list for all the tests to work.
@@ -74,10 +85,12 @@ public class TypicalRooms {
      * Room 002: Last week - Yesterday (checked-in)
      * Room 010: Yesterday - Today
      * Room 011: Today - Tomorrow
-     * Room 012: Today - Next week
-     * Room 020: Tomorrow - Next week
-     * Room 021: Last week - Yesterday, Yesterday - Today, Today - Tomorrow, Tomorrow - Next week
-     * Room 022: Last week - Yesterday (checked-in), Yesterday - Today, Today - Tomorrow, Tomorrow - Next week
+     * Room 012: Today - Tomorrow (checked-in)
+     * Room 020: Today - Next week
+     * Room 021: Tomorrow - Next week
+     * Room 022: Last week - Yesterday, Yesterday - Today, Today - Tomorrow, Tomorrow - Next week
+     * Room 030: Last week - Yesterday, Yesterday - Today, Today - Tomorrow (checked-in), Tomorrow - Next week
+     * Room 031: No bookings
      */
     public static UniqueRoomList getTypicalUniqueRoomListWithBookings() {
         UniqueRoomList uniqueRoomList = new UniqueRoomList();
@@ -89,6 +102,8 @@ public class TypicalRooms {
         uniqueRoomList.setRoom(uniqueRoomList.getRoom(TypicalRoomNumbers.ROOM_NUMBER_020), SUITE_020);
         uniqueRoomList.setRoom(uniqueRoomList.getRoom(TypicalRoomNumbers.ROOM_NUMBER_021), SINGLE_021);
         uniqueRoomList.setRoom(uniqueRoomList.getRoom(TypicalRoomNumbers.ROOM_NUMBER_022), DOUBLE_022);
+        uniqueRoomList.setRoom(uniqueRoomList.getRoom(TypicalRoomNumbers.ROOM_NUMBER_030), SUITE_030);
+        uniqueRoomList.setRoom(uniqueRoomList.getRoom(TypicalRoomNumbers.ROOM_NUMBER_031), SINGLE_031);
         return uniqueRoomList;
     }
 }

@@ -4,9 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -14,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.testutil.TypicalBookings;
+import seedu.address.testutil.TypicalConcierge;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
@@ -23,23 +21,11 @@ import seedu.address.testutil.TypicalRoomNumbers;
  */
 public class CheckInCommandTest {
 
-    private Model model = new ModelManager(getTypicalConcierge(), new UserPrefs());
+    private Model model = new ModelManager(TypicalConcierge.getTypicalConciergeWithRoomBookings(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
-    @Before
-    public void initialize() {
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_001, TypicalBookings.LASTWEEK_YESTERDAY);
-
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_002, TypicalBookings.YESTERDAY_TODAY);
-        model.checkInRoom(TypicalRoomNumbers.ROOM_NUMBER_002);
-
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_010, TypicalBookings.TODAY_TOMORROW);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_011, TypicalBookings.TOMORROW_NEXTWEEK);
-        model = new ModelManager(model.getConcierge(), new UserPrefs());
-    }
-
     @Test
-    public void execute_invalidCheckinExpiredBookingLastweekYesterday_throwsExpiredBookingException() {
+    public void execute_invalidCheckinExpiredBooking_throwsExpiredBookingException() {
         RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_001;
         CheckInCommand checkInCommand = new CheckInCommand(roomNumberToCheckIn);
 
@@ -64,7 +50,7 @@ public class CheckInCommandTest {
 
     @Test
     public void execute_invalidCheckInUpcomingBooking_throwsNoActiveBookingException() {
-        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_011;
+        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_021;
         CheckInCommand checkInCommand = new CheckInCommand(roomNumberToCheckIn);
 
         String expectedMessage = String.format(CheckInCommand.MESSAGE_NO_ACTIVE_BOOKING_CHECKIN, roomNumberToCheckIn);
@@ -74,7 +60,7 @@ public class CheckInCommandTest {
 
     @Test
     public void execute_noBookingCheckIn_throwsNoActiveBookingException() {
-        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_020;
+        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_031;
         CheckInCommand checkInCommand = new CheckInCommand(roomNumberToCheckIn);
 
         String expectedMessage = String.format(CheckInCommand.MESSAGE_NO_ACTIVE_BOOKING_CHECKIN, roomNumberToCheckIn);
@@ -85,7 +71,7 @@ public class CheckInCommandTest {
 
     @Test
     public void execute_invalidCheckInOccupiedRoomBooking_throwsOccupiedRoomCheckInException() {
-        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_002;
+        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_012;
         CheckInCommand checkInCommand = new CheckInCommand(roomNumberToCheckIn);
 
         String expectedMessage = String.format(CheckInCommand.MESSAGE_OCCUPIED_ROOM_CHECKIN, roomNumberToCheckIn);
@@ -116,7 +102,7 @@ public class CheckInCommandTest {
 
     @Test
     public void executeUndoRedo_invalidCheckIn_failure() throws Exception {
-        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_002;
+        RoomNumber roomNumberToCheckIn = TypicalRoomNumbers.ROOM_NUMBER_012;
         CheckInCommand checkInCommand = new CheckInCommand(roomNumberToCheckIn);
 
         String expectedMessage = String.format(CheckInCommand.MESSAGE_OCCUPIED_ROOM_CHECKIN, roomNumberToCheckIn);

@@ -38,22 +38,22 @@
         <tagged>colleagues</tagged>
     </guests>
     <guests>
-        <name>naruto</name>
+        <name>bodo</name>
         <phone>123</phone>
-        <email>naruto@konoha</email>
+        <email>bodo@bodo</email>
     </guests>
     <rooms>
         <roomNumber>001</roomNumber>
         <capacity>SINGLE</capacity>
         <bookings>
             <guest>
-                <name>naruto</name>
+                <name>bodo</name>
                 <phone>123</phone>
-                <email>naruto@konoha</email>
+                <email>bodo@bodo</email>
             </guest>
             <bookingPeriod>
-                <startDate>28/10/2018</startDate>
-                <endDate>29/10/2018</endDate>
+                <startDate>29/10/2018</startDate>
+                <endDate>30/10/2018</endDate>
             </bookingPeriod>
             <checkin>false</checkin>
         </bookings>
@@ -460,7 +460,7 @@
             <value>
                 <itemNumber>RS03</itemNumber>
                 <itemName>Room service: Thai massage</itemName>
-                <itemCost>100.0</itemCost>
+                <itemCost>100.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -468,7 +468,7 @@
             <value>
                 <itemNumber>RS01</itemNumber>
                 <itemName>Room service: Red wine</itemName>
-                <itemCost>50.0</itemCost>
+                <itemCost>50.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -476,7 +476,7 @@
             <value>
                 <itemNumber>MB02</itemNumber>
                 <itemName>Minibar: Sprite</itemName>
-                <itemCost>3.0</itemCost>
+                <itemCost>3.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -484,7 +484,7 @@
             <value>
                 <itemNumber>RS02</itemNumber>
                 <itemName>Room service: Beef steak</itemName>
-                <itemCost>70.0</itemCost>
+                <itemCost>70.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -492,7 +492,7 @@
             <value>
                 <itemNumber>MB01</itemNumber>
                 <itemName>Minibar: Coca cola</itemName>
-                <itemCost>3.0</itemCost>
+                <itemCost>3.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -500,7 +500,7 @@
             <value>
                 <itemNumber>SP01</itemNumber>
                 <itemName>Swimming pool: Entry</itemName>
-                <itemCost>5.0</itemCost>
+                <itemCost>5.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -508,7 +508,7 @@
             <value>
                 <itemNumber>MB04</itemNumber>
                 <itemName>Minibar: Mineral water</itemName>
-                <itemCost>3.0</itemCost>
+                <itemCost>3.00</itemCost>
             </value>
         </entry>
         <entry>
@@ -516,7 +516,7 @@
             <value>
                 <itemNumber>MB03</itemNumber>
                 <itemName>Minibar: Tiger beer</itemName>
-                <itemCost>6.0</itemCost>
+                <itemCost>6.00</itemCost>
             </value>
         </entry>
     </menu>
