@@ -1,7 +1,10 @@
 package seedu.address.model.expenses;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 import seedu.address.model.expenses.exceptions.MoneyLimitExceededException;
 
@@ -20,7 +23,7 @@ public class Money {
 
     private int dollars;
     private int cents;
-    //v2.0: implement exchange rates
+    // KIV: implement exchange rates
 
     public Money(int dollars, int cents) {
         if (cents >= 100 || cents < 0 || dollars == Integer.MIN_VALUE) {
@@ -35,9 +38,7 @@ public class Money {
      * @param toConvert The string to convert to a Money object.
      */
     public Money(String toConvert) {
-        if (!isValidMoneyFormat(toConvert)) {
-            throw new IllegalArgumentException();
-        }
+        checkArgument(isValidMoneyFormat(toConvert), MESSAGE_MONEY_CONSTRAINTS);
         String[] parts = toConvert.split("\\.");
         dollars = Integer.parseInt(parts[0]);
         cents = Integer.parseInt(parts[1]);
@@ -45,6 +46,11 @@ public class Money {
 
     /**
      * Checks that a string is a valid representation of money.
+     * A valid string representation must be of the format "xxx.yy",
+     * i.e. must always represent with two decimal places.
+     * String cannot contain unnecessary leading zeroes, e.g. "012.34".
+     * Actual magnitude of monetary value cannot exceed Integer.MAX_VALUE.
+     * Negative amounts are accepted.
      * @param money The string to be checked.
      * @return True if the string is in money format, false otherwise.
      */
@@ -107,6 +113,6 @@ public class Money {
 
     @Override
     public int hashCode() {
-        return (dollars * 100) + cents;
+        return Objects.hashCode(this);
     }
 }

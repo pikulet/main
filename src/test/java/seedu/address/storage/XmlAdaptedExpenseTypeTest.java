@@ -12,14 +12,16 @@ import seedu.address.testutil.Assert;
 
 public class XmlAdaptedExpenseTypeTest {
 
+    private static final String VALID_NUMBER = "1";
+    private static final String VALID_NAME = "name";
+    private static final String VALID_COST = "1.23";
+
     @Test
     public void toModelType_validArguments_returnsExpenseTypeObject() {
-        String number = "1";
-        String cost = "0.00";
-        String name = "-";
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(number, name, cost);
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(VALID_NUMBER, VALID_NAME, VALID_COST);
         try {
-            assertEquals(testType.toModelType(), new ExpenseType(number, name, new Money(cost)));
+            assertEquals(testType.toModelType(), new ExpenseType(
+                    VALID_NUMBER, VALID_NAME, new Money(VALID_COST)));
         } catch (IllegalValueException e) {
             fail();
         }
@@ -27,40 +29,40 @@ public class XmlAdaptedExpenseTypeTest {
 
     @Test
     public void toModelType_emptyNumber_throwsIllegalValueException() {
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("", "-", "0.00");
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("", VALID_NAME, VALID_COST);
         Assert.assertThrows(IllegalValueException.class, ExpenseType.MESSAGE_NUMBER_EMPTY, testType::toModelType);
     }
 
     @Test
     public void toModelType_emptyName_throwsIllegalValueException() {
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("1", "", "0.00");
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(VALID_NUMBER, "", VALID_COST);
         Assert.assertThrows(IllegalValueException.class, ExpenseType.MESSAGE_NAME_EMPTY, testType::toModelType);
     }
 
     @Test
     public void toModelType_nullNumber_throwsIllegalValueException() {
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(null, "-", "0.00");
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(null, VALID_NAME, VALID_COST);
         Assert.assertThrows(IllegalValueException.class,
                 XmlAdaptedExpenseType.MESSAGE_NUMBER_MISSING, testType::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("1", null, "0.00");
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(VALID_NUMBER, null, VALID_COST);
         Assert.assertThrows(IllegalValueException.class,
                 XmlAdaptedExpenseType.MESSAGE_NAME_MISSING, testType::toModelType);
     }
 
     @Test
     public void toModelType_nullCost_throwsIllegalValueException() {
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("1", "-", null);
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(VALID_NUMBER, VALID_NAME, null);
         Assert.assertThrows(IllegalValueException.class,
                 XmlAdaptedExpenseType.MESSAGE_COST_MISSING, testType::toModelType);
     }
 
     @Test
     public void toModelType_invalidCost_throwsIllegalValueException() {
-        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType("1", "-", "abc");
+        XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(VALID_NUMBER, VALID_NAME, "abc");
         Assert.assertThrows(IllegalValueException.class,
                 XmlAdaptedExpense.MESSAGE_INVALID_COST, testType::toModelType);
     }
