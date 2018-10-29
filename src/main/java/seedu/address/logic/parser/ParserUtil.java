@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -140,6 +141,21 @@ public class ParserUtil {
         }
         return new BookingPeriod(trimmedStartDate, trimmedEndDate);
     }
+
+    /**
+     * Parses a {@code String password} into a hashed password.
+     */
+    public static String parseAndHashPassword(String pw) throws ParseException {
+
+        requireNonNull(pw);
+        try{
+            return PasswordHashUtil.hash(pw);
+        } catch (NoSuchAlgorithmException e) {
+            throw new ParseException(e.getMessage());
+        }
+    }
+
+
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
