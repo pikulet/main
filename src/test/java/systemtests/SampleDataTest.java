@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.ui.testutil.GuiTestAssert.assertGuestListMatching;
 import static seedu.address.ui.testutil.GuiTestAssert.assertRoomListMatching;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.model.Concierge;
+import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
@@ -46,7 +48,12 @@ public class SampleDataTest extends ConciergeSystemTest {
 
     @Test
     public void concierge_dataFileDoesNotExist_loadSampleData() {
-        List<Room> expectedRoomList = SampleDataUtil.getSampleRooms();
+        Guest[] expectedGuestList = SampleDataUtil.getSampleGuests();
+        assertGuestListMatching(getGuestListPanel(), expectedGuestList);
+
+        List<Room> expectedRoomList =
+                SampleDataUtil.getSampleRooms();
         assertRoomListMatching(getRoomListPanel(), expectedRoomList);
+
     }
 }

@@ -88,9 +88,11 @@ public class MainApp extends Application {
         try {
             conciergeOptional = storage.readConcierge();
             if (!conciergeOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with an empty Concierge");
+                logger.info("Data file not found. Will be starting with a " +
+                        "sample Concierge");
             }
-            initialData = conciergeOptional.orElseGet(SampleDataUtil::getEmptyConcierge);
+            initialData =
+                    conciergeOptional.orElseGet(SampleDataUtil::getSampleConcierge);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty Concierge");
             initialData = getEmptyConcierge();
