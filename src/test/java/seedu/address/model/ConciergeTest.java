@@ -21,6 +21,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.ExpenseType;
+import seedu.address.model.expenses.Money;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
@@ -98,7 +99,7 @@ public class ConciergeTest {
     @Test
     public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        concierge.getMenuMap().put("1", new ExpenseType("1", "-", 0));
+        concierge.getMenuMap().put("1", new ExpenseType("1", "-", new Money(0, 0)));
     }
 
     /**
