@@ -36,6 +36,19 @@ public class TypicalBookings {
         .withBookingPeriod(TypicalBookingPeriods.TOMORROW_NEXTWEEK).build();
 
     /* ============== Bookings with single bookings ========================================================== */
+    private static Booking[] getTypicalBookings() {
+        return new Booking[] {
+            LASTWEEK_YESTERDAY,
+            LASTWEEK_YESTERDAY_CHECKED_IN,
+            YESTERDAY_TODAY,
+            TODAY_TOMORROW_CHECKED_IN,
+            TODAY_TOMORROW,
+            TODAY_NEXTWEEK,
+            TOMORROW_NEXTWEEK
+        };
+    }
+
+    /* ============== Bookings with single bookings ========================================================== */
     public static SortedSet<Booking> getTypicalBookingsLastWeekYesterday() {
         SortedSet<Booking> bookings = new TreeSet<>();
         bookings.add(LASTWEEK_YESTERDAY);
