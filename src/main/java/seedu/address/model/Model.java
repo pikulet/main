@@ -1,12 +1,9 @@
 package seedu.address.model;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.Expense;
-import seedu.address.model.expenses.Money;
-import seedu.address.model.expenses.exceptions.ItemNotFoundException;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;

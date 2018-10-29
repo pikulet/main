@@ -12,6 +12,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.expenses.Money;
 import seedu.address.model.room.RoomNumber;
 
+/**
+ * Parses input arguments and creates a new ServiceCommand object.
+ */
 public class ServiceCommandParser implements Parser<ServiceCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
