@@ -38,8 +38,6 @@ public class ServiceCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private CommandHistory commandHistory = new CommandHistory();
-
     @Test
     public void constructor_nullRoomNumber_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);

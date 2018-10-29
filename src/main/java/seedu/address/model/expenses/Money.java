@@ -113,6 +113,6 @@ public class Money {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        return Objects.hash(dollars, cents);
     }
 }
