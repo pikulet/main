@@ -64,8 +64,8 @@ public class SampleDataUtil {
                 new Booking(getSampleGuests()[0],
                 new BookingPeriod(
                     LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT),
-                    LocalDate.now().plusDays(1).format(BookingPeriod.DATE_TO_STRING_FORMAT))));
-        uniqueRoomList.getRoom(new RoomNumber("001")).addExpense(new Expense(getSampleExpenseTypes()[0]));
+                    LocalDate.now().plusDays(1).format(BookingPeriod.DATE_TO_STRING_FORMAT))))
+            .addExpense(new Expense(getSampleExpenseTypes()[0]));
         return uniqueRoomList.asUnmodifiableObservableList();
     }
 
@@ -90,11 +90,8 @@ public class SampleDataUtil {
         return sampleMenuMap;
     }
 
-    public static ReadOnlyConcierge getSampleConcierge() {
+    public static ReadOnlyConcierge getEmptyConcierge() {
         Concierge sampleAb = new Concierge();
-        for (Guest sampleGuest : getSampleGuests()) {
-            sampleAb.addGuest(sampleGuest);
-        }
         sampleAb.setRooms(getSampleRooms());
         sampleAb.setMenu(getSampleMenuMap());
         return sampleAb;
