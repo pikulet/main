@@ -47,7 +47,7 @@ public class RoomDetailedCard extends UiPart<Region> {
         header.setText("Room Details:");
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
-        expenses.setText("Expenses: " + room.getExpenses().toStringTotalCost());
+        expenses.setText("Expenses: " + room.getExpenses().getTotalCost());
         activeBooking.getChildren().add(new Label("Active booking:\n" + room.getBookings().toStringActiveBooking()));
         allOtherBookings.getChildren().add(new Label("All other bookings:\n"
                 + room.getBookings().toStringAllOtherBookings()));
