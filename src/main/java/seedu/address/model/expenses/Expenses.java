@@ -56,7 +56,7 @@ public class Expenses {
     /**
      * Get the total cost of all the expenses as a string.
      */
-    public String getTotalCost() {
+    public String toStringTotalCost() {
         Money totalCost = new Money(0, 0);
         for (Expense e : expenseList) {
             totalCost = totalCost.add(e.getCost());
