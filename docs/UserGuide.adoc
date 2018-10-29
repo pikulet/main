@@ -57,8 +57,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Adding a guest: `add`
 
 Adds a guest to the guest list for the purpose of assigning a room +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] -r ROOM_NUMBER
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ ROOM_NUMBER
 from/START_DATE to/END_DATE`
+
+The room number must be a 3-digit number from 001 to 100. For example, 074 is
+valid but 128 is not.
+
+The dates can be expressed in DD/MM/YY or DD/MM/YYYY.
+
+Currently, a guest can only make one booking with the hotel. This will
+subsequently be modified such that a guest can make an unlimited number of
+bookings, but provided that he only checks in one booking at once.
 
 [TIP]
 A guest can have any number of tags (including 0)
@@ -297,6 +306,9 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the application. +
 Format: `clear`
+
+The rooms are maintained - only all their current and future bookings are
+cleared. I.e. all maintenance requests and faults will still be recorded.
 
 === Export log: `export` [red]#Coming in v1.3#
 
