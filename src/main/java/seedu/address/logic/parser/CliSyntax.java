@@ -18,4 +18,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_GUEST = new Prefix("g/");
     public static final Prefix FLAG_ROOM = new Prefix("-r");
     public static final Prefix FLAG_GUEST = new Prefix("-g");
+    public static final Prefix PREFIX_USERNAME = new Prefix("user/");
+    public static final Prefix PREFIX_PASSWORD = new Prefix("pw/");
 }
