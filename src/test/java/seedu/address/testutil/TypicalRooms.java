@@ -6,6 +6,7 @@ import seedu.address.model.room.UniqueRoomList;
 
 /**
  * A utility class containing a list of {@code Room} objects to be used in tests.
+ * TODO Incorporate expenses into rooms once WEI ZHENG has implemented it
  */
 public class TypicalRooms {
 

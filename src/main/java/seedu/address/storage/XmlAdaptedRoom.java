@@ -47,6 +47,18 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom() {}
 
     /**
+     * Constructor FOR TESTING in XmlAdaptedRoomTest
+     */
+    public XmlAdaptedRoom(String roomNumber, Capacity capacity, List<XmlAdaptedBooking> bookings,
+                          List<XmlAdaptedExpense> expenses, List<XmlAdaptedTag> tagged) {
+        this.roomNumber = roomNumber;
+        this.capacity = capacity;
+        this.bookings = bookings;
+        this.expenses = expenses;
+        this.tagged = tagged;
+    }
+
+    /**
      * Converts a given room into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedRoom

@@ -18,7 +18,8 @@ import seedu.address.testutil.TypicalBookings;
  * Furthermore, JAXB and Unmarshaller ensures for us that at the point of constructing XmlAdaptedBooking,
  * both XmlAdaptedGuest and XmlAdaptedBookingPeriod must already be valid.
  * We also do not test invalid isCheckedIn values, because JAXB and Unmarshaller can only parse true or false values
- * into Boolean, meaning all other values will trigger a parse exception there, not here.
+ * into Boolean, meaning all other values will trigger an exception there, not here.
+ * TODO The test for Boolean isCheckedIn will be covered under XmlUtilTest.
  */
 public class XmlAdaptedBookingTest {
 
