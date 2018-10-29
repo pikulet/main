@@ -15,6 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Money;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.SingleRoom;
 
 /**
  * Adds an Expense to a Room.
@@ -76,5 +77,14 @@ public class ServiceCommand extends Command {
         model.addExpense(roomNumber, expense);
         model.commitConcierge();
         return new CommandResult(String.format(MESSAGE_SUCCESS, expense.getItemName(), roomNumber.toString()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ServiceCommand // instanceof handles nulls
+                && roomNumber.equals(((ServiceCommand) other).roomNumber)
+                && itemNumber.equals(((ServiceCommand) other).itemNumber)
+                && itemCost.equals(((ServiceCommand) other).itemCost));
     }
 }
