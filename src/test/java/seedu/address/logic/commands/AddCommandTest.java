@@ -110,6 +110,16 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
+        public boolean isSignedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void signIn(String userName, String hashedPassword) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addGuest(Guest guest) {
             throw new AssertionError("This method should not be called.");
         }

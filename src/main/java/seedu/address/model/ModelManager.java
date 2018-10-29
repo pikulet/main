@@ -25,12 +25,12 @@ import seedu.address.model.room.booking.BookingPeriod;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    // Log-in username
+    public final Optional<String> userName = Optional.empty();
+
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
-
-    // Log-in username
-    public final Optional<String> userName = Optional.empty();
 
     /**
      * Initializes a ModelManager with the given concierge and userPrefs.
@@ -73,7 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void signIn(String userName, String hashedPassword) {
-        
+
     }
 
     @Override
