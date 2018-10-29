@@ -26,6 +26,7 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.GuestBuilder;
 import seedu.address.testutil.TypicalBookingPeriods;
+import seedu.address.testutil.TypicalGuests;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 public class AddCommandTest {
@@ -44,6 +45,24 @@ public class AddCommandTest {
         BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
 
         new AddCommand(null, validRoomNumber, validBookingPeriod);
+    }
+
+    @Test
+    public void constructor_nullRoomNumber_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        Guest validGuest = TypicalGuests.ALICE;
+        BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
+
+        new AddCommand(validGuest, null, validBookingPeriod);
+    }
+
+    @Test
+    public void constructor_nullBookingPeriod_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        Guest validGuest = TypicalGuests.ALICE;
+        RoomNumber validRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_002;
+
+        new AddCommand(validGuest, validRoomNumber, null);
     }
 
     @Test

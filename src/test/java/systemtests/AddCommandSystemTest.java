@@ -7,6 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_END_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_START_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -189,6 +191,18 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
                 + ROOM_DESC_AMY + DATE_START_DESC_AMY + DATE_END_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
+        /* Case: missing booking start date -> rejected */
+        command =
+                AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ROOM_DESC_AMY + DATE_END_DESC_AMY;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing booking end date -> rejected */
+        command =
+                AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + EMAIL_DESC_AMY + ROOM_DESC_AMY + DATE_START_DESC_AMY;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
         /* Case: invalid keyword -> rejected */
         command = "adds " + GuestUtil.getAddCommand(validGuest,
                 validRoomNumber, validBookingPeriod);
@@ -218,6 +232,18 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
                 + EMAIL_DESC_AMY + INVALID_TAG_DESC + ROOM_DESC_AMY
                 + DATE_START_DESC_AMY + DATE_END_DESC_AMY;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        /* Case: invalid booking start date -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ROOM_DESC_AMY + INVALID_DATE_START_DESC
+                + DATE_END_DESC_AMY;
+        assertCommandFailure(command, BookingPeriod.MESSAGE_BOOKING_PERIOD_CONSTRAINTS);
+
+        /* Case: invalid booking end date -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ROOM_DESC_AMY + DATE_START_DESC_AMY
+                + INVALID_DATE_END_DESC;
+        assertCommandFailure(command, BookingPeriod.MESSAGE_BOOKING_PERIOD_CONSTRAINTS);
     }
 
     /**
