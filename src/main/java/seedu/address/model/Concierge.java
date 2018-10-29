@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.room.RoomNumber.MAX_ROOM_NUMBER;
 
 import java.util.List;
 import java.util.Map;
@@ -41,11 +42,21 @@ public class Concierge implements ReadOnlyConcierge {
     public Concierge() {}
 
     /**
-     * Creates an Concierge using the Guests in the {@code toBeCopied}
+     * Creates an Concierge using the data in the {@code toBeCopied}
      */
     public Concierge(ReadOnlyConcierge toBeCopied) {
         this();
         resetData(toBeCopied);
+    }
+
+    /**
+     * Creates an Concierge with 100 empty rooms.
+     */
+    public static Concierge getEmptyConcierge() {
+        Concierge emptyRoomsConcierge = new Concierge();
+        emptyRoomsConcierge.setRooms(
+                new UniqueRoomList(MAX_ROOM_NUMBER).asUnmodifiableObservableList());
+        return emptyRoomsConcierge;
     }
 
     //=========== Getters =============================================================
