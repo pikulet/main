@@ -26,6 +26,18 @@ public interface Model {
     /** Returns the Concierge */
     ReadOnlyConcierge getConcierge();
 
+    // =========== Signing in. ================================================
+    /**
+     * Returns true if Concierge is currently logged in.
+     */
+    boolean isSignedIn();
+
+    /**
+     * Attempts to sign in with username {@code username} and password {@code
+     * hashedPassword}.
+     */
+    void signIn(String username, String hashedPassword);
+
     // =========== Methods for guest. =========================================
 
     /**

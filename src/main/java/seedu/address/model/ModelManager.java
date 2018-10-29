@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -27,6 +28,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
+
+    // Log-in username
+    public final Optional<String> userName = Optional.empty();
 
     /**
      * Initializes a ModelManager with the given concierge and userPrefs.
@@ -60,6 +64,16 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateConciergeChanged() {
         raise(new ConciergeChangedEvent(versionedConcierge));
+    }
+
+    @Override
+    public boolean isSignedIn() {
+        return this.userName.isPresent();
+    }
+
+    @Override
+    public void signIn(String userName, String hashedPassword) {
+        
     }
 
     @Override
