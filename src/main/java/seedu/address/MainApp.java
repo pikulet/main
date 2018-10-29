@@ -1,6 +1,6 @@
 package seedu.address;
 
-import static seedu.address.model.util.SampleDataUtil.getEmptyConcierge;
+import static seedu.address.model.util.SampleDataUtil.getSampleConcierge;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -88,17 +88,16 @@ public class MainApp extends Application {
         try {
             conciergeOptional = storage.readConcierge();
             if (!conciergeOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a " +
-                        "sample Concierge");
+                logger.info("Data file not found. Will be starting with a sample Concierge");
             }
             initialData =
                     conciergeOptional.orElseGet(SampleDataUtil::getSampleConcierge);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty Concierge");
-            initialData = getEmptyConcierge();
+            logger.warning("Data file not in the correct format. Will be starting with a sample Concierge");
+            initialData = getSampleConcierge();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty Concierge");
-            initialData = getEmptyConcierge();
+            logger.warning("Problem while reading from the file. Will be starting with a sample Concierge");
+            initialData = getSampleConcierge();
         }
 
         return new ModelManager(initialData, userPrefs);

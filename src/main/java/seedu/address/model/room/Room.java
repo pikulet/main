@@ -146,7 +146,7 @@ public class Room {
      */
     public Room addExpense(Expense expense) {
         Expenses editedExpenses = expenses.addExpense(expense);
-        return makeRoom(this.roomNumber, editedExpenses, this.bookings, this.tags);
+        return new Room(this.roomNumber, this.capacity, editedExpenses, this.bookings, this.tags);
     }
 
     //=========== Boolean checkers =============================================================

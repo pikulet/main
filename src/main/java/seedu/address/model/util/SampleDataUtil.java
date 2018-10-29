@@ -54,7 +54,7 @@ public class SampleDataUtil {
      * DELETE WHEN TESTED IN UNIT TESTS
      */
     public static List<Room> getSampleRoomsWithBookingsExpenses() {
-        UniqueRoomList uniqueRoomList = new UniqueRoomList(RoomNumber.MAX_ROOM_NUMBER);
+        UniqueRoomList uniqueRoomList = new UniqueRoomList();
 
         Room oldRoom001 = uniqueRoomList.getRoom(new RoomNumber("001"));
         Room newRoom001 = oldRoom001
