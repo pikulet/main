@@ -8,6 +8,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.util.InvalidPasswordException;
 
 /**
  * The API of the Model component.
@@ -36,7 +37,7 @@ public interface Model {
      * Attempts to sign in with username {@code username} and password {@code
      * hashedPassword}.
      */
-    void signIn(String username, String hashedPassword);
+    void signIn(String username, String hashedPassword) throws InvalidPasswordException;
 
     // =========== Methods for guest. =========================================
 
