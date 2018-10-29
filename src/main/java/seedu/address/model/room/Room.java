@@ -237,7 +237,7 @@ public abstract class Room {
                 .append(getRoomNumber())
                 .append(" Capacity: ")
                 .append(getCapacity())
-                .append("Expenses: ")
+                .append(" Expenses: ")
                 .append(getExpenses())
                 .append(" Bookings: ")
                 .append(getBookings())
