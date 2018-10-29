@@ -6,15 +6,19 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_CAPACITY_DOUBLE
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HANDICAP;
 
+import java.util.List;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.expenses.Expense;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
 import seedu.address.model.room.booking.exceptions.NoActiveBookingException;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
+import seedu.address.testutil.ExpenseBuilder;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalBookings;
@@ -256,5 +260,14 @@ public class RoomTest {
         // different tags -> returns false
         editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withTags(VALID_TAG_HANDICAP).build();
         assertFalse(testRoomWithYesterdayTodayBooking.equals(editedRoom));
+    }
+
+    @Test
+    public void addExpense() {
+        Expense expenseToAdd = new ExpenseBuilder().build();
+        Room editedRoom = testRoomWithTodayTomorrowBooking.addExpense(expenseToAdd);
+        List<Expense> actualExpenseList = editedRoom.getExpenses().getExpensesList();
+        assertTrue(actualExpenseList.size() == 1);
+        assertTrue(actualExpenseList.get(0).equals(expenseToAdd));
     }
 }
