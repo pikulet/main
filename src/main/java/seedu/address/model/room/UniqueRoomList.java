@@ -137,6 +137,13 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        internalList.forEach(sb::append);
+        return sb.toString();
+    }
+
+    @Override
     public int hashCode() {
         return internalList.hashCode();
     }

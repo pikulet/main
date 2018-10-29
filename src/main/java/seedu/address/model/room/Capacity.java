@@ -32,7 +32,7 @@ public enum Capacity {
 
     @Override
     public String toString() {
-        return String.format("Capacity: %d | %s", value, this.name());
+        return String.format("%d | %s", value, this.name());
     }
 
 }

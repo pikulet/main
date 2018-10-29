@@ -35,6 +35,7 @@ public class CheckInCommandTest {
 
         model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_010, TypicalBookings.TODAY_TOMORROW);
         model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_011, TypicalBookings.TOMORROW_NEXTWEEK);
+        model = new ModelManager(model.getConcierge(), new UserPrefs());
     }
 
     @Test

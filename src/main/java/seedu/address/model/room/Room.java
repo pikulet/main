@@ -196,13 +196,17 @@ public class Room {
         final StringBuilder builder = new StringBuilder();
         builder.append("Room: ")
                 .append(getRoomNumber())
-                .append(" Capacity: ")
+                .append("\n")
+                .append("Capacity: ")
                 .append(getCapacity())
+                .append("\n")
                 .append("Expenses: ")
                 .append(getExpenses())
-                .append(" Bookings: ")
+                .append("\n")
+                .append("Bookings: ")
                 .append(getBookings())
-                .append(" Tags: ");
+                .append("\n")
+                .append("Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

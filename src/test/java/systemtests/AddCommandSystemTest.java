@@ -75,6 +75,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
         Guest guestToAdd = AMY;
         RoomNumber roomNumberToAdd = ROOM_NUMBER_AMY;
         BookingPeriod bookingPeriodToAdd = BOOKING_PERIOD_AMY;
+        Booking bookingToAdd = new BookingBuilder().withGuest(AMY).withBookingPeriod(BOOKING_PERIOD_AMY).build();
 
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY
                 + "  " + PHONE_DESC_AMY + " " + EMAIL_DESC_AMY + " "
@@ -89,7 +90,8 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
-        model.addGuest(guestToAdd);
+        model.addGuest(AMY);
+        model.addBooking(ROOM_NUMBER_AMY, bookingToAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 

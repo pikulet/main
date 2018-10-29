@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.Expense;
@@ -189,7 +190,8 @@ public class Concierge implements ReadOnlyConcierge {
 
     @Override
     public String toString() {
-        return guests.asUnmodifiableObservableList().size() + " guests";
+        return guests.asUnmodifiableObservableList().size() + " guests"
+                + rooms.toString();
         // TODO: refine later
     }
 
@@ -197,11 +199,11 @@ public class Concierge implements ReadOnlyConcierge {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Concierge // instanceof handles nulls
-                && guests.equals(((Concierge) other).guests));
+                    && guests.equals(((Concierge) other).guests) && rooms.equals(((Concierge) other).rooms));
     }
 
     @Override
     public int hashCode() {
-        return guests.hashCode();
+        return Objects.hash(guests, rooms);
     }
 }
