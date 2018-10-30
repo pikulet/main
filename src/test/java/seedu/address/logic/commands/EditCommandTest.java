@@ -28,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.guest.Guest;
 import seedu.address.testutil.EditGuestDescriptorBuilder;
 import seedu.address.testutil.GuestBuilder;
+import seedu.address.testutil.TypicalGuests;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -197,7 +198,7 @@ public class EditCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameGuestEdited() throws Exception {
-        Guest editedGuest = new GuestBuilder().build();
+        Guest editedGuest = new GuestBuilder().withName(CommandTestUtil.VALID_NAME_BOB).build();
         EditGuestDescriptor descriptor = new EditGuestDescriptorBuilder(editedGuest).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_GUEST, descriptor);
         Model expectedModel = new ModelManager(new Concierge(model.getConcierge()), new UserPrefs());

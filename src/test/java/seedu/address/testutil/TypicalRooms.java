@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class containing a list of {@code Room} objects to be used in tests.
@@ -14,12 +15,14 @@ public class TypicalRooms {
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_001.toString())
         .withCapacity(Capacity.SINGLE)
         .withBookings(TypicalBookings.getTypicalBookingsLastWeekYesterday())
+        .withTags("maintenance")
         .build();
 
     public static final Room DOUBLE_002 = new RoomBuilder()
         .withRoomNumber(TypicalRoomNumbers.ROOM_NUMBER_002.toString())
         .withCapacity(Capacity.DOUBLE)
         .withBookings(TypicalBookings.getTypicalBookingsLastWeekYesterdayCheckedIn())
+        .withTags("maintenance")
         .build();
 
     public static final Room SUITE_010 = new RoomBuilder()

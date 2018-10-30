@@ -195,7 +195,7 @@ public class Room {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Room: ")
+        builder.append("\nRoom: ")
                 .append(getRoomNumber())
                 .append("\n")
                 .append("Capacity: ")
