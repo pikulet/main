@@ -20,12 +20,10 @@ import seedu.address.model.Concierge;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.XmlAdaptedBooking;
 import seedu.address.storage.XmlAdaptedExpense;
 import seedu.address.storage.XmlAdaptedGuest;
 import seedu.address.storage.XmlAdaptedRoom;
-import seedu.address.storage.XmlAdaptedRoomTest;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableConcierge;
 import seedu.address.testutil.TestUtil;
@@ -47,7 +45,7 @@ public class XmlUtilTest {
 
     private static final Path TEMP_FILE = TestUtil.getFilePathInSandboxFolder("tempConcierge.xml");
 
-    private static final Concierge VALID_CONCIERGE = TypicalConcierge.getTypicalConciergeWithRoomBookings();
+    private static final Concierge VALID_CONCIERGE = TypicalConcierge.getTypicalConcierge();
     private static final Guest VALID_GUEST = VALID_CONCIERGE.getGuestList().get(0);
     private static final String VALID_NAME = VALID_GUEST.getName().toString();
     private static final String VALID_PHONE = VALID_GUEST.getPhone().toString();
@@ -188,7 +186,7 @@ public class XmlUtilTest {
         XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableConcierge.class);
         assertEquals(dataToWrite, dataFromFile);
 
-        dataToWrite = new XmlSerializableConcierge(TypicalConcierge.getTypicalConcierge());
+        dataToWrite = new XmlSerializableConcierge(TypicalConcierge.getTypicalConciergeClean());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableConcierge.class);
         assertEquals(dataToWrite, dataFromFile);

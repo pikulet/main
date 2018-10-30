@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.ListUtil.getListRoomCommand;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConciergeClean;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertGuestListMatching;
@@ -79,7 +79,7 @@ public abstract class ConciergeSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected Concierge getInitialData() {
-        return getTypicalConcierge();
+        return getTypicalConciergeClean();
     }
 
     /**

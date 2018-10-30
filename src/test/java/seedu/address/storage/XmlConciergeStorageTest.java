@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConciergeClean;
 import static seedu.address.testutil.TypicalGuests.ALICE;
 import static seedu.address.testutil.TypicalGuests.HOON;
 import static seedu.address.testutil.TypicalGuests.IDA;
@@ -76,7 +76,7 @@ public class XmlConciergeStorageTest {
     @Test
     public void readAndSaveConcierge_allInOrder_success() throws Exception {
         Path filePath = testFolder.getRoot().toPath().resolve("TempConcierge.xml");
-        Concierge original = getTypicalConcierge();
+        Concierge original = getTypicalConciergeClean();
         XmlConciergeStorage xmlConciergeStorage = new XmlConciergeStorage(filePath);
 
         //Save in new file and read back

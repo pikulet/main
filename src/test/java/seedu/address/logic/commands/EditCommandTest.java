@@ -11,7 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showGuestAtIndex;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConciergeClean;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GUEST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GUEST;
 
@@ -28,14 +28,13 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.guest.Guest;
 import seedu.address.testutil.EditGuestDescriptorBuilder;
 import seedu.address.testutil.GuestBuilder;
-import seedu.address.testutil.TypicalGuests;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalConcierge(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalConciergeClean(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

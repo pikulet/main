@@ -22,16 +22,14 @@ public class XmlSerializableConciergeTest {
     private static final Path INVALID_GUEST_FILE = TEST_DATA_FOLDER.resolve("invalidGuestConcierge.xml");
     private static final Path DUPLICATE_GUEST_FILE = TEST_DATA_FOLDER.resolve("duplicateGuestConcierge.xml");
 
-    private static final Concierge TYPICAL_CONCIERGE_WITH_ROOM_BOOKINGS =
-            TypicalConcierge.getTypicalConciergeWithRoomBookings();
+    private static final Concierge TYPICAL_CONCIERGE = TypicalConcierge.getTypicalConcierge();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setupValidXmlTestFiles() throws Exception {
-        XmlUtil.saveDataToFile(TYPICAL_CONCIERGE_FILE,
-                new XmlSerializableConcierge(TYPICAL_CONCIERGE_WITH_ROOM_BOOKINGS));
+        XmlUtil.saveDataToFile(TYPICAL_CONCIERGE_FILE, new XmlSerializableConcierge(TYPICAL_CONCIERGE));
     }
 
     @Test
@@ -39,7 +37,7 @@ public class XmlSerializableConciergeTest {
         XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(TYPICAL_CONCIERGE_FILE,
                 XmlSerializableConcierge.class);
         Concierge conciergeFromFile = dataFromFile.toModelType();
-        assertEquals(conciergeFromFile, TYPICAL_CONCIERGE_WITH_ROOM_BOOKINGS);
+        assertEquals(conciergeFromFile, TYPICAL_CONCIERGE);
     }
 
     @Test

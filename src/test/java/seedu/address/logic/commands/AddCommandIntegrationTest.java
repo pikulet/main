@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
+import static seedu.address.testutil.TypicalConcierge.getTypicalConciergeClean;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,6 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.GuestBuilder;
 import seedu.address.testutil.TypicalBookingPeriods;
-import seedu.address.testutil.TypicalGuests;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
@@ -30,7 +29,7 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalConcierge(), new UserPrefs());
+        model = new ModelManager(getTypicalConciergeClean(), new UserPrefs());
     }
 
     @Test
