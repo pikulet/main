@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,23 +22,24 @@ public class XmlSerializableConciergeTest {
     private static final Path INVALID_GUEST_FILE = TEST_DATA_FOLDER.resolve("invalidGuestConcierge.xml");
     private static final Path DUPLICATE_GUEST_FILE = TEST_DATA_FOLDER.resolve("duplicateGuestConcierge.xml");
 
-    private static final Concierge VALID_CONCIERGE = TypicalConcierge.getTypicalConciergeWithRoomBookings();
+    private static final Concierge TYPICAL_CONCIERGE_WITH_ROOM_BOOKINGS =
+            TypicalConcierge.getTypicalConciergeWithRoomBookings();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setupValidXmlTestFiles() throws Exception {
-        XmlUtil.saveDataToFile(TYPICAL_CONCIERGE_FILE, new XmlSerializableConcierge(VALID_CONCIERGE));
+        XmlUtil.saveDataToFile(TYPICAL_CONCIERGE_FILE,
+                new XmlSerializableConcierge(TYPICAL_CONCIERGE_WITH_ROOM_BOOKINGS));
     }
 
     @Test
-    public void toModelType_typicalGuestsFile_success() throws Exception {
+    public void toModelType_typicalConciergeFile_success() throws Exception {
         XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(TYPICAL_CONCIERGE_FILE,
                 XmlSerializableConcierge.class);
         Concierge conciergeFromFile = dataFromFile.toModelType();
-        Concierge typicalGuestsConcierge = getTypicalConcierge();
-        assertEquals(conciergeFromFile, typicalGuestsConcierge);
+        assertEquals(conciergeFromFile, TYPICAL_CONCIERGE_WITH_ROOM_BOOKINGS);
     }
 
     @Test

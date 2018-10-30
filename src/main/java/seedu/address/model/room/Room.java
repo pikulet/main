@@ -195,7 +195,7 @@ public class Room {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("\nRoom: ")
+        builder.append("Room: ")
                 .append(getRoomNumber())
                 .append("\n")
                 .append("Capacity: ")
@@ -209,6 +209,7 @@ public class Room {
                 .append("\n")
                 .append("Tags: ");
         getTags().forEach(builder::append);
+        builder.append("\n\n");
         return builder.toString();
     }
 
