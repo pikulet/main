@@ -72,7 +72,7 @@ public class GuestBuilder {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
-    
+
     public Guest build() {
         return new Guest(name, phone, email, tags);
     }

@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.UniqueRoomList;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class containing a list of {@code Room} objects to be used in tests.

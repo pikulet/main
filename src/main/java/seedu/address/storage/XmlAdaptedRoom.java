@@ -118,7 +118,7 @@ public class XmlAdaptedRoom {
 
         return new Room(modelRoomNumber, modelCapacity, modelExpenses, modelBookings, modelTags);
     }
-    
+
     @Override
     public String toString() {
         return roomNumber + capacity + expenses + bookings + tagged;

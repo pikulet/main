@@ -37,7 +37,7 @@ public class XmlUtilTest {
     private static final Path VALID_FILE = TEST_DATA_FOLDER.resolve("validConcierge.xml");
     private static final Path VALID_GUEST_FILE = TEST_DATA_FOLDER.resolve("validGuest.xml");
     private static final Path VALID_ROOM_FILE = TEST_DATA_FOLDER.resolve("validRoom.xml");
-    
+
     private static final Path MISSING_GUEST_FIELD_FILE = TEST_DATA_FOLDER.resolve("missingGuestField.xml");
     private static final Path MISSING_ROOM_FIELD_FILE = TEST_DATA_FOLDER.resolve("missingRoomField.xml");
     private static final Path INVALID_GUEST_FIELD_FILE = TEST_DATA_FOLDER.resolve("invalidGuestField.xml");
@@ -71,7 +71,7 @@ public class XmlUtilTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
+
     @Before
     public void setupValidXmlTestFiles() throws Exception {
         XmlUtil.saveDataToFile(VALID_FILE, new XmlSerializableConcierge(VALID_CONCIERGE));
@@ -138,7 +138,7 @@ public class XmlUtilTest {
     public void xmlAdaptedRoomFromFile_fileWithInvalidRoomField_validResult() throws Exception {
         XmlAdaptedRoom actualRoom = XmlUtil.getDataFromFile(
                 INVALID_ROOM_FIELD_FILE, XmlAdaptedRoomWithRootElement.class);
-        XmlAdaptedRoom expectedRoom = new XmlAdaptedRoom(INVALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, 
+        XmlAdaptedRoom expectedRoom = new XmlAdaptedRoom(INVALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS,
                 VALID_EXPENSES, VALID_ROOM_TAGS);
         assertEquals(expectedRoom, actualRoom);
     }
