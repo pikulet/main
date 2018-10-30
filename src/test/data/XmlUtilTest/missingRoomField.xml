@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rooms>
     <roomNumber>001</roomNumber>
-	<bookings>
-		<guest>
-			<name>Alice Pauline</name>
-			<phone>94351253</phone>
-			<email>alice@example.com</email>
-        </guest>
-		<bookingPeriod>
-			<startDate>23/10/2018</startDate>
-			<endDate>29/10/2018</endDate>
-		</bookingPeriod>
-		<isCheckedIn>false</isCheckedIn>
-	</bookings>
 	<tagged>maintenance</tagged>
 </rooms>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rooms>
+<room>
     <roomNumber>01</roomNumber>
-	<capacity>SINGLE</capacity>
-	<bookings>
-		<guest>
-			<name>Alice Pauline</name>
-			<phone>94351253</phone>
-			<email>alice@example.com</email>
+    <capacity>SINGLE</capacity>
+    <bookings>
+        <guest>
+            <name>Alice Pauline</name>
+            <phone>94351253</phone>
+            <email>alice@example.com</email>
+            <tagged>vip</tagged>
         </guest>
-		<bookingPeriod>
-			<startDate>23/10/2018</startDate>
-			<endDate>29/10/2018</endDate>
-		</bookingPeriod>
-		<isCheckedIn>false</isCheckedIn>
-	</bookings>
-	<tagged>maintenance</tagged>
-</rooms>
+        <bookingPeriod>
+            <startDate>24/10/2018</startDate>
+            <endDate>30/10/2018</endDate>
+        </bookingPeriod>
+        <isCheckedIn>false</isCheckedIn>
+    </bookings>
+    <tagged>maintenance</tagged>
+</room>

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,7 @@ public class XmlUtilTest {
     private static final Path TEMP_FILE = TestUtil.getFilePathInSandboxFolder("tempConcierge.xml");
 
     private static final Concierge VALID_CONCIERGE = TypicalConcierge.getTypicalConcierge();
+
     private static final Guest VALID_GUEST = VALID_CONCIERGE.getGuestList().get(0);
     private static final String VALID_NAME = VALID_GUEST.getName().toString();
     private static final String VALID_PHONE = VALID_GUEST.getPhone().toString();
@@ -68,6 +70,11 @@ public class XmlUtilTest {
     private static final int VALID_CONCIERGE_NUM_ROOMS = VALID_CONCIERGE.getRoomList().size();
 
     private static final String INVALID_ROOM_NUMBER = "01";
+    private static final XmlAdaptedRoom INVALID_ROOM_FIELD_ROOM = new XmlAdaptedRoom(INVALID_ROOM_NUMBER,
+            VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, VALID_ROOM_TAGS);
+    private static final XmlAdaptedGuest INVALID_GUEST_FIELD_GUEST = new XmlAdaptedGuest(
+            VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_GUEST_TAGS);
+    private static final List<XmlAdaptedBooking> EMPTY_BOOKINGS = new ArrayList<>();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -75,6 +82,10 @@ public class XmlUtilTest {
     @Before
     public void setupValidXmlTestFiles() throws Exception {
         XmlUtil.saveDataToFile(VALID_FILE, new XmlSerializableConcierge(VALID_CONCIERGE));
+        XmlUtil.saveDataToFile(VALID_ROOM_FILE, new XmlAdaptedRoom(VALID_ROOM));
+        XmlUtil.saveDataToFile(VALID_GUEST_FILE, new XmlAdaptedGuest(VALID_GUEST));
+        XmlUtil.saveDataToFile(INVALID_ROOM_FIELD_FILE, INVALID_ROOM_FIELD_ROOM);
+        XmlUtil.saveDataToFile(INVALID_GUEST_FIELD_FILE, INVALID_GUEST_FIELD_GUEST);
     }
 
     @Test
@@ -116,11 +127,19 @@ public class XmlUtilTest {
         assertEquals(expectedGuest, actualGuest);
     }
 
+    /**
+     * We do not compare Bookings here because the ever-changing booking periods will cause a mismatch between
+     * the expected room and the MISSING_ROOM_FIELD_FILE. There is no way to write a MISSING_ROOM_FIELD_FILE, because
+     * JAXB and Marshaller does not allow null for XmlElements that are tagged with (required=true). As such,
+     * MISSING_ROOM_FIELD_FILE is only human editable, which leads to the problem of not having up-to-date
+     * dates. Therefore, both expectedRoom and MISSING_ROOM_FIELD_FILE will NOT contain any bookings (i.e. empty).
+     * @throws Exception
+     */
     @Test
     public void xmlAdaptedRoomFromFile_fileWithMissingRoomField_validResult() throws Exception {
         XmlAdaptedRoom actualRoom = XmlUtil.getDataFromFile(
                 MISSING_ROOM_FIELD_FILE, XmlAdaptedRoomWithRootElement.class);
-        XmlAdaptedRoom expectedRoom = new XmlAdaptedRoom(VALID_ROOM_NUMBER, null, VALID_BOOKINGS,
+        XmlAdaptedRoom expectedRoom = new XmlAdaptedRoom(VALID_ROOM_NUMBER, null, EMPTY_BOOKINGS,
                 VALID_EXPENSES, VALID_ROOM_TAGS);
         assertEquals(expectedRoom, actualRoom);
     }
@@ -129,8 +148,7 @@ public class XmlUtilTest {
     public void xmlAdaptedGuestFromFile_fileWithInvalidGuestField_validResult() throws Exception {
         XmlAdaptedGuest actualGuest = XmlUtil.getDataFromFile(
                 INVALID_GUEST_FIELD_FILE, XmlAdaptedGuestWithRootElement.class);
-        XmlAdaptedGuest expectedGuest = new XmlAdaptedGuest(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_GUEST_TAGS);
+        XmlAdaptedGuest expectedGuest = INVALID_GUEST_FIELD_GUEST;
         assertEquals(expectedGuest, actualGuest);
     }
 
@@ -138,8 +156,7 @@ public class XmlUtilTest {
     public void xmlAdaptedRoomFromFile_fileWithInvalidRoomField_validResult() throws Exception {
         XmlAdaptedRoom actualRoom = XmlUtil.getDataFromFile(
                 INVALID_ROOM_FIELD_FILE, XmlAdaptedRoomWithRootElement.class);
-        XmlAdaptedRoom expectedRoom = new XmlAdaptedRoom(INVALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS,
-                VALID_EXPENSES, VALID_ROOM_TAGS);
+        XmlAdaptedRoom expectedRoom = INVALID_ROOM_FIELD_ROOM;
         assertEquals(expectedRoom, actualRoom);
     }
 
