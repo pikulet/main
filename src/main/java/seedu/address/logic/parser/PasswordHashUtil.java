@@ -4,6 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * A utility class for hashing passwords.
+ * The code is taken from https://www.baeldung.com/sha-256-hashing-java.
+ */
 public class PasswordHashUtil {
 
     private static final String SHA_256_ALGORITHM = "SHA-256";
