@@ -41,7 +41,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public boolean checkPassword(String userName, String hashedPassword) throws IOException, InvalidPasswordException, DataConversionException {
+    public boolean checkPassword(String userName, String hashedPassword)
+            throws IOException, InvalidPasswordException, DataConversionException {
         return passwordsStorage.checkPassword(userName, hashedPassword);
     }
 

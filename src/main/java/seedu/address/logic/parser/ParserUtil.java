@@ -4,13 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.HashingException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.guest.Email;
@@ -148,9 +148,9 @@ public class ParserUtil {
     public static String parseAndHashPassword(String pw) throws ParseException {
 
         requireNonNull(pw);
-        try{
+        try {
             return PasswordHashUtil.hash(pw);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (HashingException e) {
             throw new ParseException(e.getMessage());
         }
     }

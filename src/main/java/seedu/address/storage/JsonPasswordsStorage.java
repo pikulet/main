@@ -24,7 +24,8 @@ public class JsonPasswordsStorage implements PasswordsStorage {
     }
 
     @Override
-    public boolean checkPassword(String userName, String hashedPassword) throws IOException,InvalidPasswordException, DataConversionException {
+    public boolean checkPassword(String userName, String hashedPassword)
+            throws IOException, InvalidPasswordException, DataConversionException {
         String fileContent = FileUtil.readFromFile(filePath);
         return false;
     }

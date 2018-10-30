@@ -22,6 +22,7 @@ public interface PasswordsStorage {
      *
      * Return true if the password matches the username and false otherwise.
      */
-    boolean checkPassword(String userName, String hashedPassword) throws IOException, InvalidPasswordException,DataConversionException;
+    boolean checkPassword(String userName, String hashedPassword)
+            throws IOException, InvalidPasswordException, DataConversionException;
 
 }

@@ -35,7 +35,8 @@ public interface Storage extends ConciergeStorage, UserPrefsStorage, PasswordsSt
     Path getPasswordsFilePath();
 
     @Override
-    boolean checkPassword(String userName, String hashedPassword) throws IOException, InvalidPasswordException, DataConversionException;
+    boolean checkPassword(String userName, String hashedPassword)
+            throws IOException, InvalidPasswordException, DataConversionException;
 
     /**
      * Saves the current version of Concierge to the hard disk.
