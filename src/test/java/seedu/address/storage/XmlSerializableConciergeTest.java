@@ -21,6 +21,9 @@ public class XmlSerializableConciergeTest {
     private static final Path TYPICAL_CONCIERGE_FILE = TEST_DATA_FOLDER.resolve("typicalConcierge.xml");
     private static final Path INVALID_GUEST_FILE = TEST_DATA_FOLDER.resolve("invalidGuestConcierge.xml");
     private static final Path DUPLICATE_GUEST_FILE = TEST_DATA_FOLDER.resolve("duplicateGuestConcierge.xml");
+    private static final Path INVALID_ROOM_FILE = TEST_DATA_FOLDER.resolve("invalidRoomConcierge.xml");
+    private static final Path DUPLICATE_ROOM_FILE = TEST_DATA_FOLDER.resolve("duplicateRoomConcierge.xml");
+    private static final Path OVERLAPPING_BOOKING_FILE = TEST_DATA_FOLDER.resolve("overlappingBookingConcierge.xml");
 
     private static final Concierge TYPICAL_CONCIERGE = TypicalConcierge.getTypicalConcierge();
 
@@ -49,11 +52,37 @@ public class XmlSerializableConciergeTest {
     }
 
     @Test
+    public void toModelType_invalidRoomFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(INVALID_ROOM_FILE,
+                XmlSerializableConcierge.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.toModelType();
+    }
+
+    @Test
     public void toModelType_duplicateGuests_throwsIllegalValueException() throws Exception {
         XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_GUEST_FILE,
                 XmlSerializableConcierge.class);
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(XmlSerializableConcierge.MESSAGE_DUPLICATE_GUEST);
+        dataFromFile.toModelType();
+    }
+
+    @Test
+    public void toModelType_duplicateRooms_throwsIllegalValueException() throws Exception {
+        XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_ROOM_FILE,
+                XmlSerializableConcierge.class);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(XmlSerializableConcierge.MESSAGE_DUPLICATE_ROOM);
+        dataFromFile.toModelType();
+    }
+
+    @Test
+    public void toModelType_overlappingBooking_throwsIllegalValueException() throws Exception {
+        XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(OVERLAPPING_BOOKING_FILE,
+                XmlSerializableConcierge.class);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(XmlAdaptedRoom.MESSAGE_OVERLAPPING_BOOKING);
         dataFromFile.toModelType();
     }
 

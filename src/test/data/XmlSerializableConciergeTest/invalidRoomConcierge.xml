@@ -39,9 +39,9 @@
         <phone>9482442</phone>
         <email>anna@example.com</email>
     </guests>
+	<!-- Room is missing capacity field -->
     <rooms>
         <roomNumber>001</roomNumber>
-        <capacity>SINGLE</capacity>
         <bookings>
             <guest>
                 <name>Alice Pauline</name>

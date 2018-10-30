@@ -54,6 +54,19 @@
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
+		<!-- Room has bookings whose booking period overlap with each other -->
+        <bookings>
+            <guest>
+                <name>Mary Jane</name>
+                <phone>12345678</phone>
+                <email>mary@example.com</email>
+            </guest>
+            <bookingPeriod>
+                <startDate>23/10/2018</startDate>
+                <endDate>29/10/2018</endDate>
+            </bookingPeriod>
+            <isCheckedIn>false</isCheckedIn>
+        </bookings>
         <tagged>maintenance</tagged>
     </rooms>
     <rooms>

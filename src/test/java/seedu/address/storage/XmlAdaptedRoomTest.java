@@ -64,7 +64,7 @@ public class XmlAdaptedRoomTest {
     @Test
     public void toModelType_nullRoomNumber_throwsIllegalValueException() {
         XmlAdaptedRoom room =
-            new XmlAdaptedRoom(null, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
+                new XmlAdaptedRoom(null, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, RoomNumber.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
     }
@@ -72,7 +72,7 @@ public class XmlAdaptedRoomTest {
     @Test
     public void toModelType_nullCapacity_throwsIllegalValueException() {
         XmlAdaptedRoom room =
-            new XmlAdaptedRoom(VALID_ROOM_NUMBER, null, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
+                new XmlAdaptedRoom(VALID_ROOM_NUMBER, null, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
     }
@@ -82,7 +82,7 @@ public class XmlAdaptedRoomTest {
         List<XmlAdaptedBooking> invalidBookings = new ArrayList<>(VALID_BOOKINGS);
         invalidBookings.add(INVALID_BOOKING);
         XmlAdaptedRoom room =
-            new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, invalidBookings, VALID_EXPENSES, VALID_TAGS);
+                new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, invalidBookings, VALID_EXPENSES, VALID_TAGS);
         String expectedMessage = XmlAdaptedRoom.MESSAGE_OVERLAPPING_BOOKING;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> room.toModelType(VALID_MENU_STUB));
     }
@@ -92,7 +92,7 @@ public class XmlAdaptedRoomTest {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
         XmlAdaptedRoom room =
-            new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, invalidTags);
+                new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, invalidTags);
         Assert.assertThrows(IllegalValueException.class, () -> room.toModelType(VALID_MENU_STUB));
     }
 
