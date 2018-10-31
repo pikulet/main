@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * A helper class to manage the login process.
  */
-public class LogInExecutor {
+public class LogInManager {
 
     // The username currently associated with the model
     private Optional<String> username = Optional.empty();
@@ -17,11 +17,11 @@ public class LogInExecutor {
     /**
      * Creates an {@code LogInHelper} with an empty password reference list.
      */
-    public LogInExecutor() {
+    public LogInManager() {
         this.passwordRef = PasswordHashList.getEmptyPasswordHashList();
     }
 
-    public LogInExecutor(PasswordHashList passwordRef) {
+    public LogInManager(PasswordHashList passwordRef) {
         this.passwordRef = passwordRef;
     }
 
@@ -38,7 +38,7 @@ public class LogInExecutor {
     public Optional<String> getUsername() {
         return this.username;
     }
-    
+
     /**
      * Attempts to sign in with the given {@code username} and the
      * {@code hashed password}.

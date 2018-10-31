@@ -16,7 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.login.InvalidLogInException;
-import seedu.address.model.login.LogInExecutor;
+import seedu.address.model.login.LogInManager;
 import seedu.address.model.login.PasswordHashList;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
@@ -32,7 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
-    private final LogInExecutor logInExecutor;
+    private final LogInManager logInManager;
 
     /**
      * Initializes a ModelManager with the given concierge and userPrefs.
@@ -59,7 +59,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge = new VersionedConcierge(concierge);
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());
         filteredRooms = new FilteredList<>(versionedConcierge.getRoomList());
-        logInExecutor = new LogInExecutor(passwordRef);
+        logInManager = new LogInManager(passwordRef);
     }
 
     public ModelManager() {
@@ -85,17 +85,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public boolean isSignedIn() {
-        return logInExecutor.isSignedIn();
+        return logInManager.isSignedIn();
     }
 
     @Override
     public Optional<String> getUsername() {
-        return logInExecutor.getUsername();
+        return logInManager.getUsername();
     }
 
     @Override
     public void signIn(String userName, String hashedPassword) throws InvalidLogInException {
-        logInExecutor.signIn(userName, hashedPassword);
+        logInManager.signIn(userName, hashedPassword);
     }
 
     @Override
