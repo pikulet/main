@@ -1,5 +1,7 @@
 package seedu.address.model.login;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -16,10 +18,19 @@ public class PasswordHashList {
     private JsonNode passwordRef; // The JSON password reference list
 
     public PasswordHashList(String passwordRefString) throws IOException {
-        this.passwordRef = JsonUtil.getNodeObject(passwordRefString);
+        requireNonNull(passwordRefString);
+
+        try {
+            this.passwordRef = JsonUtil.getNodeObject(passwordRefString);
+        } catch (IOException e) {
+            // Caught and rethrown to wrap subclass exception com.fasterxml.jackson.core.JsonParseException
+            throw new IOException(e.getMessage());
+        }
     }
 
     private PasswordHashList(JsonNode passwordRef) {
+        requireNonNull(passwordRef);
+
         this.passwordRef = passwordRef;
     }
 
@@ -37,6 +48,8 @@ public class PasswordHashList {
      * present. Else, the optional will wrap the associated password.
      */
     public Optional<String> getExpectedPassword(String username) {
+        requireNonNull(username);
+
         JsonNode expectedPasswordNode = passwordRef.get(username);
 
         if (expectedPasswordNode == null) {
