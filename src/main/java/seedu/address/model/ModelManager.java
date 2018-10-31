@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.login.PasswordHashList.getEmptyPasswordHashList;
 
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.login.InvalidLogInException;
 import seedu.address.model.login.LogInHelper;
+import seedu.address.model.login.PasswordHashList;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
@@ -33,17 +35,30 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Initializes a ModelManager with the given concierge and userPrefs.
+     * This method remains to support existing tests which do not require the
+     * LogInHelper module.
      */
     public ModelManager(ReadOnlyConcierge concierge, UserPrefs userPrefs) {
+        this(concierge, userPrefs, getEmptyPasswordHashList());
+    }
+
+    /**
+     * Initializes a ModelManager with the given {@code concierge},
+     * {@code userPrefs} and {@code passwordRef}.
+     */
+    public ModelManager(ReadOnlyConcierge concierge, UserPrefs userPrefs,
+                        PasswordHashList passwordRef) {
         super();
         requireAllNonNull(concierge, userPrefs);
 
-        logger.fine("Initializing with Concierge: " + concierge + " and user prefs " + userPrefs);
+        logger.fine("Initializing with Concierge: " + concierge
+                + " and user prefs " + userPrefs
+                + " and password list " + passwordRef);
 
         versionedConcierge = new VersionedConcierge(concierge);
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());
         filteredRooms = new FilteredList<>(versionedConcierge.getRoomList());
-        logInHelper = new LogInHelper();
+        logInHelper = new LogInHelper(passwordRef);
     }
 
     public ModelManager() {

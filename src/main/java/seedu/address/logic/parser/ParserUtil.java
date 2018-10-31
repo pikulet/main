@@ -15,10 +15,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.guest.Email;
 import seedu.address.model.guest.Name;
 import seedu.address.model.guest.Phone;
+import seedu.address.model.login.HashingException;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.login.HashingException;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
