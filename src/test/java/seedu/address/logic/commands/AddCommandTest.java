@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -111,6 +112,11 @@ public class AddCommandTest {
     private class ModelStub implements Model {
         @Override
         public boolean isSignedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Optional<String> getUsername() {
             throw new AssertionError("This method should not be called.");
         }
 
