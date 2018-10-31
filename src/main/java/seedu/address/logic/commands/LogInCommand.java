@@ -34,7 +34,7 @@ public class LogInCommand extends Command {
     private final String hashedPassword;
 
     /**
-     * Creates a SignInCommand to sign in as {@code userName} with password
+     * Creates a LogInCommand to sign in as {@code userName} with password
      * {@code hashedPassword}.
      */
     public LogInCommand(String userName, String hashedPassword) {

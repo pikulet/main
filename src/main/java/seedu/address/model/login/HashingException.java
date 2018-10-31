@@ -1,7 +1,7 @@
 package seedu.address.model.login;
 
 /**
- * Represents an error when hashing a password
+ * Represents an error when hashing a password.
  */
 public class HashingException extends Exception {
 
