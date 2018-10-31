@@ -10,14 +10,15 @@ import seedu.address.model.Model;
 import seedu.address.model.login.InvalidLogInException;
 
 /**
- * Allows the user to sign in to Concierge.
+ * Allows the user to sign in to Concierge. The username and passwords are
+ * case-sensitive.
  */
 public class LogInCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Signs in to Concierge. "
+            + ": Signs in to Concierge. Both username and password are case-sensitive."
             + "Parameters: "
             + PREFIX_USERNAME + "USERNAME "
             + PREFIX_PASSWORD + "PASSWORD "
