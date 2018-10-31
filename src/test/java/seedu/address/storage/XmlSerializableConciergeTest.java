@@ -20,6 +20,7 @@ public class XmlSerializableConciergeTest {
     private static final Path TYPICAL_GUESTS_FILE = TEST_DATA_FOLDER.resolve("typicalGuestsConcierge.xml");
     private static final Path INVALID_GUEST_FILE = TEST_DATA_FOLDER.resolve("invalidGuestConcierge.xml");
     private static final Path DUPLICATE_GUEST_FILE = TEST_DATA_FOLDER.resolve("duplicateGuestConcierge.xml");
+    private static final Path DUPLICATE_ITEM_FILE = TEST_DATA_FOLDER.resolve("duplicateItemConcierge.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -47,6 +48,15 @@ public class XmlSerializableConciergeTest {
                 XmlSerializableConcierge.class);
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(XmlSerializableConcierge.MESSAGE_DUPLICATE_GUEST);
+        dataFromFile.toModelType();
+    }
+
+    @Test
+    public void toModelType_duplicateItem_throwsIllegalValueException() throws Exception {
+        XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_ITEM_FILE,
+                XmlSerializableConcierge.class);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(XmlSerializableConcierge.MESSAGE_DUPLICATE_ITEM);
         dataFromFile.toModelType();
     }
 

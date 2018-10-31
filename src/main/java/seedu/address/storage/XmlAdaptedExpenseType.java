@@ -76,4 +76,8 @@ public class XmlAdaptedExpenseType {
             throw new IllegalValueException(iae.getMessage());
         }
     }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
 }
