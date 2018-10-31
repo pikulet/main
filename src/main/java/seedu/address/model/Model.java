@@ -61,6 +61,14 @@ public interface Model {
      */
     void updateFilteredGuestList(Predicate<Guest> predicate);
 
+    /**
+     * Returns an unmodifiable view of the list of checked-in {@code Guest} backed by the internal list of
+     * {@code versionedConcierge}
+     */
+    public ObservableList<Guest> getFilteredCheckedInGuestList();
+
+    public void updateFilteredCheckedInGuestList(Predicate<Guest> predicate);
+
     /** Returns an unmodifiable view of the filtered room list */
     ObservableList<Room> getFilteredRoomList();
 

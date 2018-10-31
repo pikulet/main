@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ARCHIVED_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GUESTS;
@@ -29,30 +30,27 @@ public class ListCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + FLAG_ROOM;
 
-    private final String[] splitString;
+    private final String flag;
 
     /**
      * Creates a ListCommand to handle listing of guests/rooms and other flags
      */
-    public ListCommand(String[] splitString) {
-        //If statement for listing guests/rooms, switch statement not allowed
-        requireNonNull(splitString);
-        this.splitString = splitString;
+    public ListCommand(String flag) {
+        requireNonNull(flag);
+        this.flag = flag;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
 
-        if (splitString[0].equals(FLAG_GUEST.toString())) {
-            model.updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
-            model.updateFilteredRoomList(PREDICATE_SHOW_NO_ROOMS);
+        // flag is guaranteed to be valid by the parser, so no need to throw exception after these if-else blocks
+        if (flag.equals(FLAG_GUEST.toString())) {
             EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_GUEST.toString()));
-
-        } else if (splitString[0].equals(FLAG_ROOM.toString())) {
-            model.updateFilteredGuestList(PREDICATE_SHOW_NO_GUESTS);
-            model.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        } else if (flag.equals(FLAG_ROOM.toString())) {
             EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_ROOM.toString()));
+        } else if (flag.equals(FLAG_ARCHIVED_GUEST.toString())) {
+            EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_ARCHIVED_GUEST.toString()));
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
@@ -62,7 +60,7 @@ public class ListCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ListCommand // instanceof handles nulls
-                && splitString[0].equals(((ListCommand) other).splitString[0]));
+                && flag.equals(((ListCommand) other).flag));
     }
 
 }

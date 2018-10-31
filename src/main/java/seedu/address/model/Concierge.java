@@ -138,10 +138,17 @@ public class Concierge implements ReadOnlyConcierge {
 
     /**
      * Removes {@code key} from this {@code Concierge}'s checked-in guest list.
-     * If the {@code key} guest does not exist in the checked-in guest list 
+     * If the {@code key} guest does not exist in the checked-in guest list, this method does nothing.
+     * Though not ideal, this is the current implementation.
+     * TODO Check if guest to remove from checked-in list still has other bookings in other rooms OR
+     * TODO Create new guest subclass that stores the room information, and add instances of that into checked-in
+     * guest list
      */
     public void removeCheckedInGuest(Guest key) {
-        guests.remove(key);
+        if (!checkedInGuests.contains(key)) {
+            return;
+        }
+        checkedInGuests.remove(key);
     }
 
     //=========== Room operations =============================================================
@@ -264,4 +271,5 @@ public class Concierge implements ReadOnlyConcierge {
     public int hashCode() {
         return Objects.hash(guests, checkedInGuests, rooms);
     }
+    
 }

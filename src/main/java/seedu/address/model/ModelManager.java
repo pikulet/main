@@ -27,6 +27,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
+    private final FilteredList<Guest> filteredCheckedInGuests;
 
     /**
      * Initializes a ModelManager with the given concierge and userPrefs.
@@ -40,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge = new VersionedConcierge(concierge);
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());
         filteredRooms = new FilteredList<>(versionedConcierge.getRoomList());
+        filteredCheckedInGuests = new FilteredList<>(versionedConcierge.getCheckedInGuestList());
     }
 
     public ModelManager() {
@@ -105,6 +107,21 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredGuestList(Predicate<Guest> predicate) {
         requireNonNull(predicate);
         filteredGuests.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of checked-in {@code Guest} backed by the internal list of
+     * {@code versionedConcierge}
+     */
+    @Override
+    public ObservableList<Guest> getFilteredCheckedInGuestList() {
+        return FXCollections.unmodifiableObservableList(filteredCheckedInGuests);
+    }
+
+    @Override
+    public void updateFilteredCheckedInGuestList(Predicate<Guest> predicate) {
+        requireNonNull(predicate);
+        filteredCheckedInGuests.setPredicate(predicate);
     }
 
     //=========== Filtered Room List Accessors =============================================================

@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ARCHIVED_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
@@ -151,15 +152,12 @@ public class ParserUtil {
     }
 
     /**
-     * Returns true if suffix flags are either for listing guests (-g) or rooms (-r)
-     * in the given input {@code String[]}
+     * Returns true if argument matches any of the following flags: FLAG_GUEST, FLAG_ROOM, FLAG_ARCHIVED_GUEST
      */
-    public static boolean areFlagsPresent(String[] splitString) {
-        if ((splitString[0].equals(FLAG_GUEST.toString()) || splitString[0].equals(FLAG_ROOM.toString()))
-            && splitString.length == 1) {
-            return true;
-        }
-        return false;
+    public static boolean isValidFlag(String args) {
+        return args.equals(FLAG_GUEST.toString())
+                || args.equals(FLAG_ROOM.toString())
+                || args.equals(FLAG_ARCHIVED_GUEST.toString());
     }
 
 }
