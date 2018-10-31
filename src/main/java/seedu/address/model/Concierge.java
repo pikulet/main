@@ -24,6 +24,7 @@ import seedu.address.model.room.booking.BookingPeriod;
 public class Concierge implements ReadOnlyConcierge {
 
     private final UniqueGuestList guests;
+    private final UniqueGuestList checkedInGuests;
     private final UniqueRoomList rooms;
     private final Menu menu;
     /*
@@ -35,6 +36,7 @@ public class Concierge implements ReadOnlyConcierge {
      */
     {
         guests = new UniqueGuestList();
+        checkedInGuests = new UniqueGuestList();
         rooms = new UniqueRoomList();
         menu = new Menu();
     }
@@ -55,7 +57,11 @@ public class Concierge implements ReadOnlyConcierge {
     public ObservableList<Guest> getGuestList() {
         return guests.asUnmodifiableObservableList();
     }
-
+    
+    @Override
+    public ObservableList<Guest> getCheckedInGuestList() {
+        return checkedInGuests.asUnmodifiableObservableList();
+    }
 
     @Override
     public ObservableList<Room> getRoomList() {
@@ -83,17 +89,26 @@ public class Concierge implements ReadOnlyConcierge {
     }
 
     /**
-     * Adds a guest to Concierge.
-     * The guest must not already exist in Concierge.
+     * Replaces the contents of the checked-in guest list with {@code guests}.
+     * {@code guests} must not contain duplicate guests.
+     */
+    public void setCheckedInGuests(List<Guest> guests) {
+        this.checkedInGuests.setGuests(guests);
+    }
+
+    /**
+     * Adds a guest to Concierge's guest list.
+     * The guest must not already exist in Concierge's guest list.
      */
     public void addGuest(Guest g) {
         guests.add(g);
     }
 
     /**
-     * Replaces the given guest {@code target} in the list with {@code editedGuest}.
-     * {@code target} must exist in Concierge.
-     * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge.
+     * Replaces the given guest {@code target} in the guest list with {@code editedGuest}.
+     * {@code target} must exist in Concierge's guest list.
+     * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge's
+     * guest list.
      */
     public void updateGuest(Guest target, Guest editedGuest) {
         requireNonNull(editedGuest);
@@ -102,8 +117,8 @@ public class Concierge implements ReadOnlyConcierge {
     }
 
     /**
-     * Removes {@code key} from this {@code Concierge}.
-     * {@code key} must exist in Concierge.
+     * Removes {@code key} from this {@code Concierge}'s guest list.
+     * {@code key} must exist in Concierge's guest list.
      */
     public void removeGuest(Guest key) {
         guests.remove(key);
@@ -129,27 +144,42 @@ public class Concierge implements ReadOnlyConcierge {
     }
 
     /**
-     * Checks in the room using its room number
+     * Checks in the room using its room number and adds guest to the checked-in guest list
      */
     public void checkInRoom(RoomNumber roomNumber) {
         Room room = rooms.getRoom(roomNumber);
-        rooms.setRoom(room, room.checkIn());
+        Room checkedInRoom = room.checkIn();
+        rooms.setRoom(room, checkedInRoom);
+
+        // First active booking is guaranteed to be present after executing room.checkIn() above
+        Guest checkedInGuest = checkedInRoom.getBookings().getFirstBooking().getGuest();
+        checkedInGuests.add(checkedInGuest);
     }
 
     /**
-     * Checks out a room using its room number
+     * Checks out a room's first booking using its room number and remove the guest from the checked-in guest list
      */
     public void checkoutRoom(RoomNumber roomNumber) {
-        Room room = rooms.getRoom(roomNumber);
+        Room room = rooms.getRoom(roomNumber);        
         rooms.setRoom(room, room.checkout());
+
+        Booking bookingToCheckout = room.getBookings().getFirstBooking();
+        Guest guestToCheckout = bookingToCheckout.getGuest();
+        checkedInGuests.remove(guestToCheckout);
     }
 
     /**
-     * Checks out a room's booking using its room number and the specified booking period
+     * Checks out a room's booking using its room number and the specified booking period and remove the guest
+     * from the checked-in guest list
      */
     public void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod) {
         Room room = rooms.getRoom(roomNumber);
         rooms.setRoom(room, room.checkout(bookingPeriod));
+
+        Booking bookingToCheckout = room.getBookings()
+            .getFirstBookingByPredicate(booking -> booking.getBookingPeriod().equals(bookingPeriod));
+        Guest guestToCheckout = bookingToCheckout.getGuest();
+        checkedInGuests.remove(guestToCheckout);
     }
 
     public void setMenu(Map<String, ExpenseType> menu) {
@@ -172,6 +202,7 @@ public class Concierge implements ReadOnlyConcierge {
         requireNonNull(newData);
 
         setGuests(newData.getGuestList());
+        setCheckedInGuests(newData.getCheckedInGuestList());
         setRooms(newData.getRoomList());
         setMenu(newData.getMenuMap());
     }
@@ -190,20 +221,27 @@ public class Concierge implements ReadOnlyConcierge {
 
     @Override
     public String toString() {
-        return guests.asUnmodifiableObservableList().size() + " guests"
-                + rooms.toString();
-        // TODO: refine later
+        StringBuilder sb = new StringBuilder();
+        sb.append("Guests:\n")
+                .append(guests.asUnmodifiableObservableList())
+                .append("\nChecked-in guests:\n")
+                .append(checkedInGuests.asUnmodifiableObservableList())
+                .append("\nRooms:\n")
+                .append(rooms.asUnmodifiableObservableList());
+        return sb.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Concierge // instanceof handles nulls
-                    && guests.equals(((Concierge) other).guests) && rooms.equals(((Concierge) other).rooms));
+                    && guests.equals(((Concierge) other).guests)
+                    && checkedInGuests.equals(((Concierge) other).checkedInGuests)
+                    && rooms.equals(((Concierge) other).rooms));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guests, rooms);
+        return Objects.hash(guests, checkedInGuests, rooms);
     }
 }
