@@ -67,7 +67,7 @@ The dates can be expressed in DD/MM/YY or DD/MM/YYYY.
 
 Currently, a guest can only make one booking with the hotel. This will
 subsequently be modified such that a guest can make an unlimited number of
-bookings, but provided that he only checks in one booking at once.
+bookings.
 
 [TIP]
 A guest can have any number of tags (including 0)
@@ -187,6 +187,16 @@ List all rooms
 * `list -g` +
 List all guests
 
+=== Login : `login`
+
+Logs in to the Concierge application. +
+Format: `login [user/USERNAME] [pw/PASSWORD]`
+
+Note: the username and password are both case-sensitive.
+
+Examples:
+
+* login user/damithz pw/forgotpassword
 
 === Selecting a guest : `select` [red]#Coming in v1.3#
 
