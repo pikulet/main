@@ -43,6 +43,10 @@ public class UserPrefs {
         return passwordsFilePath;
     }
 
+    public void setPasswordsFilePath(Path passwordsFilePath) {
+        this.passwordsFilePath = passwordsFilePath;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

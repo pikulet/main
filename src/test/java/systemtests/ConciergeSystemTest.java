@@ -85,7 +85,7 @@ public abstract class ConciergeSystemTest {
      * Returns the directory of the data file.
      */
     protected Path getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+        return TestApp.CONCIERGE_LOCATION_FOR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {
