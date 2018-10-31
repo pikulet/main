@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.login.InvalidLogInException;
+import seedu.address.model.login.LogInHelper;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
@@ -28,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
+    private final LogInHelper logInHelper;
 
     /**
      * Initializes a ModelManager with the given concierge and userPrefs.
@@ -41,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge = new VersionedConcierge(concierge);
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());
         filteredRooms = new FilteredList<>(versionedConcierge.getRoomList());
+        logInHelper = new LogInHelper();
     }
 
     public ModelManager() {
@@ -66,12 +69,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public boolean isSignedIn() {
-        return true;
+        return logInHelper.isSignedIn();
     }
 
     @Override
     public void signIn(String userName, String hashedPassword) throws InvalidLogInException {
-
+        logInHelper.signIn(userName, hashedPassword);
     }
 
     @Override
