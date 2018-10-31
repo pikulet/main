@@ -44,7 +44,7 @@ public class LogInHelper {
 
         if (!expectedPassword.isPresent()) {
             throw new InvalidLogInException(MESSAGE_INVALID_USERNAME);
-        } else if (!hashedPassword.toLowerCase().equals(expectedPassword.get().toLowerCase())) {
+        } else if (!hashedPassword.equalsIgnoreCase(expectedPassword.get())) {
             throw new InvalidLogInException(MESSAGE_INVALID_PASSWORD);
         }
 
