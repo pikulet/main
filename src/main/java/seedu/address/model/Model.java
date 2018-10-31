@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -28,10 +29,17 @@ public interface Model {
     ReadOnlyConcierge getConcierge();
 
     // =========== Signing in. ================================================
+
     /**
      * Returns true if Concierge is currently logged in.
      */
     boolean isSignedIn();
+
+    /**
+     * Returns an Optional containing the username currently tagged to the
+     * session.
+     */
+    Optional<String> getUsername();
 
     /**
      * Attempts to sign in with username {@code username} and password {@code

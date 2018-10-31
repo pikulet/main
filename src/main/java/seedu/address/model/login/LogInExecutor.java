@@ -33,6 +33,13 @@ public class LogInExecutor {
     }
 
     /**
+     * Returns an Optional of the username associated with the session.
+     */
+    public Optional<String> getUsername() {
+        return this.username;
+    }
+    
+    /**
      * Attempts to sign in with the given {@code username} and the
      * {@code hashed password}.
      *

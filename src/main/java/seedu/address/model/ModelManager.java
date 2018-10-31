@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.login.PasswordHashList.getEmptyPasswordHashList;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -85,6 +86,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean isSignedIn() {
         return logInExecutor.isSignedIn();
+    }
+
+    @Override
+    public Optional<String> getUsername() {
+        return logInExecutor.getUsername();
     }
 
     @Override
