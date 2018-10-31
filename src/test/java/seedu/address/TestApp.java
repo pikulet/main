@@ -27,8 +27,8 @@ import systemtests.ModelHelper;
  */
 public class TestApp extends MainApp {
 
-    public static final Path CONCIERGE_LOCATION_FOR_TESTING
-            = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final Path CONCIERGE_LOCATION_FOR_TESTING =
+            TestUtil.getFilePathInSandboxFolder("sampleData.xml");
     public static final Path PASSWORD_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pass_testing.json");
 
