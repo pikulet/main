@@ -1,6 +1,7 @@
 package seedu.address.model.login;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -25,4 +26,9 @@ public class PasswordHashList {
     public static PasswordHashList getEmptyPasswordHashList() {
         return new PasswordHashList(JsonNodeFactory.instance.objectNode());
     }
+
+    public Optional<String> getExpectedPassword(String username) {
+        return Optional.of(passwordRef.get(username).asText());
+    }
+
 }

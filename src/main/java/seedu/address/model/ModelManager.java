@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,20 +13,17 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.model.guest.Guest;
+import seedu.address.model.login.InvalidLogInException;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.model.login.InvalidLogInException;
 
 /**
  * Represents the in-memory model of Concierge data.
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
-    // Log-in username
-    public final Optional<String> userName = Optional.empty();
 
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
@@ -70,7 +66,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public boolean isSignedIn() {
-        return this.userName.isPresent();
+        return true;
     }
 
     @Override
