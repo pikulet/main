@@ -77,12 +77,12 @@ public class StorageManagerTest {
 
     @Test
     public void handleConciergeChangedEvent_exceptionThrown_eventRaised() {
-        Path DUMMY_PATH = Paths.get("dummy");
+        Path dummyPath = Paths.get("dummy");
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(
-                new XmlConciergeStorageExceptionThrowingStub(DUMMY_PATH),
-                new JsonUserPrefsStorage(DUMMY_PATH),
-                new JsonPasswordsStorage(DUMMY_PATH));
+                new XmlConciergeStorageExceptionThrowingStub(dummyPath),
+                new JsonUserPrefsStorage(dummyPath),
+                new JsonPasswordsStorage(dummyPath));
         storage.handleConciergeChangedEvent(new ConciergeChangedEvent(new Concierge()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
