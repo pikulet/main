@@ -28,10 +28,12 @@ public class StorageManager extends ComponentManager implements Storage {
 
 
     public StorageManager(ConciergeStorage conciergeStorage,
-                          UserPrefsStorage userPrefsStorage) {
+                          UserPrefsStorage userPrefsStorage,
+                          PasswordsStorage passwordsStorage) {
         super();
         this.conciergeStorage = conciergeStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.passwordsStorage = passwordsStorage;
     }
     // ================ SignIn / Password methods ==============================
 
