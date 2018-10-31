@@ -74,7 +74,7 @@ public class PasswordHashListTest {
 
 
     @Test
-    public void getExpegractedPassword_invalidUsername() throws IOException {
+    public void getExpectedPassword_invalidUsername() throws IOException {
         PasswordHashList passwordRef = getSamplePasswordHashList();
 
         // incorrect username
