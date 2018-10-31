@@ -16,20 +16,20 @@ public class LogInUtil {
     private static final String validUsername = "testuser";
     private static final String validPassword = "password1";
 
-    public String getLogInCommand(String username, String validPassword) {
+    public static String getLogInCommand(String username, String validPassword) {
         StringBuilder sb = new StringBuilder();
         sb.append(LogInCommand.COMMAND_WORD);
         sb.append(" ");
         sb.append(PREFIX_USERNAME);
         sb.append(username);
         sb.append(" ");
-        sb.append(validPassword);
         sb.append(PREFIX_PASSWORD);
+        sb.append(validPassword);
 
         return sb.toString();
     }
 
-    public String getValidLogInCommand() {
+    public static String getValidLogInCommand() {
         return getLogInCommand(validUsername, validPassword);
     }
 }

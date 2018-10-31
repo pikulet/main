@@ -7,16 +7,23 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.LogInCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.testutil.LogInUtil;
 
 public class ClearCommandSystemTest extends ConciergeSystemTest {
 
     @Test
     public void clear() {
         final Model defaultModel = getModel();
+
+        /* Signs in to Concierge first */
+        String command = LogInUtil.getValidLogInCommand();
+        String expectedResultMessage = LogInCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, expectedResultMessage, defaultModel);
 
         /* Case: clear non-empty Concierge, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
@@ -25,8 +32,8 @@ public class ClearCommandSystemTest extends ConciergeSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing Concierge -> original Concierge restored */
-        String command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, defaultModel);
         assertSelectedCardUnchanged();
 

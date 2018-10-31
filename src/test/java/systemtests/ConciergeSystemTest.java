@@ -36,6 +36,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Concierge;
 import seedu.address.model.Model;
+import seedu.address.testutil.LogInUtil;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -159,6 +160,7 @@ public abstract class ConciergeSystemTest {
      * Deletes all guests in Concierge.
      */
     protected void deleteAllGuests() {
+        executeCommand(LogInUtil.getValidLogInCommand());
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getConcierge().getGuestList().size());
     }
