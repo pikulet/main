@@ -38,29 +38,21 @@ public class XmlAdaptedExpenseTest {
     }
 
     @Test
-    public void toModelType_validDetails_returnsNormalExpense() {
+    public void toModelType_validDetails_returnsNormalExpense() throws Exception {
         XmlAdaptedExpense testExpense = new XmlAdaptedExpense(VALID_ITEM, VALID_COST, VALID_DATETIME);
-        try {
-            Expense convertedExpense = testExpense.toModelType(VALID_MENU);
-            assertEquals(convertedExpense.getExpenseType(), VALID_MENU.getExpenseType(VALID_ITEM));
-            assertEquals(convertedExpense.getDateTimeString(), VALID_DATETIME);
-        } catch (IllegalValueException ive) {
-            fail();
-        }
+        Expense convertedExpense = testExpense.toModelType(VALID_MENU);
+        assertEquals(convertedExpense.getExpenseType(), VALID_MENU.getExpenseType(VALID_ITEM));
+        assertEquals(convertedExpense.getDateTimeString(), VALID_DATETIME);
     }
 
     @Test
-    public void toModelType_invalidItem_returnsUnknownExpense() {
+    public void toModelType_invalidItem_returnsUnknownExpense() throws Exception {
         XmlAdaptedExpense testExpense = new XmlAdaptedExpense(INVALID_ITEM, VALID_COST, VALID_DATETIME);
-        try {
-            Expense convertedExpense = testExpense.toModelType(VALID_MENU);
-            ExpenseType unknownType = new ExpenseType(INVALID_ITEM,
-                    XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_NAME, XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_COST);
-            assertEquals(convertedExpense.getExpenseType(), unknownType);
-            assertEquals(convertedExpense.getDateTimeString(), VALID_DATETIME);
-        } catch (IllegalValueException ive) {
-            fail();
-        }
+        Expense convertedExpense = testExpense.toModelType(VALID_MENU);
+        ExpenseType unknownType = new ExpenseType(INVALID_ITEM,
+                XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_NAME, XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_COST);
+        assertEquals(convertedExpense.getExpenseType(), unknownType);
+        assertEquals(convertedExpense.getDateTimeString(), VALID_DATETIME);
     }
 
     @Test

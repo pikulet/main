@@ -17,14 +17,10 @@ public class XmlAdaptedExpenseTypeTest {
     private static final String VALID_COST = "1.23";
 
     @Test
-    public void toModelType_validArguments_returnsExpenseTypeObject() {
+    public void toModelType_validArguments_returnsExpenseTypeObject() throws Exception {
         XmlAdaptedExpenseType testType = new XmlAdaptedExpenseType(VALID_NUMBER, VALID_NAME, VALID_COST);
-        try {
-            assertEquals(testType.toModelType(), new ExpenseType(
-                    VALID_NUMBER, VALID_NAME, new Money(VALID_COST)));
-        } catch (IllegalValueException e) {
-            fail();
-        }
+        assertEquals(testType.toModelType(), new ExpenseType(
+                VALID_NUMBER, VALID_NAME, new Money(VALID_COST)));
     }
 
     @Test
