@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.util.HashingException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.guest.Email;
@@ -19,6 +18,7 @@ import seedu.address.model.guest.Phone;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.HashingException;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
