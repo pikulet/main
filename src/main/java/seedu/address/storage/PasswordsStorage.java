@@ -3,8 +3,7 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.util.InvalidLogInException;
+import seedu.address.model.login.PasswordHashList;
 
 /**
  * Represents a storage for user passwords
@@ -17,12 +16,8 @@ public interface PasswordsStorage {
     Path getPasswordsFilePath();
 
     /**
-     * Checks the validity of a given {@code userName} and {@code
-     * hashedPassword}.
-     *
-     * Return true if the password matches the username and false otherwise.
+     * Retrieve the password list from storage.
      */
-    boolean checkPassword(String userName, String hashedPassword)
-            throws IOException, InvalidLogInException, DataConversionException;
+    PasswordHashList getPasswordHashList() throws IOException;
 
 }

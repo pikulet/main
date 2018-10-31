@@ -18,7 +18,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.model.util.InvalidLogInException;
+import seedu.address.model.login.InvalidLogInException;
 
 /**
  * Represents the in-memory model of Concierge data.

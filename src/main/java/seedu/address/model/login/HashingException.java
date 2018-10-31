@@ -1,4 +1,4 @@
-package seedu.address.model.util;
+package seedu.address.model.login;
 
 /**
  * Represents an error when hashing a password

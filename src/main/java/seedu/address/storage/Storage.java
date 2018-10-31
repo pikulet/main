@@ -9,7 +9,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.util.InvalidLogInException;
+import seedu.address.model.login.PasswordHashList;
 
 /**
  * API of the Storage component
@@ -35,8 +35,7 @@ public interface Storage extends ConciergeStorage, UserPrefsStorage, PasswordsSt
     Path getPasswordsFilePath();
 
     @Override
-    boolean checkPassword(String userName, String hashedPassword)
-            throws IOException, InvalidLogInException, DataConversionException;
+    PasswordHashList getPasswordHashList() throws IOException;
 
     /**
      * Saves the current version of Concierge to the hard disk.

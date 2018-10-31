@@ -14,7 +14,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.util.InvalidLogInException;
+import seedu.address.model.login.PasswordHashList;
 
 /**
  * Manages storage of Concierge data in local storage.
@@ -41,9 +41,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public boolean checkPassword(String userName, String hashedPassword)
-            throws IOException, InvalidLogInException, DataConversionException {
-        return passwordsStorage.checkPassword(userName, hashedPassword);
+    public PasswordHashList getPasswordHashList() throws IOException {
+        return passwordsStorage.getPasswordHashList();
     }
 
     // ================ UserPrefs methods ======================================

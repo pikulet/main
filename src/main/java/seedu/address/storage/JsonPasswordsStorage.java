@@ -3,9 +3,8 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.util.InvalidLogInException;
+import seedu.address.model.login.PasswordHashList;
 
 /**
  * A class to access the passwords stored in the hard disk as a json file
@@ -24,10 +23,9 @@ public class JsonPasswordsStorage implements PasswordsStorage {
     }
 
     @Override
-    public boolean checkPassword(String userName, String hashedPassword)
-            throws IOException, InvalidLogInException, DataConversionException {
+    public PasswordHashList getPasswordHashList() throws IOException {
         String fileContent = FileUtil.readFromFile(filePath);
-        return false;
+        return new PasswordHashList(fileContent);
     }
 
 }

@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import seedu.address.model.util.HashingException;
+import seedu.address.model.login.HashingException;
 
 /**
  * A utility class for hashing passwords.

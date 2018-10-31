@@ -1,4 +1,4 @@
-package seedu.address.model.util;
+package seedu.address.model.login;
 
 /**
  * Signals that the password supplied does not match the user name.
