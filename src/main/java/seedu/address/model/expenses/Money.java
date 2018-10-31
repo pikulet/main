@@ -56,7 +56,7 @@ public class Money {
      */
     public static boolean isValidMoneyFormat(String money) {
         // check 1: if negative value, make a new string without negative sign
-        String positiveMoney = new String(money);
+        String positiveMoney = money;
         if (money.toCharArray()[0] == '-') {
             positiveMoney = money.substring(1);
         }
