@@ -88,7 +88,7 @@ public interface Model {
     /**
      * Add a booking to a room identified by its room number.
      */
-    public void addBooking(RoomNumber roomNumber, Booking booking);
+    void addBooking(RoomNumber roomNumber, Booking booking);
 
     /**
      *  Displays room list instead of guest list

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.login.InvalidLogInException;
 
 /**
  * Allows the user to sign in to Concierge.
@@ -48,7 +49,11 @@ public class LogInCommand extends Command {
             throw new CommandException(MESSAGE_SIGNED_IN_ALREADY);
         }
 
-        model.signIn(userName, hashedPassword);
+        try {
+            model.signIn(userName, hashedPassword);
+        } catch (InvalidLogInException e) {
+            throw new CommandException(e.getMessage());
+        }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, userName));
     }
