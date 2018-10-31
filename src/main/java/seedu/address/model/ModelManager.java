@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ConciergeChangedEvent;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.login.InvalidLogInException;
+import seedu.address.model.login.InvalidLogOutException;
 import seedu.address.model.login.LogInManager;
 import seedu.address.model.login.PasswordHashList;
 import seedu.address.model.room.Room;
@@ -96,6 +97,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void signIn(String userName, String hashedPassword) throws InvalidLogInException {
         logInManager.signIn(userName, hashedPassword);
+    }
+
+    @Override
+    public void signOut() throws InvalidLogOutException {
+        logInManager.signOut();
     }
 
     @Override

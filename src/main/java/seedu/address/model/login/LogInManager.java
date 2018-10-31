@@ -5,6 +5,8 @@ import static seedu.address.model.login.InvalidLogInException.MESSAGE_INVALID_US
 
 import java.util.Optional;
 
+import seedu.address.logic.commands.LogInCommand;
+
 /**
  * A helper class to manage the login process.
  */
@@ -47,6 +49,10 @@ public class LogInManager {
      * or the password does not match the username.
      */
     public void signIn(String username, String hashedPassword) throws InvalidLogInException {
+        if (isSignedIn()) {
+            throw new InvalidLogInException(LogInCommand.MESSAGE_SIGNED_IN_ALREADY);
+        }
+
         Optional<String> expectedPassword = passwordRef.getExpectedPassword(username);
 
         if (!expectedPassword.isPresent()) {
@@ -56,5 +62,20 @@ public class LogInManager {
         }
 
         this.username = Optional.of(username);
+    }
+
+    /**
+     * Attempts to sign out of Concierge.
+     *
+     * @throws InvalidLogOutException if Concierge is not signed in.
+     */
+    public void signOut() throws InvalidLogOutException {
+        if (!this.isSignedIn()) {
+            throw new InvalidLogOutException();
+        }
+
+        else {
+            this.username = Optional.empty();
+        }
     }
 }
