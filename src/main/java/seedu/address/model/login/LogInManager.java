@@ -74,8 +74,6 @@ public class LogInManager {
             throw new InvalidLogOutException();
         }
 
-        else {
-            this.username = Optional.empty();
-        }
+        this.username = Optional.empty();
     }
 }

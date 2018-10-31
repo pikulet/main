@@ -126,6 +126,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void signOut() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addGuest(Guest guest) {
             throw new AssertionError("This method should not be called.");
         }

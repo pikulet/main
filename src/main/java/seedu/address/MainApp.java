@@ -101,13 +101,13 @@ public class MainApp extends Application {
                     conciergeOptional.orElseGet(SampleDataUtil::getSampleConcierge);
             passwordRef = storage.getPasswordHashList();
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be " +
-                    "starting with a sample Concierge and empty password list");
+            logger.warning("Data file not in the correct format. "
+                    + "Will be starting with a sample Concierge and empty password list");
             initialData = getSampleConcierge();
             passwordRef = getEmptyPasswordHashList();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be " +
-                    "starting with a sample Concierge and empty password list");
+            logger.warning("Problem while reading from the file. "
+                    + "Will be starting with a sample Concierge and empty password list");
             initialData = getSampleConcierge();
             passwordRef = getEmptyPasswordHashList();
         }
