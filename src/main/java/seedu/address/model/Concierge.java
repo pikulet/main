@@ -105,6 +105,18 @@ public class Concierge implements ReadOnlyConcierge {
     }
 
     /**
+     * Adds a guest to Concierge's checked-in guest list.
+     * If the guest already exists in the checked-in guest list, this method does nothing. This is expected
+     * behavior because a guest can make multiple bookings over the same booking period (just for different rooms).
+     */
+    public void addCheckedInGuest(Guest g) {
+        if (checkedInGuests.contains(g)) {
+            return;
+        }
+        checkedInGuests.add(g);
+    }
+
+    /**
      * Replaces the given guest {@code target} in the guest list with {@code editedGuest}.
      * {@code target} must exist in Concierge's guest list.
      * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge's
@@ -121,6 +133,14 @@ public class Concierge implements ReadOnlyConcierge {
      * {@code key} must exist in Concierge's guest list.
      */
     public void removeGuest(Guest key) {
+        guests.remove(key);
+    }
+
+    /**
+     * Removes {@code key} from this {@code Concierge}'s checked-in guest list.
+     * If the {@code key} guest does not exist in the checked-in guest list 
+     */
+    public void removeCheckedInGuest(Guest key) {
         guests.remove(key);
     }
 
@@ -153,7 +173,7 @@ public class Concierge implements ReadOnlyConcierge {
 
         // First active booking is guaranteed to be present after executing room.checkIn() above
         Guest checkedInGuest = checkedInRoom.getBookings().getFirstBooking().getGuest();
-        checkedInGuests.add(checkedInGuest);
+        addCheckedInGuest(checkedInGuest);
     }
 
     /**
