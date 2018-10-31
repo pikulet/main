@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.HashingException;
+import seedu.address.model.util.HashingException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.guest.Email;

@@ -1,4 +1,4 @@
-package seedu.address.commons.exceptions;
+package seedu.address.model.util;
 
 /**
  * Represents an error when hashing a password
