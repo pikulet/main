@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.FLAG_CHECKED_IN_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -20,10 +23,15 @@ public class ListCommandParser implements Parser<ListCommand> {
     public ListCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
-        if (!ParserUtil.isValidFlag(trimmedArgs)) {
+        if (trimmedArgs.equals(FLAG_GUEST.toString())) {
+            return new ListCommand(FLAG_GUEST);
+        } else if (trimmedArgs.equals(FLAG_ROOM.toString())) {
+            return new ListCommand(FLAG_ROOM);
+        } else if (trimmedArgs.equals(FLAG_CHECKED_IN_GUEST.toString())) {
+            return  new ListCommand(FLAG_CHECKED_IN_GUEST);
+        } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
-        return new ListCommand(trimmedArgs);
     }
 
 }

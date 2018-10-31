@@ -92,9 +92,6 @@ public class CommandTestUtil {
     public static final EditCommand.EditGuestDescriptor DESC_AMY;
     public static final EditCommand.EditGuestDescriptor DESC_BOB;
 
-    public static final String VALID_FLAG_ROOM = FLAG_ROOM.toString();
-    public static final String VALID_FLAG_GUEST = FLAG_GUEST.toString();
-
     static {
         DESC_AMY = new EditGuestDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ListingChangedEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
 /**
@@ -19,19 +20,20 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "List successful!";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list of guest or rooms. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list of guests or rooms. "
             + "Parameters: "
-            + FLAG_GUEST + " for guests, "
+            + FLAG_GUEST + " for archived guests, "
+            + FLAG_CHECKED_IN_GUEST + " for checked-in guests. "
             + FLAG_ROOM + " for rooms. \n"
             + "Example: " + COMMAND_WORD + " "
             + FLAG_ROOM;
 
-    private final String flag;
+    private final Prefix flag;
 
     /**
      * Creates a ListCommand to handle listing of guests/rooms and other flags
      */
-    public ListCommand(String flag) {
+    public ListCommand(Prefix flag) {
         requireNonNull(flag);
         this.flag = flag;
     }
@@ -40,15 +42,8 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
 
-        // flag is guaranteed to be valid by the parser, so no need to throw exception after these if-else blocks
-        if (flag.equals(FLAG_GUEST.toString())) {
-            EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_GUEST.toString()));
-        } else if (flag.equals(FLAG_ROOM.toString())) {
-            EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_ROOM.toString()));
-        } else if (flag.equals(FLAG_CHECKED_IN_GUEST.toString())) {
-            EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_CHECKED_IN_GUEST.toString()));
-        }
-
+        // flag is guaranteed to be valid by the parser, so no need to throw exception
+        EventsCenter.getInstance().post(new ListingChangedEvent(flag));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

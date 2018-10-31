@@ -126,14 +126,14 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleListingChangeEvent(ListingChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        if (event.getFlag().equals(FLAG_GUEST.toString())) {
-            setDisplayArchivedGuestList();
+        if (event.getFlag().equals(FLAG_GUEST)) {
+            setDisplayGuestList();
             showGuestList();
             showGuestDetailedPanel();
-        } else if (event.getFlag().equals(FLAG_ROOM.toString())) {
+        } else if (event.getFlag().equals(FLAG_ROOM)) {
             showRoomList();
             showRoomDetailedPanel();
-        } else if (event.getFlag().equals(FLAG_CHECKED_IN_GUEST.toString())) {
+        } else if (event.getFlag().equals(FLAG_CHECKED_IN_GUEST)) {
             setDisplayCheckedInGuestList();
             showGuestList();
             showGuestDetailedPanel();
@@ -150,8 +150,8 @@ public class UiManager extends ComponentManager implements Ui {
         mainWindow.setGuestListPanelDisplayCheckedInGuestList();
     }
     
-    private void setDisplayArchivedGuestList() {
-        mainWindow.setGuestListPanelDisplayArchivedGuestList();
+    private void setDisplayGuestList() {
+        mainWindow.setGuestListPanelDisplayGuestList();
     }
 
     private void showRoomList() {

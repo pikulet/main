@@ -151,13 +151,4 @@ public class ParserUtil {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
-    /**
-     * Returns true if argument matches any of the following flags: FLAG_GUEST, FLAG_ROOM, FLAG_CHECKED_IN_GUEST
-     */
-    public static boolean isValidFlag(String args) {
-        return args.equals(FLAG_GUEST.toString())
-                || args.equals(FLAG_ROOM.toString())
-                || args.equals(FLAG_CHECKED_IN_GUEST.toString());
-    }
-
 }

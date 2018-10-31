@@ -270,7 +270,7 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Sets the observable list of the guest list panel to be the list of archived guests
      */
-    public void setGuestListPanelDisplayArchivedGuestList() {
+    public void setGuestListPanelDisplayGuestList() {
         guestListPanel = new GuestListPanel(logic.getFilteredGuestList());
         guestListPanelPlaceholder.getChildren().add(guestListPanel.getRoot());
     }
