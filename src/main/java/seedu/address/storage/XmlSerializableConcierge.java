@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -16,6 +17,9 @@ import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.exceptions.DuplicateRoomException;
+import seedu.address.model.room.exceptions.RoomMissingException;
 
 /**
  * An Immutable Concierge that is serializable to XML format
@@ -26,11 +30,13 @@ public class XmlSerializableConcierge {
     public static final String MESSAGE_DUPLICATE_GUEST = "Guest list contains duplicate guest(s).";
     public static final String MESSAGE_DUPLICATE_ROOM = "Room list contains duplicate room(s).";
     public static final String MESSAGE_DUPLICATE_ITEM = "Menu contains items with same number.";
+    public static final String MESSAGE_ROOM_MISSING = "Room list is missing room(s) from total of "
+            + RoomNumber.MAX_ROOM_NUMBER + " rooms.";
 
     @XmlElement
     private List<XmlAdaptedGuest> guests;
 
-    @XmlElement
+    @XmlElement(required = true)
     private List<XmlAdaptedRoom> rooms;
 
     @XmlElement
@@ -83,15 +89,18 @@ public class XmlSerializableConcierge {
         }
         concierge.setMenu(newMenu);
 
+        List<Room> modelRoomList = new LinkedList<>();
         for (XmlAdaptedRoom r : rooms) {
-            Room room = r.toModelType(concierge.getMenu());
-            if (concierge.hasRoom(room)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM);
-            }
-            concierge.addRoom(room);
+            modelRoomList.add(r.toModelType(concierge.getMenu()));
         }
-
-        return concierge;
+        try {
+            concierge.setRooms(modelRoomList);
+            return concierge;
+        } catch (DuplicateRoomException e) {
+            throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM, e);
+        } catch (RoomMissingException e) {
+            throw new IllegalValueException(MESSAGE_ROOM_MISSING, e);
+        }
     }
 
     @Override

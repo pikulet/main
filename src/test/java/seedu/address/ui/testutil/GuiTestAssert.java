@@ -11,6 +11,7 @@ import guitests.guihandles.GuestListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.RoomCardHandle;
 import guitests.guihandles.RoomDetailedCardHandle;
+import guitests.guihandles.RoomListPanelHandle;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.Room;
 import seedu.address.ui.MainWindow;
@@ -74,7 +75,7 @@ public class GuiTestAssert {
     public static void assertCardDisplaysDetailedRoom(Room expectedRoom, RoomDetailedCardHandle actualCard) {
         assertEquals("Room: " + expectedRoom.getRoomNumber(), actualCard.getRoomNumber());
         assertEquals("Capacity: " + expectedRoom.getCapacity(), actualCard.getCapacity());
-        assertEquals("Expenses: " + expectedRoom.getExpenses().getTotalCost(), actualCard.getExpenses());
+        assertEquals("Expenses: " + expectedRoom.getExpenses().toStringTotalCost(), actualCard.getExpenses());
         assertEquals(expectedRoom.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
@@ -107,7 +108,7 @@ public class GuiTestAssert {
      * Asserts that the list in {@code guestListPanelHandle} displays the details of {@code guests} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(GuestListPanelHandle guestListPanelHandle, Guest... guests) {
+    public static void assertGuestListMatching(GuestListPanelHandle guestListPanelHandle, Guest... guests) {
         for (int i = 0; i < guests.length; i++) {
             guestListPanelHandle.navigateToCard(i);
             assertCardDisplaysGuest(guests[i], guestListPanelHandle.getGuestCardHandle(i));
@@ -118,8 +119,27 @@ public class GuiTestAssert {
      * Asserts that the list in {@code guestListPanelHandle} displays the details of {@code guests} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(GuestListPanelHandle guestListPanelHandle, List<Guest> guests) {
-        assertListMatching(guestListPanelHandle, guests.toArray(new Guest[0]));
+    public static void assertGuestListMatching(GuestListPanelHandle guestListPanelHandle, List<Guest> guests) {
+        assertGuestListMatching(guestListPanelHandle, guests.toArray(new Guest[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code roomListPanelHandle} displays the details
+     * of {@code rooms} correctly and in the correct order.
+     */
+    public static void assertRoomListMatching(RoomListPanelHandle roomListPanelHandle, Room... rooms) {
+        for (int i = 0; i < rooms.length; i++) {
+            roomListPanelHandle.navigateToCard(i);
+            assertCardDisplaysRoom(rooms[i], roomListPanelHandle.getRoomCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code roomListPanelHandle} displays the details
+     * of {@code roooms} correctly and in the correct order.
+     */
+    public static void assertRoomListMatching(RoomListPanelHandle roomListPanelHandle, List<Room> rooms) {
+        assertRoomListMatching(roomListPanelHandle, rooms.toArray(new Room[0]));
     }
 
     /**

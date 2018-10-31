@@ -50,6 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyConcierge newData) {
         versionedConcierge.resetData(newData);
+        updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 
@@ -160,25 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge.checkoutRoom(roomNumber, bookingPeriod);
     }
 
-    @Override
-    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-        return versionedConcierge.isRoomCheckedIn(roomNumber);
-    }
-
-    public boolean roomHasBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasBookings(roomNumber);
-    }
-
-    @Override
-    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasActiveBooking(roomNumber);
-    }
-
-
-    @Override
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
-        return versionedConcierge.roomHasActiveOrExpiredBooking(roomNumber);
-    }
+    // ========= Expenses =================================================
 
     @Override
     public void addExpense(RoomNumber roomNumber, Expense expense) {
@@ -187,7 +170,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateConciergeChanged();
     }
 
-    //=========== Undo/Redo =================================================================================
+    //=========== Undo/Redo ================================================
 
     @Override
     public boolean canUndoConcierge() {

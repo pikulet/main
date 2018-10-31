@@ -4,9 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalConcierge.getTypicalConcierge;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -16,7 +14,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.TypicalBookingPeriods;
-import seedu.address.testutil.TypicalBookings;
+import seedu.address.testutil.TypicalConcierge;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
@@ -25,19 +23,8 @@ import seedu.address.testutil.TypicalRoomNumbers;
  */
 public class CheckoutCommandTest {
 
-    private Model model = new ModelManager(getTypicalConcierge(), new UserPrefs());
+    private Model model = new ModelManager(TypicalConcierge.getTypicalConcierge(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
-
-    @Before
-    public void initialize() {
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_001, TypicalBookings.LASTWEEK_YESTERDAY);
-
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_002, TypicalBookings.YESTERDAY_TODAY);
-        model.checkInRoom(TypicalRoomNumbers.ROOM_NUMBER_002);
-
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_010, TypicalBookings.TODAY_TOMORROW);
-        model.addBooking(TypicalRoomNumbers.ROOM_NUMBER_011, TypicalBookings.TOMORROW_NEXTWEEK);
-    }
 
     @Test
     public void execute_validCheckoutExpiredBookingLastweekYesterday_success() {
@@ -54,8 +41,8 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_validCheckoutBookingCheckedIn_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_002;
+    public void execute_validCheckoutBookingNotCheckedIn_success() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -68,8 +55,8 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void execute_validCheckoutBookingNotCheckedIn_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
+    public void execute_validCheckoutBookingCheckedIn_success() {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_012;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout);
@@ -83,7 +70,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_validCheckoutBookingPeriod_success() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_022;
         BookingPeriod bookingPeriodToCheckOut = TypicalBookingPeriods.TOMORROW_NEXTWEEK;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, bookingPeriodToCheckOut);
 
@@ -99,7 +86,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_invalidCheckoutBookingPeriod_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
         BookingPeriod invalidBookingPeriodToCheckOut = TypicalBookingPeriods.TODAY_TOMORROW;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, invalidBookingPeriodToCheckOut);
 
@@ -112,7 +99,7 @@ public class CheckoutCommandTest {
 
     @Test
     public void execute_invalidCheckoutNoBooking_throwsCommandException() {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_020;
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_031;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout);
 
         String expectedMessage = String.format(CheckoutCommand.MESSAGE_NO_ROOM_BOOKING, roomNumberToCheckout);
@@ -121,8 +108,8 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+    public void executeUndoRedo_validCheckout_success() throws Exception {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_022;
         BookingPeriod bookingPeriodToCheckOut = TypicalBookingPeriods.TOMORROW_NEXTWEEK;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, bookingPeriodToCheckOut);
 
@@ -143,8 +130,8 @@ public class CheckoutCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() throws Exception {
-        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_011;
+    public void executeUndoRedo_invalidCheckout_failure() throws Exception {
+        RoomNumber roomNumberToCheckout = TypicalRoomNumbers.ROOM_NUMBER_010;
         BookingPeriod invalidBookingPeriodToCheckOut = TypicalBookingPeriods.TODAY_TOMORROW;
         CheckoutCommand checkoutCommand = new CheckoutCommand(roomNumberToCheckout, invalidBookingPeriodToCheckOut);
 
@@ -167,8 +154,8 @@ public class CheckoutCommandTest {
         assertTrue(checkoutFirstCommand.equals(checkoutFirstCommand));
 
         // same values -> returns true
-        CheckoutCommand deleteFirstCommandCopy = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001);
-        assertTrue(checkoutFirstCommand.equals(deleteFirstCommandCopy));
+        CheckoutCommand checkoutFirstCommandCopy = new CheckoutCommand(TypicalRoomNumbers.ROOM_NUMBER_001);
+        assertTrue(checkoutFirstCommand.equals(checkoutFirstCommandCopy));
 
         // different types -> returns false
         assertFalse(checkoutFirstCommand.equals(1));
