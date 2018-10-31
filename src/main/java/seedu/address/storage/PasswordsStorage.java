@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.util.InvalidPasswordException;
+import seedu.address.model.util.InvalidLogInException;
 
 /**
  * Represents a storage for user passwords
@@ -23,6 +23,6 @@ public interface PasswordsStorage {
      * Return true if the password matches the username and false otherwise.
      */
     boolean checkPassword(String userName, String hashedPassword)
-            throws IOException, InvalidPasswordException, DataConversionException;
+            throws IOException, InvalidLogInException, DataConversionException;
 
 }

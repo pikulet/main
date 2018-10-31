@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.util.InvalidPasswordException;
+import seedu.address.model.util.InvalidLogInException;
 
 /**
  * A class to access the passwords stored in the hard disk as a json file
@@ -25,7 +25,7 @@ public class JsonPasswordsStorage implements PasswordsStorage {
 
     @Override
     public boolean checkPassword(String userName, String hashedPassword)
-            throws IOException, InvalidPasswordException, DataConversionException {
+            throws IOException, InvalidLogInException, DataConversionException {
         String fileContent = FileUtil.readFromFile(filePath);
         return false;
     }

@@ -18,7 +18,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.model.util.InvalidPasswordException;
+import seedu.address.model.util.InvalidLogInException;
 
 /**
  * Represents the in-memory model of Concierge data.
@@ -74,7 +74,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void signIn(String userName, String hashedPassword) throws InvalidPasswordException {
+    public void signIn(String userName, String hashedPassword) throws InvalidLogInException {
 
     }
 
