@@ -1,13 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ARCHIVED_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_CHECKED_IN_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GUESTS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ROOMS;
-import static seedu.address.model.Model.PREDICATE_SHOW_NO_GUESTS;
-import static seedu.address.model.Model.PREDICATE_SHOW_NO_ROOMS;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ListingChangedEvent;
@@ -49,8 +45,8 @@ public class ListCommand extends Command {
             EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_GUEST.toString()));
         } else if (flag.equals(FLAG_ROOM.toString())) {
             EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_ROOM.toString()));
-        } else if (flag.equals(FLAG_ARCHIVED_GUEST.toString())) {
-            EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_ARCHIVED_GUEST.toString()));
+        } else if (flag.equals(FLAG_CHECKED_IN_GUEST.toString())) {
+            EventsCenter.getInstance().post(new ListingChangedEvent(FLAG_CHECKED_IN_GUEST.toString()));
         }
 
         return new CommandResult(MESSAGE_SUCCESS);

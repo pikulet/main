@@ -147,6 +147,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedConcierge.addBooking(roomNumber, booking);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 
@@ -154,6 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void checkInRoom(RoomNumber roomNumber) {
         versionedConcierge.checkInRoom(roomNumber);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 
@@ -161,6 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void checkoutRoom(RoomNumber roomNumber) {
         versionedConcierge.checkoutRoom(roomNumber);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 

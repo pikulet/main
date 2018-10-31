@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ARCHIVED_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_CHECKED_IN_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
@@ -157,7 +157,7 @@ public class ParserUtil {
     public static boolean isValidFlag(String args) {
         return args.equals(FLAG_GUEST.toString())
                 || args.equals(FLAG_ROOM.toString())
-                || args.equals(FLAG_ARCHIVED_GUEST.toString());
+                || args.equals(FLAG_CHECKED_IN_GUEST.toString());
     }
 
 }

@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.parser.CliSyntax.FLAG_ARCHIVED_GUEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_CHECKED_IN_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 
@@ -127,14 +127,14 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         if (event.getFlag().equals(FLAG_GUEST.toString())) {
-            setDisplayCheckedInGuestList();
+            setDisplayArchivedGuestList();
             showGuestList();
             showGuestDetailedPanel();
         } else if (event.getFlag().equals(FLAG_ROOM.toString())) {
             showRoomList();
             showRoomDetailedPanel();
-        } else if (event.getFlag().equals(FLAG_ARCHIVED_GUEST.toString())) {
-            setDisplayArchivedGuestList();
+        } else if (event.getFlag().equals(FLAG_CHECKED_IN_GUEST.toString())) {
+            setDisplayCheckedInGuestList();
             showGuestList();
             showGuestDetailedPanel();
         }
