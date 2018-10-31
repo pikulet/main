@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.Expense;
@@ -41,7 +42,7 @@ public class Concierge implements ReadOnlyConcierge {
     public Concierge() {}
 
     /**
-     * Creates an Concierge using the Guests in the {@code toBeCopied}
+     * Creates an Concierge using the data in the {@code toBeCopied}
      */
     public Concierge(ReadOnlyConcierge toBeCopied) {
         this();
@@ -109,14 +110,6 @@ public class Concierge implements ReadOnlyConcierge {
     }
 
     //=========== Room operations =============================================================
-
-    /**
-     * Adds a room to Concierge.
-     * The room must not already exist in Concierge.
-     */
-    public void addRoom(Room r) {
-        rooms.add(r);
-    }
 
     /**
      * Replaces the contents of the room list with {@code rooms}.
@@ -193,47 +186,12 @@ public class Concierge implements ReadOnlyConcierge {
         return guests.contains(guest);
     }
 
-    /**
-     * Returns true if a room with the same identity as {@code room} exists in Concierge.
-     */
-    public boolean hasRoom(Room room) {
-        requireNonNull(room);
-        return rooms.contains(room);
-    }
-
-    /**
-     * Returns true if the room identified by its room number is checked in.
-     */
-    public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).isCheckedIn();
-    }
-
-    /**
-     * Returns true if the room's bookings is non-empty
-     */
-    public boolean roomHasBookings(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).hasBookings();
-    }
-
-    /**
-     * Returns true if the room's first booking is active.
-     */
-    public boolean roomHasActiveBooking(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).hasActiveBooking();
-    }
-
-    /**
-     * Returns true if the room's first booking is active or expired
-     */
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
-        return rooms.getRoom(roomNumber).hasActiveOrExpiredBooking();
-    }
-
     //// util methods
 
     @Override
     public String toString() {
-        return guests.asUnmodifiableObservableList().size() + " guests";
+        return guests.asUnmodifiableObservableList().size() + " guests"
+                + rooms.toString();
         // TODO: refine later
     }
 
@@ -241,11 +199,11 @@ public class Concierge implements ReadOnlyConcierge {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Concierge // instanceof handles nulls
-                && guests.equals(((Concierge) other).guests));
+                    && guests.equals(((Concierge) other).guests) && rooms.equals(((Concierge) other).rooms));
     }
 
     @Override
     public int hashCode() {
-        return guests.hashCode();
+        return Objects.hash(guests, rooms);
     }
 }

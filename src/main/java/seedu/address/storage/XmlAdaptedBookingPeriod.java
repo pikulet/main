@@ -27,6 +27,14 @@ public class XmlAdaptedBookingPeriod {
     public XmlAdaptedBookingPeriod() {}
 
     /**
+     * Constructor FOR TESTING in XmlAdaptedBookingPeriodTest
+     */
+    public XmlAdaptedBookingPeriod(String startDate, String endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    /**
      * Converts a given booking into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedBookingPeriod
@@ -47,7 +55,7 @@ public class XmlAdaptedBookingPeriod {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, LocalDate.class.getSimpleName()));
         }
-        if (!BookingPeriod.parsableDate(startDate) || !BookingPeriod.parsableDate(endDate)) {
+        if (!BookingPeriod.isValidBookingPeriod(startDate, endDate)) {
             throw new IllegalValueException(BookingPeriod.MESSAGE_BOOKING_PERIOD_CONSTRAINTS);
         }
 

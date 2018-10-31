@@ -73,21 +73,6 @@ public interface Model {
     //=========== Methods for room. ===========================================
 
     /**
-     * Returns true if the room's bookings is non-empty
-     */
-    boolean roomHasBooking(RoomNumber roomNumber);
-
-    /**
-     * Returns true if the room's first booking is active.
-     */
-    boolean roomHasActiveBooking(RoomNumber roomNumber);
-
-    /**
-     * Returns true if the room's first booking is active or upcoming
-     */
-    public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber);
-
-    /**
      * Add a booking to a room identified by its room number.
      */
     public void addBooking(RoomNumber roomNumber, Booking booking);
@@ -112,11 +97,6 @@ public interface Model {
      * Checks out a room's booking using its room number and the specified booking period
      */
     public void checkoutRoom(RoomNumber roomNumber, BookingPeriod bookingPeriod);
-
-    /**
-     * Returns true if the room identified by its room number is checked in.
-     */
-    boolean isRoomCheckedIn(RoomNumber roomNumber);
 
     /* =========== Methods for undo and redo. =================================
 

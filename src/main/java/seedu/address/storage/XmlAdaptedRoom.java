@@ -5,39 +5,36 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Menu;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.room.Capacity;
-import seedu.address.model.room.DoubleRoom;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.SingleRoom;
-import seedu.address.model.room.SuiteRoom;
-import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.Bookings;
+import seedu.address.model.room.booking.exceptions.OverlappingBookingException;
 import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Room.
+ * Note: Tagged as XmlRootElement for XML tests to be able to write XML files for just this class
  */
+@XmlRootElement(name = "room")
 public class XmlAdaptedRoom {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Room's %s field is missing!";
     public static final String MESSAGE_OVERLAPPING_BOOKING = "Room contains overlapping bookings!";
-    public static final String MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY = "No such rooms with the capacity %d exists.";
 
     @XmlElement(required = true)
     private String roomNumber;
     @XmlElement(required = true)
-    private Integer capacity;
+    private Capacity capacity;
 
     @XmlElement
     private List<XmlAdaptedBooking> bookings = new ArrayList<>();
@@ -53,13 +50,25 @@ public class XmlAdaptedRoom {
     public XmlAdaptedRoom() {}
 
     /**
+     * Constructor FOR TESTING in XmlAdaptedRoomTest
+     */
+    public XmlAdaptedRoom(String roomNumber, Capacity capacity, List<XmlAdaptedBooking> bookings,
+                          List<XmlAdaptedExpense> expenses, List<XmlAdaptedTag> tagged) {
+        this.roomNumber = roomNumber;
+        this.capacity = capacity;
+        this.bookings = bookings;
+        this.expenses = expenses;
+        this.tagged = tagged;
+    }
+
+    /**
      * Converts a given room into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedRoom
      */
     public XmlAdaptedRoom(Room source) {
         roomNumber = source.getRoomNumber().toString();
-        capacity = source.getCapacity().getValue();
+        capacity = source.getCapacity();
         expenses.addAll(source.getExpenses().getExpensesList().stream().map(XmlAdaptedExpense::new)
             .collect(Collectors.toList()));
         bookings.addAll(source.getBookings().getSortedBookingsSet().stream().map(XmlAdaptedBooking::new)
@@ -87,16 +96,16 @@ public class XmlAdaptedRoom {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName()));
         }
-        if (!Capacity.isValidCapacity(capacity)) {
-            throw new IllegalValueException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
-        }
-        final Capacity modelCapacity = new Capacity(capacity);
+        final Capacity modelCapacity = capacity;
 
-        final SortedSet<Booking> bookingsSet = new TreeSet<>();
-        for (XmlAdaptedBooking b : bookings) {
-            bookingsSet.add(b.toModelType());
+        Bookings modelBookings = new Bookings();
+        try {
+            for (XmlAdaptedBooking b : bookings) {
+                modelBookings = modelBookings.add(b.toModelType());
+            }
+        } catch (OverlappingBookingException e) {
+            throw new IllegalValueException(MESSAGE_OVERLAPPING_BOOKING);
         }
-        final Bookings modelBookings = new Bookings(bookingsSet);
 
         final List<Expense> expenseList = new ArrayList<>();
         for (XmlAdaptedExpense expense : expenses) {
@@ -110,15 +119,12 @@ public class XmlAdaptedRoom {
         }
         final Set<Tag> modelTags = new HashSet<>(roomTags);
 
-        if (modelCapacity.equals(SingleRoom.CAPACITY_SINGLE_ROOM)) {
-            return new SingleRoom(modelRoomNumber, modelExpenses, modelBookings, modelTags);
-        } else if (modelCapacity.equals(DoubleRoom.CAPACITY_DOUBLE_ROOM)) {
-            return new DoubleRoom(modelRoomNumber, modelExpenses, modelBookings, modelTags);
-        } else if (modelCapacity.equals(SuiteRoom.CAPACITY_SUITE_ROOM)) {
-            return new SuiteRoom(modelRoomNumber, modelExpenses, modelBookings, modelTags);
-        } else {
-            throw new IllegalValueException(String.format(MESSAGE_NO_SUCH_ROOM_WITH_CAPACITY, capacity));
-        }
+        return new Room(modelRoomNumber, modelCapacity, modelExpenses, modelBookings, modelTags);
+    }
+
+    @Override
+    public String toString() {
+        return roomNumber + capacity + expenses + bookings + tagged;
     }
 
     @Override

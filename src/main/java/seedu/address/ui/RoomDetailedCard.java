@@ -1,15 +1,11 @@
 package seedu.address.ui;
 
-import java.util.Optional;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.room.Room;
-import seedu.address.model.room.booking.Booking;
-import seedu.address.model.room.booking.Bookings;
 
 /**
  * An UI component that displays information of a {@code Room}.
@@ -39,9 +35,9 @@ public class RoomDetailedCard extends UiPart<Region> {
     @FXML
     private Label expenses;
     @FXML
-    private FlowPane bookings;
+    private FlowPane activeBooking;
     @FXML
-    private FlowPane otherBookings;
+    private FlowPane allOtherBookings;
     @FXML
     private FlowPane tags;
 
@@ -51,15 +47,10 @@ public class RoomDetailedCard extends UiPart<Region> {
         header.setText("Room Details:");
         roomNumber.setText("Room: " + room.getRoomNumber().toString());
         capacity.setText("Capacity: " + room.getCapacity().toString());
-        expenses.setText("Expenses: " + room.getExpenses().getTotalCost());
-        Optional<Booking> activeBooking = room.getActiveBooking();
-        bookings.getChildren().add(new Label("Active booking:\n"
-                + activeBooking.map(Booking::toString).orElse("")));
-        Bookings allOtherBookings = room.getBookings();
-        if (activeBooking.isPresent()) {
-            allOtherBookings = allOtherBookings.remove(activeBooking.get());
-        }
-        otherBookings.getChildren().add(new Label("All other bookings: \n" + allOtherBookings));
+        expenses.setText("Expenses: " + room.getExpenses().toStringTotalCost());
+        activeBooking.getChildren().add(new Label("Active booking:\n" + room.getBookings().toStringActiveBooking()));
+        allOtherBookings.getChildren().add(new Label("All other bookings:\n"
+                + room.getBookings().toStringAllOtherBookings()));
         room.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
