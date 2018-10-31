@@ -1,7 +1,7 @@
 package seedu.address.model.login;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.io.IOException;
@@ -26,11 +26,11 @@ public class PasswordHashListTest {
 
     @Test
     public void constructor_invalidString_throwsIoException() {
-
-        // invalid format
         assertThrows(IOException.class, () -> new PasswordHashList("invalidPasswordRefList"));
     }
 
+    // TODO: Add support to assert the success of parsing
+    /*
     @Test
     public void constructor_validString_success() throws IOException {
 
@@ -44,8 +44,8 @@ public class PasswordHashListTest {
 
         // multiple entries
         getSamplePasswordHashList();
-
     }
+    */
 
     @Test
     public void getEmptyPasswordHashList_success() throws IOException {
@@ -74,17 +74,17 @@ public class PasswordHashListTest {
 
 
     @Test
-    public void getExpectedPassword_invalidUsername() throws IOException {
+    public void getExpegractedPassword_invalidUsername() throws IOException {
         PasswordHashList passwordRef = getSamplePasswordHashList();
 
         // incorrect username
-        assertTrue(!passwordRef.getExpectedPassword("user0").isPresent());
+        assertFalse(passwordRef.getExpectedPassword("user0").isPresent());
 
         // incorrect username case
-        assertTrue(!passwordRef.getExpectedPassword("USER1").isPresent());
+        assertFalse(passwordRef.getExpectedPassword("USER1").isPresent());
 
         // whitespace in preamble of username
-        assertTrue(!passwordRef.getExpectedPassword(" user1").isPresent());
+        assertFalse(passwordRef.getExpectedPassword(" user1").isPresent());
     }
 
     @Test
