@@ -50,7 +50,7 @@ public class XmlAdaptedExpenseTest {
         XmlAdaptedExpense testExpense = new XmlAdaptedExpense(INVALID_ITEM, VALID_COST, VALID_DATETIME);
         Expense convertedExpense = testExpense.toModelType(VALID_MENU);
         ExpenseType unknownType = new ExpenseType(INVALID_ITEM,
-                XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_NAME, XmlAdaptedExpense.EXPENSETYPE_UNKNOWN_COST);
+                XmlAdaptedExpense.EXPENSE_TYPE_UNKNOWN_NAME, XmlAdaptedExpense.EXPENSE_TYPE_UNKNOWN_COST);
         assertEquals(convertedExpense.getExpenseType(), unknownType);
         assertEquals(convertedExpense.getDateTimeString(), VALID_DATETIME);
     }

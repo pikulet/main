@@ -25,6 +25,8 @@ public class XmlSerializableConciergeTest {
     private static final Path INVALID_ROOM_FILE = TEST_DATA_FOLDER.resolve("invalidRoomConcierge.xml");
     private static final Path DUPLICATE_ROOM_FILE = TEST_DATA_FOLDER.resolve("duplicateRoomConcierge.xml");
     private static final Path OVERLAPPING_BOOKING_FILE = TEST_DATA_FOLDER.resolve("overlappingBookingConcierge.xml");
+    private static final Path INVALID_EXPENSE_FILE = TEST_DATA_FOLDER.resolve("invalidExpenseConcierge.xml");
+    private static final Path INVALID_ITEM_FILE = TEST_DATA_FOLDER.resolve("invalidItemConcierge.xml");
 
     private static final Concierge TYPICAL_CONCIERGE = TypicalConcierge.getTypicalConcierge();
 
@@ -96,4 +98,21 @@ public class XmlSerializableConciergeTest {
         dataFromFile.toModelType();
     }
 
+    @Test
+    public void toModelType_invalidExpenseFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(INVALID_EXPENSE_FILE,
+                XmlSerializableConcierge.class);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(XmlAdaptedExpense.MESSAGE_INVALID_COST);
+        dataFromFile.toModelType();
+    }
+
+    @Test
+    public void toModelType_invalidItemFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableConcierge dataFromFile = XmlUtil.getDataFromFile(INVALID_ITEM_FILE,
+                XmlSerializableConcierge.class);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(XmlAdaptedExpense.MESSAGE_INVALID_COST);
+        dataFromFile.toModelType();
+    }
 }

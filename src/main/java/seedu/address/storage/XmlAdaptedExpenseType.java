@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import static seedu.address.storage.XmlAdaptedExpense.MESSAGE_INVALID_COST;
-
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -70,7 +68,7 @@ public class XmlAdaptedExpenseType {
             throw new IllegalValueException(MESSAGE_COST_MISSING);
         }
         if (!Money.isValidMoneyFormat(itemCost)) {
-            throw new IllegalValueException(MESSAGE_INVALID_COST);
+            throw new IllegalValueException(XmlAdaptedExpense.MESSAGE_INVALID_COST);
         }
         try {
             return new ExpenseType(itemNumber, itemName, new Money(itemCost));

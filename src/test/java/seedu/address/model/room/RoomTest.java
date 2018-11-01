@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.expenses.Expense;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
 import seedu.address.model.room.booking.exceptions.ExpiredBookingsFoundException;
@@ -22,6 +23,7 @@ import seedu.address.testutil.ExpenseBuilder;
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalBookings;
+import seedu.address.testutil.TypicalExpenses;
 
 public class RoomTest {
     @Rule
@@ -142,15 +144,14 @@ public class RoomTest {
         editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking).withCapacity(Capacity.DOUBLE).build();
         assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedRoom));
 
-        /* TODO Expenses
         // same room number, different expenses -> returns true
-        editedSingle001 = new RoomBuilder(testRoomWithYesterdayTodayBooking).withExpenses(new Expenses()).build();
-        assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedSingle001));
-        */
+        editedRoom = new RoomBuilder(testRoomWithLastWeekYesterdayBookingCheckedIn)
+                .withExpenses(TypicalExpenses.getTypicalExpenses().getExpensesList()).build();
+        assertTrue(testRoomWithLastWeekYesterdayBookingCheckedIn.isSameRoom(editedRoom));
 
         // same room number, different bookings -> returns true
         editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking)
-            .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
+                .withBookings(TypicalBookings.getTypicalBookingsTodayTomorrow()).build();
         assertTrue(testRoomWithYesterdayTodayBooking.isSameRoom(editedRoom));
 
         // same room number, different tags -> return true
@@ -186,11 +187,10 @@ public class RoomTest {
             .build();
         assertFalse(testRoomWithYesterdayTodayBooking.equals(editedRoom));
 
-        /* TODO Expenses
-        // different capacity -> returns false
-        editedSingle001 = new RoomBuilder(testRoomWithYesterdayTodayBooking).withExpenses(new Expenses()).build();
-        assertFalse(testRoomWithYesterdayTodayBooking.equals(editedSingle001));
-        */
+        // different expenses -> returns false
+        editedRoom = new RoomBuilder(testRoomWithLastWeekYesterdayBookingCheckedIn)
+                .withExpenses(TypicalExpenses.getTypicalExpenses().getExpensesList()).build();
+        assertFalse(testRoomWithLastWeekYesterdayBookingCheckedIn.equals(editedRoom));
 
         // different bookings -> returns false
         editedRoom = new RoomBuilder(testRoomWithYesterdayTodayBooking)

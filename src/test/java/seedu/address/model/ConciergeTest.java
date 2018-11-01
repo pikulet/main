@@ -26,7 +26,12 @@ import seedu.address.model.expenses.Money;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
+import seedu.address.model.room.booking.exceptions.NotCheckedInException;
 import seedu.address.testutil.GuestBuilder;
+import seedu.address.testutil.TypicalExpenses;
+import seedu.address.testutil.TypicalRoomNumbers;
+import seedu.address.testutil.TypicalRooms;
 
 public class ConciergeTest {
 
@@ -116,6 +121,26 @@ public class ConciergeTest {
     public void getMenuMap_modifyMap_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         concierge.getMenuMap().put("1", new ExpenseType("1", "-", new Money(0, 0)));
+    }
+
+    //===================== Expenses Test ======================================================
+
+    @Test
+    public void addExpense_noBookings_throwsNoBookingException() {
+        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomList().asUnmodifiableObservableList());
+        thrown.expect(NoBookingException.class);
+        concierge.addExpense(concierge.getRoomList().get(0).roomNumber, TypicalExpenses.EXPENSE_RS01);
+    }
+
+    @Test
+    public void addExpense_notCheckedIn_throwsNotCheckedInException() {
+        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomListWithBookings().asUnmodifiableObservableList());
+        // get room 011, which is not checked in, based on TypicalRooms
+        Room notCheckedInRoom = concierge.getRoomList().stream()
+                .filter(r -> r.getRoomNumber().equals(TypicalRoomNumbers.ROOM_NUMBER_011))
+                .findFirst().get();
+        thrown.expect(NotCheckedInException.class);
+        concierge.addExpense(notCheckedInRoom.getRoomNumber(), TypicalExpenses.EXPENSE_RS01);
     }
 
     /**
