@@ -23,6 +23,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of Concierge data.
@@ -33,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedConcierge versionedConcierge;
     private final FilteredList<Guest> filteredGuests;
     private final FilteredList<Room> filteredRooms;
+    private final FilteredList<Guest> filteredCheckedInGuests;
     private final LogInManager logInManager;
 
     /**
@@ -61,6 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGuests = new FilteredList<>(versionedConcierge.getGuestList());
         filteredRooms = new FilteredList<>(versionedConcierge.getRoomList());
         logInManager = new LogInManager(passwordRef);
+        filteredCheckedInGuests = new FilteredList<>(versionedConcierge.getCheckedInGuestList());
     }
 
     public ModelManager() {
@@ -148,6 +151,21 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGuests.setPredicate(predicate);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of checked-in {@code Guest} backed by the internal list of
+     * {@code versionedConcierge}
+     */
+    @Override
+    public ObservableList<Guest> getFilteredCheckedInGuestList() {
+        return FXCollections.unmodifiableObservableList(filteredCheckedInGuests);
+    }
+
+    @Override
+    public void updateFilteredCheckedInGuestList(Predicate<Guest> predicate) {
+        requireNonNull(predicate);
+        filteredCheckedInGuests.setPredicate(predicate);
+    }
+
     //=========== Filtered Room List Accessors =============================================================
 
     /**
@@ -168,9 +186,15 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Room =======================================================
 
     @Override
+    public void addRoomTags(RoomNumber roomNumber, Tag... tags) {
+        versionedConcierge.addRoomTags(roomNumber, tags);
+    }
+
+    @Override
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedConcierge.addBooking(roomNumber, booking);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 
@@ -178,6 +202,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void checkInRoom(RoomNumber roomNumber) {
         versionedConcierge.checkInRoom(roomNumber);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 
@@ -185,6 +210,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void checkoutRoom(RoomNumber roomNumber) {
         versionedConcierge.checkoutRoom(roomNumber);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
+        updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 
