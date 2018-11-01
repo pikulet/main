@@ -143,6 +143,17 @@ public class ConciergeTest {
         concierge.addExpense(notCheckedInRoom.getRoomNumber(), TypicalExpenses.EXPENSE_RS01);
     }
 
+    @Test
+    public void addExpense_hasBookingAndCheckedIn_success() {
+        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomListWithBookings().asUnmodifiableObservableList());
+        // get room 011, which is not checked in, based on TypicalRooms
+        Room room = concierge.getRoomList().stream()
+                .filter(r -> r.getRoomNumber().equals(TypicalRoomNumbers.ROOM_NUMBER_011))
+                .findFirst().get();
+        concierge.checkInRoom(room.getRoomNumber());
+        concierge.addExpense(room.getRoomNumber(), TypicalExpenses.EXPENSE_RS01);
+    }
+
     /**
      * A stub ReadOnlyConcierge whose guests list can violate interface constraints.
      */
