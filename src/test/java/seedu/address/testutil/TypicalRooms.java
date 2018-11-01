@@ -14,8 +14,6 @@ import seedu.address.model.room.UniqueRoomList;
  */
 public class TypicalRooms {
 
-    public static final Room SINGLE_001 = getTypicalUniqueRoomList().get(0);
-
     /**
      * Returns a {@code UniqueRoomList} with all rooms.
      * Note: All rooms do not have bookings or expenses.
