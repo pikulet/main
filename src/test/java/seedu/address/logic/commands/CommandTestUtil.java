@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -12,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +22,7 @@ import seedu.address.model.Concierge;
 import seedu.address.model.Model;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.NameContainsKeywordsPredicate;
+import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.EditGuestDescriptorBuilder;
 import seedu.address.testutil.TypicalRoomNumbers;
 
@@ -48,10 +48,14 @@ public class CommandTestUtil {
             TypicalRoomNumbers.ROOM_NUMBER_001.value;
     public static final String VALID_ROOM_NUMBER_020 =
             TypicalRoomNumbers.ROOM_NUMBER_020.value;
-    public static final String VALID_DATE_START_AMY = "14/11/2018";
-    public static final String VALID_DATE_END_AMY = "17/11/2018";
-    public static final String VALID_DATE_START_BOB = "03/11/2018";
-    public static final String VALID_DATE_END_BOB = "05/11/2018";
+    public static final String VALID_DATE_START_AMY =
+            LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT);
+    public static final String VALID_DATE_END_AMY =
+            LocalDate.now().plusDays(3).format(BookingPeriod.DATE_TO_STRING_FORMAT);
+    public static final String VALID_DATE_START_BOB =
+            LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT);
+    public static final String VALID_DATE_END_BOB =
+            LocalDate.now().plusWeeks(1).format(BookingPeriod.DATE_TO_STRING_FORMAT);
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

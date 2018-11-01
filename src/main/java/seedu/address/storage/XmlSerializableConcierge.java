@@ -15,7 +15,6 @@ import seedu.address.model.Concierge;
 import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.guest.Guest;
-import seedu.address.model.guest.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
@@ -29,8 +28,6 @@ import seedu.address.model.room.exceptions.RoomMissingException;
 public class XmlSerializableConcierge {
 
     public static final String MESSAGE_DUPLICATE_GUEST = "Archived guest list contains duplicate guest(s).";
-    public static final String MESSAGE_DUPLICATE_CHECKED_IN_GUEST
-            = "Checked-in guest list contains duplicate guest(s).";
     public static final String MESSAGE_DUPLICATE_ROOM = "Room list contains duplicate room(s)";
     public static final String MESSAGE_ROOM_MISSING = "Room list is missing room(s) from total of "
             + RoomNumber.MAX_ROOM_NUMBER + " rooms.";
@@ -88,26 +85,22 @@ public class XmlSerializableConcierge {
         concierge.setMenu(newMenu);
 
         List<Room> modelRoomList = new LinkedList<>();
-        List<Guest> checkedInGuestList = new LinkedList<>();
         for (XmlAdaptedRoom r : rooms) {
             Room room = r.toModelType(concierge.getMenu());
+            modelRoomList.add(room);
+
             room.getBookings().getSortedBookingsSet().parallelStream()
                     .filter(Booking::getIsCheckedIn)
                     .map(Booking::getGuest)
-                    .forEach(checkedInGuestList::add);
-            modelRoomList.add(room);
+                    .forEach(concierge::addCheckedInGuest);
         }
+
         try {
             concierge.setRooms(modelRoomList);
         } catch (DuplicateRoomException e) {
             throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM, e);
         } catch (RoomMissingException e) {
             throw new IllegalValueException(MESSAGE_ROOM_MISSING, e);
-        }
-        try {
-            concierge.setCheckedInGuests(checkedInGuestList);
-        } catch (DuplicateGuestException e) {
-            throw new IllegalValueException(MESSAGE_DUPLICATE_CHECKED_IN_GUEST, e);
         }
         return concierge;
     }

@@ -14,7 +14,8 @@ import seedu.address.commons.events.ui.RoomPanelSelectionChangedEvent;
 import seedu.address.model.room.Room;
 
 public class RoomDetailedPanelTest extends GuiUnitTest {
-    private static final ObservableList<Room> TYPICAL_ROOMS = getTypicalUniqueRoomListClean().asUnmodifiableObservableList();
+    private static final ObservableList<Room> TYPICAL_ROOMS =
+            getTypicalUniqueRoomListClean().asUnmodifiableObservableList();
 
     private RoomPanelSelectionChangedEvent selectionChangedEventStub;
 

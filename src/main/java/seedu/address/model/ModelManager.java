@@ -148,7 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void addRoomTags(RoomNumber roomNumber, Tag... tags) {
         versionedConcierge.addRoomTags(roomNumber, tags);
     }
-    
+
     @Override
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedConcierge.addBooking(roomNumber, booking);

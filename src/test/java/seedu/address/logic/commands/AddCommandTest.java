@@ -24,6 +24,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.GuestBuilder;
 import seedu.address.testutil.TypicalBookingPeriods;
 import seedu.address.testutil.TypicalRoomNumbers;
@@ -211,6 +212,11 @@ public class AddCommandTest {
 
         @Override
         public void addBooking(RoomNumber roomNumber, Booking booking) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addRoomTags(RoomNumber roomNumber, Tag... tags) {
             throw new AssertionError("This method should not be called.");
         }
     }

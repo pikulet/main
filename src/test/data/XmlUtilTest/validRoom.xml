@@ -15,4 +15,5 @@
         </bookingPeriod>
         <isCheckedIn>false</isCheckedIn>
     </bookings>
+    <tagged>maintenance</tagged>
 </room>

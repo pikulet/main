@@ -25,13 +25,13 @@ public class CheckInCommand extends Command {
             + "Example: " + COMMAND_WORD + " 001";
 
     public static final String MESSAGE_CHECKIN_ROOM_SUCCESS = "Checked in Room: %1$s";
-    public static final String MESSAGE_NO_BOOKING =
+    public static final String MESSAGE_NO_BOOKING_CHECK_IN =
         "Cannot check in Room %1$s, as it has no bookings.";
     public static final String MESSAGE_EXPIRED_BOOKING_CHECK_IN =
         "Cannot check in Room %1$s, as it has expired bookings.";
     public static final String MESSAGE_INACTIVE_BOOKING_CHECKIN =
         "Cannot check in Room %1$s, as it does not have an active booking.";
-    public static final String MESSAGE_BOOKING_ALREADY_CHECKEDIN =
+    public static final String MESSAGE_BOOKING_ALREADY_CHECKED_IN =
         "Cannot check in Room %1$s, as it is already checked in.";
 
     private final RoomNumber roomNumber;
@@ -48,13 +48,13 @@ public class CheckInCommand extends Command {
             model.commitConcierge();
             return new CommandResult(String.format(MESSAGE_CHECKIN_ROOM_SUCCESS, roomNumber));
         } catch (NoBookingException e) {
-            throw new CommandException(String.format(MESSAGE_NO_BOOKING, roomNumber));
+            throw new CommandException(String.format(MESSAGE_NO_BOOKING_CHECK_IN, roomNumber));
         } catch (ExpiredBookingCheckInException e) {
             throw new CommandException(String.format(MESSAGE_EXPIRED_BOOKING_CHECK_IN, roomNumber));
         } catch (InactiveBookingCheckInException e) {
             throw new CommandException(String.format(MESSAGE_INACTIVE_BOOKING_CHECKIN, roomNumber));
         } catch (BookingAlreadyCheckedInException e) {
-            throw new CommandException(String.format(MESSAGE_BOOKING_ALREADY_CHECKEDIN, roomNumber));
+            throw new CommandException(String.format(MESSAGE_BOOKING_ALREADY_CHECKED_IN, roomNumber));
         }
     }
 

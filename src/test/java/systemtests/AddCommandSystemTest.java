@@ -35,7 +35,7 @@ import static seedu.address.testutil.TypicalGuests.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_001;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_020;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_021;
-import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_022;
+import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_031;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_099;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_AMY;
 
@@ -133,7 +133,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
 
         /* Case: filters the guest list before adding -> added */
         showGuestsWithName(KEYWORD_MATCHING_MEIER);
-        roomNumberToAdd = ROOM_NUMBER_022;
+        roomNumberToAdd = ROOM_NUMBER_031;
         assertCommandSuccess(IDA, roomNumberToAdd, bookingPeriodToAdd);
 
         /* ------------------------ Perform add operation while a guest card is selected --------------------------- */

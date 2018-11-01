@@ -85,7 +85,7 @@ public interface Model {
      * Adds given tags to the specified room
      */
     public void addRoomTags(RoomNumber roomNumber, Tag... tags);
-    
+
     /**
      * Add a booking to a room identified by its room number.
      */

@@ -91,20 +91,11 @@ public class TypicalBookings {
     }
 
     /* ============== Bookings with multiple bookings ========================================================== */
-    public static SortedSet<Booking> getMultipleBookingsSet1() {
+    public static SortedSet<Booking> getMultipleBookingsSet() {
         SortedSet<Booking> bookings = new TreeSet<>();
-        bookings.add(LASTWEEK_YESTERDAY);
+        bookings.add(LASTWEEK_YESTERDAY_CHECKED_IN);
         bookings.add(YESTERDAY_TODAY);
         bookings.add(TODAY_TOMORROW);
-        bookings.add(TOMORROW_NEXTWEEK);
-        return bookings;
-    }
-
-    public static SortedSet<Booking> getMultipleBookingsSet2() {
-        SortedSet<Booking> bookings = new TreeSet<>();
-        bookings.add(LASTWEEK_YESTERDAY);
-        bookings.add(YESTERDAY_TODAY);
-        bookings.add(TODAY_TOMORROW_CHECKED_IN);
         bookings.add(TOMORROW_NEXTWEEK);
         return bookings;
     }

@@ -2,12 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.Expense;
@@ -61,7 +58,7 @@ public class Concierge implements ReadOnlyConcierge {
     public ObservableList<Guest> getGuestList() {
         return guests.asUnmodifiableObservableList();
     }
-    
+
     @Override
     public ObservableList<Guest> getCheckedInGuestList() {
         return checkedInGuests.asUnmodifiableObservableList();
@@ -200,12 +197,12 @@ public class Concierge implements ReadOnlyConcierge {
      * Checks out a room's first booking using its room number and remove the guest from the checked-in guest list
      */
     public void checkoutRoom(RoomNumber roomNumber) {
-        Room room = rooms.getRoom(roomNumber);        
+        Room room = rooms.getRoom(roomNumber);
         rooms.setRoom(room, room.checkout());
 
         Booking bookingToCheckout = room.getBookings().getFirstBooking();
         Guest guestToCheckout = bookingToCheckout.getGuest();
-        checkedInGuests.remove(guestToCheckout);
+        removeCheckedInGuest(guestToCheckout);
     }
 
     /**
@@ -219,7 +216,7 @@ public class Concierge implements ReadOnlyConcierge {
         Booking bookingToCheckout = room.getBookings()
             .getFirstBookingByPredicate(booking -> booking.getBookingPeriod().equals(bookingPeriod));
         Guest guestToCheckout = bookingToCheckout.getGuest();
-        checkedInGuests.remove(guestToCheckout);
+        removeCheckedInGuest(guestToCheckout);
     }
 
     public void setMenu(Map<String, ExpenseType> menu) {
@@ -284,5 +281,5 @@ public class Concierge implements ReadOnlyConcierge {
     public int hashCode() {
         return Objects.hash(guests, checkedInGuests, rooms);
     }
-    
+
 }

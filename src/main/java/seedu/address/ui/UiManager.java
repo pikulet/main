@@ -149,7 +149,7 @@ public class UiManager extends ComponentManager implements Ui {
     private void setDisplayCheckedInGuestList() {
         mainWindow.setGuestListPanelDisplayCheckedInGuestList();
     }
-    
+
     private void setDisplayGuestList() {
         mainWindow.setGuestListPanelDisplayGuestList();
     }

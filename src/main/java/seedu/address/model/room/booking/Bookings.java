@@ -67,10 +67,9 @@ public class Bookings {
 
     /**
      * Returns an {@code Optional} of the first active booking of this room
-     * Note 1: We return an optional here and not throw exception because only GUI elements (RoomCard and 
-     * RoomDetailedCard) use this method. It makes it difficult to read the code there if we need to handle exceptions
-     * there.
-     * Note 2: There can be more than one active booking at a time. 
+     * Note 1: We return an optional here and not throw exception because only GUI elements (RoomCard and
+     * RoomDetailedCard) use this method. It makes it difficult to read the GUI code if exceptions are handled there.
+     * Note 2: There can be more than one active booking at a time.
      * For example, Booking A ends on 01/11/18 and Booking B starts on 01/11/18. This is allowed, to simulate a
      * turnover of rooms in the same day.
      */

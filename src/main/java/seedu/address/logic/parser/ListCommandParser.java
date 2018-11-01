@@ -28,7 +28,7 @@ public class ListCommandParser implements Parser<ListCommand> {
         } else if (trimmedArgs.equals(FLAG_ROOM.toString())) {
             return new ListCommand(FLAG_ROOM);
         } else if (trimmedArgs.equals(FLAG_CHECKED_IN_GUEST.toString())) {
-            return  new ListCommand(FLAG_CHECKED_IN_GUEST);
+            return new ListCommand(FLAG_CHECKED_IN_GUEST);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }

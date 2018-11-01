@@ -82,7 +82,7 @@ public class RoomTest {
 
     @Test
     public void checkIn_noBooking_throwsNoBookingException() {
-        thrown.expect(InactiveBookingCheckInException.class);
+        thrown.expect(NoBookingException.class);
         testRoomWithoutBooking.checkIn();
     }
 
