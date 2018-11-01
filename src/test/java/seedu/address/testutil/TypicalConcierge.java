@@ -23,7 +23,7 @@ public class TypicalConcierge {
     public static Concierge getTypicalConciergeClean() {
         Concierge ab = new Concierge();
         ab.setGuests(GUEST_LIST.asUnmodifiableObservableList());
-        ab.setRooms(ROOM_LIST.asUnmodifiableObservableList());
+        ab.setRooms(ROOM_LIST_WITHOUT_BOOKINGS.asUnmodifiableObservableList());
         return ab;
     }
 
