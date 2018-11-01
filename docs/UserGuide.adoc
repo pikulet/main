@@ -1,4 +1,4 @@
-= Concierge v1.1 - User Guide
+= Concierge v1.3 - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -202,17 +202,36 @@ Selects the 1st guest in the results of the `find` command.
 === Provide Room Service: `service` [red]#Coming in v1.3#
 
 Charges a room service to a room  +
-Format: `service r/ROOM_NUMBER svc/SERVICE_TYPE`
+Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 
 ****
-* SERVICE_TYPE refers to the serial number given to each type of service offered by the hotel.
+* ITEM_NUMBER refers to the number in the menu given to each type of service offered by the hotel.
 * This could be room service, on-demand video streaming, bath supplies, mini bar, etc.
+* The cost can be specified as well, if the guest is to be charged an amount that is
+  different from the cost in the menu. Note that the cost has to follow a strict format
+  such as 100.00, i.e. with two decimal places. The dollar part of the cost should also
+  not exceed `Integer.MAX_VALUE`.
+* Any expenses added with this command will be accounted for under the Expenses portion
+  of the respective rooms.
+* The default `Menu` that comes with Concierge consists of the following items. Items
+  may be modified, added, or removed through `concierge.xml`.
+** *RS01* -- Room service: Red wine -- $50.00
+** *RS02* -- Room service: Beef steak -- $70.00
+** *RS03* -- Room service: Thai massage -- $100.00
+** *MB01* -- Minibar: Coca cola -- $3.00
+** *MB02* -- Minibar: Sprite -- $3.00
+** *MB03* -- Minibar: Tiger beer -- $6.00
+** *MB04* -- Minibar: Mineral water -- $3.00
+** *SP01* -- Swimming pool: Entry -- $5.00
 ****
 
 Examples:
 
-* `service r/085 svc/01` +
-Adds a service with the serial number *01* to the room's expenses.
+* `service r/085 no/RS01` +
+Adds an expenditure of the item *RS01* to the room's expenses.
+
+* `service r/096 no/RS03 c/12.34` +
+Adds an expenditure of the item *RS03* to the room's expenses and charge $12.34 for it.
 
 === Room maintenance: `maintenance` [red]#Coming in v2.0#
 
