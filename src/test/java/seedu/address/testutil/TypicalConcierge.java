@@ -56,6 +56,7 @@ public class TypicalConcierge {
         addCheckedInGuest. Contrast with the standard way below. */
         ab.addBooking(TypicalRoomNumbers.ROOM_NUMBER_002, TypicalBookings.LASTWEEK_YESTERDAY_CHECKED_IN);
         ab.addCheckedInGuest(TypicalBookings.LASTWEEK_YESTERDAY_CHECKED_IN.getGuest());
+        ab.addRoomTags(TypicalRoomNumbers.ROOM_NUMBER_002, TypicalTags.ROOM_TAG_MAINTENANCE);
         
         ab.addBooking(TypicalRoomNumbers.ROOM_NUMBER_010, TypicalBookings.YESTERDAY_TODAY);
         ab.addBooking(TypicalRoomNumbers.ROOM_NUMBER_011, TypicalBookings.TODAY_TOMORROW);
