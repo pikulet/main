@@ -2,6 +2,8 @@ package seedu.address.storage;
 
 import static seedu.address.storage.XmlAdaptedExpense.MESSAGE_INVALID_COST;
 
+import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -79,5 +81,24 @@ public class XmlAdaptedExpenseType {
 
     public String getItemNumber() {
         return itemNumber;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof XmlAdaptedExpenseType)) {
+            return false;
+        }
+        XmlAdaptedExpenseType otherExpenseType = (XmlAdaptedExpenseType) other;
+        return itemNumber.equals(otherExpenseType.itemNumber)
+                && itemName.equals(otherExpenseType.itemName)
+                && itemCost.equals(otherExpenseType.itemCost);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemNumber, itemName, itemCost);
     }
 }

@@ -14,7 +14,10 @@ import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Money;
+import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
+import seedu.address.model.room.booking.exceptions.NotCheckedInException;
 
 /**
  * Adds an Expense to a Room.
@@ -62,9 +65,7 @@ public class ServiceCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         Menu menu = model.getMenu();
-        if (!model.roomHasBooking(roomNumber) || !model.isRoomCheckedIn(roomNumber)) {
-            throw new CommandException(MESSAGE_ROOM_HAS_NO_GUEST);
-        } else if (!menu.isValidMenuNumber(itemNumber)) {
+        if (!menu.isValidMenuNumber(itemNumber)) {
             throw new CommandException(MESSAGE_ITEM_NOT_FOUND);
         }
         Expense expense;
@@ -73,9 +74,14 @@ public class ServiceCommand extends Command {
         } else {
             expense = new Expense(menu.getExpenseType(itemNumber));
         }
-        model.addExpense(roomNumber, expense);
-        model.commitConcierge();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, expense.getItemName(), roomNumber.toString()));
+        try {
+            model.addExpense(roomNumber, expense);
+            model.commitConcierge();
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    expense.getItemName(), roomNumber.toString()));
+        } catch (NoBookingException | NotCheckedInException e) {
+            throw new CommandException(MESSAGE_ROOM_HAS_NO_GUEST);
+        }
     }
 
     @Override

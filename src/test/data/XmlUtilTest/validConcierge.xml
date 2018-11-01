@@ -50,8 +50,8 @@
                 <tagged>vip</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>24/10/2018</startDate>
-                <endDate>30/10/2018</endDate>
+                <startDate>25/10/2018</startDate>
+                <endDate>31/10/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -69,8 +69,8 @@
                 <tagged>specialNeeds</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>24/10/2018</startDate>
-                <endDate>30/10/2018</endDate>
+                <startDate>25/10/2018</startDate>
+                <endDate>31/10/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>true</isCheckedIn>
         </bookings>
@@ -114,8 +114,8 @@
                 <email>heinz@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>30/10/2018</startDate>
-                <endDate>31/10/2018</endDate>
+                <startDate>31/10/2018</startDate>
+                <endDate>1/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -131,8 +131,8 @@
                 <tagged>friends</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>31/10/2018</startDate>
-                <endDate>1/11/2018</endDate>
+                <startDate>1/11/2018</startDate>
+                <endDate>2/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -147,8 +147,8 @@
                 <email>werner@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>31/10/2018</startDate>
-                <endDate>1/11/2018</endDate>
+                <startDate>1/11/2018</startDate>
+                <endDate>2/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>true</isCheckedIn>
         </bookings>
@@ -191,8 +191,8 @@
                 <email>lydia@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>31/10/2018</startDate>
-                <endDate>7/11/2018</endDate>
+                <startDate>1/11/2018</startDate>
+                <endDate>8/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -207,8 +207,8 @@
                 <email>anna@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>1/11/2018</startDate>
-                <endDate>7/11/2018</endDate>
+                <startDate>2/11/2018</startDate>
+                <endDate>8/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -224,8 +224,8 @@
                 <tagged>vip</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>24/10/2018</startDate>
-                <endDate>30/10/2018</endDate>
+                <startDate>25/10/2018</startDate>
+                <endDate>31/10/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -236,8 +236,8 @@
                 <email>heinz@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>30/10/2018</startDate>
-                <endDate>31/10/2018</endDate>
+                <startDate>31/10/2018</startDate>
+                <endDate>1/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -249,8 +249,8 @@
                 <tagged>friends</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>31/10/2018</startDate>
-                <endDate>1/11/2018</endDate>
+                <startDate>1/11/2018</startDate>
+                <endDate>2/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -261,8 +261,8 @@
                 <email>anna@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>1/11/2018</startDate>
-                <endDate>7/11/2018</endDate>
+                <startDate>2/11/2018</startDate>
+                <endDate>8/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -306,8 +306,8 @@
                 <tagged>vip</tagged>
             </guest>
             <bookingPeriod>
-                <startDate>24/10/2018</startDate>
-                <endDate>30/10/2018</endDate>
+                <startDate>25/10/2018</startDate>
+                <endDate>31/10/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -318,8 +318,8 @@
                 <email>heinz@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>30/10/2018</startDate>
-                <endDate>31/10/2018</endDate>
+                <startDate>31/10/2018</startDate>
+                <endDate>1/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -330,8 +330,8 @@
                 <email>werner@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>31/10/2018</startDate>
-                <endDate>1/11/2018</endDate>
+                <startDate>1/11/2018</startDate>
+                <endDate>2/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>true</isCheckedIn>
         </bookings>
@@ -342,8 +342,8 @@
                 <email>anna@example.com</email>
             </guest>
             <bookingPeriod>
-                <startDate>1/11/2018</startDate>
-                <endDate>7/11/2018</endDate>
+                <startDate>2/11/2018</startDate>
+                <endDate>8/11/2018</endDate>
             </bookingPeriod>
             <isCheckedIn>false</isCheckedIn>
         </bookings>
@@ -628,5 +628,44 @@
         <roomNumber>100</roomNumber>
         <capacity>SUITE</capacity>
     </rooms>
-    <menu/>
+    <menu>
+        <itemNumber>RS03</itemNumber>
+        <itemName>Room service: Thai massage</itemName>
+        <itemCost>100.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>MB02</itemNumber>
+        <itemName>Minibar: Sprite</itemName>
+        <itemCost>3.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>RS01</itemNumber>
+        <itemName>Room service: Red wine</itemName>
+        <itemCost>50.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>MB01</itemNumber>
+        <itemName>Minibar: Coca cola</itemName>
+        <itemCost>3.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>RS02</itemNumber>
+        <itemName>Room service: Beef steak</itemName>
+        <itemCost>70.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>SP01</itemNumber>
+        <itemName>Swimming pool: Entry</itemName>
+        <itemCost>5.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>MB04</itemNumber>
+        <itemName>Minibar: Mineral water</itemName>
+        <itemCost>3.00</itemCost>
+    </menu>
+    <menu>
+        <itemNumber>MB03</itemNumber>
+        <itemName>Minibar: Tiger beer</itemName>
+        <itemCost>6.00</itemCost>
+    </menu>
 </concierge>

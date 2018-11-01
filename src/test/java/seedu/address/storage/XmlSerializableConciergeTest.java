@@ -75,6 +75,7 @@ public class XmlSerializableConciergeTest {
                 XmlSerializableConcierge.class);
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(XmlSerializableConcierge.MESSAGE_DUPLICATE_ITEM);
+        dataFromFile.toModelType();
     }
 
     @Test

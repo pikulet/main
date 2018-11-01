@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalConcierge.getTypicalConciergeClean;
 import static seedu.address.testutil.TypicalGuests.ALICE;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -59,7 +60,7 @@ public class ConciergeTest {
                 .build();
         List<Guest> newGuests = Arrays.asList(ALICE, editedAlice);
 
-        ConciergeStub newData = new ConciergeStub(newGuests, null);
+        ConciergeStub newData = new ConciergeStub(newGuests, new ArrayList<>());
 
         thrown.expect(DuplicateGuestException.class);
         concierge.resetData(newData);

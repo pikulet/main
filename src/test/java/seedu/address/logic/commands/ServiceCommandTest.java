@@ -24,6 +24,8 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.room.booking.exceptions.NoBookingException;
+import seedu.address.model.room.booking.exceptions.NotCheckedInException;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 public class ServiceCommandTest {
@@ -63,18 +65,18 @@ public class ServiceCommandTest {
     }
 
     @Test
-    public void execute_roomHasNoBookings_throwsCommandException() throws Exception {
+    public void execute_roomHasItemButNoBookings_throwsCommandException() throws Exception {
         thrown.expect(CommandException.class);
         thrown.expectMessage(ServiceCommand.MESSAGE_ROOM_HAS_NO_GUEST);
-        Model model = new ModelStubNoBookings();
+        Model model = new ModelStubHasItemButNoBookings();
         VALID_SERVICE_COMMAND.execute(model, EMPTY_COMMAND_HISTORY);
     }
 
     @Test
-    public void execute_roomHasBookingsButNotCheckedIn_throwsCommandException() throws Exception {
+    public void execute_roomHasItemAndBookingsButNotCheckedIn_throwsCommandException() throws Exception {
         thrown.expect(CommandException.class);
         thrown.expectMessage(ServiceCommand.MESSAGE_ROOM_HAS_NO_GUEST);
-        Model model = new ModelStubHasBookingsNotCheckedIn();
+        Model model = new ModelStubHasItemAndBookingsNotCheckedIn();
         VALID_SERVICE_COMMAND.execute(model, EMPTY_COMMAND_HISTORY);
     }
 
@@ -82,7 +84,7 @@ public class ServiceCommandTest {
     public void execute_invalidItemNumber_throwsCommandException() throws Exception {
         thrown.expect(CommandException.class);
         thrown.expectMessage(ServiceCommand.MESSAGE_ITEM_NOT_FOUND);
-        Model model = new ModelStubWithBookingsAndCheckedIn();
+        Model model = new ModelStubWithBookingsAndCheckedInButNoItem();
         // new menu has no items, any item number is invalid.
         VALID_SERVICE_COMMAND.execute(model, EMPTY_COMMAND_HISTORY);
     }
@@ -192,26 +194,6 @@ public class ServiceCommandTest {
         }
 
         @Override
-        public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean roomHasBooking(RoomNumber roomNumber) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean roomHasActiveBooking(RoomNumber roomNumber) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean roomHasActiveOrExpiredBooking(RoomNumber roomNumber) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public void addBooking(RoomNumber roomNumber, Booking booking) {
             throw new AssertionError("This method should not be called.");
         }
@@ -230,41 +212,39 @@ public class ServiceCommandTest {
     /**
      * A Model stub that does not have any bookings.
      */
-    private class ModelStubNoBookings extends ModelStub {
+    private class ModelStubHasItemButNoBookings extends ModelStub {
         @Override
-        public boolean roomHasBooking(RoomNumber roomNumber) {
-            return false;
+        public Menu getMenu() {
+            return getValidMenu();
+        }
+
+        @Override
+        public void addExpense(RoomNumber roomNumber, Expense expense) {
+            throw new NoBookingException();
         }
     }
 
     /**
      * A Model stub with bookings but no one checked in.
      */
-    private class ModelStubHasBookingsNotCheckedIn extends ModelStub {
+    private class ModelStubHasItemAndBookingsNotCheckedIn extends ModelStub {
         @Override
-        public boolean roomHasBooking(RoomNumber roomNumber) {
-            return true;
+        public Menu getMenu() {
+            return getValidMenu();
         }
 
         @Override
-        public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-            return false;
+        public void addExpense(RoomNumber roomNumber, Expense expense) {
+            throw new NotCheckedInException();
         }
     }
 
     /**
      * A Model stub with bookings all checked in.
      */
-    private class ModelStubWithBookingsAndCheckedIn extends ModelStub {
+    private class ModelStubWithBookingsAndCheckedInButNoItem extends ModelStub {
         @Override
-        public boolean roomHasBooking(RoomNumber roomNumber) {
-            return true;
-        }
-
-        @Override
-        public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-            return true;
-        }
+        public void addExpense(RoomNumber roomNumber, Expense expense) {}
     }
 
     /**
@@ -274,22 +254,8 @@ public class ServiceCommandTest {
      */
     private class ModelStubCanService extends ModelStub {
         @Override
-        public boolean roomHasBooking(RoomNumber roomNumber) {
-            return true;
-        }
-
-        @Override
-        public boolean isRoomCheckedIn(RoomNumber roomNumber) {
-            return true;
-        }
-
-        @Override
         public Menu getMenu() {
-            HashMap<String, ExpenseType> validMap = new HashMap<>();
-            validMap.put(VALID_ITEM_NUMBER, new ExpenseType(VALID_ITEM_NUMBER, "-", VALID_ITEM_COST.get()));
-            Menu menu = new Menu();
-            menu.setMenu(validMap);
-            return menu;
+            return getValidMenu();
         }
 
         @Override
@@ -301,5 +267,16 @@ public class ServiceCommandTest {
         public void commitConcierge() {
             // called by {@code ServiceCommand#execute()}
         }
+    }
+
+    /**
+     * Generates a menu that has the required expense type used throughout this test class.
+     */
+    private Menu getValidMenu() {
+        HashMap<String, ExpenseType> validMap = new HashMap<>();
+        validMap.put(VALID_ITEM_NUMBER, new ExpenseType(VALID_ITEM_NUMBER, "-", VALID_ITEM_COST.get()));
+        Menu menu = new Menu();
+        menu.setMenu(validMap);
+        return menu;
     }
 }

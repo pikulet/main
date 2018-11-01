@@ -12,8 +12,7 @@ import seedu.address.model.expenses.Money;
 public class ExpenseBuilder {
 
     public static final Money DEFAULT_COST = new Money(0, 99);
-    public static final ExpenseType DEFAULT_EXPENSETYPE = new ExpenseType(
-            "1.99", "-", new Money(1, 0));
+    public static final ExpenseType DEFAULT_EXPENSETYPE = TypicalExpenseTypes.EXPENSE_TYPE_RS01;
     public static final LocalDateTime DEFAULT_DATETIME = LocalDateTime.now();
 
     private Money cost;
