@@ -17,7 +17,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.concurrent.Service;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CheckInCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -125,10 +124,10 @@ public class ConciergeParserTest {
 
     @Test
     public void parseCommand_service() throws Exception {
-        String argsWithoutCost = CliSyntax.PREFIX_ROOM + TypicalRoomNumbers.ROOM_NUMBER_001.toString() + " " +
-                CliSyntax.PREFIX_ITEM_NUMBER + TypicalExpenseTypes.EXPENSE_TYPE_RS01.getItemNumber();
-        String argsWithCost = argsWithoutCost + " " + CliSyntax.PREFIX_COST +
-                TypicalExpenses.EXPENSE_RS01.getCost().toString();
+        String argsWithoutCost = CliSyntax.PREFIX_ROOM + TypicalRoomNumbers.ROOM_NUMBER_001.toString() + " "
+                + CliSyntax.PREFIX_ITEM_NUMBER + TypicalExpenseTypes.EXPENSE_TYPE_RS01.getItemNumber();
+        String argsWithCost = argsWithoutCost + " " + CliSyntax.PREFIX_COST
+                + TypicalExpenses.EXPENSE_RS01.getCost().toString();
         ServiceCommand commandWithoutCost = (ServiceCommand) parser.parseCommand(
                 ServiceCommand.COMMAND_WORD + " " + argsWithoutCost);
         ServiceCommand commandWithCost = (ServiceCommand) parser.parseCommand(
@@ -144,8 +143,8 @@ public class ConciergeParserTest {
     @Test
     public void parseCommand_checkIn() throws Exception {
         CheckInCommand command = (CheckInCommand) parser.parseCommand(
-                CheckInCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_ROOM +
-                        TypicalRoomNumbers.ROOM_NUMBER_001.toString());
+                CheckInCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_ROOM
+                        + TypicalRoomNumbers.ROOM_NUMBER_001.toString());
         assertEquals(new CheckInCommand(TypicalRoomNumbers.ROOM_NUMBER_001), command);
     }
 

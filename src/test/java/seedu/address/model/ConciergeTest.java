@@ -27,7 +27,7 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.exceptions.DuplicateGuestException;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
-import seedu.address.model.room.booking.exceptions.NotCheckedInException;
+import seedu.address.model.room.booking.exceptions.RoomNotCheckedInException;
 import seedu.address.testutil.GuestBuilder;
 import seedu.address.testutil.TypicalExpenses;
 import seedu.address.testutil.TypicalRoomNumbers;
@@ -139,7 +139,7 @@ public class ConciergeTest {
         Room notCheckedInRoom = concierge.getRoomList().stream()
                 .filter(r -> r.getRoomNumber().equals(TypicalRoomNumbers.ROOM_NUMBER_011))
                 .findFirst().get();
-        thrown.expect(NotCheckedInException.class);
+        thrown.expect(RoomNotCheckedInException.class);
         concierge.addExpense(notCheckedInRoom.getRoomNumber(), TypicalExpenses.EXPENSE_RS01);
     }
 

@@ -25,7 +25,7 @@ import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
-import seedu.address.model.room.booking.exceptions.NotCheckedInException;
+import seedu.address.model.room.booking.exceptions.RoomNotCheckedInException;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 public class ServiceCommandTest {
@@ -235,7 +235,7 @@ public class ServiceCommandTest {
 
         @Override
         public void addExpense(RoomNumber roomNumber, Expense expense) {
-            throw new NotCheckedInException();
+            throw new RoomNotCheckedInException();
         }
     }
 

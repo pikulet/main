@@ -23,7 +23,7 @@ public class Money {
 
     private int dollars;
     private int cents;
-    // KIV: implement exchange rates
+    // TODO implement exchange rates
 
     public Money(int dollars, int cents) {
         if (cents >= 100 || cents < 0 || dollars == Integer.MIN_VALUE) {

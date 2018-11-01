@@ -18,7 +18,7 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.room.booking.Bookings;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
-import seedu.address.model.room.booking.exceptions.NotCheckedInException;
+import seedu.address.model.room.booking.exceptions.RoomNotCheckedInException;
 
 /**
  * Wraps all data at the Concierge level
@@ -171,7 +171,7 @@ public class Concierge implements ReadOnlyConcierge {
         }
         if (!bookings.getFirstBooking().getIsCheckedIn()) {
             // not checked in
-            throw new NotCheckedInException();
+            throw new RoomNotCheckedInException();
         }
         Room editedRoom = room.addExpense(expense);
         rooms.setRoom(room, editedRoom);

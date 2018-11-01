@@ -16,7 +16,7 @@ import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Money;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
-import seedu.address.model.room.booking.exceptions.NotCheckedInException;
+import seedu.address.model.room.booking.exceptions.RoomNotCheckedInException;
 
 /**
  * Adds an Expense to a Room.
@@ -78,7 +78,7 @@ public class ServiceCommand extends Command {
             model.commitConcierge();
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     expense.getItemName(), roomNumber.toString()));
-        } catch (NoBookingException | NotCheckedInException e) {
+        } catch (NoBookingException | RoomNotCheckedInException e) {
             throw new CommandException(MESSAGE_ROOM_HAS_NO_GUEST);
         }
     }
