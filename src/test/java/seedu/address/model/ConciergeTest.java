@@ -128,14 +128,14 @@ public class ConciergeTest {
 
     @Test
     public void addExpense_noBookings_throwsNoBookingException() {
-        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomList().asUnmodifiableObservableList());
+        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomListClean().asUnmodifiableObservableList());
         thrown.expect(NoBookingException.class);
         concierge.addExpense(concierge.getRoomList().get(0).roomNumber, TypicalExpenses.EXPENSE_RS01);
     }
 
     @Test
     public void addExpense_notCheckedIn_throwsNotCheckedInException() {
-        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomListWithBookings().asUnmodifiableObservableList());
+        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomList());
         // get room 011, which is not checked in, based on TypicalRooms
         Room notCheckedInRoom = concierge.getRoomList().stream()
                 .filter(r -> r.getRoomNumber().equals(TypicalRoomNumbers.ROOM_NUMBER_011))
@@ -146,7 +146,7 @@ public class ConciergeTest {
 
     @Test
     public void addExpense_hasBookingAndCheckedIn_success() {
-        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomListWithBookings().asUnmodifiableObservableList());
+        concierge.setRooms(TypicalRooms.getTypicalUniqueRoomList());
         // get room 011, which is not checked in, based on TypicalRooms
         Room room = concierge.getRoomList().stream()
                 .filter(r -> r.getRoomNumber().equals(TypicalRoomNumbers.ROOM_NUMBER_011))

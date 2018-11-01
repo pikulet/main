@@ -26,6 +26,7 @@ import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.booking.exceptions.RoomNotCheckedInException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.TypicalRoomNumbers;
 
 public class ServiceCommandTest {
@@ -206,6 +207,41 @@ public class ServiceCommandTest {
         @Override
         public Menu getMenu() {
             return new Menu();
+        }
+
+        @Override
+        public void addRoomTags(RoomNumber roomNumber, Tag... tags) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isSignedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Optional<String> getUsername() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void signIn(String username, String hashedPassword) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void signOut() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Guest> getFilteredCheckedInGuestList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredCheckedInGuestList(Predicate<Guest> predicate) {
+            throw new AssertionError("This method should not be called.");
         }
     }
 

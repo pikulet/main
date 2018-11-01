@@ -17,7 +17,6 @@ import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
 import seedu.address.model.room.booking.exceptions.ExpiredBookingCheckInException;
 import seedu.address.model.room.booking.exceptions.InactiveBookingCheckInException;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
-import seedu.address.model.room.exceptions.OccupiedRoomCheckinException;
 import seedu.address.testutil.ExpenseBuilder;
 import seedu.address.model.room.exceptions.BookingAlreadyCheckedInException;
 import seedu.address.testutil.RoomBuilder;

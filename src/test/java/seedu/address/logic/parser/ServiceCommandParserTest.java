@@ -9,11 +9,11 @@ import static seedu.address.logic.commands.CommandTestUtil.ITEM_NUMBER_DESC_RS01
 import static seedu.address.logic.commands.CommandTestUtil.ITEM_NUMBER_DESC_RS02;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_001;
-import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_020;
+import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COST_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ITEM_NUMBER_RS01;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_001;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -31,7 +31,7 @@ public class ServiceCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        RoomNumber expectedRoomNumber = new RoomNumber(VALID_ROOM_NUMBER_001);
+        RoomNumber expectedRoomNumber = new RoomNumber(VALID_ROOM_NUMBER_AMY);
         String expectedItemNumber = VALID_ITEM_NUMBER_RS01;
         Optional<Money> expectedCost = Optional.of(new Money(VALID_COST_1));
         ServiceCommand expectedServiceCommand = new ServiceCommand(
@@ -39,34 +39,34 @@ public class ServiceCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser,
-                PREAMBLE_WHITESPACE + ROOM_DESC_001 + ITEM_NUMBER_DESC_RS01 + COST_DESC_1,
+                PREAMBLE_WHITESPACE + ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS01 + COST_DESC_1,
                 expectedServiceCommand);
 
         // multiple rooms - last room accepted
         assertParseSuccess(parser,
-                 ROOM_DESC_020 + ROOM_DESC_001 + ITEM_NUMBER_DESC_RS01 + COST_DESC_1,
+                 ROOM_DESC_BOB + ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS01 + COST_DESC_1,
                 expectedServiceCommand);
 
         // multiple item numbers - last item accepted
         assertParseSuccess(parser,
-                ROOM_DESC_001 + ITEM_NUMBER_DESC_RS02 + ITEM_NUMBER_DESC_RS01 + COST_DESC_1,
+                ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS02 + ITEM_NUMBER_DESC_RS01 + COST_DESC_1,
                 expectedServiceCommand);
 
         // multiple costs - last cost accepted
         assertParseSuccess(parser,
-                ROOM_DESC_001 + ITEM_NUMBER_DESC_RS01 + COST_DESC_2 + COST_DESC_1,
+                ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS01 + COST_DESC_2 + COST_DESC_1,
                 expectedServiceCommand);
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
         // no cost
-        RoomNumber expectedRoomNumber = new RoomNumber(VALID_ROOM_NUMBER_001);
+        RoomNumber expectedRoomNumber = new RoomNumber(VALID_ROOM_NUMBER_AMY);
         String expectedItemNumber = VALID_ITEM_NUMBER_RS01;
         Optional<Money> expectedCost = Optional.empty();
         ServiceCommand expectedServiceCommand = new ServiceCommand(
                 expectedRoomNumber, expectedItemNumber, expectedCost);
-        assertParseSuccess(parser, ROOM_DESC_001 + ITEM_NUMBER_DESC_RS01, expectedServiceCommand);
+        assertParseSuccess(parser, ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS01, expectedServiceCommand);
     }
 
     @Test
@@ -79,14 +79,14 @@ public class ServiceCommandParserTest {
         assertParseFailure(parser, ITEM_NUMBER_DESC_RS01 + COST_DESC_1, expectedMessage);
 
         // no item number
-        assertParseFailure(parser, ROOM_DESC_001, expectedMessage);
-        assertParseFailure(parser, ROOM_DESC_001 + COST_DESC_1, expectedMessage);
+        assertParseFailure(parser, ROOM_DESC_AMY, expectedMessage);
+        assertParseFailure(parser, ROOM_DESC_AMY + COST_DESC_1, expectedMessage);
 
         // missing room prefix
-        assertParseFailure(parser, VALID_ROOM_NUMBER_001 + ITEM_NUMBER_DESC_RS01, expectedMessage);
+        assertParseFailure(parser, VALID_ROOM_NUMBER_AMY + ITEM_NUMBER_DESC_RS01, expectedMessage);
 
         // missing item number prefix
-        assertParseFailure(parser, ROOM_DESC_001 + " " + VALID_ITEM_NUMBER_RS01, expectedMessage);
+        assertParseFailure(parser, ROOM_DESC_AMY + " " + VALID_ITEM_NUMBER_RS01, expectedMessage);
     }
 
     @Test
@@ -96,13 +96,13 @@ public class ServiceCommandParserTest {
                 RoomNumber.MESSAGE_ROOM_NUMBER_CONSTRAINTS);
 
         // invalid cost
-        assertParseFailure(parser, ROOM_DESC_001 + ITEM_NUMBER_DESC_RS01 + INVALID_COST_DESC,
+        assertParseFailure(parser, ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS01 + INVALID_COST_DESC,
                 Money.MESSAGE_MONEY_CONSTRAINTS);
 
         // no invalid item number since parser cannot check menu
 
         // non-empty preamble
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + ROOM_DESC_001 + ITEM_NUMBER_DESC_RS01,
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + ROOM_DESC_AMY + ITEM_NUMBER_DESC_RS01,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ServiceCommand.MESSAGE_USAGE));
     }
 }

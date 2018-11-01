@@ -92,7 +92,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND
                 + DATE_END_DESC_BOB + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + ROOM_DESC_BOB
                 + DATE_START_DESC_BOB + PHONE_DESC_BOB + NAME_DESC_BOB + DATE_END_DESC_BOB;
-        assertCommandSuccess(command, guestToAdd, roomNumberToAdd, bookingPeriodToAdd);s
+        assertCommandSuccess(command, guestToAdd, roomNumberToAdd, bookingPeriodToAdd);
 
         /* Case: add a guest, missing tags -> added */
         roomNumberToAdd = ROOM_NUMBER_050;
