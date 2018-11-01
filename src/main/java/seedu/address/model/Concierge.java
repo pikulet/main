@@ -154,8 +154,8 @@ public class Concierge implements ReadOnlyConcierge {
         }
         checkedInGuests.remove(key);
     }
-    
-    //=========== Tags operations =============================================================
+
+    //=========== Room operations =============================================================
 
     /**
      * Adds given tags to the specified room
@@ -165,8 +165,6 @@ public class Concierge implements ReadOnlyConcierge {
         Room editedRoom = room.addTags(tags);
         rooms.setRoom(room, editedRoom);
     }
-
-    //=========== Room operations =============================================================
 
     /**
      * Replaces the contents of the room list with {@code rooms}.

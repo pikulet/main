@@ -17,6 +17,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of Concierge data.
@@ -143,6 +144,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Room =======================================================
 
+    @Override
+    public void addRoomTags(RoomNumber roomNumber, Tag... tags) {
+        versionedConcierge.addRoomTags(roomNumber, tags);
+    }
+    
     @Override
     public void addBooking(RoomNumber roomNumber, Booking booking) {
         versionedConcierge.addBooking(roomNumber, booking);

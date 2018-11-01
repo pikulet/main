@@ -8,6 +8,7 @@ import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -80,6 +81,11 @@ public interface Model {
 
     //=========== Methods for room. ===========================================
 
+    /**
+     * Adds given tags to the specified room
+     */
+    public void addRoomTags(RoomNumber roomNumber, Tag... tags);
+    
     /**
      * Add a booking to a room identified by its room number.
      */
