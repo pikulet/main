@@ -244,7 +244,9 @@ public class ServiceCommandTest {
      */
     private class ModelStubWithBookingsAndCheckedInButNoItem extends ModelStub {
         @Override
-        public void addExpense(RoomNumber roomNumber, Expense expense) {}
+        public void addExpense(RoomNumber roomNumber, Expense expense) {
+            // called by {@code ServiceCommand#execute()}
+        }
     }
 
     /**
