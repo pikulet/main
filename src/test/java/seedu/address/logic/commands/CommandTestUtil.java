@@ -40,14 +40,10 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_HANDICAP = "handicap";
-    public static final String VALID_ROOM_NUMBER_AMY =
-            TypicalRoomNumbers.ROOM_NUMBER_010.value;
-    public static final String VALID_ROOM_NUMBER_BOB =
-            TypicalRoomNumbers.ROOM_NUMBER_002.value;
-    public static final String VALID_ROOM_NUMBER_001 =
-            TypicalRoomNumbers.ROOM_NUMBER_001.value;
-    public static final String VALID_ROOM_NUMBER_020 =
-            TypicalRoomNumbers.ROOM_NUMBER_020.value;
+    public static final String VALID_ROOM_NUMBER_AMY = "001";
+    public static final String VALID_ROOM_NUMBER_BOB = "002";
+    public static final String VALID_ROOM_NUMBER_001 = "001";
+    public static final String VALID_ROOM_NUMBER_020 = "020";
     public static final String VALID_DATE_START_AMY =
             LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT);
     public static final String VALID_DATE_END_AMY =
