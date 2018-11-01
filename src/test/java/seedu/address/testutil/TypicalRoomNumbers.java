@@ -21,7 +21,7 @@ public class TypicalRoomNumbers {
     public static final RoomNumber ROOM_NUMBER_030 = new RoomNumber("030");
     public static final RoomNumber ROOM_NUMBER_031 = new RoomNumber("031");
     public static final RoomNumber ROOM_NUMBER_099 = new RoomNumber("099");
-    
+
     // Reserved for testing with clean rooms
     public static final RoomNumber ROOM_NUMBER_050 = new RoomNumber("050");
     public static final RoomNumber ROOM_NUMBER_051 = new RoomNumber("051");

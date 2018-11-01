@@ -21,7 +21,6 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.testutil.TypicalBookingPeriods.BOOKING_PERIOD_AMY;
 import static seedu.address.testutil.TypicalBookingPeriods.BOOKING_PERIOD_BOB;
-import static seedu.address.testutil.TypicalBookingPeriods.TODAY_TOMORROW;
 import static seedu.address.testutil.TypicalBookingPeriods.TOMORROW_NEXTWEEK;
 import static seedu.address.testutil.TypicalGuests.AMY;
 import static seedu.address.testutil.TypicalGuests.BOB;
