@@ -14,6 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +26,8 @@ import seedu.address.model.Concierge;
 import seedu.address.model.Model;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.NameContainsKeywordsPredicate;
+import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.EditGuestDescriptorBuilder;
-import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
  * Contains helper methods for testing commands.
@@ -42,23 +43,21 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_HANDICAP = "handicap";
-    public static final String VALID_ROOM_NUMBER_AMY =
-            TypicalRoomNumbers.ROOM_NUMBER_010.value;
-    public static final String VALID_ROOM_NUMBER_BOB =
-            TypicalRoomNumbers.ROOM_NUMBER_002.value;
-    public static final String VALID_ROOM_NUMBER_001 =
-            TypicalRoomNumbers.ROOM_NUMBER_001.value;
-    public static final String VALID_ROOM_NUMBER_020 =
-            TypicalRoomNumbers.ROOM_NUMBER_020.value;
-    public static final String VALID_DATE_START_AMY = "14/11/2018";
-    public static final String VALID_DATE_END_AMY = "17/11/2018";
-    public static final String VALID_DATE_START_BOB = "03/11/2018";
-    public static final String VALID_DATE_END_BOB = "05/11/2018";
+    public static final String VALID_ROOM_NUMBER_AMY = "080";
+    public static final String VALID_ROOM_NUMBER_BOB = "081";
+    public static final String VALID_DATE_START_AMY =
+            LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT);
+    public static final String VALID_DATE_END_AMY =
+            LocalDate.now().plusDays(3).format(BookingPeriod.DATE_TO_STRING_FORMAT);
+    public static final String VALID_DATE_START_BOB =
+            LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT);
+    public static final String VALID_DATE_END_BOB =
+            LocalDate.now().plusWeeks(1).format(BookingPeriod.DATE_TO_STRING_FORMAT);
     public static final String VALID_ITEM_NUMBER_RS01 = "RS01";
     public static final String VALID_ITEM_NUMBER_RS02 = "RS02";
     public static final String VALID_COST_1 = "123.45";
     public static final String VALID_COST_2 = "678.90";
-
+  
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
@@ -67,10 +66,6 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String ROOM_DESC_001 =
-            " " + PREFIX_ROOM + VALID_ROOM_NUMBER_001;
-    public static final String ROOM_DESC_020 =
-            " " + PREFIX_ROOM + VALID_ROOM_NUMBER_020;
     public static final String ROOM_DESC_AMY = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_AMY;
     public static final String ROOM_DESC_BOB = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_BOB;
     public static final String DATE_START_DESC_AMY =
@@ -102,9 +97,6 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditGuestDescriptor DESC_AMY;
     public static final EditCommand.EditGuestDescriptor DESC_BOB;
-
-    public static final String VALID_FLAG_ROOM = FLAG_ROOM.toString();
-    public static final String VALID_FLAG_GUEST = FLAG_GUEST.toString();
 
     static {
         DESC_AMY = new EditGuestDescriptorBuilder().withName(VALID_NAME_AMY)
