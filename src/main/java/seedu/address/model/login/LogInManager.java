@@ -1,5 +1,6 @@
 package seedu.address.model.login;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.model.login.InvalidLogInException.MESSAGE_INVALID_PASSWORD;
 import static seedu.address.model.login.InvalidLogInException.MESSAGE_INVALID_USERNAME;
 
@@ -24,6 +25,7 @@ public class LogInManager {
     }
 
     public LogInManager(PasswordHashList passwordRef) {
+        requireNonNull(passwordRef);
         this.passwordRef = passwordRef;
     }
 
@@ -54,7 +56,6 @@ public class LogInManager {
         }
 
         Optional<String> expectedPassword = passwordRef.getExpectedPassword(username);
-
         if (!expectedPassword.isPresent()) {
             throw new InvalidLogInException(MESSAGE_INVALID_USERNAME);
         } else if (!hashedPassword.equalsIgnoreCase(expectedPassword.get())) {

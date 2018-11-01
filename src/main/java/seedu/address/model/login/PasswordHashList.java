@@ -24,6 +24,7 @@ public class PasswordHashList {
             this.passwordRef = JsonUtil.getNodeObject(passwordRefString);
         } catch (IOException e) {
             // Caught and rethrown to wrap subclass exception com.fasterxml.jackson.core.JsonParseException
+            // as JsonParseException.isAssignableFrom(IOException) returns false
             throw new IOException(e.getMessage());
         }
     }

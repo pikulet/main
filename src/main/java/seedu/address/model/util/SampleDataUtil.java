@@ -158,7 +158,6 @@ public class SampleDataUtil {
             sb.append(",");
         }
         sb.replace(sb.length() - 1, sb.length(), "}");
-        System.out.println(sb.toString());
         return new PasswordHashList(sb.toString());
     }
 }
