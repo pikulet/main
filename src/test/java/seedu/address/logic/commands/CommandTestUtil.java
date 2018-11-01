@@ -24,7 +24,6 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.NameContainsKeywordsPredicate;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.EditGuestDescriptorBuilder;
-import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
  * Contains helper methods for testing commands.
