@@ -48,7 +48,7 @@ public class PasswordHashList {
      * @return An Optional value which is empty if the username is not
      * present. Else, the optional will wrap the associated password.
      */
-    public Optional<String> getExpectedPassword(String username) {
+    protected Optional<String> getExpectedPassword(String username) {
         requireNonNull(username);
 
         JsonNode expectedPasswordNode = passwordRef.get(username);

@@ -1,8 +1,9 @@
 package seedu.address.model.login;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.login.InvalidLogInException.MESSAGE_INVALID_PASSWORD;
+import static seedu.address.model.login.InvalidLogInException.MESSAGE_INVALID_USERNAME;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.Test;
@@ -58,13 +59,11 @@ public class LogInManagerTest {
 
         // username not in reference list
         assertThrows(InvalidLogInException.class,
-                InvalidLogInException.MESSAGE_INVALID_USERNAME,
-                () -> logInManager.signIn("incorrectuser", "dummy"));
+                MESSAGE_INVALID_USERNAME, () -> logInManager.signIn("incorrectuser", "dummy"));
 
         // username in reference list, but of a different case
         assertThrows(InvalidLogInException.class,
-                InvalidLogInException.MESSAGE_INVALID_USERNAME,
-                () -> logInManager.signIn("USER1", "dummy"));
+                MESSAGE_INVALID_USERNAME, () -> logInManager.signIn("USER1", "dummy"));
     }
 
     @Test
@@ -74,8 +73,7 @@ public class LogInManagerTest {
 
         // hashed password does not match at all
         assertThrows(InvalidLogInException.class,
-                InvalidLogInException.MESSAGE_INVALID_PASSWORD,
-                () -> logInManager.signIn("user1", "incorrectpassword"));
+                MESSAGE_INVALID_PASSWORD, () -> logInManager.signIn("user1", "incorrectpassword"));
     }
 
     @Test
