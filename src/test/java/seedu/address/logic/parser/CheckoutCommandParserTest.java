@@ -3,7 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_END_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_001;
+import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_END_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_START_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -29,10 +29,10 @@ public class CheckoutCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsCheckoutCommand() {
-        RoomNumber expectedRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_001;
+        RoomNumber expectedRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_AMY;
         BookingPeriod expectedBookingPeriod = new BookingPeriod(VALID_DATE_START_AMY, VALID_DATE_END_AMY);
-        assertParseSuccess(parser, ROOM_DESC_001, new CheckoutCommand(expectedRoomNumber));
-        assertParseSuccess(parser, ROOM_DESC_001 + DATE_START_DESC_AMY + DATE_END_DESC_AMY,
+        assertParseSuccess(parser, ROOM_DESC_AMY, new CheckoutCommand(expectedRoomNumber));
+        assertParseSuccess(parser, ROOM_DESC_AMY + DATE_START_DESC_AMY + DATE_END_DESC_AMY,
                 new CheckoutCommand(expectedRoomNumber, expectedBookingPeriod));
     }
 
@@ -44,9 +44,9 @@ public class CheckoutCommandParserTest {
         assertParseFailure(parser, "001", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "-r 001",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, ROOM_DESC_001 + DATE_START_DESC_AMY,
+        assertParseFailure(parser, ROOM_DESC_AMY + DATE_START_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, ROOM_DESC_001 + DATE_END_DESC_AMY,
+        assertParseFailure(parser, ROOM_DESC_AMY + DATE_END_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
         assertParseFailure(parser, DATE_START_DESC_AMY + DATE_END_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));

@@ -107,11 +107,12 @@ public class Concierge implements ReadOnlyConcierge {
 
     /**
      * Adds a guest to Concierge's checked-in guest list.
-     * If the guest already exists in the checked-in guest list, this method does nothing. This is expected
-     * behavior because a guest can make multiple bookings over the same booking period (just for different rooms).
+     * If the guest already exists in the checked-in guest list, do nothing. This is expected
+     * behavior because a guest can make multiple bookings over overlapping booking periods (just for different
+     * rooms).
      */
     public void addCheckedInGuest(Guest g) {
-        if (checkedInGuests.contains(g)) {
+        if (hasCheckedInGuest(g)) {
             return;
         }
         checkedInGuests.add(g);
@@ -139,16 +140,9 @@ public class Concierge implements ReadOnlyConcierge {
 
     /**
      * Removes {@code key} from this {@code Concierge}'s checked-in guest list.
-     * If the {@code key} guest does not exist in the checked-in guest list, this method does nothing.
-     * Though not ideal, this is the current implementation.
-     * TODO Check if guest to remove from checked-in list still has other bookings in other rooms OR
-     * TODO Create new guest subclass that stores the room information, and add instances of that into checked-in
-     * guest list
+     * {@code key} must exist in Concierge's checked-in guest list.
      */
     public void removeCheckedInGuest(Guest key) {
-        if (!checkedInGuests.contains(key)) {
-            return;
-        }
         checkedInGuests.remove(key);
     }
 
@@ -189,8 +183,9 @@ public class Concierge implements ReadOnlyConcierge {
         rooms.setRoom(room, checkedInRoom);
 
         // First active booking is guaranteed to be present after executing room.checkIn() above
-        Guest checkedInGuest = checkedInRoom.getBookings().getFirstBooking().getGuest();
-        addCheckedInGuest(checkedInGuest);
+        Guest guestToCheckIn = checkedInRoom.getBookings().getFirstBooking().getGuest();
+
+        addCheckedInGuest(guestToCheckIn);
     }
 
     /**
@@ -202,8 +197,22 @@ public class Concierge implements ReadOnlyConcierge {
 
         Booking bookingToCheckout = room.getBookings().getFirstBooking();
         Guest guestToCheckout = bookingToCheckout.getGuest();
-        removeCheckedInGuest(guestToCheckout);
-        addGuest(guestToCheckout);
+
+        // If the guest does not exist in the checked-in guest list, this block does nothing. This is expected
+        // behavior, because a guest can have multiple bookings at once and checkout one before another.
+        // Though not ideal, this is the current implementation.
+        // TODO Check if guest to remove from checked-in list still has other bookings in other rooms OR
+        // TODO Create new guest subclass that stores the room information, and add instances of that into
+        // checked-in guest list
+        if (hasCheckedInGuest(guestToCheckout)) {
+            removeCheckedInGuest(guestToCheckout);
+        }
+
+        // If the guest exists in the archived guest list, this block does nothing. This is expected because a guest
+        // may have stayed in the hotel before, so he would already be in the archived guest list.
+        if (!hasGuest(guestToCheckout)) {
+            addGuest(guestToCheckout);
+        }
     }
 
     /**
@@ -217,8 +226,25 @@ public class Concierge implements ReadOnlyConcierge {
         Booking bookingToCheckout = room.getBookings()
             .getFirstBookingByPredicate(booking -> booking.getBookingPeriod().equals(bookingPeriod));
         Guest guestToCheckout = bookingToCheckout.getGuest();
+
+        // If the guest does not exist in the checked-in guest list, this code below does nothing. This is expected
+        // behavior, because a guest can have multiple bookings at once and checkout one before another.
+        // Though not ideal, this is the current implementation.
+        // TODO Check if guest to remove from checked-in list still has other bookings in other rooms OR
+        // TODO Create new guest subclass that stores the room information, and add instances of that into
+        // checked-in guest list
+        if (!hasCheckedInGuest(guestToCheckout)) {
+            return;
+        }
         removeCheckedInGuest(guestToCheckout);
+
+        // If the guest exists in the archived guest list, the code below does nothing. This is expected because a guest
+        // may have stayed in the hotel before, so he would already be in the archived guest list.
+        if (hasGuest(guestToCheckout)) {
+            return;
+        }
         addGuest(guestToCheckout);
+
     }
 
     public void setMenu(Map<String, ExpenseType> menu) {
@@ -254,6 +280,14 @@ public class Concierge implements ReadOnlyConcierge {
     public boolean hasGuest(Guest guest) {
         requireNonNull(guest);
         return guests.contains(guest);
+    }
+
+    /**
+     * Returns true if a guest with the same identity as {@code guest} exists in Concierge's checked-in guest list.
+     */
+    public boolean hasCheckedInGuest(Guest guest) {
+        requireNonNull(guest);
+        return checkedInGuests.contains(guest);
     }
 
     //// util methods

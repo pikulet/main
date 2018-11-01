@@ -35,11 +35,14 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newGuest_success() {
+    public void execute_newBooking_success() {
         Guest validGuest = new GuestBuilder().withName(CommandTestUtil.VALID_NAME_BOB).build();
         RoomNumber validRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_002;
         BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
         Booking validBooking = new Booking(validGuest, validBookingPeriod);
+
+        String expectedMessage =
+            String.format(AddCommand.MESSAGE_SUCCESS, validGuest, validRoomNumber, validBookingPeriod);
 
         Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
         expectedModel.addBooking(validRoomNumber, validBooking);
@@ -47,7 +50,7 @@ public class AddCommandIntegrationTest {
 
         assertCommandSuccess(new AddCommand(validGuest, validRoomNumber, validBookingPeriod),
                 model, commandHistory,
-                String.format(AddCommand.MESSAGE_SUCCESS, validGuest, validRoomNumber, validBookingPeriod),
+                expectedMessage,
                 expectedModel);
     }
 
@@ -58,14 +61,15 @@ public class AddCommandIntegrationTest {
         BookingPeriod validBookingPeriod = TypicalBookingPeriods.TODAY_TOMORROW;
         Booking validBooking = new Booking(validGuest, validBookingPeriod);
 
+        String expectedMessage = String.format(MESSAGE_OVERLAPPING_BOOKING, validRoomNumber);
+
         // add first time -> valid
-        Model expectedModel = new ModelManager(model.getConcierge(), new UserPrefs());
-        expectedModel.addBooking(validRoomNumber, validBooking);
-        expectedModel.commitConcierge();
+        model.addBooking(validRoomNumber, validBooking);
 
         // add second time with same booking period -> throw overlapping booking exception
         assertCommandFailure(new AddCommand(validGuest, validRoomNumber, validBookingPeriod),
-                model, commandHistory, String.format(MESSAGE_OVERLAPPING_BOOKING, validRoomNumber));
+                model, commandHistory,
+                expectedMessage);
     }
 
 }

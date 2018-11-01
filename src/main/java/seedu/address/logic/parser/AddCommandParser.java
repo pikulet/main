@@ -18,7 +18,6 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.Name;
 import seedu.address.model.guest.Phone;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
 
