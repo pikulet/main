@@ -2,9 +2,12 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.Expense;
@@ -16,6 +19,7 @@ import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.tag.Tag;
 
 /**
  * Wraps all data at the Concierge level
@@ -149,6 +153,17 @@ public class Concierge implements ReadOnlyConcierge {
             return;
         }
         checkedInGuests.remove(key);
+    }
+    
+    //=========== Tags operations =============================================================
+
+    /**
+     * Adds given tags to the specified room
+     */
+    public void addRoomTags(RoomNumber roomNumber, Tag... tags) {
+        Room room = rooms.getRoom(roomNumber);
+        Room editedRoom = room.addTags(tags);
+        rooms.setRoom(room, editedRoom);
     }
 
     //=========== Room operations =============================================================
