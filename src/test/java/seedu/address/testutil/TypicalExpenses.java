@@ -8,6 +8,9 @@ import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.Money;
 
+/**
+ * A utility class that provides sample {@code Expense} and {@code Expenses} objects to be used in tests.
+ */
 public class TypicalExpenses {
 
     public static final Expense EXPENSE_RS01 = new ExpenseBuilder()

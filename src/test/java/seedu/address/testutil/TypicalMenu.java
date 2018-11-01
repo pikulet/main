@@ -15,6 +15,9 @@ import java.util.Map;
 import seedu.address.model.Menu;
 import seedu.address.model.expenses.ExpenseType;
 
+/**
+ * A utility class that provides a sample {@code Menu} object to be used in tests.
+ */
 public class TypicalMenu {
 
     public static Map<String, ExpenseType> getTypicalMenuMap() {
@@ -35,9 +38,4 @@ public class TypicalMenu {
         menu.setMenu(getTypicalMenuMap());
         return menu;
     }
-
-    /**
-     * Prevents instantiation.
-     */
-    private TypicalMenu() {}
 }

@@ -14,7 +14,6 @@ import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.expenses.Money;
-import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.exceptions.NoBookingException;
 import seedu.address.model.room.booking.exceptions.NotCheckedInException;

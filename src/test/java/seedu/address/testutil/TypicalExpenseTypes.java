@@ -3,6 +3,9 @@ package seedu.address.testutil;
 import seedu.address.model.expenses.ExpenseType;
 import seedu.address.model.expenses.Money;
 
+/**
+ * A utility class containing a list of {@code ExpenseType} objects to be used in tests.
+ */
 public class TypicalExpenseTypes {
     public static final ExpenseType EXPENSE_TYPE_RS01 = new ExpenseType(
             "RS01", "Room service: Red wine", new Money(50, 0));

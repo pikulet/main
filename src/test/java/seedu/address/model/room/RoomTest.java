@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.expenses.Expense;
-import seedu.address.model.expenses.Expenses;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.exceptions.BookingNotFoundException;
 import seedu.address.model.room.booking.exceptions.ExpiredBookingsFoundException;
