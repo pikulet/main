@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.ExpenseType;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.Money;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.exceptions.DuplicateGuestException;
@@ -152,6 +153,11 @@ public class ConciergeTest {
                 .findFirst().get();
         concierge.checkInRoom(room.getRoomNumber());
         concierge.addExpense(room.getRoomNumber(), TypicalExpenses.EXPENSE_RS01);
+        Expenses actualExpenses = concierge.getRoomList().stream()
+                .filter(r -> r.getRoomNumber().equals(TypicalRoomNumbers.ROOM_NUMBER_011))
+                .findFirst().get().getExpenses();
+        Expenses expectedExpenses = new Expenses(Arrays.asList(TypicalExpenses.EXPENSE_RS01));
+        assertEquals(actualExpenses, expectedExpenses);
     }
 
     /**
