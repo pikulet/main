@@ -23,7 +23,7 @@ public class TypicalConcierge {
     public static Concierge getTypicalConciergeClean() {
         Concierge ab = new Concierge();
         ab.setGuests(GUEST_LIST.asUnmodifiableObservableList());
-        ab.setRooms(ROOM_LIST_WITHOUT_BOOKINGS.asUnmodifiableObservableList());
+        ab.setRooms(ROOM_LIST.asUnmodifiableObservableList());
         return ab;
     }
 
@@ -74,7 +74,7 @@ public class TypicalConcierge {
                 .forEach(booking -> ab.addBooking(TypicalRoomNumbers.ROOM_NUMBER_022, booking));
         ab.addCheckedInGuest(TypicalBookings.LASTWEEK_YESTERDAY_CHECKED_IN.getGuest());
 
-        // Room 031 will have no bookings. This comment is put here to inform you in case you come across Room 031 in 
+        // Room 031 will have no bookings. This comment is put here to inform you in case you come across Room 031 in
         // any of the tests.
 
         return ab;

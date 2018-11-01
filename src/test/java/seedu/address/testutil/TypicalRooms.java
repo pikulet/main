@@ -13,7 +13,7 @@ import seedu.address.model.room.UniqueRoomList;
  * TODO Incorporate expenses into rooms once WEI ZHENG has implemented it
  */
 public class TypicalRooms {
-    
+
     /**
      * Returns a {@code UniqueRoomList} with all rooms.
      * Note: All rooms do not have bookings or expenses.
