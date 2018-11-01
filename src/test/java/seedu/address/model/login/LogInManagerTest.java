@@ -34,5 +34,53 @@ public class LogInManagerTest {
         // after correct sign-in attempt -> signed in
         logInManager.signIn("user1", "passw0rd");
         assertTrue(logInManager.isSignedIn());
+
+        // after sign out -> not signed in
+        logInManager.signOut();
+        assertFalse(logInManager.isSignedIn());
+    }
+
+    @Test
+    public void signIn_incorrectPasswordCase_success() throws Exception {
+        PasswordHashList passwordRef = PasswordHashListTest.getSamplePasswordHashList();
+        LogInManager logInManager = new LogInManager(passwordRef);
+
+        // (hashed) password is of a different case -> accepted
+        // note that two case-sensitive passwords would produce different hashes
+        logInManager.signIn("user1", "PASSw0rd");
+        assertTrue(logInManager.isSignedIn());
+    }
+
+    @Test
+    public void signIn_invalidUsername_throwsInvalidLogInException() throws Exception {
+        PasswordHashList passwordRef = PasswordHashListTest.getSamplePasswordHashList();
+        LogInManager logInManager = new LogInManager(passwordRef);
+
+        // username not in reference list
+        assertThrows(InvalidLogInException.class,
+                InvalidLogInException.MESSAGE_INVALID_USERNAME,
+                () -> logInManager.signIn("incorrectuser", "dummy"));
+
+        // username in reference list, but of a different case
+        assertThrows(InvalidLogInException.class,
+                InvalidLogInException.MESSAGE_INVALID_USERNAME,
+                () -> logInManager.signIn("USER1", "dummy"));
+    }
+
+    @Test
+    public void signIn_invalidPassword_throwsInvalidLogInException() throws Exception {
+        PasswordHashList passwordRef = PasswordHashListTest.getSamplePasswordHashList();
+        LogInManager logInManager = new LogInManager(passwordRef);
+
+        // hashed password does not match at all
+        assertThrows(InvalidLogInException.class,
+                InvalidLogInException.MESSAGE_INVALID_PASSWORD,
+                () -> logInManager.signIn("user1", "incorrectpassword"));
+    }
+
+    @Test
+    public void signOut_notSignedIn_throwsInvalidLogOutException() {
+        LogInManager logInManager = new LogInManager();
+        assertThrows(InvalidLogOutException.class, () -> logInManager.signOut());
     }
 }

@@ -51,11 +51,14 @@ public class LogInManager {
      * or the password does not match the username.
      */
     public void signIn(String username, String hashedPassword) throws InvalidLogInException {
+        requireNonNull(username, hashedPassword);
+
         if (isSignedIn()) {
             throw new InvalidLogInException(LogInCommand.MESSAGE_SIGNED_IN_ALREADY);
         }
 
         Optional<String> expectedPassword = passwordRef.getExpectedPassword(username);
+
         if (!expectedPassword.isPresent()) {
             throw new InvalidLogInException(MESSAGE_INVALID_USERNAME);
         } else if (!hashedPassword.equalsIgnoreCase(expectedPassword.get())) {

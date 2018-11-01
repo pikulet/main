@@ -77,13 +77,16 @@ public class PasswordHashListTest {
     public void getExpectedPassword_invalidUsername() throws IOException {
         PasswordHashList passwordRef = getSamplePasswordHashList();
 
-        // incorrect username
+        // null username -> throws NullPointerException
+        assertThrows(NullPointerException.class, () -> passwordRef.getExpectedPassword(null));
+
+        // incorrect username -> returns empty optional
         assertFalse(passwordRef.getExpectedPassword("user0").isPresent());
 
-        // incorrect username case
+        // incorrect username case -> returns empty optional
         assertFalse(passwordRef.getExpectedPassword("USER1").isPresent());
 
-        // whitespace in preamble of username
+        // whitespace in preamble of username -> returns empty optional
         assertFalse(passwordRef.getExpectedPassword(" user1").isPresent());
     }
 
