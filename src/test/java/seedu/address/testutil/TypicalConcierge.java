@@ -77,7 +77,7 @@ public class TypicalConcierge {
 
         // Room 031 will have no bookings. This comment is put here to inform you in case you come across Room 031 in
         // any of the tests.
-      
+
         return ab;
     }
 }

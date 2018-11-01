@@ -155,7 +155,7 @@ public class ParserUtil {
         }
         return cost.map(s -> new Money(s));
     }
-  
+
     /**
      * Parses a {@code String password} into a hashed password.
      * Strips whitespace off the password, so passwords cannot begin with a

@@ -10,14 +10,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Concierge;
-import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.expenses.Expense;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
