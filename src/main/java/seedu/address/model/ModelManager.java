@@ -170,6 +170,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedConcierge.checkoutRoom(roomNumber);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         updateFilteredCheckedInGuestList(PREDICATE_SHOW_ALL_GUESTS);
+        updateFilteredGuestList(PREDICATE_SHOW_ALL_GUESTS);
         indicateConciergeChanged();
     }
 

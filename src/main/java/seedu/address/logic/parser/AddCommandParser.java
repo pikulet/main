@@ -18,6 +18,7 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.Name;
 import seedu.address.model.guest.Phone;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
 
@@ -54,7 +55,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         BookingPeriod bookingPeriod =
                 ParserUtil.parseBookingPeriod(argMultimap.getValue(PREFIX_DATE_START).get(),
                         argMultimap.getValue(PREFIX_DATE_END).get());
-
         Guest guest = new Guest(name, phone, email, tagList);
 
         return new AddCommand(guest, roomNumber, bookingPeriod);

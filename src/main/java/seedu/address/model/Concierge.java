@@ -203,6 +203,7 @@ public class Concierge implements ReadOnlyConcierge {
         Booking bookingToCheckout = room.getBookings().getFirstBooking();
         Guest guestToCheckout = bookingToCheckout.getGuest();
         removeCheckedInGuest(guestToCheckout);
+        addGuest(guestToCheckout);
     }
 
     /**
@@ -217,6 +218,7 @@ public class Concierge implements ReadOnlyConcierge {
             .getFirstBookingByPredicate(booking -> booking.getBookingPeriod().equals(bookingPeriod));
         Guest guestToCheckout = bookingToCheckout.getGuest();
         removeCheckedInGuest(guestToCheckout);
+        addGuest(guestToCheckout);
     }
 
     public void setMenu(Map<String, ExpenseType> menu) {

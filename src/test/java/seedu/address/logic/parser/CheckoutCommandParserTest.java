@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_001;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_END_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_START_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_001;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -15,6 +14,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.CheckoutCommand;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -29,7 +29,7 @@ public class CheckoutCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsCheckoutCommand() {
-        RoomNumber expectedRoomNumber = new RoomNumber(VALID_ROOM_NUMBER_001);
+        RoomNumber expectedRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_001;
         BookingPeriod expectedBookingPeriod = new BookingPeriod(VALID_DATE_START_AMY, VALID_DATE_END_AMY);
         assertParseSuccess(parser, ROOM_DESC_001, new CheckoutCommand(expectedRoomNumber));
         assertParseSuccess(parser, ROOM_DESC_001 + DATE_START_DESC_AMY + DATE_END_DESC_AMY,

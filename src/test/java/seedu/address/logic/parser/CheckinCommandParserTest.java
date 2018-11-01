@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.DATE_END_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_001;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_001;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -12,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.CheckInCommand;
 import seedu.address.model.room.RoomNumber;
+import seedu.address.testutil.TypicalRoomNumbers;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -26,7 +26,7 @@ public class CheckinCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsCheckInCommand() {
-        RoomNumber expectedRoomNumber = new RoomNumber(VALID_ROOM_NUMBER_001);
+        RoomNumber expectedRoomNumber = TypicalRoomNumbers.ROOM_NUMBER_001;
         assertParseSuccess(parser, ROOM_DESC_001, new CheckInCommand(expectedRoomNumber));
     }
 

@@ -39,10 +39,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_HANDICAP = "handicap";
-    public static final String VALID_ROOM_NUMBER_AMY = "001";
-    public static final String VALID_ROOM_NUMBER_BOB = "002";
-    public static final String VALID_ROOM_NUMBER_001 = "001";
-    public static final String VALID_ROOM_NUMBER_020 = "020";
+    public static final String VALID_ROOM_NUMBER_AMY = "080";
+    public static final String VALID_ROOM_NUMBER_BOB = "081";
     public static final String VALID_DATE_START_AMY =
             LocalDate.now().format(BookingPeriod.DATE_TO_STRING_FORMAT);
     public static final String VALID_DATE_END_AMY =
@@ -60,10 +58,6 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String ROOM_DESC_001 =
-            " " + PREFIX_ROOM + VALID_ROOM_NUMBER_001;
-    public static final String ROOM_DESC_020 =
-            " " + PREFIX_ROOM + VALID_ROOM_NUMBER_020;
     public static final String ROOM_DESC_AMY = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_AMY;
     public static final String ROOM_DESC_BOB = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_BOB;
     public static final String DATE_START_DESC_AMY =
