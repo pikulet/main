@@ -1,10 +1,13 @@
 package seedu.address.model;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.Expense;
 import seedu.address.model.guest.Guest;
+import seedu.address.model.login.InvalidLogInException;
+import seedu.address.model.login.InvalidLogOutException;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
@@ -31,6 +34,30 @@ public interface Model {
     /** Returns the Menu.*/
     Menu getMenu();
 
+    // =========== Signing in. ================================================
+
+    /**
+     * Returns true if Concierge is currently logged in.
+     */
+    boolean isSignedIn();
+
+    /**
+     * Returns an Optional containing the username currently tagged to the
+     * session.
+     */
+    Optional<String> getUsername();
+
+    /**
+     * Attempts to sign in with username {@code username} and password {@code
+     * hashedPassword}.
+     */
+    void signIn(String username, String hashedPassword) throws InvalidLogInException;
+
+    /**
+     * Attempts to sign out of Concierge.
+     */
+    void signOut() throws InvalidLogOutException;
+  
     // =========== Methods for guest. =========================================
 
     /**
