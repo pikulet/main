@@ -203,7 +203,7 @@ Examples:
 `select 2` +
 Selects the 2nd room in the displayed list.
 
-=== Provide Room Service: `service` [red]#Coming in v1.3#
+=== Provide Room Service: `service`
 
 Charges a room service to a room  +
 Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
