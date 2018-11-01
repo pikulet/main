@@ -2,6 +2,7 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -72,6 +73,17 @@ public class Room {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    //=========== Tags operations =============================================================
+
+    /**
+     * Returns a copy of this room with given tags added
+     */
+    public Room addTags(Tag... tags) {
+        Set<Tag> editedTags = new HashSet<>(this.tags);
+        editedTags.addAll(Arrays.asList(tags));
+        return new Room(this.roomNumber, this.capacity, this.expenses, this.bookings, editedTags);
     }
 
     //=========== Bookings operations =============================================================
