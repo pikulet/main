@@ -36,8 +36,8 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all rooms types and cost of room
-* **`checkout`**`S9465789B` : checks out guest with NRIC no. S9465789B from his/her room
+* *`list -r`* : lists all rooms
+* **`checkin`**`r/085` : checks in the first active booking of room 085
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
