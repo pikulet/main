@@ -64,6 +64,22 @@ public class Expenses {
         return totalCost.toString();
     }
 
+    public String toStringSummary() {
+        String format = "%1$-20s %2$-7s %3$-30s %4$13s\n"; // datetime number name cost
+        StringBuilder output = new StringBuilder();
+        for (Expense expense : expenseList) {
+            output.append(String.format(format,
+                    expense.getDateTimeString(),
+                    expense.getExpenseType().getItemNumber(),
+                    expense.getExpenseType().getItemName(),
+                    expense.getCost()));
+        }
+        // anyone who has a nicer way of writing the Total line, do edit
+        String spaces = String.join("", Collections.nCopies(29, " "));
+        output.append(spaces + String.format("%1$-30s %2$13s", "Total:", toStringTotalCost()));
+        return output.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
