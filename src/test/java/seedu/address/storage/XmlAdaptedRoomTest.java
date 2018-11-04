@@ -5,7 +5,6 @@ import static seedu.address.storage.XmlAdaptedRoom.MESSAGE_NOT_CHECKED_IN;
 import static seedu.address.storage.XmlAdaptedRoom.MESSAGE_NO_BOOKING;
 import static seedu.address.storage.XmlAdaptedRoom.MISSING_FIELD_MESSAGE_FORMAT;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +14,10 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Menu;
-import seedu.address.model.expenses.Expense;
 import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
-import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.model.room.booking.Bookings;
 import seedu.address.testutil.Assert;
-import seedu.address.testutil.BookingBuilder;
 import seedu.address.testutil.ExpenseBuilder;
 import seedu.address.testutil.TypicalBookings;
 import seedu.address.testutil.TypicalMenu;

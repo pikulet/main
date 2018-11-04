@@ -16,9 +16,6 @@ import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.UniqueRoomList;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.model.room.booking.Bookings;
-import seedu.address.model.room.booking.exceptions.NoBookingException;
-import seedu.address.model.room.booking.exceptions.RoomNotCheckedInException;
 import seedu.address.model.tag.Tag;
 
 /**
