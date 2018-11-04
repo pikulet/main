@@ -64,6 +64,9 @@ public class Expenses {
         return totalCost.toString();
     }
 
+    /**
+     * Returns a table-formatted string of all expenses to be displayed on the detailed panel.
+     */
     public String toStringSummary() {
         String format = "%1$-20s %2$-7s %3$-30s %4$13s\n"; // datetime number name cost
         StringBuilder output = new StringBuilder();
