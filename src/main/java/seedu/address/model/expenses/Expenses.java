@@ -79,7 +79,7 @@ public class Expenses {
         }
         // anyone who has a nicer way of writing the Total line, do edit
         String spaces = String.join("", Collections.nCopies(29, " "));
-        output.append(spaces + String.format("%1$-30s %2$13s", "Total:", toStringTotalCost()));
+        output.append("\n" + spaces + String.format("%1$-30s %2$13s", "Total:", toStringTotalCost()));
         return output.toString();
     }
 

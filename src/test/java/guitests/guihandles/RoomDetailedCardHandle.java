@@ -23,9 +23,9 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
 
     private final Label roomNumberLabel;
     private final Label capacityLabel;
-    private final List<Label> expensesLabels;
-    private final List<Label> activeBookingLabels;
-    private final List<Label> allOtherBookingsLabels;
+    private final Label expensesLabel;
+    private final Label activeBookingLabel;
+    private final Label allOtherBookingsLabel;
     private final List<Label> tagLabels;
 
     public RoomDetailedCardHandle(Node cardNode) {
@@ -35,31 +35,28 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
         capacityLabel = getChildNode(CAPACITY_FIELD_ID);
 
         Region expensesContainer = getChildNode(EXPENSES_FIELD_ID);
-        expensesLabels = expensesContainer
+        expensesLabel = expensesContainer
                 .getChildrenUnmodifiable()
                 .stream()
                 .map(Label.class::cast)
-                .collect(Collectors.toList());
-
-        expensesLabels.remove(0);
+                .findFirst()
+                .get(); // guaranteed to have only one item
 
         Region activeBookingContainer = getChildNode(ACTIVE_BOOKING_FIELD_ID);
-        activeBookingLabels = activeBookingContainer
+        activeBookingLabel = activeBookingContainer
                 .getChildrenUnmodifiable()
                 .stream()
                 .map(Label.class::cast)
-                .collect(Collectors.toList());
-
-        activeBookingLabels.remove(0);
+                .findFirst()
+                .get(); // guaranteed to have only one item
 
         Region allOtherBookingsContainer = getChildNode(ALL_OTHER_BOOKING_FIELD_ID);
-        allOtherBookingsLabels = allOtherBookingsContainer
+        allOtherBookingsLabel = allOtherBookingsContainer
             .getChildrenUnmodifiable()
             .stream()
             .map(Label.class::cast)
-            .collect(Collectors.toList());
-
-        allOtherBookingsLabels.remove(0);
+            .findFirst()
+            .get(); // guaranteed to have only one item
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         tagLabels = tagsContainer
@@ -77,25 +74,16 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
         return capacityLabel.getText();
     }
 
-    public List<String> getExpenses() {
-        return expensesLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
+    public String getExpenses() {
+        return expensesLabel.getText();
     }
 
-    public List<String> getActiveBooking() {
-        return activeBookingLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
+    public String getActiveBooking() {
+        return activeBookingLabel.getText();
     }
 
-    public List<String> getAllOtherBookings() {
-        return allOtherBookingsLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
+    public String getAllOtherBookings() {
+        return allOtherBookingsLabel.getText();
     }
 
     public List<String> getTags() {
