@@ -2,6 +2,8 @@ package seedu.address.model.expenses;
 
 import static java.util.Objects.requireNonNull;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,9 +59,10 @@ public class Expenses {
      * Get the total cost of all the expenses as a string.
      */
     public String toStringTotalCost() {
-        Money totalCost = new Money(0, 0);
+        BigDecimal totalCost = new BigDecimal(0);
         for (Expense e : expenseList) {
-            totalCost = totalCost.add(e.getCost());
+            totalCost = totalCost.add(new BigDecimal(e.getCost().toString()));
+            totalCost = totalCost.setScale(2, RoundingMode.HALF_EVEN);
         }
         return totalCost.toString();
     }
