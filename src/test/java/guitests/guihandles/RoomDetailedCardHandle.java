@@ -23,7 +23,7 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
 
     private final Label roomNumberLabel;
     private final Label capacityLabel;
-    private final Label expensesLabel;
+    private final List<Label> expensesLabels;
     private final List<Label> activeBookingLabels;
     private final List<Label> allOtherBookingsLabels;
     private final List<Label> tagLabels;
@@ -33,7 +33,15 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
 
         roomNumberLabel = getChildNode(ROOMNUMBER_FIELD_ID);
         capacityLabel = getChildNode(CAPACITY_FIELD_ID);
-        expensesLabel = getChildNode(EXPENSES_FIELD_ID);
+
+        Region expensesContainer = getChildNode(EXPENSES_FIELD_ID);
+        expensesLabels = expensesContainer
+                .getChildrenUnmodifiable()
+                .stream()
+                .map(Label.class::cast)
+                .collect(Collectors.toList());
+
+        expensesLabels.remove(0);
 
         Region activeBookingContainer = getChildNode(ACTIVE_BOOKING_FIELD_ID);
         activeBookingLabels = activeBookingContainer
@@ -69,8 +77,11 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
         return capacityLabel.getText();
     }
 
-    public String getExpenses() {
-        return expensesLabel.getText();
+    public List<String> getExpenses() {
+        return expensesLabels
+                .stream()
+                .map(Label::getText)
+                .collect(Collectors.toList());
     }
 
     public List<String> getActiveBooking() {
@@ -100,7 +111,6 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
     public boolean equals(Room room) {
         return getRoomNumber().equals("Room: " + room.getRoomNumber())
                 && getCapacity().equals("Capacity: " + room.getCapacity())
-                && getExpenses().equals("Expenses: " + room.getExpenses().toStringTotalCost())
                 && ImmutableMultiset.copyOf(getTags()).equals(ImmutableMultiset.copyOf(room.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.toList())));
