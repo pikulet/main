@@ -99,6 +99,9 @@ public class RoomDetailedCardHandle extends NodeHandle<Node> {
     public boolean equals(Room room) {
         return getRoomNumber().equals("Room: " + room.getRoomNumber())
                 && getCapacity().equals("Capacity: " + room.getCapacity())
+                && getExpenses().equals("Expenses:\n" + room.getExpenses().toStringSummary())
+                && getActiveBooking().equals("Active booking:\n" + room.getBookings().toStringActiveBooking())
+                && getAllOtherBookings().equals("All other bookings:\n" + room.getBookings().toStringAllOtherBookings())
                 && ImmutableMultiset.copyOf(getTags()).equals(ImmutableMultiset.copyOf(room.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.toList())));
