@@ -1,6 +1,6 @@
 package seedu.address;
 
-import static seedu.address.model.login.PasswordHashList.getEmptyPasswordHashList;
+import static seedu.address.model.login.PasswordHashList.getSamplePasswordHashList;
 import static seedu.address.model.util.SampleDataUtil.getSampleConcierge;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class MainApp extends Application {
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyConcierge> conciergeOptional;
         ReadOnlyConcierge initialData;
-        PasswordHashList passwordRef;
+        PasswordHashList passwordRef = initPasswordStorage(storage);
 
         try {
             conciergeOptional = storage.readConcierge();
@@ -101,17 +101,12 @@ public class MainApp extends Application {
                     conciergeOptional.orElseGet(SampleDataUtil::getSampleConcierge);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. "
-                    + "Will be starting with a sample Concierge and empty password list");
+                    + "Will be starting with a sample Concierge");
             initialData = getSampleConcierge();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. "
-                    + "Will be starting with a sample Concierge and empty password list");
+                    + "Will be starting with a sample Concierge");
             initialData = getSampleConcierge();
-        }
-        try {
-            passwordRef = storage.getPasswordHashList();
-        } catch (IOException e) {
-            passwordRef = getEmptyPasswordHashList();
         }
 
         return new ModelManager(initialData, userPrefs, passwordRef);
@@ -119,6 +114,25 @@ public class MainApp extends Application {
 
     private void initLogging(Config config) {
         LogsCenter.init(config);
+    }
+
+    /**
+     * Returns a {@code PasswordHashList} using the storage data.
+     * If there is an invalid or missing passwords.json file, then an empty
+     * one with the default data will be created.
+     */
+    private PasswordHashList initPasswordStorage(Storage storage) {
+        PasswordHashList passwordRef;
+
+        try {
+            passwordRef = storage.getPasswordHashList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the password file. "
+                    + "Will be starting with a sample login");
+            passwordRef = getSamplePasswordHashList();
+        }
+
+        return passwordRef;
     }
 
     /**

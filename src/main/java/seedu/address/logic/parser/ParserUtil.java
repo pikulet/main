@@ -15,7 +15,6 @@ import seedu.address.model.expenses.Money;
 import seedu.address.model.guest.Email;
 import seedu.address.model.guest.Name;
 import seedu.address.model.guest.Phone;
-import seedu.address.model.login.HashingException;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
@@ -163,11 +162,7 @@ public class ParserUtil {
      */
     public static String parseAndHashPassword(String pw) throws ParseException {
         requireNonNull(pw);
-        try {
-            return PasswordHashUtil.hash(pw.trim());
-        } catch (HashingException e) {
-            throw new ParseException(e.getMessage());
-        }
+        return PasswordHashUtil.hash(pw.trim());
     }
 
     /**
