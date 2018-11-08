@@ -1,4 +1,4 @@
-= Concierge v1.3 - User Guide
+= Concierge v1.4 - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -318,42 +318,32 @@ List all archived guests
 * `list -cg` +
 List all checked-in guests
 
+// tag::login[]
 === Login : `login`
 
 Logs in to the Concierge application. +
 Format: `login user/USERNAME pw/PASSWORD`
 
+Note: The username and password are both case-sensitive.
+
+[TIP]
+A login allows the user to access the commands which can affect the
+bookings.
+
 ****
-* The username and password are both case-sensitive.
-* A login allows the user to access the commands which can affect the bookings.
+* The default account can be accessed with `login user/admin pw/passw0rd`
+* More users can be added at `src/data/passwords.json`. When adding passwords
+to the reference list, be sure to add the SHA-256 hashed password.
+You can find a useful hashing tool here: https://passwordsgenerator.net/sha256-hash-generator/
 ****
 
 Commands which require login:
-
-****
-* `login user/<name> pw/<name>-pw`, where <name> is any of the developer team’s GitHub username
-* As of v1.3, you must create your own passwords.json file with your username and passwords.
-For demo purposes, go to https://github.com/CS2103-AY1819S1-F11-2/main and copy the passwords.json file there
-into the same folder as the Concierge.jar file.
-Alternatively, create a new passwords.json and use SHA-256 Hash to generate
-the hash for your password. You can use this website for this: https://passwordsgenerator.net/sha256-hash-generator/
-
-****
 
 ** `add`, `edit` [red]#Coming in v2.0#
 ** `checkin`, `checkout` [red]#Coming in v2.0#
 ** `clear`
 
 Example: `login user/damithz pw/forgotpassword`
-
-There are a few default accounts which can be used:
-* `login user/admin pw/admin-pw`
-* `login user/<name> pw/<name>-pw`, where `<name>` is any of the developer
-team's GitHub username
-
-[NOTE]
-More users can be added at `src/data/passwords.json`. When adding passwords
-to the reference list, be sure to add the SHA-256 hashed password.
 
 .Without login, Concierge cannot be cleared
 image::LogInCommand-notsignedin.png[width="400"]
