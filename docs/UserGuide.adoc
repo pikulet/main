@@ -82,22 +82,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+// tag::add[]
 === Adding a guest: `add`
 
-Adds a guest to the guest list for the purpose of assigning a room +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER
-from/START_DATE to/END_DATE`
-
-[TIP]
-A guest can have any number of tags (including 0)
+Adds a booking associated with a guest, room and booking period.
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
 
 ****
+* A guest can have any number of tags (including 0)
 * A guest can make an unlimited number of bookings with the hotel, as long as
 the booking is valid.
 * A guest can make a booking for however long he/she wants.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
-His/her information will be stored under his/her booking in the room.
-* Expired bookings cannot be added. [red]#Coming in v1.4#
+His/ her information will be stored under his/ her booking in the room.
+* Expired bookings cannot be added. [red]#Coming in v2.0#
 ****
 
 [TIP]
@@ -107,7 +105,8 @@ Example:
 
 `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085 from/09/12/18 to/10/12/18`
 
-Add a guest "John Smith" to room 085 for a period of stay from 09/12/18 to 10/12/18.
+Add a guest "John Smith" to room 085 for the period of stay from 09/12/18 to
+10/12/18.
 
 .Adding an active booking
 image::AddCommand-userguide-active.png[width="800"]
@@ -318,6 +317,7 @@ List all archived guests
 * `list -cg` +
 List all checked-in guests
 
+// tag::login[]
 === Login : `login`
 
 Logs in to the Concierge application. +
@@ -364,6 +364,7 @@ image::LogInCommand-loginsuccess.png[width="400"]
 .`clear` command can now be executed
 image::LogInCommand-clearsuccess.png[width="400"]
 
+// tag::logout[]
 === Logout : `logout`
 
 Logs out of the Concierge application. +
