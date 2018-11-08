@@ -54,8 +54,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ** A `Booking` is...
 * `Active` if its start and end date includes today's date, inclusively.
-* `Expired` if its end date is strictly before today's date.
 * `Upcoming` if its start date is strictly after today's date.
+* `Expired` if its end date is strictly before today's date.
+* `Outdated` if its start date is strictly before today's date.
 
 ** Date format: `d/M/y`
 * `d` - Day can be 1 or 2 digits
@@ -94,14 +95,15 @@ A guest can have any number of tags (including 0)
 ****
 * A guest can make an unlimited number of bookings with the hotel, as long as
 the booking is valid.
-* A guest can make a booking for however long he/she wants.
+* A guest can make a booking for however long he/ she wants.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
-His/her information will be stored under his/her booking in the room.
+His/ her information will be stored under his/ her booking in the room.
 * Expired bookings cannot be added. [red]#Coming in v1.4#
 ****
 
 [TIP]
-A valid booking cannot clash with an existing booking
+A valid booking cannot clash with an existing booking. It must also have a
+start date from today onwards.
 
 Example:
 
