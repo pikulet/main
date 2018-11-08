@@ -75,4 +75,15 @@ public class PasswordHashList {
         return "Number of users: " + passwordRef.size();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof PasswordHashList)) {
+            return false;
+        }
+
+        return ((PasswordHashList) other).passwordRef.equals(passwordRef);
+    }
+
 }

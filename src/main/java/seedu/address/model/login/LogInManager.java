@@ -80,4 +80,16 @@ public class LogInManager {
 
         this.username = Optional.empty();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof LogInManager)) {
+            return false;
+        }
+
+        return ((LogInManager) other).getUsername().equals(getUsername())
+                && ((LogInManager) other).passwordRef.equals(passwordRef);
+    }
 }

@@ -156,6 +156,11 @@ public class ServiceCommandTest {
         }
 
         @Override
+        public void resetUndoRedoHistory() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean canUndoConcierge() {
             throw new AssertionError("This method should not be called.");
         }

@@ -83,4 +83,26 @@ public class LogInManagerTest {
         LogInManager logInManager = new LogInManager();
         assertThrows(InvalidLogOutException.class, () -> logInManager.signOut());
     }
+
+    @Test
+    public void equals() {
+        LogInManager logInManager = new LogInManager(getSamplePasswordHashList());
+
+        // null -> returns false
+        assertFalse(logInManager.equals(null));
+
+        // same empty password list --> returns true
+        assertTrue(new LogInManager().equals(new LogInManager()));
+
+        // same non-empty password list -> returns true
+        LogInManager logInManagerCopy = new LogInManager(getSamplePasswordHashList());
+        assertTrue(logInManager.equals(logInManagerCopy));
+
+        // different usernames -> returns false
+        logInManagerCopy.signIn("user1", hash("passw0rd"));
+        assertFalse(logInManager.equals(logInManagerCopy));
+
+        // different password lists -> returns false
+        assertFalse(logInManager.equals(new LogInManager()));
+    }
 }
