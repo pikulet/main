@@ -1,6 +1,7 @@
 package seedu.address.model.login;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.PasswordHashUtil.hash;
 
 import java.util.Optional;
 
@@ -36,26 +37,19 @@ public class PasswordHashList {
     }
 
     /**
-     * A helper method to wrap the JsonNode in with {@code PASSWORD_REF_NAME}
-     * Note: a deprecated method put(String, JsonNode) is used
+     * Returns a new {@code PasswordHashList} with the username and password
+     * entry added.
      */
-    private static PasswordHashList of(JsonNode passwordRef) {
-        requireNonNull(passwordRef);
-        ObjectNode wrappedNode = JsonNodeFactory.instance.objectNode();
-        wrappedNode.putPOJO(PASSWORD_REF_NAME, passwordRef);
-        return new PasswordHashList(wrappedNode);
-    }
-
-    /**
-     * Returns a new {@code PasswordHashList} with the username/ hashed
-     * password entry added.
-     */
-    public PasswordHashList addEntry(String username, String hashedPassword) {
-        requireNonNull(username, hashedPassword);
+    public PasswordHashList addEntry(String username, String password) {
+        requireNonNull(username, password);
 
         ObjectNode newPasswordRef = (ObjectNode) passwordRef;
-        newPasswordRef.put(username, hashedPassword);
-        return PasswordHashList.of(newPasswordRef);
+        newPasswordRef.put(username, hash(password));
+
+        PasswordHashList passwordHashList = new PasswordHashList();
+        passwordHashList.passwordRef = passwordRef;
+
+        return passwordHashList;
     }
 
     /**

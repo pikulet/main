@@ -2,6 +2,7 @@ package seedu.address.model.login;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.logic.parser.PasswordHashUtil.hash;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.io.IOException;
@@ -24,18 +25,13 @@ public class PasswordHashListTest {
         assertThrows(NullPointerException.class, () -> new PasswordHashList(null));
     }
 
-    @Test
-    public void constructor_invalidString_throwsIoException() {
-        assertThrows(IOException.class, () -> new PasswordHashList("invalidPasswordRefList"));
-    }
-
     // TODO: Add support to assert the success of parsing
     /*
     @Test
     public void constructor_validString_success() throws IOException {
 
         // empty json string
-        String passwordRef = "{ }";
+        String passwordRef = " { } "
         new PasswordHashList(passwordRef);
 
         // one entry
@@ -48,28 +44,16 @@ public class PasswordHashListTest {
     */
 
     @Test
-    public void getEmptyPasswordHashList_success() throws IOException {
-        PasswordHashList emptyPasswordRefFromUtil =
-                PasswordHashList.getEmptyPasswordHashList();
-
-        PasswordHashList emptyPasswordRefFromString =
-                new PasswordHashList("{ }");
-
-        assertEquals(emptyPasswordRefFromUtil.toString(),
-                emptyPasswordRefFromString.toString());
-    }
-
-    @Test
     public void getExpectedPassword_success() throws IOException {
         PasswordHashList passwordRef = getSamplePasswordHashList();
 
         // correct username, first user
         String retrievedPassword = passwordRef.getExpectedPassword("user1").get();
-        assertEquals(retrievedPassword, "passw0rd");
+        assertEquals(retrievedPassword, hash("passw0rd"));
 
         // correct username, second user
         retrievedPassword = passwordRef.getExpectedPassword("USER2").get();
-        assertEquals(retrievedPassword, "passw1rd");
+        assertEquals(retrievedPassword, hash("passw1rd"));
     }
 
 
@@ -94,7 +78,7 @@ public class PasswordHashListTest {
     public void toString_success() throws IOException {
 
         // empty
-        PasswordHashList passwordRef = new PasswordHashList("{ }");
+        PasswordHashList passwordRef = new PasswordHashList();
         assertEquals(passwordRef.toString(), "Number of users: 0");
 
         // multiple entries

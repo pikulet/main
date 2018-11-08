@@ -121,7 +121,7 @@ public class MainApp extends Application {
      * If there is an invalid or missing passwords.json file, then an empty
      * one with the default data will be created.
      */
-    private PasswordHashList initPasswordStorage(Storage storage) {
+    protected PasswordHashList initPasswordStorage(Storage storage) {
         PasswordHashList passwords;
 
         try {

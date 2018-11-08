@@ -13,8 +13,8 @@ import seedu.address.logic.commands.LogInCommand;
  */
 public class LogInUtil {
 
-    private static final String validUsername = "testuser";
-    private static final String validPassword = "password1";
+    public static final String validUsername = "testuser";
+    public static final String validPassword = "passw0rd1";
 
     public static String getLogInCommand(String username, String validPassword) {
         StringBuilder sb = new StringBuilder();

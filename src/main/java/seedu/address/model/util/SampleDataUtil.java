@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.util.Pair;
-import seedu.address.logic.parser.PasswordHashUtil;
 import seedu.address.model.Concierge;
 import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.expenses.Expense;
@@ -33,6 +32,7 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating {@code Concierge} with sample data.
  */
 public class SampleDataUtil {
+
     public static Guest[] getSampleGuests() {
         return new Guest[] {
             new Guest(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
@@ -138,7 +138,7 @@ public class SampleDataUtil {
      */
     public static PasswordHashList getSamplePasswordHashList() {
         return getPasswordHashList(
-                new Pair<>("admin", PasswordHashUtil.hash("passw0rd")));
+                new Pair<>("admin", "passw0rd"));
     }
 
     /**
