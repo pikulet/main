@@ -1,12 +1,10 @@
 package seedu.address.logic;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.autocomplete.AutoCompleteManager;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,13 +25,10 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final ConciergeParser conciergeParser;
 
-    private final AutoCompleteManager autoCompleteManager;
-
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         conciergeParser = new ConciergeParser();
-        autoCompleteManager = new AutoCompleteManager();
     }
 
     @Override
@@ -68,15 +63,5 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
-    }
-
-    @Override
-    public List<String> getAutoCompleteCommands(String commandPrefix) {
-        return autoCompleteManager.getAutoCompleteCommands(commandPrefix);
-    }
-
-    @Override
-    public String getAutoCompleteNextParameter(String inputText) {
-        return autoCompleteManager.getAutoCompleteNextMissingParameter(inputText);
     }
 }
