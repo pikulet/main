@@ -540,6 +540,12 @@ Format: `export`
 
 Format: `help`
 
+****
+* Only one help session can be in place at each time.
+* Your help session resets each time you close the window.
+* Your help session is retained if the window is not closed.
+****
+
 === Exiting the program : `exit`
 
 Exits the program. +
