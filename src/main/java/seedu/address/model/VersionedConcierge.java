@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class VersionedConcierge extends Concierge {
 
-    private final List<ReadOnlyConcierge> conciergeStateList;
+    private List<ReadOnlyConcierge> conciergeStateList;
     private int currentStatePointer;
 
     public VersionedConcierge(ReadOnlyConcierge initialState) {
@@ -67,6 +67,16 @@ public class VersionedConcierge extends Concierge {
      */
     public boolean canRedo() {
         return currentStatePointer < conciergeStateList.size() - 1;
+    }
+
+    /**
+     * Resets the undo and redo history. {@code undo()} and {@code redo()}
+     * will throw the respective {@code NoUndoableStateException} and {@code
+     * NoRedoableStateException}.
+     */
+    public void resetUndoRedoHistory() {
+        currentStatePointer = 0;
+        removeStatesAfterCurrentPointer();
     }
 
     @Override

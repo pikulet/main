@@ -251,6 +251,10 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Undo/Redo ================================================
 
     @Override
+    public void resetUndoRedoHistory() {
+        versionedConcierge.resetUndoRedoHistory(); }
+
+    @Override
     public boolean canUndoConcierge() {
         return versionedConcierge.canUndo();
     }

@@ -170,6 +170,11 @@ public interface Model {
     // =========== Methods for undo and redo. =================================
 
     /**
+     * Resets the undo/ redo history.
+     */
+    void resetUndoRedoHistory();
+
+    /**
      * Returns true if the model has previous Concierge states to restore.
      */
     boolean canUndoConcierge();
