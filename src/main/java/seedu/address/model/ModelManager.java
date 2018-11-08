@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.login.PasswordHashList.getEmptyPasswordHashList;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -47,7 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
      * LogInHelper module.
      */
     public ModelManager(ReadOnlyConcierge concierge, UserPrefs userPrefs) {
-        this(concierge, userPrefs, getEmptyPasswordHashList());
+        this(concierge, userPrefs, new PasswordHashList());
     }
 
     /**

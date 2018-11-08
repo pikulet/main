@@ -21,7 +21,7 @@ public class LogInManager {
      * Creates an {@code LogInHelper} with an empty password reference list.
      */
     public LogInManager() {
-        this.passwordRef = PasswordHashList.getEmptyPasswordHashList();
+        this.passwordRef = new PasswordHashList();
     }
 
     public LogInManager(PasswordHashList passwordRef) {

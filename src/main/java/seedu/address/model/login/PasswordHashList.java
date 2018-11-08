@@ -2,15 +2,11 @@ package seedu.address.model.login;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import seedu.address.commons.util.JsonUtil;
-import seedu.address.logic.parser.PasswordHashUtil;
 
 /**
  * Represents a password hash list, and is used in the {@code LogInHelper}.
@@ -18,54 +14,48 @@ import seedu.address.logic.parser.PasswordHashUtil;
 public class PasswordHashList {
 
     private JsonNode passwordRef; // The JSON password reference list
-    private static final String defaultUsername = "admin";
-    private static final String defaultPassword = "passw0rd";
-    private static final String defaultPasswordHash =
-            "8F0E2F76E22B43E2855189877E7DC1E1E7D98C226C95DB247CD1D547928334A9";
+    // The json key that wraps the other key-value pairs
+    private static final String PASSWORD_REF_NAME = "passwordRef";
 
-    public PasswordHashList(String passwordRefString) throws IOException {
-        requireNonNull(passwordRefString);
-
-        try {
-            this.passwordRef = JsonUtil.getNodeObject(passwordRefString);
-        } catch (IOException e) {
-            // Caught and rethrown to wrap subclass exception com.fasterxml.jackson.core.JsonParseException
-            // as JsonParseException.isAssignableFrom(IOException) returns false in {@code Assert.assertThrows}
-            throw new IOException(e.getMessage());
-        }
+    /**
+     * Returns an empty password hash list with no username or passwords
+     */
+    public PasswordHashList() {
+        this.passwordRef = JsonNodeFactory.instance.objectNode();
     }
 
-    private PasswordHashList(JsonNode passwordRef) {
+    /**
+     * This method creates a new PasswordHashList using a JsonNode with a
+     * {@code PASSWORD_REF_NAME} wrapper object. This facilitates the
+     * serialising and storage component handled by {@code JsonUtil}.
+     * @param passwordRef
+     */
+    public PasswordHashList(JsonNode passwordRef) {
         requireNonNull(passwordRef);
-
-        this.passwordRef = passwordRef;
+        this.passwordRef = passwordRef.get(PASSWORD_REF_NAME);
     }
 
     /**
-     * @return An empty password hash list with no username or passwords
+     * A helper method to wrap the JsonNode in with {@code PASSWORD_REF_NAME}
+     * Note: a deprecated method put(String, JsonNode) is used
      */
-    public static PasswordHashList getEmptyPasswordHashList() {
-        return new PasswordHashList(JsonNodeFactory.instance.objectNode());
-    }
-
-    /**
-     * @return An sample password hash list with the following login
-     * credentials.
-     * Username: admin, Password: passw0rd
-     */
-    public static PasswordHashList getSamplePasswordHashList() {
-        return getEmptyPasswordHashList().addEntry(defaultUsername,
-                    PasswordHashUtil.hash(defaultPassword));
+    private static PasswordHashList of(JsonNode passwordRef) {
+        requireNonNull(passwordRef);
+        ObjectNode wrappedNode = JsonNodeFactory.instance.objectNode();
+        wrappedNode.putPOJO(PASSWORD_REF_NAME, passwordRef);
+        return new PasswordHashList(wrappedNode);
     }
 
     /**
      * Returns a new {@code PasswordHashList} with the username/ hashed
      * password entry added.
      */
-    private PasswordHashList addEntry(String username, String hashedPassword) {
+    public PasswordHashList addEntry(String username, String hashedPassword) {
+        requireNonNull(username, hashedPassword);
+
         ObjectNode newPasswordRef = (ObjectNode)passwordRef;
         newPasswordRef.put(username, hashedPassword);
-        return new PasswordHashList(newPasswordRef);
+        return PasswordHashList.of(newPasswordRef);
     }
 
     /**

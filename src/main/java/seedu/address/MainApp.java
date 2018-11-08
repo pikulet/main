@@ -1,7 +1,7 @@
 package seedu.address;
 
-import static seedu.address.model.login.PasswordHashList.getSamplePasswordHashList;
 import static seedu.address.model.util.SampleDataUtil.getSampleConcierge;
+import static seedu.address.model.util.SampleDataUtil.getSamplePasswordHashList;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -122,17 +122,32 @@ public class MainApp extends Application {
      * one with the default data will be created.
      */
     private PasswordHashList initPasswordStorage(Storage storage) {
-        PasswordHashList passwordRef;
+        PasswordHashList passwords;
 
         try {
-            passwordRef = storage.getPasswordHashList();
-        } catch (IOException e) {
+            Optional<PasswordHashList> passwordsOptional =
+                    storage.getPasswordHashList();
+            if (!passwordsOptional.isPresent()) {
+                logger.info("Password file not found. "
+                        + "Will be starting with a sample login account.");
+            }
+
+            passwords =
+                    passwordsOptional.orElseGet(SampleDataUtil::getSamplePasswordHashList);
+        } catch (DataConversionException e) {
             logger.warning("Problem while reading from the password file. "
-                    + "Will be starting with a sample login");
-            passwordRef = getSamplePasswordHashList();
+                    + "Will be starting with a sample login account.");
+            passwords = getSamplePasswordHashList();
         }
 
-        return passwordRef;
+        // Update prefs file in case it was missing to begin with or there are new/unused fields
+        try {
+            storage.savePasswordRef(passwords);
+        } catch (IOException e) {
+            logger.warning("Failed to save password file : " + StringUtil.getDetails(e));
+        }
+
+        return passwords;
     }
 
     /**

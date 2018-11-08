@@ -2,7 +2,6 @@ package seedu.address.model.util;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.util.Pair;
+import seedu.address.logic.parser.PasswordHashUtil;
 import seedu.address.model.Concierge;
 import seedu.address.model.ReadOnlyConcierge;
 import seedu.address.model.expenses.Expense;
@@ -132,23 +132,28 @@ public class SampleDataUtil {
     }
 
     /**
+     * @return An sample password hash list with the following login
+     * credentials.
+     * Username: admin, Password: passw0rd
+     */
+    public static PasswordHashList getSamplePasswordHashList() {
+        return getPasswordHashList(
+                new Pair<>("admin", PasswordHashUtil.hash("passw0rd")));
+    }
+
+    /**
      * Returns a PasswordHashList given pairs of keys and values.
      */
-    public static PasswordHashList getPasswordHashList(Pair<String, String>... pairs) throws IOException {
+    public static PasswordHashList getPasswordHashList(Pair<String, String>... pairs) {
         requireNonNull(pairs);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        PasswordHashList passwordHashList = new PasswordHashList();
 
         for (Pair p: pairs) {
-            sb.append(" \"");
-            sb.append(p.getKey());
-            sb.append("\" : \"");
-            sb.append(p.getValue());
-            sb.append("\" ");
-            sb.append(",");
+            passwordHashList =
+                    passwordHashList.addEntry((String)p.getKey(), (String)p.getValue());
         }
-        sb.replace(sb.length() - 1, sb.length(), "}");
-        return new PasswordHashList(sb.toString());
+
+        return passwordHashList;
     }
 }
