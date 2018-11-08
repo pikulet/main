@@ -150,8 +150,8 @@ public class SampleDataUtil {
         PasswordHashList passwordHashList = new PasswordHashList();
 
         for (Pair p: pairs) {
-            passwordHashList =
-                    passwordHashList.addEntry((String)p.getKey(), (String)p.getValue());
+            passwordHashList = passwordHashList.addEntry(
+                            (String) p.getKey(), (String) p.getValue());
         }
 
         return passwordHashList;

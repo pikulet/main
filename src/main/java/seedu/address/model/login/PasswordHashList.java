@@ -13,9 +13,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class PasswordHashList {
 
+    private static final String PASSWORD_REF_NAME = "passwordRef";
     private JsonNode passwordRef; // The JSON password reference list
     // The json key that wraps the other key-value pairs
-    private static final String PASSWORD_REF_NAME = "passwordRef";
 
     /**
      * Returns an empty password hash list with no username or passwords
@@ -53,7 +53,7 @@ public class PasswordHashList {
     public PasswordHashList addEntry(String username, String hashedPassword) {
         requireNonNull(username, hashedPassword);
 
-        ObjectNode newPasswordRef = (ObjectNode)passwordRef;
+        ObjectNode newPasswordRef = (ObjectNode) passwordRef;
         newPasswordRef.put(username, hashedPassword);
         return PasswordHashList.of(newPasswordRef);
     }
