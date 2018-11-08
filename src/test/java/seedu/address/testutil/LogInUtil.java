@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import seedu.address.logic.commands.LogInCommand;
+import seedu.address.logic.commands.LogOutCommand;
 
 /**
  * Allows testing to use this typical log in to access "restricted" commands.
@@ -31,5 +32,9 @@ public class LogInUtil {
 
     public static String getValidLogInCommand() {
         return getLogInCommand(validUsername, validPassword);
+    }
+
+    public static String getLogOutCommand() {
+        return LogOutCommand.COMMAND_WORD;
     }
 }
