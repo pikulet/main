@@ -253,6 +253,7 @@ Edits all guests with name `John` and phone number `123` in room 001 to have new
 * `edit -g n/John e/john@john.com ne/phua@phua.com` +
 Edits all guests with name `John` and email `john@john.com` in all rooms to have new email `phua@phua.com`.
 
+//tag::find[]
 === Locating guests and rooms : `find`
 
 Finds guests or rooms, depending on the input flag and the keyword filters.
@@ -279,6 +280,8 @@ Filters for Rooms (-r):
 * `r/ - Room Number`
 * `c/ - Capacity`
 * `t/ - Room Tags`
+* `n/ - Guest name within bookings`
+
 * `-hb - Has Bookings Flag`*
 * `-nb - No Bookings Flag`*
 * `from/ - Booking Start Date`^
@@ -291,6 +294,7 @@ Input dates must be in DD/MM/YY or DD/MM/YYYY format.
 
 Find Command Examples:
 
+=======
 * `find -g n/Alex Yu` +
 Find guest(s) with "Alex" or "Yu" or both in their names.
 * `find -g n/Alex t/VIP` +
@@ -307,7 +311,11 @@ Find all rooms with a capacity of 5, without any bookings from the date range 01
 Find all rooms with bookings.
 * `find -r -hb t/RoomService` +
 Find all rooms with bookings with tag "RoomService".
+=======
 
+//end::find[]
+
+// tag::list[]
 === Listing all guests : `list`
 
 Shows the entire list of rooms, checked-in guests, or archived guests, depending on the input flag +
@@ -321,6 +329,7 @@ List all rooms
 List all archived guests
 * `list -cg` +
 List all checked-in guests
+// end::list[]
 
 // tag::login[]
 === Login : `login`

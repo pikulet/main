@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.FLAG_CHECKED_IN_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_GUEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ROOM_HAS_BOOKINGS;
@@ -24,18 +25,24 @@ import java.util.function.Predicate;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.model.guest.Email;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.GuestEmailExactPredicate;
 import seedu.address.model.guest.GuestNameContainsKeywordsPredicate;
 import seedu.address.model.guest.GuestPhoneExactPredicate;
 import seedu.address.model.guest.GuestTagsContainsKeywordsPredicate;
+import seedu.address.model.guest.Name;
+import seedu.address.model.guest.Phone;
+import seedu.address.model.room.Capacity;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomBookingsDateRangePredicate;
 import seedu.address.model.room.RoomCapacityExactPredicate;
 import seedu.address.model.room.RoomHasBookingsExactPredicate;
+import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.RoomNumberExactPredicate;
 import seedu.address.model.room.RoomTagsContainsKeywordsPredicate;
 import seedu.address.model.room.booking.BookingPeriod;
+import seedu.address.model.tag.Tag;
 
 public class FindCommandParserTest {
 
@@ -60,8 +67,20 @@ public class FindCommandParserTest {
     }
 
     @Test
+    public void parse_validCheckedInGuestFlagNoFilters_throwsParseException() {
+        assertParseFailure(parser, " " + FLAG_CHECKED_IN_GUEST,
+                String.format(FindCommandParser.MESSAGE_NO_FILTERS, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validGuestFlagNullValueFilter_throwsParseException() {
         assertParseFailure(parser, " " + FLAG_GUEST + " " + PREFIX_NAME,
+                String.format(FindCommandParser.MESSAGE_NULL_FILTERS, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validCheckedInGuestFlagNullValueFilter_throwsParseException() {
+        assertParseFailure(parser, " " + FLAG_CHECKED_IN_GUEST + " " + PREFIX_NAME,
                 String.format(FindCommandParser.MESSAGE_NULL_FILTERS, FindCommand.MESSAGE_USAGE));
     }
 
@@ -125,14 +144,31 @@ public class FindCommandParserTest {
     }
 
     @Test
+    public void parse_validRoomFlagCapacityInvalid_throwsParseException() {
+        assertParseFailure(parser, " " + FLAG_ROOM + " " + PREFIX_ROOM_CAPACITY + 4,
+                String.format(Capacity.MESSAGE_CAPACITY_CONSTRAINTS));
+    }
+
+    @Test
     public void parse_validGuestFlag_returnsFindCommand() {
         // no leading and trailing whitespaces
         List<Predicate<Guest>> listPredicates = new LinkedList<>();
         List<Predicate<Room>> emptyRoomPredicates = new LinkedList<>();
-        listPredicates.add(new GuestNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        listPredicates.add(new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("Alice"), new Name("Bob"))));
         FindCommand expectedFindCommand =
                 new FindCommand(FLAG_GUEST.toString(), listPredicates, emptyRoomPredicates);
         assertParseSuccess(parser, " " + FLAG_GUEST + " " + PREFIX_NAME + "Alice Bob", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_validCheckedInGuestFlag_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        List<Predicate<Guest>> listPredicates = new LinkedList<>();
+        List<Predicate<Room>> emptyRoomPredicates = new LinkedList<>();
+        listPredicates.add(new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("Alice"), new Name("Bob"))));
+        FindCommand expectedFindCommand =
+                new FindCommand(FLAG_CHECKED_IN_GUEST.toString(), listPredicates, emptyRoomPredicates);
+        assertParseSuccess(parser, " " + FLAG_CHECKED_IN_GUEST + " " + PREFIX_NAME + "Alice Bob", expectedFindCommand);
     }
 
     @Test
@@ -140,11 +176,11 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         List<Predicate<Guest>> guestPredicates = new LinkedList<>();
         List<Predicate<Room>> emptyRoomPredicates = new LinkedList<>();
-        guestPredicates.add(new GuestNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        guestPredicates.add(new GuestPhoneExactPredicate("81027115"));
-        guestPredicates.add(new GuestEmailExactPredicate("alice@gmail.com"));
+        guestPredicates.add(new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("Alice"), new Name("Bob"))));
+        guestPredicates.add(new GuestPhoneExactPredicate(new Phone("81027115")));
+        guestPredicates.add(new GuestEmailExactPredicate(new Email("alice@gmail.com")));
         guestPredicates.add(new GuestTagsContainsKeywordsPredicate(
-                new LinkedList<>(Arrays.asList("Friends", "Neighbour"))));
+                new LinkedList<>(Arrays.asList(new Tag("Friends"), new Tag("Neighbour")))));
         FindCommand expectedFindCommand =
                 new FindCommand(FLAG_GUEST.toString(), guestPredicates, emptyRoomPredicates);
         assertParseSuccess(parser, " " + FLAG_GUEST + " " + PREFIX_NAME + "Alice Bob " + PREFIX_PHONE
@@ -157,7 +193,7 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         List<Predicate<Guest>> emptyGuestPredicates = new LinkedList<>();
         List<Predicate<Room>> roomPredicates = new LinkedList<>();
-        roomPredicates.add(new RoomNumberExactPredicate("001"));
+        roomPredicates.add(new RoomNumberExactPredicate(new RoomNumber("001")));
         FindCommand expectedFindCommand =
                 new FindCommand(FLAG_ROOM.toString(), emptyGuestPredicates, roomPredicates);
         assertParseSuccess(parser, " " + FLAG_ROOM + " " + PREFIX_ROOM + "001", expectedFindCommand);
@@ -168,10 +204,10 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         List<Predicate<Guest>> emptyGuestPredicates = new LinkedList<>();
         List<Predicate<Room>> roomPredicates = new LinkedList<>();
-        roomPredicates.add(new RoomNumberExactPredicate("001"));
+        roomPredicates.add(new RoomNumberExactPredicate(new RoomNumber("001")));
         roomPredicates.add(new RoomCapacityExactPredicate("2"));
         roomPredicates.add(new RoomTagsContainsKeywordsPredicate(
-                new LinkedList<>(Arrays.asList("Filthy", "AF"))));
+                new LinkedList<>(Arrays.asList(new Tag("Filthy"), new Tag("AF")))));
         roomPredicates.add(new RoomHasBookingsExactPredicate(true));
         roomPredicates.add(new RoomBookingsDateRangePredicate(new BookingPeriod("01/01/2018", "02/01/2018")));
         FindCommand expectedFindCommand =
@@ -181,5 +217,4 @@ public class FindCommandParserTest {
                 + " 01/01/2018 " + PREFIX_DATE_END + " 02/01/2018",
                 expectedFindCommand);
     }
-
 }
