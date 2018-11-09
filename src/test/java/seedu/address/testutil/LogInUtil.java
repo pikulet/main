@@ -9,8 +9,8 @@ import seedu.address.logic.commands.LogOutCommand;
 /**
  * Allows testing to use this typical log in to access "restricted" commands.
  * Currently, the restricted commands which require sign-in are:
- * {@code AddCommand}, {@code EditCommand}, {@code CheckInCommand},
- * {@code CheckOutCommand} and {@code ClearCommand}
+ * {@code AddCommand}, {@code CheckInCommand}, {@code CheckOutCommand}
+ * {@code ReassignCommand}, {@code ServiceCommand} and {@code ClearCommand}.
  */
 public class LogInUtil {
 

@@ -185,6 +185,8 @@ Reassigns a booking from one room to another.
 
 Format: `reassign r/ROOM_NUMBER from/START_DATE`
 
+ This command requires a login.
+
 Examples:
 
 * `reassign r/085 from/01/11/18 nr/086` +
@@ -434,6 +436,8 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *MB04* -- Minibar: Mineral water -- $3.00
 ** *SP01* -- Swimming pool: Entry -- $5.00
 ****
+
+ This command requires a login.
 
 Examples:
 
