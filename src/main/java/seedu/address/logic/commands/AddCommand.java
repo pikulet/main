@@ -51,6 +51,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Guest %1$s successfully made a booking for room: %2$s from %3$s";
     public static final String MESSAGE_OVERLAPPING_BOOKING =
             "Cannot add booking, because it overlaps with another booking in room %s";
+    public static final String MESSAGE_OUTDATED_BOOKING =
+            "Cannot add booking, because it starts on a past date";
 
     private final Guest guestToAdd;
     private final RoomNumber roomNumberToAdd;
@@ -72,6 +74,10 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+
+        if (bookingToAdd.isOutdated()) {
+            throw new CommandException(MESSAGE_OUTDATED_BOOKING);
+        }
 
         try {
             model.addBooking(roomNumberToAdd, bookingToAdd);
