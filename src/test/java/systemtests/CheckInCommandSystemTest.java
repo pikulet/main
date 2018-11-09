@@ -1,71 +1,75 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CheckoutCommand.MESSAGE_BOOKING_NOT_FOUND;
-import static seedu.address.logic.commands.CheckoutCommand.MESSAGE_NO_ROOM_BOOKING;
-import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_AMY;
+import static seedu.address.logic.commands.CheckInCommand.MESSAGE_BOOKING_ALREADY_CHECKED_IN;
+import static seedu.address.logic.commands.CheckInCommand.MESSAGE_INACTIVE_BOOKING_CHECK_IN;
+import static seedu.address.logic.commands.CheckInCommand.MESSAGE_NO_BOOKING_CHECK_IN;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROOM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_START_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_BOB;
 import static seedu.address.logic.commands.LogInCommand.MESSAGE_NOT_SIGNED_IN;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ROOMS;
 import static seedu.address.testutil.TypicalBookingPeriods.BOOKING_PERIOD_AMY;
+import static seedu.address.testutil.TypicalBookingPeriods.TODAY_TOMORROW;
 import static seedu.address.testutil.TypicalBookingPeriods.TOMORROW_NEXTWEEK;
 import static seedu.address.testutil.TypicalGuests.AMY;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_AMY;
+import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_BOB;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.CheckoutCommand;
+import seedu.address.logic.commands.CheckInCommand;
 import seedu.address.model.Model;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.testutil.BookingUtil;
 import seedu.address.testutil.LogInUtil;
 import seedu.address.testutil.RoomUtil;
 
-// TODO: Add support to assert the success of auxiliary commands (login, logout, add, checkin)
-public class CheckoutCommandSystemTest extends ConciergeSystemTest {
+// TODO: Add support to assert the success of auxiliary commands (login, logout, add)
+public class CheckInCommandSystemTest extends ConciergeSystemTest {
 
     @Test
-    public void checkout() {
+    public void checkin() {
 
         /* Signs in to Concierge first */
         String command = LogInUtil.getValidLogInCommand();
         executeCommand(command);
 
-        // checkout room without bookings -> rejected
-        command = CheckoutCommand.COMMAND_WORD + ROOM_DESC_AMY;
+        // attempt to checkin but no bookings found in room -> rejected
+        command = CheckInCommand.COMMAND_WORD + ROOM_DESC_BOB;
         assertCommandFailure(command,
-                String.format(MESSAGE_NO_ROOM_BOOKING, ROOM_NUMBER_AMY));
+                String.format(MESSAGE_NO_BOOKING_CHECK_IN, ROOM_NUMBER_BOB));
 
-        // add guest to Concierge
+        // TODO: Add test case for checkin of expired bookings
+        // add guest with expired booking to Concierge
+        // attempt to checkin expired booking -> rejected
+
+        // add guest with inactive booking to Concierge
         executeCommand(BookingUtil.getAddCommand(AMY, ROOM_NUMBER_AMY, TOMORROW_NEXTWEEK));
+        // attempt to checkin inactive booking -> rejected
+        command = CheckInCommand.COMMAND_WORD + ROOM_DESC_AMY;
+        assertCommandFailure(command, String.format(MESSAGE_INACTIVE_BOOKING_CHECK_IN, ROOM_NUMBER_AMY));
 
-        // checkout booking with invalid start date -> rejected
-        command = CheckoutCommand.COMMAND_WORD + ROOM_DESC_AMY + DATE_START_DESC_AMY;
-        assertCommandFailure(command,
-                String.format(MESSAGE_BOOKING_NOT_FOUND, ROOM_NUMBER_AMY, VALID_DATE_START_AMY));
-
-        // checkout guest without checkin
+        // add guest with active booking to Concierge
+        executeCommand(BookingUtil.getAddCommand(AMY, ROOM_NUMBER_AMY, TODAY_TOMORROW));
         assertCommandSuccess(ROOM_NUMBER_AMY);
 
-        // add guest to Concierge
-        executeCommand(BookingUtil.getAddCommand(AMY, ROOM_NUMBER_AMY, BOOKING_PERIOD_AMY));
-        // checkin guest
-        executeCommand(RoomUtil.getCheckInCommand(ROOM_NUMBER_AMY));
-        // checkout guest with checkin
-        assertCommandSuccess(ROOM_NUMBER_AMY);
+        // attempt to checkin the same booking twice -> rejected
+        command = CheckInCommand.COMMAND_WORD + ROOM_DESC_AMY;
+        assertCommandFailure(command, String.format(MESSAGE_BOOKING_ALREADY_CHECKED_IN, ROOM_NUMBER_AMY));
 
-        /* ------------------------------- Perform invalid checkout operations ---------------------------------- */
+        /* ------------------------------- Perform invalid checkin operations ---------------------------------- */
 
         /* Case: invalid room number -> rejected */
-        command = CheckoutCommand.COMMAND_WORD + INVALID_ROOM_DESC;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
+        command = CheckInCommand.COMMAND_WORD + INVALID_ROOM_DESC;
+        assertCommandFailure(command,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckInCommand.MESSAGE_USAGE));
 
         /* Case: missing room number -> rejected */
-        command = CheckoutCommand.COMMAND_WORD;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckoutCommand.MESSAGE_USAGE));
+        command = CheckInCommand.COMMAND_WORD;
+        assertCommandFailure(command,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckInCommand.MESSAGE_USAGE));
 
         /* ----------------------------------- Verify the need to sign in --------------------------------------- */
 
@@ -75,41 +79,41 @@ public class CheckoutCommandSystemTest extends ConciergeSystemTest {
         executeCommand(LogInUtil.getLogOutCommand());
 
         // not signed in -> rejected
-        command = RoomUtil.getCheckoutCommand(ROOM_NUMBER_AMY);
+        command = RoomUtil.getCheckInCommand(ROOM_NUMBER_AMY);
         assertCommandFailure(command, String.format(MESSAGE_NOT_SIGNED_IN));
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String,
      * RoomNumber)} except that the browser url and selected card remain unchanged.
-     * @param roomNumberToCheckout the room number to checkout
-     * @see CheckoutCommandSystemTest#assertCommandSuccess(String, RoomNumber)
+     * @param roomNumberToCheckIn the room number to checkin
+     * @see CheckInCommandSystemTest#assertCommandSuccess(String, RoomNumber)
      */
-    private void assertCommandSuccess(RoomNumber roomNumberToCheckout) {
-        String command = RoomUtil.getCheckoutCommand(roomNumberToCheckout);
-        assertCommandSuccess(command, roomNumberToCheckout);
+    private void assertCommandSuccess(RoomNumber roomNumberToCheckIn) {
+        String command = RoomUtil.getCheckInCommand(roomNumberToCheckIn);
+        assertCommandSuccess(command, roomNumberToCheckIn);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess (RoomNumber} and in addition,<br>
-     * 1. Asserts that result display box displays the success message of executing {@code CheckoutCommand}.<br>
+     * 1. Asserts that result display box displays the success message of executing {@code CheckInCommand}.<br>
      * 2. Asserts that the model related components are updated to reflect the room with room number
-     * {@code roomNumberToCheckout} being updated to values specified.<br>
-     * @param roomNumberToCheckout the room number to checkout
-     * @see CheckoutCommandSystemTest#assertCommandSuccess(RoomNumber)
+     * {@code roomNumberToCheckIn} being updated to values specified.<br>
+     * @param roomNumberToCheckIn the room number to checkin
+     * @see CheckInCommandSystemTest#assertCommandSuccess(RoomNumber)
      */
-    private void assertCommandSuccess(String command, RoomNumber roomNumberToCheckout) {
+    private void assertCommandSuccess(String command, RoomNumber roomNumberToCheckIn) {
         Model expectedModel = getModel();
-        expectedModel.checkoutRoom(roomNumberToCheckout);
+        expectedModel.checkInRoom(roomNumberToCheckIn);
 
         assertCommandSuccess(command, expectedModel,
-                String.format(CheckoutCommand.MESSAGE_CHECKOUT_ROOM_SUCCESS, roomNumberToCheckout));
+                String.format(CheckInCommand.MESSAGE_CHECKIN_ROOM_SUCCESS, roomNumberToCheckIn));
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
      * browser url and selected card remain unchanged.
-     * @see CheckoutCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     * @see CheckInCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
