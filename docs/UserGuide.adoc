@@ -354,15 +354,17 @@ bookings.
 * More users can be added at `src/data/passwords.json`. When adding passwords
 to the reference list, be sure to add the SHA-256 hashed password.
 You can find a useful hashing tool here: https://passwordsgenerator.net/sha256-hash-generator/
+* [v2.0] You can create new accounts via the Concierge app.
 ****
 
 Commands which require login:
 
-** `add` [red]#Coming in v2.0#
+** `add`
 ** `checkin`
 ** `checkout`
+** `reassign`
 ** `clear`
-** `service` [red]#Coming in v2.0#
+** `service`
 
 Example: `login user/damithz pw/forgotpassword`
 
@@ -488,24 +490,24 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify Concierge's content (`add`, `checkin`, `checkout`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Concierge's content (`add`, `checkin`, `checkout`, and `clear`).
 ====
 
 Examples:
 
-* `delete 1` +
+* `checkin r/001` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `checkin r/001` command) +
 
 * `select 1` +
 `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
+* `checkin r/001` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `checkin r/001` command) +
 
 === Redoing the previously undone command : `redo`
 
@@ -514,19 +516,19 @@ Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `checkin r/001` +
+`undo` (reverses the `checkin r/001` command) +
+`redo` (reapplies the `checkin r/001` command) +
 
-* `delete 1` +
+* `checkin r/001` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+* `checkin r/001` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `checkin r/001` command) +
+`redo` (reapplies the `checkin r/001` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
@@ -535,7 +537,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the application. +
 Format: `clear`
 
-This command requires a login.
+ This command requires a login.
 
 The rooms are maintained - only all their current and future bookings are
 cleared. I.e. all maintenance requests and faults will still be recorded.
