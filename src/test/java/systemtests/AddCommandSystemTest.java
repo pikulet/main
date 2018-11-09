@@ -50,7 +50,7 @@ import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.Booking;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.GuestUtil;
+import seedu.address.testutil.BookingUtil;
 
 // TODO Fix and redo these tests for refactored addCommand!
 public class AddCommandSystemTest extends ConciergeSystemTest {
@@ -179,7 +179,7 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
                                       RoomNumber roomNumberToAdd,
                                       BookingPeriod bookingPeriodToAdd) {
 
-        String command = GuestUtil.getAddCommand(guestToAdd, roomNumberToAdd, bookingPeriodToAdd);
+        String command = BookingUtil.getAddCommand(guestToAdd, roomNumberToAdd, bookingPeriodToAdd);
 
         assertCommandSuccess(command, guestToAdd, roomNumberToAdd, bookingPeriodToAdd);
     }

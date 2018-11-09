@@ -43,8 +43,9 @@ import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.Name;
 import seedu.address.model.guest.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.BookingUtil;
 import seedu.address.testutil.GuestBuilder;
-import seedu.address.testutil.GuestUtil;
+import seedu.address.testutil.LogInUtil;
 import seedu.address.testutil.RoomUtil;
 
 public class EditCommandSystemTest extends ConciergeSystemTest {
@@ -52,6 +53,7 @@ public class EditCommandSystemTest extends ConciergeSystemTest {
     @Test
     public void edit() {
         Model model = getModel();
+        executeCommand(LogInUtil.getValidLogInCommand());
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 
@@ -179,7 +181,7 @@ public class EditCommandSystemTest extends ConciergeSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a guest with new values same as another guest's values -> rejected */
-        executeCommand(GuestUtil.getAddCommand(BOB, ROOM_NUMBER_BOB, BOOKING_PERIOD_BOB));
+        executeCommand(BookingUtil.getAddCommand(BOB, ROOM_NUMBER_BOB, BOOKING_PERIOD_BOB));
         executeCommand(RoomUtil.getCheckInCommand(ROOM_NUMBER_BOB));
         executeCommand(RoomUtil.getCheckoutCommand(ROOM_NUMBER_BOB));
         assertTrue(getModel().getConcierge().getGuestList().contains(BOB));
