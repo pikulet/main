@@ -79,13 +79,6 @@ public interface Model {
     void addGuest(Guest guest);
 
     /**
-     * Replaces the given guest {@code target} with {@code editedGuest}.
-     * {@code target} must exist in Concierge.
-     * The guest identity of {@code editedGuest} must not be the same as another existing guest in Concierge.
-     */
-    void updateGuest(Guest target, Guest editedGuest);
-
-    /**
      * Get the flag representing the last displayed list.
      */
     Prefix getDisplayedListFlag();

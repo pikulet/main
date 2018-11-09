@@ -131,11 +131,6 @@ public class ServiceCommandTest {
         }
 
         @Override
-        public void updateGuest(Guest target, Guest editedGuest) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<Guest> getFilteredGuestList() {
             throw new AssertionError("This method should not be called.");
         }
