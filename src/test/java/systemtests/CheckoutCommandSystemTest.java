@@ -1,10 +1,16 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CheckoutCommand.MESSAGE_BOOKING_NOT_FOUND;
+import static seedu.address.logic.commands.CheckoutCommand.MESSAGE_NO_ROOM_BOOKING;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_START_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROOM_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.ROOM_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_START_AMY;
 import static seedu.address.logic.commands.LogInCommand.MESSAGE_NOT_SIGNED_IN;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ROOMS;
 import static seedu.address.testutil.TypicalBookingPeriods.BOOKING_PERIOD_AMY;
+import static seedu.address.testutil.TypicalBookingPeriods.TOMORROW_NEXTWEEK;
 import static seedu.address.testutil.TypicalGuests.AMY;
 import static seedu.address.testutil.TypicalRoomNumbers.ROOM_NUMBER_AMY;
 
@@ -18,19 +24,29 @@ import seedu.address.testutil.BookingUtil;
 import seedu.address.testutil.LogInUtil;
 import seedu.address.testutil.RoomUtil;
 
-// TODO: Add support to assert the success of auxiliary commands (login, add, checkin, logout)
+// TODO: Add support to assert the success of auxiliary commands (login, logout, add, checkin)
 public class CheckoutCommandSystemTest extends ConciergeSystemTest {
 
     @Test
     public void checkout() {
-        final Model defaultModel = getModel();
 
         /* Signs in to Concierge first */
         String command = LogInUtil.getValidLogInCommand();
         executeCommand(command);
 
+        // checkout room without bookings -> rejected
+        command = CheckoutCommand.COMMAND_WORD + ROOM_DESC_AMY;
+        assertCommandFailure(command,
+                String.format(MESSAGE_NO_ROOM_BOOKING, ROOM_NUMBER_AMY));
+
         // add guest to Concierge
-        executeCommand(BookingUtil.getAddCommand(AMY, ROOM_NUMBER_AMY, BOOKING_PERIOD_AMY));
+        executeCommand(BookingUtil.getAddCommand(AMY, ROOM_NUMBER_AMY, TOMORROW_NEXTWEEK));
+
+        // checkout booking with invalid start date -> rejected
+        command = CheckoutCommand.COMMAND_WORD + ROOM_DESC_AMY + DATE_START_DESC_AMY;
+        assertCommandFailure(command,
+                String.format(MESSAGE_BOOKING_NOT_FOUND,ROOM_NUMBER_AMY, VALID_DATE_START_AMY));
+
         // checkout guest without checkin
         assertCommandSuccess(ROOM_NUMBER_AMY);
 
