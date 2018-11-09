@@ -14,8 +14,8 @@ import seedu.address.logic.commands.LogOutCommand;
  */
 public class LogInUtil {
 
-    public static final String validUsername = "testuser";
-    public static final String validPassword = "passw0rd1";
+    public static final String VALID_USERNAME = "testuser";
+    public static final String VALID_PASSWORD = "passw0rd1";
 
     public static String getLogInCommand(String username, String validPassword) {
         StringBuilder sb = new StringBuilder();
@@ -31,7 +31,7 @@ public class LogInUtil {
     }
 
     public static String getValidLogInCommand() {
-        return getLogInCommand(validUsername, validPassword);
+        return getLogInCommand(VALID_USERNAME, VALID_PASSWORD);
     }
 
     public static String getLogOutCommand() {

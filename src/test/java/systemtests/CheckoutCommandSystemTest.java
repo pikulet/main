@@ -1,6 +1,5 @@
 package systemtests;
 
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROOM_DESC;
 import static seedu.address.logic.commands.LogInCommand.MESSAGE_NOT_SIGNED_IN;
@@ -42,7 +41,7 @@ public class CheckoutCommandSystemTest extends ConciergeSystemTest {
         // checkout guest with checkin
         assertCommandSuccess(ROOM_NUMBER_AMY);
 
-        /* ----------------------------------- Perform invalid checkout operations --------------------------------------- */
+        /* ------------------------------- Perform invalid checkout operations ---------------------------------- */
 
         /* Case: invalid room number -> rejected */
         command = CheckoutCommand.COMMAND_WORD + INVALID_ROOM_DESC;

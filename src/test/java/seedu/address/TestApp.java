@@ -1,7 +1,7 @@
 package seedu.address;
 
-import static seedu.address.testutil.LogInUtil.validPassword;
-import static seedu.address.testutil.LogInUtil.validUsername;
+import static seedu.address.testutil.LogInUtil.VALID_PASSWORD;
+import static seedu.address.testutil.LogInUtil.VALID_USERNAME;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -82,7 +82,7 @@ public class TestApp extends MainApp {
     @Override
     protected PasswordHashList initPasswordStorage(Storage storage) {
         return new PasswordHashList()
-                .addEntry(validUsername, validPassword);
+                .addEntry(VALID_USERNAME, VALID_PASSWORD);
     }
 
     /**
