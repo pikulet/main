@@ -105,6 +105,8 @@ His/ her information will be stored under his/ her booking in the room.
 A valid booking cannot clash with an existing booking. It must also have a
 start date from today onwards.
 
+ This command requires a login.
+
 Example:
 
 `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085 from/09/12/18 to/10/12/18`
