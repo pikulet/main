@@ -148,6 +148,8 @@ A booking can be uniquely identified by its start date.
 `checkout` 's intended use is the deletion of any booking.
  This means that you can delete a non-checked-in booking using `checkout`.
 
+ This command requires a login.
+
 Depending on whether the guest still has other checked-in bookings, either of the following can occur: +
 
 * If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
@@ -339,9 +341,11 @@ You can find a useful hashing tool here: https://passwordsgenerator.net/sha256-h
 
 Commands which require login:
 
-** `add`, `edit` [red]#Coming in v2.0#
-** `checkin`, `checkout` [red]#Coming in v2.0#
+** `add` [red]#Coming in v2.0#
+** `checkin` [red]#Coming in v2.0#
+** `checkout`
 ** `clear`
+** `service`
 
 Example: `login user/damithz pw/forgotpassword`
 
@@ -364,8 +368,7 @@ image::LogOutCommand-success.png[width="400"]
 ****
 * The special classes of commands (as documented in `login`) can no longer be
 executed.
-* Unable to undo/ redo before logout [red]#Coming in v2.0#
-** The `logout` command will erase the command history, so users cannot undo/
+* The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
 ** This is the same as closing and re-opening Concierge after a logout.
 ****
@@ -557,7 +560,7 @@ interested in contributing, please refer to the Developer Guide.
 * *Add a Guest and assign a Room* : `add n/NAME p/PHONE_NUMBER e/EMAIL
 t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Checkin* : `checkin`
-* *Checkout* : `checkout`
+* *Checkout* : `checkout` r/ROOM_NUMBER [from/START_DATE]
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [t/TAG]...` [red]#Coming in v2.0#
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` [red]#Coming in v2.0#
 * *List* : `list`
