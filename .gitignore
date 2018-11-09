@@ -9,6 +9,7 @@ lib/*
 *.log.*
 *.csv
 config.json
+passwords.json
 preferences.json
 src/test/data/sandbox/
 .DS_Store
