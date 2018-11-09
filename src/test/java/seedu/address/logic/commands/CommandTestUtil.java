@@ -75,8 +75,8 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String ROOM_DESC_AMY = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_AMY;
-    public static final String ROOM_DESC_BOB = " " + PREFIX_ROOM + " " + VALID_ROOM_NUMBER_BOB;
+    public static final String ROOM_DESC_AMY = " " + PREFIX_ROOM + VALID_ROOM_NUMBER_AMY;
+    public static final String ROOM_DESC_BOB = " " + PREFIX_ROOM + VALID_ROOM_NUMBER_BOB;
     public static final String DATE_START_DESC_AMY =
             " " + PREFIX_DATE_START + " " + VALID_DATE_START_AMY;
     public static final String DATE_END_DESC_AMY =

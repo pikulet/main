@@ -133,6 +133,8 @@ Upon checking in the room's first active booking, the guest who made the booking
 the checked-in guest list. +
 Format: `checkin r/ROOM_NUMBER`
 
+ This command requires a login.
+
 Examples:
 
 * `checkin r/085` +
@@ -148,8 +150,6 @@ A booking can be uniquely identified by its start date.
 `checkout` 's intended use is the deletion of any booking.
  This means that you can delete a non-checked-in booking using `checkout`.
 
- This command requires a login.
-
 Depending on whether the guest still has other checked-in bookings, either of the following can occur: +
 
 * If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
@@ -158,6 +158,8 @@ guest list and added to the archived guest list.
 but will be added to the archived guest list.
 
 Format: `checkout r/ROOM_NUMBER [from/START_DATE]`
+
+ This command requires a login.
 
 Examples:
 
@@ -342,10 +344,10 @@ You can find a useful hashing tool here: https://passwordsgenerator.net/sha256-h
 Commands which require login:
 
 ** `add` [red]#Coming in v2.0#
-** `checkin` [red]#Coming in v2.0#
+** `checkin`
 ** `checkout`
 ** `clear`
-** `service`
+** `service` [red]#Coming in v2.0#
 
 Example: `login user/damithz pw/forgotpassword`
 
@@ -559,8 +561,8 @@ interested in contributing, please refer to the Developer Guide.
 
 * *Add a Guest and assign a Room* : `add n/NAME p/PHONE_NUMBER e/EMAIL
 t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
-* *Checkin* : `checkin`
-* *Checkout* : `checkout` r/ROOM_NUMBER [from/START_DATE]
+* *Checkin* : `checkin r/ROOM_NUMBER`
+* *Checkout* : `checkout r/ROOM_NUMBER [from/START_DATE]`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [t/TAG]...` [red]#Coming in v2.0#
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` [red]#Coming in v2.0#
 * *List* : `list`
