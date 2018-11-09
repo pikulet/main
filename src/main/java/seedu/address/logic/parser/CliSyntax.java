@@ -34,7 +34,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_NEW_DATE_START = new Prefix("nfrom/");
     public static final Prefix PREFIX_NEW_DATE_END = new Prefix("nto/");
 
-
     /* Flag prefixes */
     public static final Prefix FLAG_ROOM = new Prefix("-r");
     public static final Prefix FLAG_GUEST = new Prefix("-g");

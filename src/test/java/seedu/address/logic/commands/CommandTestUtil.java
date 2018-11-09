@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_START;
@@ -25,6 +26,7 @@ import seedu.address.model.Concierge;
 import seedu.address.model.Model;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.GuestNameContainsKeywordsPredicate;
+import seedu.address.model.guest.Name;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumberExactPredicate;
 import seedu.address.model.room.booking.BookingPeriod;
@@ -170,7 +172,7 @@ public class CommandTestUtil {
 
         Guest guest = model.getFilteredGuestList().get(targetIndex.getZeroBased());
         final String[] splitName = guest.getName().fullName.split("\\s+");
-        model.updateFilteredGuestList(new GuestNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredGuestList(new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name(splitName[0]))));
 
         assertEquals(1, model.getFilteredGuestList().size());
     }
@@ -184,7 +186,9 @@ public class CommandTestUtil {
 
         Guest guest = model.getFilteredCheckedInGuestList().get(targetIndex.getZeroBased());
         final String[] splitName = guest.getName().fullName.split("\\s+");
-        model.updateFilteredCheckedInGuestList(new GuestNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        List<Name> nameList = new ArrayList<>();
+        nameList.add(new Name(splitName[0]));
+        model.updateFilteredCheckedInGuestList(new GuestNameContainsKeywordsPredicate(nameList));
 
         assertEquals(1, model.getFilteredCheckedInGuestList().size());
     }
@@ -197,7 +201,7 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredRoomList().size());
 
         Room room = model.getFilteredRoomList().get(targetIndex.getZeroBased());
-        model.updateFilteredRoomList(new RoomNumberExactPredicate(room.getRoomNumber().toString()));
+        model.updateFilteredRoomList(new RoomNumberExactPredicate(room.getRoomNumber()));
 
         assertEquals(1, model.getFilteredRoomList().size());
     }
