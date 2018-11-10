@@ -15,40 +15,47 @@ user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
-Access my contributed code https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet[here].
+
+[TIP]
+Access my contributed code https://nus-cs2103-ay1819s1.github
+ .io/cs2103-dashboard/#=undefined&search=pikulet[here].
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
 These were mainly done in
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/168[#168] and
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226]
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226].
 
-* What it does: Allow users to login to Concierge and access restricted
-commands which mutate the data
+* What it does: Allows users to login to Concierge and access restricted
+commands which mutate the data.
 * Significance:  With this feature, hotel managers can implement some level
-of access control. By combining this with the ability to export the command
-history, the auditing process for rogue commands is expedited.
+of access control. Some features more commonly used (`find`, `list`) can
+still be accessed without signing in. By combining this with the ability
+ to export the command history, the auditing process for rogue commands is
+ expedited.
 * Highlights:
 ** The login/logout feature is dynamic and multiple logins/ logouts can
-happen in the same session. What this means is that there is a very close
-integration with the existing commands as there is a need to verify whether
-these commands are restricted.
+happen in the same session. This means that there is a very close integration
+ with the existing commands to verify whether these commands are restricted.
 ** This feature is complete - there was a need to work with the different
 architectural components of Concierge, from command parsing (`Logic`) to login
 verification (`Model`) and even password storage (`Storage`).
 ** The feature attempts to achieve some level of security as the passwords
 are strong as a SHA-256 hash instead of in plaintext.
-* Credits: The password hash algorithm was taken from https://www.baeldung.com/sha-256-hashing-java.
+* Credits: The password hash algorithm was taken from
+https://www.baeldung.com/sha-256-hashing-java[Baeldung].
 
-*Minor enhancements*:
+*Minor enhancements/ code contributed*:
 
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/133[Renamed] the
 existing classes and methods from `Person` to `Guest`.
-* Modified the `add` command to https://github
-.com/CS2103-AY1819S1-F11-2/main/pull/104[take in more parameters], namely the
+* Modified the `add` command to
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[take in more
+parameters], namely the
  room and date details) in a hotel booking. Note that the actual `Room` and
  `Booking` packages were not done by me.
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[Modified the `clear`
-command] to maintain empty hotel rooms. Previously, `clear` removed all data.
+command] to maintain empty hotel rooms. Added function for GUI verification
+of rooms.
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[Removed `address`] as
  a field in `Person`
 * Removed the https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[`edit`]

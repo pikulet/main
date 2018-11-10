@@ -704,6 +704,8 @@ image::LogInCommand-LogInManager-classdiagram.png[width=700]
 `LogInManager` uses an optional `username` to keep track of whether
 the user is currently signed in. The `passwordRef` provides an
 immutable key-value lookup for usernames and passwords. +
+ +
+
 `LogInManager` implements the following operations.
 
 * `LogInManager#isSignedIn()` - checks if the user is currently signed in.
@@ -741,6 +743,9 @@ The `passwords.json` file is read when Concierge is opened (i.e. in
 the `JsonPasswordsStorage` class, which is very similar to the
 `JsonUserPrefsStorage` class. Intuitively, the usernames and passwords are
 stored as key-value pairs for quick look-up.
+
+More information on the design consideration for this aspect can be found
+<<Aspect: Storage of Passwords, here>>.
 
 ===== Check for sign-in requirement of commands
 
@@ -838,19 +843,6 @@ not need to write the the passwords file when in use. However, `concierge
 *** Furthermore, creating a new entry is difficult since once has to add all
 the layers of XML tags involved. Nevertheless, users are not expected to be
 adding new accounts on a regular basis.
-
-===== Aspect: Adding a New Account
-
-* **Alternative 1 (current choice):** User can only add a new account via the
-`passwords.json` file
-** Pros: Complies with the non-functional requirement to put the user data in
- a human-editable format
-** Cons: Exposes implementation of password hashing. Prone to error in file
-format.
-
-* **Alternative 2:** User can only add a new account via the Concierge app
-** Pros: Maintains encapsulation of data.
-** Cons: Exposes implementation of password hashing.
 // end::loginlogout[]
 
 // tag::archive[]
