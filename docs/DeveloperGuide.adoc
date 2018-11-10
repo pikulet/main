@@ -329,8 +329,8 @@ and assign him a room.
 We currently accept a `Guest`, `RoomNumber` and `BookingPeriod`
 as parameters for the `AddCommand` constructor.
 
-An example of its usage: `add n/Madith p/83141592 e/madith@themyth.com a/Recluse Street -r 041 from/
-29/10/2018 to/ 03/11/2018`
+An example of its usage: `add n/Madith p/83141592 e/madith@themyth.com r/041
+from/29/11/2018 to/ 03/12/2018`
 
 The parsing of the `AddCommand` is very similar to what was already
 implemented in AddressBook4. More parameters were added, namely the
@@ -681,7 +681,7 @@ a normal command by extending the abstract `Command` class. Similarly, the
 
 ===== Model
 
-The model handles the signing in, using its attribute `LogInManager`. The
+The model handles the signing-in, using its attribute `LogInManager`. The
 Class Diagram of the `LogInManager` module is shown below.
 
 image::LogInCommand-LogInManager-classdiagram.png[width=700]
@@ -696,58 +696,77 @@ immutable key-value lookup for usernames and passwords. +
 username and hashed password. This is handled by the `PasswordHashList`.
 * `LogInManager#signOut()` - signs out Concierge.
 
-Additionally, a new method `resetUndoRedoHistory` was added to the
+A new method `resetUndoRedoHistory` was added to the
 `VersionedConcierge`. This is used to clear the command history upon a
 `logout` command, so users cannot undo important commands or redo accidental
 commands after signing out.
 
-The `resetUndoRedoHistory` first sets the `currentStatePointer` to 0, then
-commits the current `VersionedConcierge`.
+The `resetUndoRedoHistory` first sets the `currentStatePointer` to `-1`, then
+commits the current `VersionedConcierge`. This is so that the commit will
+write the current state of Concierge to state `0`, essentially overwriting
+the Concierge the user last started with.
 
-More details on the `VersionedConcierge` can be
-understood from the <<Undo/Redo feature, undo and redo documentation>>.
+More details on the `VersionedConcierge` can be understood from the <<Undo/Redo feature, undo and redo documentation>>.
 
-
+====== Login
 
 Shown here is the sequence diagram for executing a `login` command.
 
 `LogInCommand`: hashing of password is immediate so sensitive data is handled
 as quickly as possible.
 
+====== Logout
 
+Shown here is the sequence diagram for executing a `logout` command.
 
+===== Check for sign-in requirement of commands
 
-===== Checking if commands require sign-in
+`LogicManager` does the checks for whether a command requires a sign in, and
+whether the model is signed in.
 
-`LogicManager` checks if commands require sign-in.
+The `Command` class exposes a new `requiresSignIn()` method that returns
+false by default. This means that to make new command require signing-in, one
+ only has to overwrite this method.
+
+More information on the design consideration for this aspect can be found
+<<Aspect: Check for sign-in requirement of commands, here>>
 
 ==== Design Considerations
+
 ===== Aspect: Accessing features of Concierge with/ without login
 
 * **Alternative 1 (current choice):** Login is needed only for some features
-** Pros:
-*** Allows manager to implement some level of access control
-*** Quickly start a new session with a new user.
+** Pros: Allows manager to implement some level of access control within Concierge
+ (different users can access different features). some of the more commonly
+ used Concierge features (`list`, `find`) are read-only features. This is in
+ comparison to mandating a sign-in at the start and create different user
+ views based on whether they are administrative or normal accounts.
 ** Cons: Not intuitive to users. They have to enter commands before being told
-they need to sign in.
-
-TODO: explain the use of requiresSignIn
+they need to sign in. The `requiresSignIn()` check takes place after the
+parsing of the command, so a user can spend multiple tries getting the `add`
+command to parse correctly before being told they cannot execute the command
+without a sign-in.
 
 * **Alternative 2:** Login is needed for all features
-** Pros: Very easy check when Concierge is first loaded
-** Cons: Logout would invoke a new window/ close the session.
+** Pros: Very easy to check login validity. This only occurs when Concierge is
+first loaded. For subsequent commands, they can be executed without
+additional checks on sign-in requirement.
+** Cons: Changing user accounts is troublesome. One would have to first
+`logout`, which is equivalent to exiting Concierge.
 
-===== Aspect: Adding a New Account
+===== Aspect: Check for sign-in requirement of commands
 
-* **Alternative 1 (current choice):** User can only add a new account via the
-`passwords.json` file
-** Pros: Complies with the non-functional requirement to put the user data in
- a human-editable format
-** Cons: Exposes implementation of password hashing. Prone to error.
+Given that sign-in is only required for some commands, the priorities in
+designing this aspect are:
 
-* **Alternative 2:** User can only add a new account via the Concierge app
-** Pros: Maintains encapsulation of data.
-** Cons: Exposes implementation of password hashing.
+* Able to easily mandate login for commands already implemented
+* Able to easily mandate login for future commands
+* Able to easily disable compulsory login for commands
+
+* **Alternative 1 (current choice):** Do the check in `LogInManager`
+
+
+
 
 ===== Aspect: Storage of Passwords
 
@@ -766,6 +785,17 @@ Concierge data.
 *** User is overloaded with information from XML (but they should be familiar)
 *** Creating a new entry is very difficult. (But new entries not created often)
 
+===== Aspect: Adding a New Account
+
+* **Alternative 1 (current choice):** User can only add a new account via the
+`passwords.json` file
+** Pros: Complies with the non-functional requirement to put the user data in
+ a human-editable format
+** Cons: Exposes implementation of password hashing. Prone to error.
+
+* **Alternative 2:** User can only add a new account via the Concierge app
+** Pros: Maintains encapsulation of data.
+** Cons: Exposes implementation of password hashing.
 // end::loginlogout[]
 
 // tag::archive[]
