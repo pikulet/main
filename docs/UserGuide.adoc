@@ -78,13 +78,13 @@ Some important things that you should know before using Concierge(TM)
 
 [cols="^.^,<.^9a", frame=none]
 |===
-|image:icon-key.png[]
+|image:icon-key.png[width="50"]
 |This is a `login` icon. If a command requires login before execution, this icon will be located on its right in its title.
 |===
 
 [cols="^.^,<.^9a", frame=none]
 |===
-|image:icon-important.png[]
+|image:icon-important.png[width="50"]
 |This is a *important* icon. You should read the information in these before executing the command, as it will likely
 affect what you can or cannot do.
 |===
@@ -107,7 +107,7 @@ This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 ====
 
 // tag::add[]
-=== Adding a guest: `add` image:icon-key.png[width="38"]
+=== Adding a guest: `add` image:icon-key.png[width="30"]
 
 Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
@@ -117,7 +117,7 @@ A guest can have any number of tags (including 0)
 
 [cols="^.^,<.^9a", frame=none]
 |===
-|image:icon-important.png[]
+|image:icon-important.png[width="50"]
 |
 * A valid booking cannot overlap with an existing booking.
 * A valid booking must have a start date from today onwards. This means that outdated bookings cannot be added.
@@ -145,14 +145,14 @@ When a booking is added and it starts today (i.e. it is active), then you can
 image::AddCommand-userguide-notactive.png[width="800"]
 
 //tag::checkin[]
-=== Check-in room: `checkin` image:icon-key.png[width="38"]
+=== Check-in room: `checkin` image:icon-key.png[width="30"]
 
 Checks in the first booking of a room. The guest who made the booking will be added to
 the checked-in guest list.
 
 [cols="^.^,<9a", frame=none]
 |===
-|image:icon-important.png[]
+|image:icon-important.png[width="50"]
 |Expired and upcoming bookings *cannot* be checked-in.
 |===
 
@@ -167,7 +167,7 @@ to the checked-in guest list.
 //end::checkin[]
 
 //tag::checkout[]
-=== Checkout room: `checkout` image:icon-key.png[width="38"]
+=== Checkout room: `checkout` image:icon-key.png[width="30"]
 
 Checks out the room's first (i.e. earliest) booking, or its booking with the specified start date.
 
@@ -177,7 +177,7 @@ Checks out the room's first (i.e. earliest) booking, or its booking with the spe
 
 [cols="^.^,<9a", frame=none]
 |===
-|image:icon-important.png[]
+|image:icon-important.png[width="50"]
 |
 * If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
 guest list and added to the archived guest list.
@@ -196,7 +196,7 @@ Checks out the booking with start date 01/11/18 from room 085.
 //end::checkout[]
 
 //tag::reassign[]
-=== Reassigning a guest to another room : `reassign` image:icon-key.png[width="38"]
+=== Reassigning a guest to another room : `reassign` image:icon-key.png[width="30"]
 
 Reassigns a booking from one room to another. The room's expenses will also be ported over to the new room.
 
@@ -412,7 +412,7 @@ Selects the 2nd guest in the displayed list.
 `select 100` +
 Selects the 100th room in the displayed list.
 
-=== Provide Room Service: `service`
+=== Provide Room Service: `service` image:icon-key.png[width="30"]
 
 Charges a room service to a room  +
 Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
@@ -438,8 +438,6 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *MB04* -- Minibar: Mineral water -- $3.00
 ** *SP01* -- Swimming pool: Entry -- $5.00
 ****
-
- This command requires a login.
 
 Examples:
 
@@ -510,12 +508,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 // tag::clear[]
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` image:icon-key.png[width="30"]
 
 Clears all entries from the application. +
 Format: `clear`
-
- This command requires a login.
 
 The rooms are maintained - only all their current and future bookings are
 cleared. I.e. all maintenance requests and faults will still be recorded.
