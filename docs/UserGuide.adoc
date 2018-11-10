@@ -319,39 +319,35 @@ image::LogInCommand-clearsuccess.png[width="400"]
 
 ==== Adding a new account
 
- Currently, Concierge does not have a feature for users to add an account via
-the app. The reason is because we only _read_ from the password file.
-Nevertheless, for the adventurous users who want to create their own
-accounts, this sub-section will be useful.
+ Currently, Concierge does not have a feature for users to add an account via the app. The reason is because we only read from the password file. Nevertheless, for the adventurous users who want to create their own accounts, this sub-section will be useful.
 
-* Step 1: Open the `passwords.json` file, which should be in the same
-folder as your Concierge.jar file.
+Step 1: Open the `passwords.json` file, which should be in the same
+folder as your Concierge.jar file. This file stores a list of hashed passwords.
 
-.The `passwords.json` file stores a list of hashed passwords
-image::LogInCommand-passwordsfile.png[width="900"]
-
-* Step 2: Concierge uses SHA-256 password hashing. This hash can be
+Step 2: Concierge uses SHA-256 password hashing. This hash can be
 generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
-.Enter your password in the field to generate the hash
+Enter your password in the field to generate the hash.
+
 image::LogInCommand-generatehash.png[width="900"]
 
 [NOTE]
  Concierge was designed to work with alphanumeric usernames and passwords in
- mind. Do not enter symbols (!, @, %...)
+ mind. Do not enter symbols (!, @, %...).
 
-* Step 3: Add the entry to the `passwords.json` file. Note that entries are
+Step 3: Add the entry to the `passwords.json` file. Note that entries are
 separate with a comma.
 Format: `"username" : "hashedPassword"`
 
-.A new account with username "newUser" and password "mySecurePassw0rd" has been added
+In the image below, a new account with username "newUser" and password
+"mySecurePassw0rd" has been added.
+
 image::LogInCommand-addpasswordentry.png[width="900"]
 
-* Step 4: Close and reload the Concierge application, and your new account
-will be recognised.
+Step 4: Close and reload the Concierge application, and your new account
+will be recognised. You are now able to sign in with the new account.
 
-.User is now able to sign in with the new account
-image::LogInCommand-newloginsuccess.png[width="900"]
+image::LogInCommand-newloginsuccess.png[width="400"]
 
 === Logout : `logout`
 
