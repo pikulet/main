@@ -623,9 +623,9 @@ Assuming there is a booking already added to room 001,
 .. throw `ExpiredBookingException` if the room's first booking is expired
 .. throw `InactiveBookingCheckInException` if the room's first booking is not active
 .. throw `BookingAlreadyCheckedInException` if the room's first booking is already checked in
-.. update the first booking as checked-in if no exceptions were thrown
+.. update the first booking as checked-in if no exceptions were thrown, and replace the room with its updated version that has the first booking checked-in
 . `VersionedConcierge#checkinRoom` will call `VersionedConcierge#addCheckedInGuestIfNotPresent`
-. `VersionedConcierge#addCheckedInGuestIfNotPresent` will add the checked-in guest to the checked-in guest list
+. `VersionedConcierge#addCheckedInGuestIfNotPresent` will add the guest of the checked-in booking to the checked-in guest list
  if he/she is not already in it
 
 * The user executes `checkout r/001` when the guest leaves.
@@ -642,9 +642,15 @@ Assuming there is a booking already added to room 001,
 . `VersionedConcierge#checkoutRoom` will call `VersionedConcierge#addGuest`
  to add the guest to the archived guest list if he/she does not already exists in it
 
-The following sequence diagram shows how to CheckinCommand operations works:
+The following sequence diagram shows how `CheckInCommand#execute` works:
 
+._The sequence diagram of `CheckInCommand#execute`._
 image::CheckinCommandSequenceDiagram.png[width="1280"]
+
+The following activity diagram shows how `Concierge#checkInRoom` executes:
+
+._The activity diagram of checking-in a room when `Concierge#checkInRoom` is executed._
+image::check-in-activity-diagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -1519,6 +1525,15 @@ Facilities: Any form of services provided within the hotel. These include the sp
 
 * Complete audit trail for all financial transactions
 * Guest history available
+
+[appendix]
+== Market Survey
+
+*Hotel Rendezvous*
+
+* Interviewed via phone about hotel operations
+* For instance, using Hotel Rendezvous as reference, we discovered that hotels only require 1 guest of a booking to provide
+identifications details, thus the responsibility of the guest(s) under that booking falls to him/her.
 
 [appendix]
 == Instructions for Manual Testing
