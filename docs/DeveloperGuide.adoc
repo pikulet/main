@@ -651,22 +651,68 @@ possible to modify the default information through editing the XML file.
 // tag::loginlogout[]
 === Login and Logout
 
-The `login` feature sign
+The `login` feature...
 
 ==== Current Implementation
 
-==== Design Considerations
+`LogicManager` checks if commands require sign-in.
 
+`LogInCommand`: hashing of password is immediate so sensitive data is handled
+as quickly as possible.
+
+`LogInManager` module manages sign-in module.
+#isSignedIn
+#signIn
+#signOut
+#resetUndoRedoHistory
+
+`JsonPasswordsStorage` module manages reading of passwords (only at
+initialisation of Main App).
+
+==== Design Considerations
 ===== Aspect: Accessing features of Concierge with/ without login
 
 * **Alternative 1 (current choice):** Login is needed only for some features
+** Pros:
+*** Allows manager to implement some level of access control
+*** Quickly start a new session with a new user.
+** Cons: Not intuitive to users. They have to enter commands before being told
+they need to sign in.
+
+TODO: explain the use of requiresSignIn
 
 * **Alternative 2:** Login is needed for all features
-** Pros: ...
-** Cons: ...
+** Pros: Very easy check when Concierge is first loaded
+** Cons: Logout would invoke a new window/ close the session.
 
 ===== Aspect: Adding a New Account
+
+* **Alternative 1 (current choice):** User can only add a new account via the
+`passwords.json` file
+** Pros: Complies with the non-functional requirement to put the user data in
+ a human-editable format
+** Cons: Exposes implementation of password hashing. Prone to error.
+
+* **Alternative 2:** User can only add a new account via the Concierge app
+** Pros: Maintains encapsulation of data.
+** Cons: Exposes implementation of password hashing.
+
 ===== Aspect: Storage of Passwords
+
+* **Alternative 1 (current choice):** Store passwords in JSON file
+** Pros:
+*** Able to make use of existing `JsonUtil` methods used by the
+`UserPrefs` and `Config` classes.
+*** Able to parse data easily into key-value pairs
+
+* **Alternative 2:** Store passwords in same XML file as all other
+Concierge data.
+** Pros:
+*** Centralises data storage in Concierge.
+*** Concierge only performs one read operation for the data.
+** Cons:
+*** User is overloaded with information from XML (but they should be familiar)
+*** Creating a new entry is very difficult. (But new entries not created often)
 
 // end::loginlogout[]
 
