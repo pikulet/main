@@ -770,28 +770,30 @@ More information on the design consideration for this aspect can be found
 ===== Aspect: Accessing features of Concierge with/ without login
 
 * **Alternative 1 (current choice):** Login is needed only for some features
-** Pros: Allows manager to implement some level of access control within Concierge
- (different users can access different features). some of the more commonly
- used Concierge features (`list`, `find`) are read-only features. This is in
- comparison to mandating a sign-in at the start and create different user
- views based on whether they are administrative or normal accounts.
-** Cons: Not intuitive to users. They have to enter commands before being told
-they need to sign in. The `requiresSignIn()` check takes place after the
+** Pros: Allows manager to implement some level of access control within
+Concierge as different users can access different features. Some of the more
+ commonly used Concierge features (`list`, `find`) are read-only features.
+ This is in comparison to mandating a sign-in at the start and create
+ different user views based on whether they are administrative or normal accounts.
+** Cons: Not very intuitive to users. They have to enter commands before being
+told they need to sign in. The `requiresSignIn()` check takes place after the
 parsing of the command, so a user can spend multiple tries getting the `add`
 command to parse correctly before being told they cannot execute the command
 without a sign-in.
 
 * **Alternative 2:** Login is needed for all features
 ** Pros: Very easy to check login validity. This only occurs when Concierge is
-first loaded. For subsequent commands, they can be executed without
-additional checks on sign-in requirement.
+first loaded. Subsequent commands can be executed without additional checks
+on the sign-in requirement.
 ** Cons: Changing user accounts is troublesome. One would have to first
-`logout`, which is equivalent to exiting Concierge.
+`logout`, which is equivalent to exiting Concierge. Of course, this scenario
+is not expected to be a common occurrence for Concierge.
 
 ===== Aspect: Check for sign-in requirement of commands
 
 Given that sign-in is only required for some commands, the priorities in
 designing this aspect are the ability to easily:
+
 ** Mandate login for commands already implemented
 ** Mandate login for future commands
 ** Disable compulsory login for commands

@@ -1,15 +1,15 @@
-= Joyce Yeo - Project Portfolio
+= Joyce Yeo Shuhui - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: Concierge
+== PROJECT: Concierge(TM)
 
 ---
 
 == Overview
 
-Concierge is a desktop hotel management application used as an all-in-one
+Concierge(TM) is a desktop hotel management application used as an all-in-one
 platform for receptionists to handle potential bookings and current guests. The
 user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 is written in Java, and has about 10 kLoC.
@@ -48,17 +48,20 @@ https://www.baeldung.com/sha-256-hashing-java[Baeldung].
 
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/133[Renamed] the
 existing classes and methods from `Person` to `Guest`.
+* https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[Removed `address`] as
+ a field in `Person`
+* Removed the https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[`edit`]
+and https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[`delete`] commands
 * Modified the `add` command to
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[take in more
 parameters] (namely the room and date details) in a hotel booking. Note that the actual `Room` and
  `Booking` packages were not done by me.
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[Modified the `clear`
 command] to maintain empty hotel rooms.
-* Added function for verification of rooms in GUI tests.
-* https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[Removed `address`] as
- a field in `Person`
-* Removed the https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[`edit`]
-and https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[`delete`] commands
+* Added function for
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[verification of rooms]
+in GUI tests.
+
 
 *Project Management*:
 
