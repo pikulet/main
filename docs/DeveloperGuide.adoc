@@ -815,14 +815,13 @@ reminds the manager to verify the booking.
 ** Cons:
 *** It is difficult to check which methods require sign-in. Instead of
 implementing a boolean check on `requiresSignIn()`, every method now makes a
-call to a method (e.g. `performLoginChecks()`) in the superclass.
-**** The proposed solution to this would be to implement the `Command#execute`
- method to do the current check that is in the `LogicManager`. If the command
-  requires a sign-in, check the sign in. Every command must call `super()` in
-   its respective `execute` method.
-*** While more cohesive, this implementation makes less semantic sense. The
-logical misstep comes because one is executing the method, then checking if the
-method can be executed, then "reversing" the execution.
+call to a method (e.g. `performLoginChecks()`) in the superclass. The
+proposed solution to this would be to implement the `Command#execute` method
+to do these login checks. Every command must call `super()` in its respective
+ `execute` method to perform the login checks.
+*** While increasing cohesion, this implementation makes less semantic sense.
+ The logical misstep comes because one is executing the method, then checking
+  if the method can be executed, then "reversing" the execution.
 
 ===== Aspect: Storage of Passwords
 
