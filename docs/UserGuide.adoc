@@ -107,7 +107,7 @@ This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 ====
 
 // tag::add[]
-=== Adding a guest: `add` image:icon-key.png[width="32"]
+=== Adding a booking: `add` image:icon-key.png[width="32"]
 
 Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`

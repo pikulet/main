@@ -320,7 +320,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::add[]
-=== AddCommand
+=== Adding a Booking
 
 The `add` command is used by the receptionist to add the guest to the hotel,
 and assign him a room.
@@ -352,6 +352,12 @@ An Activity Diagram for the execution of `execute(Model model, CommandHistory
  history)` in the `add` command is shown below.
 
 image::AddCommand-activity-diagram.png[width="700"]
+
+[NOTE]
+The `AddCommandParser` already checks that `ROOM_NUMBER` is a valid
+string from `001` to `100`, and the initialisation of Concierge checks that
+there are 100 rooms. The `RoomNotFoundException` is not unexpected to occur
+under any circumstances of user input, but is left there as a defensive measure.
 
 ==== Design Considerations
 ===== Aspect: Recognising a `BookingPeriod` from the user input
@@ -716,7 +722,8 @@ immutable key-value lookup for usernames and passwords. +
 
 * `LogInManager#isSignedIn()` - checks if the user is currently signed in.
 * `LogInManager#signIn(String, String)` - attempts to sign in with the given
-username and hashed password. This is handled by the `PasswordHashList`.
+username and hashed password. This is handled by the `PasswordHashList`. A
+case-insensitive comparison is used on the hash.
 * `LogInManager#signOut()` - signs out Concierge.
 
 A new method `resetUndoRedoHistory` was added to the
@@ -1705,6 +1712,56 @@ identifications details, thus the responsibility of the guest(s) under that book
 == Instructions for Manual Testing
 
 Given below are instructions to test the app manually.
+
+=== Adding a Booking
+
+`add n/Pikachu p/81726354 e/pi@ka.chu t/wheelchair r/047 from/20/11/2018 to/23/11/2018` +
+Unable to execute command because you have not signed-in to Concierge.
+
+`login user/admin pw/passw0rd` +
+Successfully signed-in to Concierge. The previous booking can be successfully
+ made.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/049 from/20/11/2018 to/23/11/2018` +
+Pikachu can make a new (inactive)** booking in the same time period but a
+different room.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/049 from/16/11/2018 to/20/11/2018` +
+Pikachu can make a new (active)** booking.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/047 from/19/11/2018 to/21/11/2018` +
+Unable to make booking because it overlaps with the previous booking.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/047 from/14/11/2018 to/17/11/2018` +
+Unable to make booking because it is outdated.
+
+** As of CS2103 Practical Exam which is expected to be on 16 November 2018.
+
+=== Login/ logout
+
+`clear` +
+Unable to clear because user is not signed in.
+
+`login user/peanuts pw/peanut0` +
+Invalid login account.
+
+`login user/admin pw/passw0rD` +
+Invalid password. Password is case-sensitive.
+
+`login user/admin pw/passw0rd` +
+Successful login.
+
+`clear` +
+Able to clear Concierge.
+
+`logout` +
+Sign out of Concierge.
+
+`clear` +
+Unable to clear because user is not signed in.
+
+`undo` +
+Unable to undo because the revision history was erased.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
