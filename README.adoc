@@ -16,10 +16,9 @@ image::docs/images/ConciergeFinal.png[width="600"]
 * Concierge is a desktop Hotel Management application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a concise Java application intended for small hotels looking for a simple application to manage basic hotel features.
 * Value Proposition
-** A simple, intuitive and free command line tool for managing a small-scale hotel.
+** A simple, intuitive and free command line tool for managing a small-scale hotel (~ 100 rooms).
 ** Hassle-free for receptionists in managing day-to-day hotel operations.
-** A logistics tool that generates insightful reports for hotel managers to
-assess hotel efficiency.
+** Protects against error-prone situations in the context of managing hotel bookings.
 
 == Site Map
 
