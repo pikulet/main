@@ -711,7 +711,6 @@ image::LogInCommand-LogInManager-classdiagram.png[width=700]
 `LogInManager` uses an optional `username` to keep track of whether
 the user is currently signed in. The `passwordRef` provides an
 immutable key-value lookup for usernames and passwords. +
- +
 
 `LogInManager` implements the following operations.
 

@@ -320,13 +320,17 @@ Note: The username and password are both case-sensitive.
 A login allows the user to access the commands which can affect the
 bookings.
 
-Commands which require login: <<Adding a guest: `add`, `add`>>, <<Check-in room: `checkin`, `checkin`>>,
-<<Checkout room: `checkout`, `checkout`>>, <<Reassigning a guest to another room : `reassign`, `reassign`>>,
-<<Provide Room Service: `service`, `service`>>, <<Clearing all entries : `clear`, `clear`>>
+Commands which require login:
+<<Adding a guest: `add` image:icon-key.png[width="32"], `add`>>,
+<<Check-in room: `checkin` image:icon-key.png[width="32"], `checkin`>>,
+<<Checkout room: `checkout` image:icon-key.png[width="32"], `checkout`>>,
+<<Reassigning a guest to another room : `reassign` image:icon-key.png[width="32"],`reassign`>>,
+<<Provide Room Service: `service` image:icon-key.png[width="32"], `service`>>,
+<<Clearing all entries : `clear` image:icon-key.png[width="32"], `clear`>>
 
 Example: `login user/admin pw/passw0rd`
 
-Without login, Concierge(TM) cannot be cleared.
+Attempting to clear Concierge(TM) without a login is not allowed.
 
 image::LogInCommand-notsignedin.png[width="400"]
 
@@ -334,24 +338,21 @@ Login with a valid account, such as the default one provided.
 
 image::LogInCommand-loginsuccess.png[width="400"]
 
-After sign in, the `clear` command can now be executed.
+After signing in, the `clear` command can now be executed.
 
 image::LogInCommand-clearsuccess.png[width="400"]
 
 ==== Adding a new account
 
  Currently, Concierge(TM) does not have a feature for users to add an account
-  via the app. The reason is because we only read from the password file.
-Nevertheless, for the adventurous users who want to create their own
-accounts, this sub-section will be useful.
+  via the app. The reason is because we only read from the password file. Nevertheless, for the adventurous users who want to create their own accounts, this sub-section will be useful.
 
 Step 1: Open the `passwords.json` file, which should be in the same
-folder as your Concierge.jar file. This file stores a list of hashed passwords.
+folder as your `concierge.jar` file. This file stores a list of hashed
+passwords.
 
 Step 2: Concierge(TM) uses SHA-256 password hashing. This hash can be
 generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
-
-Enter your password in the field to generate the hash.
 
 image::LogInCommand-generatehash.png[width="900"]
 
@@ -360,7 +361,7 @@ image::LogInCommand-generatehash.png[width="900"]
  mind. Do not enter symbols (!, @, %...).
 
 Step 3: Add the entry to the `passwords.json` file. Note that entries are
-separate with a comma.
+separate with a comma. +
 Format: `"username" : "hashedPassword"`
 
 In the image below, a new account with username "newUser" and password
