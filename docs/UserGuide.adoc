@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-F11-2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Concierge(TM)`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -37,7 +37,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list -r`* : lists all rooms
-* **`checkin`**`r/085` : checks in the first active booking of room 085
+* **`checkin`**`r/001` : checks in the first booking of room 001
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -506,11 +506,6 @@ Format: `exit`
 Concierge(TM) data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Concierge(TM) folder.
-
 == Command Summary
 
 * *Add a Guest and assign a Room* : `add n/NAME p/PHONE_NUMBER e/EMAIL
@@ -531,3 +526,19 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Export log* : `export` [red]#Coming in v2.0#
 * *Help* : `help`
 * *Exit* : `exit`
+
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Concierge(TM) folder.
+
+*Q*: What platform is this application available on? +
+*A*: This application is cross-platform, and can be used on both Windows and Mac OS.
+
+*Q*: Where can I go to purchase this application? +
+*A*: This application is 100% free-of-charge, and is open-source for any and all to contribute to make it better.
+
+*Q*: I've found a bug in the application! How can I report it? +
+*A*: Please open an issue in the issue section and we will see to it as soon as possible. Bug reports only serve to
+make our application better, so do not hesitate to report them to us!
