@@ -84,7 +84,7 @@ Some important things that you should know before using Concierge(TM)
 
 [cols="^.^1,<.^5a", frame=none]
 |===
-|image:icon-important.png[Important info,48,48]
+|image:icon-important.png[Important info]
 |This is a *important* icon. You should read the information in these before executing the command, as it will likely
 affect what you can or cannot do.
 |===
@@ -117,7 +117,7 @@ A guest can have any number of tags (including 0)
 
 [cols="^.^1,<.^5a", frame=none]
 |===
-|image:icon-important.png[Important info,48,48]
+|image:icon-important.png[Important info]
 |
 * A valid booking cannot overlap with an existing booking.
 * A valid booking must have a start date from today onwards. This means that outdated bookings cannot be added.
@@ -152,7 +152,7 @@ the checked-in guest list.
 
 [cols="^.^1,<.^5a", frame=none]
 |===
-|image:icon-important.png[Important info,48,48]
+|image:icon-important.png[Important info]
 |Expired and upcoming bookings *cannot* be checked-in.
 |===
 
@@ -177,7 +177,7 @@ Checks out the room's first (i.e. earliest) booking, or its booking with the spe
 
 [cols="^.^1,<.^5a", frame=none]
 |===
-|image:icon-important.png[Important info,48,48]
+|image:icon-important.png[Important info]
 |
 * If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
 guest list and added to the archived guest list.
