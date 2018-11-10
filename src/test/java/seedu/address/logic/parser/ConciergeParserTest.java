@@ -42,7 +42,6 @@ import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
 import seedu.address.testutil.BookingUtil;
 import seedu.address.testutil.GuestBuilder;
-import seedu.address.testutil.GuestUtil;
 import seedu.address.testutil.TypicalExpenseTypes;
 import seedu.address.testutil.TypicalExpenses;
 import seedu.address.testutil.TypicalRoomNumbers;

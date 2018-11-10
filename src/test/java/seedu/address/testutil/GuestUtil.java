@@ -21,7 +21,7 @@ public class GuestUtil {
         sb.append(PREFIX_PHONE + guest.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + guest.getEmail().value + " ");
         guest.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
+            s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }
