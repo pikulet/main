@@ -298,7 +298,7 @@ Commands which require login: <<Adding a guest: `add`, `add`>>, <<Check-in room:
 <<Checkout room: `checkout`, `checkout`>>, <<Reassigning a guest to another room : `reassign`, `reassign`>>,
 <<Provide Room Service: `service`, `service`>>, <<Clearing all entries : `clear`, `clear`>>
 
-Example: `login user/damithz pw/forgotpassword`
+Example: `login user/admin pw/passw0rd`
 
 Without login, Concierge cannot be cleared.
 
@@ -343,6 +343,12 @@ Step 4: Close and reload the Concierge application, and your new account
 will be recognised. You are now able to sign in with the new account.
 
 image::LogInCommand-newloginsuccess.png[width="400"]
+
+[NOTE]
+ The parsing of the `passwords.json` file is delicate. Currently, if you
+ enter a valid json file format but an incorrect password reference list
+ format, you will end up with no default account. To resolve this, delete the
+  `passwords.json` file and re-run Concierge.
 
 === Logout : `logout`
 
