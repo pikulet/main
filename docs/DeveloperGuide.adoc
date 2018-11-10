@@ -348,9 +348,9 @@ its parameters.
 * This `Booking` is then added to the `Room` with the `RoomNumber` specified.
 
 An Activity Diagram for the execution of `execute(Model model, CommandHistory
- history)` is shown below.
+ history)` in the `add` command is shown below.
 
-image::AddCommand-activity-diagram.png[width="600"]
+image::AddCommand-activity-diagram.png[width="800"]
 
 ==== Design Considerations
 ===== Aspect: How to recognise a `BookingPeriod` from the user input?
@@ -374,78 +374,45 @@ However, it is troublesome to enter a `BookingPeriod` manually, as it entails
 ** Cons: The duration has to be parsed and converted to an end date. The
 current implementation of `BookingPeriod` does not support this method.
 
-===== Aspect: Reducing redundancy in `UniqueGuestList` and `UniqueRoomList`
-
-As one can observe in the current implementation, `Guest` is added to the
-guest list of Concierge and is then used again to make a `Booking`. The
-`Booking` is added to Concierge, this time under the room list.
-
-There is a repetition of the addition of a guest - it is added to both the
-`UniqueGuestList` and the `UniqueRoomList`. In an actual use case of
-Concierge, we rarely if not never add the `Guest` to the `UniqueGuestList`
-without assigning him a `Room` under the `UniqueRoomList`.
-
-In its cleanest case, the structure of Concierge would be as follows:
-
-Concierge contains a `UniqueRoomList`. Each room in this internalList may
-consist multiple `Booking` s. Each `Booking` is tagged to one `Guest` and one
-`BookingPeriod`. An illustration of this relationship is shown below.
-
-image::addCommand-class-diagram.png[width="800"]
-
-* **Alternative 1 (current choice):** Keep both the `UniqueGuestList` and
-`UniqueRoomList`
-** Pros: Maintaining a separate list of guests currently allows us to quickly
- check for the `DuplicateGuestException`.
-** Cons: The list is only useful for guest-specific functions. To find the
-`Room` the guest is assigned to, we still have to work through the
-`UniqueRoomList`.
-
-* **Alternative 2:** Remove the `UniqueGuestList`
-** Pros: Remove the redundancy in maintaining two lists. Improved storage space.
-** Cons: Unable to quickly check for a `DuplicateGuestException`. However, we
- must also note that the `DuplicateGuestException` is something we may want
- to remove in future iterations. That is, a `Guest` should be able to make
- multiple `Booking` s. However, this would lead to more complications -
- during `checkout`, we have to look through all the `Booking` s and ensure
- that the `Guest` is no longer needed in the Concierge system. Only then can
- we move the `Guest` to an archive or remove him from the system.
-
 ==== Aspect: Reduce coupling between `Room` and `Guest`
 
 Semantically, we can observe a strong coupling and dependency between `Room`
 and `Guest`. A `Room` contains a `Guest`, and a `Guest` also has a `Room`.
-This coupling is more binding than that between `UniqueGuestList` and
-`UniqueRoomList` as described above.
+Maintaining this coupling allows for very quick lookup both ways, either
+given a `Guest` (which is common at the reception desk) or given a `Room`
+(which is common for housekeeping).
 
-Having to keep track of both sides of the coin introduces an unnecessary
-coupling between these two classes. Our team decided to record `Guest` in
-`Room` instead of recording `Room` in `Guest`. The difference between these
-two selections lies in the time needed for different operations.
+Our team decided to record `Guest` in `Room` instead of recording `Room` in
+`Guest`. The difference between these two selections lies in the time needed for different operations.
 
 * **Alternative 1 (current choice):** Add `Guest` as a field in `Room`
-** Pros: An efficient for managing bookings. All the `Booking` s tied to a
+** Pros: An efficient way for managing bookings. All the `Booking` s tied to a
 particular `Room` can be put together, allowing the Receptionist to determine
  if a `Room` can be booked in `O(m)` time, where `m` is the number of
  `Booking` s in a room. In the context of Concierge, there is a rare chance
  that a `Room` will have a large number of advanced bookings being made.
-** Cons: It is difficult to find the `Room` given the `Guest`. When a
-`Guest` has made and advanced booking and wishes to cancel it, we have
-to search through all the `Room` s for bookings on the particular date
-tagged to the `Guest`. However, given the `BookingPeriod` of the
-`Guest`, this can be done in `O(1)` time since the number of `Room` s is
-constant.
-*** For most uses of Concierge, we expect `Guest` s to be aware of their
- `Room` s. When the `Guest` calls for room service, we can tag the service
- to the `Room` instead.
+** Cons: It is difficult to find the `Room` given the `Guest`. When a `Guest`
+ has made an advanced booking and wishes to cancel it, we have to search
+ through all the `Room` s and all the `Booking` s in each of the
+ rooms to find `Booking` s tagged to the `Guest`. However, this is essentially
+ an `O(1)` time operation since the number of `Room` s is constant.
+ *** Furthermore, for most uses of Concierge, we expect `Guest` s to be aware of
+ their `Room` s. When the `Guest` calls for room service, we can tag the service
+ to the `Room` instead of to the `Guest` name.
 
 * **Alternative 2:** Add `Room` as a field in `Guest`
-** Pros: Very customer-centric design. Allows the receptionist to find the
-`Room` or `Booking` details of a `Guest` in `O(1)` time.
+** Pros: Very customer-centric design. Given the guest, allows the receptionist
+ to find the `Room` or `Booking` details of a `Guest` in `O(1)` time.
 ** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
 Because the `Booking` information is now scattered across individual
 `Guest` s, the search space for `Concierge` to decide if a `Room` is free to
 book is the entire `UniqueGuestList`.
+*** As of v1.3, our implementation includes the list of rooms, and we have
+two auxiliary lists: checked-in guests and archived guests. These auxiliary
+lists help the receptionist to look up the personal particulars of the
+`Guest` quickly. Because `Booking` information is not needed when a
+receptionist intends to look up guest particulars, these lists do not retain
+any history on the guest bookings.
 // end::add[]
 
 // tag::list[]
@@ -684,9 +651,22 @@ possible to modify the default information through editing the XML file.
 // tag::loginlogout[]
 === Login and Logout
 
+The `login` feature sign
+
 ==== Current Implementation
 
 ==== Design Considerations
+
+===== Aspect: Accessing features of Concierge with/ without login
+
+* **Alternative 1 (current choice):** Login is needed only for some features
+
+* **Alternative 2:** Login is needed for all features
+** Pros: ...
+** Cons: ...
+
+===== Aspect: Adding a New Account
+===== Aspect: Storage of Passwords
 
 // end::loginlogout[]
 
