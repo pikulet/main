@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-F11-2/main
 
-By: `Team Concierge(TM)`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Concierge(TM)`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -575,7 +575,7 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 ** `export` - Export the logs of the current session to a text-editable file
 
 * Other features
-** Displaying the checked-in guest's room's information when selecting the checked-in guests 
+** Displaying the checked-in guest's room's information when selecting the checked-in guests
 
 == FAQ
 

@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-F11-2/main
 
-By: `Team Concierge(TM)`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Concierge(TM)`      Since: `Aug 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -147,7 +147,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `ConciergeChangedEvent` when Concierge(TM) data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `ConciergeChangedEvent` when Concierge data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -208,12 +208,12 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores Concierge(TM) data.
+* stores Concierge data.
 * exposes an unmodifiable `ObservableList<Guest>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [NOTE]
-As a more OOP model, we can store a `Tag` list in `Concierge(TM)`, which `Guest` can reference. This would allow `Concierge(TM)` to only require one `Tag` object per unique `Tag`, instead of each `Guest` needing their own `Tag` object. An example of how such a model may look like is given below. +
+As a more OOP model, we can store a `Tag` list in `Concierge`, which `Guest` can reference. This would allow `Concierge` to only require one `Tag` object per unique `Tag`, instead of each `Guest` needing their own `Tag` object. An example of how such a model may look like is given below. +
  +
 image:ModelClassBetterOopDiagram.png[width="800"]
 
@@ -228,7 +228,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save Concierge(TM) data in xml format and read it back.
+* can save Concierge data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -244,53 +244,53 @@ This section describes some noteworthy details on how certain features are imple
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by `VersionedConcierge`.
-It extends `Concierge(TM)` with an undo/redo history, stored internally as an `conciergeStateList` and `currentStatePointer`.
+It extends `Concierge` with an undo/redo history, stored internally as an `conciergeStateList` and `currentStatePointer`.
 Additionally, it implements the following operations:
 
-* `VersionedConcierge#commit()` -- Saves the current Concierge(TM) state in its history.
-* `VersionedConcierge#undo()` -- Restores the previous Concierge(TM) state from its history.
-* `VersionedConcierge#redo()` -- Restores a previously undone Concierge(TM) state from its history.
+* `VersionedConcierge#commit()` -- Saves the current Concierge state in its history.
+* `VersionedConcierge#undo()` -- Restores the previous Concierge state from its history.
+* `VersionedConcierge#redo()` -- Restores a previously undone Concierge state from its history.
 
 These operations are exposed in the `Model` interface as `Model#commitConcierge()`, `Model#undoConcierge()` and `Model#redoConcierge()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedConcierge` will be initialized with the initial Concierge(TM) state, and the `currentStatePointer` pointing to that single Concierge(TM) state.
+Step 1. The user launches the application for the first time. The `VersionedConcierge` will be initialized with the initial Concierge state, and the `currentStatePointer` pointing to that single Concierge state.
 
 image::UndoRedoStartingStateListDiagram.png[width="800"]
 
-Step 2. The user executes `delete 5` command to delete the 5th guest in Concierge(TM). The `delete` command calls `Model#commitConcierge()`, causing the modified state of Concierge(TM) after the `delete 5` command executes to be saved in the `conciergeStateList`, and the `currentStatePointer` is shifted to the newly inserted Concierge(TM) state.
+Step 2. The user executes `delete 5` command to delete the 5th guest in Concierge. The `delete` command calls `Model#commitConcierge()`, causing the modified state of Concierge after the `delete 5` command executes to be saved in the `conciergeStateList`, and the `currentStatePointer` is shifted to the newly inserted Concierge state.
 
 image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
 
-Step 3. The user executes `add n/David ...` to add a new guest. The `add` command also calls `Model#commitConcierge()`, causing another modified Concierge(TM) state to be saved into the `conciergeStateList`.
+Step 3. The user executes `add n/David ...` to add a new guest. The `add` command also calls `Model#commitConcierge()`, causing another modified Concierge state to be saved into the `conciergeStateList`.
 
 image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
 
 [NOTE]
-If a command fails its execution, it will not call `Model#commitConcierge()`, so Concierge(TM) state will not be saved into the `conciergeStateList`.
+If a command fails its execution, it will not call `Model#commitConcierge()`, so Concierge state will not be saved into the `conciergeStateList`.
 
-Step 4. The user now decides that adding the guest was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoConcierge()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous Concierge(TM) state, and restores Concierge(TM) to that state.
+Step 4. The user now decides that adding the guest was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoConcierge()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous Concierge state, and restores Concierge to that state.
 
 image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
 
 [NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial Concierge(TM) state, then there are no previous Concierge(TM) states to restore. The `undo` command uses `Model#canUndoConcierge()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If the `currentStatePointer` is at index 0, pointing to the initial Concierge state, then there are no previous Concierge states to restore. The `undo` command uses `Model#canUndoConcierge()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The `redo` command does the opposite -- it calls `Model#redoConcierge()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores Concierge(TM) to that state.
+The `redo` command does the opposite -- it calls `Model#redoConcierge()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores Concierge to that state.
 
 [NOTE]
-If the `currentStatePointer` is at index `conciergeStateList.size() - 1`, pointing to the latest Concierge(TM) state, then there are no undone Concierge(TM) states to restore. The `redo` command uses `Model#canRedoConcierge()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the `currentStatePointer` is at index `conciergeStateList.size() - 1`, pointing to the latest Concierge state, then there are no undone Concierge states to restore. The `redo` command uses `Model#canRedoConcierge()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify Concierge(TM), such as `list`, will usually not call `Model#commitConcierge()`, `Model#undoConcierge()` or `Model#redoConcierge()`. Thus, the `conciergeStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify Concierge, such as `list`, will usually not call `Model#commitConcierge()`, `Model#undoConcierge()` or `Model#redoConcierge()`. Thus, the `conciergeStateList` remains unchanged.
 
 image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
 
-Step 6. The user executes `clear`, which calls `Model#commitConcierge()`. Since the `currentStatePointer` is not pointing at the end of the `conciergeStateList`, all Concierge(TM) states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitConcierge()`. Since the `currentStatePointer` is not pointing at the end of the `conciergeStateList`, all Concierge states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
 
 image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
 
@@ -302,7 +302,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire Concierge(TM).
+* **Alternative 1 (current choice):** Saves the entire Concierge.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -311,7 +311,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use a list to store the history of Concierge(TM) states.
+* **Alternative 1 (current choice):** Use a list to store the history of Concierge states.
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
 ** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedConcierge`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
@@ -341,7 +341,7 @@ objects - `Guest`, `RoomNumber` and `BookingPeriod`.
 As in AddressBook4, the `Logic` component parses the `AddCommand`, and the
 `Model` handles its execution.
 
-* In the `Model`, the `Guest` is _no longer_ added to Concierge(TM). It was
+* In the `Model`, the `Guest` is _no longer_ added to Concierge. It was
 previously the case in AddressBook4.
 * A new `Booking` object is created with the `Guest` and `BookingPeriod` as
 its parameters.
@@ -377,17 +377,17 @@ current implementation of `BookingPeriod` does not support this method.
 ===== Aspect: Reducing redundancy in `UniqueGuestList` and `UniqueRoomList`
 
 As one can observe in the current implementation, `Guest` is added to the
-guest list of Concierge(TM) and is then used again to make a `Booking`. The
-`Booking` is added to Concierge(TM), this time under the room list.
+guest list of Concierge and is then used again to make a `Booking`. The
+`Booking` is added to Concierge, this time under the room list.
 
 There is a repetition of the addition of a guest - it is added to both the
 `UniqueGuestList` and the `UniqueRoomList`. In an actual use case of
-Concierge(TM), we rarely if not never add the `Guest` to the `UniqueGuestList`
+Concierge, we rarely if not never add the `Guest` to the `UniqueGuestList`
 without assigning him a `Room` under the `UniqueRoomList`.
 
-In its cleanest case, the structure of Concierge(TM) would be as follows:
+In its cleanest case, the structure of Concierge would be as follows:
 
-Concierge(TM) contains a `UniqueRoomList`. Each room in this internalList may
+Concierge contains a `UniqueRoomList`. Each room in this internalList may
 consist multiple `Booking` s. Each `Booking` is tagged to one `Guest` and one
 `BookingPeriod`. An illustration of this relationship is shown below.
 
@@ -408,7 +408,7 @@ image::addCommand-class-diagram.png[width="800"]
  to remove in future iterations. That is, a `Guest` should be able to make
  multiple `Booking` s. However, this would lead to more complications -
  during `checkout`, we have to look through all the `Booking` s and ensure
- that the `Guest` is no longer needed in the Concierge(TM) system. Only then can
+ that the `Guest` is no longer needed in the Concierge system. Only then can
  we move the `Guest` to an archive or remove him from the system.
 
 ==== Aspect: Reduce coupling between `Room` and `Guest`
@@ -427,7 +427,7 @@ two selections lies in the time needed for different operations.
 ** Pros: An efficient for managing bookings. All the `Booking` s tied to a
 particular `Room` can be put together, allowing the Receptionist to determine
  if a `Room` can be booked in `O(m)` time, where `m` is the number of
- `Booking` s in a room. In the context of Concierge(TM), there is a rare chance
+ `Booking` s in a room. In the context of Concierge, there is a rare chance
  that a `Room` will have a large number of advanced bookings being made.
 ** Cons: It is difficult to find the `Room` given the `Guest`. When a
 `Guest` has made and advanced booking and wishes to cancel it, we have
@@ -435,7 +435,7 @@ to search through all the `Room` s for bookings on the particular date
 tagged to the `Guest`. However, given the `BookingPeriod` of the
 `Guest`, this can be done in `O(1)` time since the number of `Room` s is
 constant.
-*** For most uses of Concierge(TM), we expect `Guest` s to be aware of their
+*** For most uses of Concierge, we expect `Guest` s to be aware of their
  `Room` s. When the `Guest` calls for room service, we can tag the service
  to the `Room` instead.
 
@@ -444,7 +444,7 @@ constant.
 `Room` or `Booking` details of a `Guest` in `O(1)` time.
 ** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
 Because the `Booking` information is now scattered across individual
-`Guest` s, the search space for `Concierge(TM)` to decide if a `Room` is free to
+`Guest` s, the search space for `Concierge` to decide if a `Room` is free to
 book is the entire `UniqueGuestList`.
 // end::add[]
 
@@ -542,7 +542,7 @@ An example is this: find -g n/Alex t/VIP, this can be interpreted in two ways. F
 ==== Current Implementation
 
 The room check-in and checkout features makes use of `UniqueRoomList`.
-The logic that supports the check-in and checkout operations mainly reside in the `Concierge(TM)` and `Room` classes.
+The logic that supports the check-in and checkout operations mainly reside in the `Concierge` and `Room` classes.
 
 * `UniqueRoomList#checkin(RoomNumber)` -- Checks in the first booking of the room identified by the given room number
 * `UniqueRoomList#checkout(RoomNumber)` -- Checks out the first booking of the room identified by the given room number
@@ -625,7 +625,7 @@ image::check-in-activity-diagram.png[width="800"]
 
 // tag::expenses[]
 === Expense, Expenses and ExpenseType
-In Concierge(TM), users will be given the feature of tracking the expenditure of each individual
+In Concierge, users will be given the feature of tracking the expenditure of each individual
 guest, in order to facilitate checkout charges. Hence, the three classes, `Expenses`, `Expense`
 and `ExpenseType` have been created for this purpose. In addition, the hotel also has a
 `menu` of goods and services available.
@@ -961,7 +961,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Concierge(TM) depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Concierge depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -1004,21 +1004,21 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in Concierge(TM), but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in Concierge, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Concierge(TM).
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Concierge.
 +
 ****
 * Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/Concierge(TM).java[`Concierge(TM)`] API need to be updated.
+** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/Concierge(TM).java[`Concierge(TM)`] and link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/Concierge(TM).java[`Concierge(TM)`] allows you to update a guest, and link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`] and link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`] allows you to update a guest, and link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/Concierge(TM).java[`Concierge(TM)`]. Loop through each guest, and remove the `tag` from each guest.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `Concierge(TM)#removeTag(Tag)`.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`]. Loop through each guest, and remove the `tag` from each guest.
+** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `Concierge#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
 ****
@@ -1026,7 +1026,7 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Concierge(TM) application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last guest in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Concierge application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last guest in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
@@ -1076,7 +1076,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in Concierge(TM).
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in Concierge.
 +
 **Before**
 +
@@ -1089,7 +1089,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever Concierge(TM) is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever Concierge is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of guests when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleConciergeChangedEvent(ConciergeChangedEvent)`] to update the number of guests whenever there are new changes to the concierge.
@@ -1101,12 +1101,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving Concierge(TM) to the cloud. However, the current implementation of the application constantly saves Concierge(TM) after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for Concierge(TM) storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving Concierge to the cloud. However, the current implementation of the application constantly saves Concierge after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for Concierge storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupConcierge(ReadOnlyConcierge)`, so that Concierge(TM) can be saved in a fixed temporary location.
+. Add a new method `backupConcierge(ReadOnlyConcierge)`, so that Concierge can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -1321,7 +1321,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [discrete]
 === UC1.1: Check-in a Guest
 
-*System*: `Concierge(TM)`, *Actor*: `Receptionist`
+*System*: `Concierge`, *Actor*: `Receptionist`
 
 *MSS*
 
@@ -1349,7 +1349,7 @@ Use case resumes at step 4.
 [discrete]
 === UC1.2: Retrieve room number of a Guest
 
-*System*: `Concierge(TM)`, *Actor*: `Receptionist`
+*System*: `Concierge`, *Actor*: `Receptionist`
 
 *MSS*
 
@@ -1368,7 +1368,7 @@ Use case ends.
 [discrete]
 === UC1.3: Send room service to a Guest
 
-*System*: `Concierge(TM)`, *Actor*: `Receptionist`
+*System*: `Concierge`, *Actor*: `Receptionist`
 
 *MSS*
 
@@ -1391,7 +1391,7 @@ Use case ends.
 [discrete]
 === UC1.4: Swap Guest's room
 
-*System*: `Concierge(TM)`, *Actor*: `Receptionist`
+*System*: `Concierge`, *Actor*: `Receptionist`
 
 *MSS*
 
@@ -1405,7 +1405,7 @@ Use case ends.
 [discrete]
 === UC1.5: Edit Guest's personal particulars
 
-*System*: `Concierge(TM)`, *Actor*: `Receptionist`
+*System*: `Concierge`, *Actor*: `Receptionist`
 
 *MSS*
 
@@ -1417,7 +1417,7 @@ Use case ends.
 [discrete]
 === UC1.6: Reserve a room for Guest
 
-*System*: `Concierge(TM)`, *Actor*: `Receptionist`
+*System*: `Concierge`, *Actor*: `Receptionist`
 
 *MSS*
 
@@ -1429,7 +1429,7 @@ Use case ends.
 [discrete]
 === UC2.1: Edit room rates
 
-*System*: `Concierge(TM)`, *Actor*: `Hotel Manager`
+*System*: `Concierge`, *Actor*: `Hotel Manager`
 
 *MSS*
 
@@ -1451,7 +1451,7 @@ Use case ends.
 [discrete]
 === UC2.2: Check statistics
 
-*System*: `Concierge(TM)`, *Actor*: `Hotel Manager`
+*System*: `Concierge`, *Actor*: `Hotel Manager`
 
 *MSS*
 
