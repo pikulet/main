@@ -78,13 +78,13 @@ Some important things that you should know before using Concierge(TM)
 
 [cols="^.^,<.^9a", frame=none]
 |===
-|image:icon-key.png[width="50"]
+|image:icon-key.png[Login requirement,640,480,pdfwidth=50%,scaledwidth=50%]
 |This is a `login` icon. If a command requires login before execution, this icon will be located on its right in its title.
 |===
 
 [cols="^.^,<.^9a", frame=none]
 |===
-|image:icon-important.png[width="50"]
+|image:icon-important.png[Important info,640,480,pdfwidth=50%,scaledwidth=50%]
 |This is a *important* icon. You should read the information in these before executing the command, as it will likely
 affect what you can or cannot do.
 |===
