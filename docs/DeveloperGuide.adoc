@@ -354,7 +354,7 @@ An Activity Diagram for the execution of `execute(Model model, CommandHistory
 image::AddCommand-activity-diagram.png[width="700"]
 
 ==== Design Considerations
-===== Aspect: How to recognise a `BookingPeriod` from the user input?
+===== Aspect: Recognising a `BookingPeriod` from the user input
 
 The relationship we defined between a `Room` and `Booking` is that a `Room`
 has a `Booking`. The `Booking` then comprises a `Guest` and `BookingPeriod`
@@ -375,7 +375,30 @@ However, it is troublesome to enter a `BookingPeriod` manually, as it entails
 ** Cons: The duration has to be parsed and converted to an end date. The
 current implementation of `BookingPeriod` does not support this method.
 
-==== Aspect: Reduce coupling between `Room` and `Guest`
+===== Aspect: Check for outdated bookings
+
+Outdated bookings are those which have a start date before today. Concierge
+disallows users to `add` outdated booking.
+
+* **Alternative 1 (current choice):** Do the check in `AddCommand#execute`
+** Pros: Very easy to implement. A simple check in the `execute` method will
+suffice. Only have to check that the `AddCommandSystemTest` uses cases
+without outdated bookings.
+** Cons: The actual `Model#addBooking` does not do any check on the
+`BookingPeriod` being outdated, opening the possibly of outdated `Booking` s
+being added from elsewhere.
+
+* **Alternative 2:** Do the check in `Room#addBooking`
+** Pros: Centralises exceptions thrown related to `Booking` s in the
+`Bookings` class. Increases the cohesiveness of this class.
+** Cons: All the existing tests and sample data calling the `addBooking`
+method with outdated bookings have to be changed.
+*** It also becomes difficult to do unit tests on checking in bookings which
+are outdated but not expired, since one cannot add these bookings in the
+first place. It is not impossible, since one could let the testing unit run
+for a day to become outdated.
+
+===== Aspect: Reduce coupling between `Room` and `Guest`
 
 Semantically, we can observe a strong coupling and dependency between `Room`
 and `Guest`. A `Room` contains a `Guest`, and a `Guest` also has a `Room`.
@@ -763,27 +786,59 @@ designing this aspect are:
 * Able to easily mandate login for future commands
 * Able to easily disable compulsory login for commands
 
-* **Alternative 1 (current choice):** Do the check in `LogInManager`
+* **Alternative 1 (current choice):** Do the check in `LogInManager#execute`
+** Pros: It ensures that commands are checked before any execution. When
+adding a new command that requires sign-in, users will no inadvertently
+change the model before doing the sign-in check.
+** Cons: Unable to implement new commands that can do some actions without
+sign-in. For example, a future developer may want to make the `add` command
+such that when the user is not signed-in, a tag is added to the `Guest` that
+reminds the manager to verify the booking.
 
-
-
+* **Alternative 2:** Do the check in `Command#execute`
+** Pros: Increases cohesiveness of `Command` class. The compulsory sign-in is
+ an attribute of a `Command`, so these internal checks can be done. By
+ implementing a method `checkSignIn(Model)`, commands which require sign-ins
+ can call this method in their respective `execute` methods.
+** Cons:
+*** Difficult to check which methods require sign-in. Every method, instead
+ of implementing a boolean check on `requiresSignIn()`, indicates if it
+ requires sign-in using a call to a method in the superclass.
+**** The proposed solution to this would be to implement the `Command#execute`
+ method to do the current check that is in the `LogicManager`. If the command
+  requires a sign-in, check the sign in. Every command must call `super()` in
+   its respective `execute` method.
+*** While more cohesive, this implementation makes less semantic sense. The
+logical misstep comes because one is executing the method, then checking if the
+method can be executed, then "reversing" the execution.
 
 ===== Aspect: Storage of Passwords
+
+The password file is currently read at `MainApp#init`, and saved once.
+Unlike the Concierge data, this file is no longer referred to when Concierge
+is in use.
 
 * **Alternative 1 (current choice):** Store passwords in JSON file
 ** Pros:
 *** Able to make use of existing `JsonUtil` methods used by the
 `UserPrefs` and `Config` classes.
-*** Able to parse data easily into key-value pairs
-
+*** Easily parse data into key-value pairs. JSON files already represent data
+ in key-value pairs, which semantically matches our needs.
+** Cons: `JsonUtil` file is not completely suitable for a data type that has
+potentially an unlimited number of entries, since this utility serialises the
+ data.
 * **Alternative 2:** Store passwords in same XML file as all other
 Concierge data.
-** Pros:
-*** Centralises data storage in Concierge.
-*** Concierge only performs one read operation for the data.
+** Pros: Centralises data storage in Concierge. There is only one single
+source of truth for all data-related concerns.
 ** Cons:
-*** User is overloaded with information from XML (but they should be familiar)
-*** Creating a new entry is very difficult. (But new entries not created often)
+***User is overloaded with information in the XMl file. Concierge does
+not need to write the the passwords file when in use. However, `concierge
+.xml` is constantly being written to, which is an unnecessary feature for the
+ passwords component.
+***Furthermore, creating a new entry is difficult since once has to add all
+the layers of XML tags involved. Nevertheless, users are not expected to be
+adding new accounts on a regular basis.
 
 ===== Aspect: Adding a New Account
 
@@ -791,7 +846,8 @@ Concierge data.
 `passwords.json` file
 ** Pros: Complies with the non-functional requirement to put the user data in
  a human-editable format
-** Cons: Exposes implementation of password hashing. Prone to error.
+** Cons: Exposes implementation of password hashing. Prone to error in file
+format.
 
 * **Alternative 2:** User can only add a new account via the Concierge app
 ** Pros: Maintains encapsulation of data.
