@@ -86,37 +86,41 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 // tag::add[]
 === Adding a guest: `add`
 
-Adds a booking associated with a guest, room and booking period.
+Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
 
+[TIP]
+A guest can have any number of tags (including 0)
+
 ****
-* A guest can have any number of tags (including 0)
-* A guest can make an unlimited number of bookings with the hotel, as long as
-the booking is valid.
-* A guest can make a booking for however long he/ she wants.
+* A valid booking cannot clash with an existing booking. It must also have a
+  start date from today onwards (not outdated).
+* A guest can make an unlimited number of bookings with the hotel.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
 His/ her information will be stored under his/ her booking in the room.
-* Outdated bookings cannot be added.
 ****
-
-[TIP]
-A valid booking cannot clash with an existing booking. It must also have a
-start date from today onwards.
 
  This command requires a login.
 
-Example:
+Example: `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085
+from/17/12/18
+to/19/12/18`
 
-`add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085 from/09/12/18 to/10/12/18`
-
-Add a guest "John Smith" to room 085 for the period of stay from 09/12/18 to
-10/12/18.
+Add a guest "John Smith" to room 085 for the period of stay from 17/12/18 to
+19/12/18.
 
 .Adding an active booking
 image::AddCommand-userguide-active.png[width="800"]
 
+When a booking is added and it starts today (i.e. it is active), then you can
+ preview the booking on the left room pane.
+
 .Adding an inactive booking (i.e. booking is in the future)
 image::AddCommand-userguide-notactive.png[width="800"]
+
+When a booking is added and it starts on a future date, then it can only be
+viewed by clicking on the relevant room. It can be found in the "All other
+bookings" section.
 // end::add[]
 
 === Adding a guest: `addx` [red]#Coming in v2.0#
@@ -124,8 +128,9 @@ image::AddCommand-userguide-notactive.png[width="800"]
 Adds a guest to the guest list NOT for the purpose of assigning a room (perhaps add to archived guest list) +
 Format: `addx n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG]...`
 
-Examples:
-* `addx n/guest p/98765432 e/johntan@hotmail.com t/bro`
+Example:
+
+`addx n/guest p/98765432 e/johntan@hotmail.com t/bro`
 
 === Check-in room: `checkin`
 
@@ -278,52 +283,89 @@ Format: `login user/USERNAME pw/PASSWORD`
 
 Note: The username and password are both case-sensitive.
 
+****
+* The default account can be accessed with `login user/admin pw/passw0rd`
+* <<Adding a new account, More users can be added>> at `passwords.json`.
+* [v2.0] You can create new accounts via the Concierge app.
+****
+
 [TIP]
 A login allows the user to access the commands which can affect the
 bookings.
 
-****
-* The default account can be accessed with `login user/admin pw/passw0rd`
-* More users can be added at `src/data/passwords.json`. When adding passwords
-to the reference list, be sure to add the SHA-256 hashed password.
-You can find a useful hashing tool here: https://passwordsgenerator.net/sha256-hash-generator/
-* [v2.0] You can create new accounts via the Concierge app.
-****
-
 Commands which require login:
 
-** `add`
-** `checkin`
-** `checkout`
-** `reassign`
-** `service`
-** `clear`
+* <<Adding a guest: `add`, `add`>>
+* <<Check-in room: `checkin`, `checkin`>>
+* <<Checkout room: `checkout`, `checkout`>>
+* <<Reassigning a guest to another room : `reassign`, `reassign`>>
+* <<Provide Room Service: `service`, `service`>>
+* <<Clearing all entries : `clear`, `clear`>>
 
 Example: `login user/damithz pw/forgotpassword`
 
 .Without login, Concierge cannot be cleared
-image::LogInCommand-notsignedin.png[width="400"]
+image::LogInCommand-notsignedin.png[width="600"]
 
 .Login with a valid account
-image::LogInCommand-loginsuccess.png[width="400"]
+image::LogInCommand-loginsuccess.png[width="600"]
 
-.`clear` command can now be executed
-image::LogInCommand-clearsuccess.png[width="400"]
+.After sign in, `clear` command can now be executed
+image::LogInCommand-clearsuccess.png[width="600"]
+
+==== Adding a new account
+
+ Currently, Concierge does not have a feature for users to add an account via
+the app. The reason is because we only _read_ from the password file.
+Nevertheless, for the adventurous users who want to create their own
+accounts, this sub-section will be useful.
+
+* Step 1: Open the `passwords.json` file, which should be in the same
+folder as your Concierge.jar file.
+
+.The `passwords.json` file stores a list of hashed passwords
+image::LogInCommand-passwordsfile.png[width="900"]
+
+* Step 2: Concierge uses SHA-256 password hashing. This hash can be
+generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
+
+.Enter your password in the field to generate the hash
+image::LogInCommand-generatehash.png[width="900"]
+
+[NOTE]
+ Concierge was designed to work with alphanumeric usernames and passwords in
+ mind. Do not enter symbols (!, @, %...)
+
+* Step 3: Add the entry to the `passwords.json` file. Note that entries are
+separate with a comma.
+Format: `"username" : "hashedPassword"`
+
+.A new account with username "newUser" and password "mySecurePassw0rd" has been added
+image::LogInCommand-addpasswordentry.png[width="900"]
+
+* Step 4: Close and reload the Concierge application, and your new account
+will be recognised.
+
+.User is now able to sign in with the new account
+image::LogInCommand-newloginsuccess.png[width="900"]
 
 === Logout : `logout`
 
 Logs out of the Concierge application. +
 Format: `logout`
 
-image::LogOutCommand-success.png[width="400"]
-
-****
-* The special classes of commands (as documented in `login`) can no longer be
+* The special classes of commands (as documented in <<Login : `login`,
+login>>) can no longer be
 executed.
 * The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
-** This is the same as closing and re-opening Concierge after a logout.
-****
+** This achieves the same effect as closing and re-opening Concierge in the
+midst of a sign-in session.
+
+Example: `logout`
+
+image::LogOutCommand-success.png[width="400"]
+
 // end::loginlogout[]
 
 === Selecting a guest : `select`
@@ -476,6 +518,8 @@ Format: `clear`
 
 The rooms are maintained - only all their current and future bookings are
 cleared. I.e. all maintenance requests and faults will still be recorded.
+
+Example: `clear`
 
 .Empty room listing with all bookings deleted and expenses reset
 image::ClearCommand-success.png[width="400"]

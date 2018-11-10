@@ -1,4 +1,4 @@
-= John Doe - Project Portfolio
+= Joyce Yeo - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
 :stylesDir: ../stylesheets
@@ -49,6 +49,9 @@ modules were not done by me
 
 *Project Management*:
 
+* Managed the team's issue tracker
+* Encouraged team to use clean PRs
+* Encouraged team to use TODO to manage their work
 * Set up RepoSense for the team
 * Community
 ** PRs reviewed (with non-trivial review comments):
