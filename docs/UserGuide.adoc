@@ -94,7 +94,7 @@ A guest can have any number of tags (including 0)
 
 ****
 * A valid booking cannot clash with an existing booking. It must also have a
-  start date from today onwards (not outdated).
+  start date from today onwards (i.e. not outdated).
 * A guest can make an unlimited number of bookings with the hotel.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
 His/ her information will be stored under his/ her booking in the room.
