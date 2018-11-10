@@ -25,4 +25,5 @@ src/test/data/XmlUtilTest/validGuest.xml
 src/test/data/XmlUtilTest/validRoom.xml
 src/test/data/XmlUtilTest/invalidGuest.xml
 src/test/data/XmlUtilTest/invalidRoom.xml
+src/test/data/XmlUtilTest/invalidRoomField.xml
 src/test/data/XmlSerializableConciergeTest/typicalConcierge.xml

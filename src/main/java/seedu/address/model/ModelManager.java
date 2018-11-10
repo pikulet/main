@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.login.PasswordHashList.getEmptyPasswordHashList;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -47,7 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
      * LogInHelper module.
      */
     public ModelManager(ReadOnlyConcierge concierge, UserPrefs userPrefs) {
-        this(concierge, userPrefs, getEmptyPasswordHashList());
+        this(concierge, userPrefs, new PasswordHashList());
     }
 
     /**
@@ -242,6 +241,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Undo/Redo ================================================
+
+    @Override
+    public void resetUndoRedoHistory() {
+        versionedConcierge.resetUndoRedoHistory(); }
 
     @Override
     public boolean canUndoConcierge() {

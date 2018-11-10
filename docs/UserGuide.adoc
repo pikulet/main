@@ -1,4 +1,4 @@
-= Concierge v1.3 - User Guide
+= Concierge v1.4 - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -105,6 +105,8 @@ His/ her information will be stored under his/ her booking in the room.
 A valid booking cannot clash with an existing booking. It must also have a
 start date from today onwards.
 
+ This command requires a login.
+
 Example:
 
 `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085 from/09/12/18 to/10/12/18`
@@ -135,6 +137,8 @@ Upon checking in the room's first active booking, the guest who made the booking
 the checked-in guest list. +
 Format: `checkin r/ROOM_NUMBER`
 
+ This command requires a login.
+
 Examples:
 
 * `checkin r/085` +
@@ -159,6 +163,8 @@ but will be added to the archived guest list.
 
 Format: `checkout r/ROOM_NUMBER [from/START_DATE]`
 
+ This command requires a login.
+
 Examples:
 
 * `checkout r/085` +
@@ -178,6 +184,8 @@ Reassigns a booking from one room to another.
 * If the booking starts the same day the new room's first booking ends, the booking cannot be checked-in.
 
 Format: `reassign r/ROOM_NUMBER from/START_DATE`
+
+ This command requires a login.
 
 Examples:
 
@@ -262,42 +270,36 @@ List all archived guests
 List all checked-in guests
 // end::list[]
 
+// tag::login[]
 === Login : `login`
 
 Logs in to the Concierge application. +
 Format: `login user/USERNAME pw/PASSWORD`
 
+Note: The username and password are both case-sensitive.
+
+[TIP]
+A login allows the user to access the commands which can affect the
+bookings.
+
 ****
-* The username and password are both case-sensitive.
-* A login allows the user to access the commands which can affect the bookings.
+* The default account can be accessed with `login user/admin pw/passw0rd`
+* More users can be added at `src/data/passwords.json`. When adding passwords
+to the reference list, be sure to add the SHA-256 hashed password.
+You can find a useful hashing tool here: https://passwordsgenerator.net/sha256-hash-generator/
+* [v2.0] You can create new accounts via the Concierge app.
 ****
 
 Commands which require login:
 
-****
-* `login user/<name> pw/<name>-pw`, where <name> is any of the developer team’s GitHub username
-* As of v1.3, you must create your own passwords.json file with your username and passwords.
-For demo purposes, go to https://github.com/CS2103-AY1819S1-F11-2/main and copy the passwords.json file there
-into the same folder as the Concierge.jar file.
-Alternatively, create a new passwords.json and use SHA-256 Hash to generate
-the hash for your password. You can use this website for this: https://passwordsgenerator.net/sha256-hash-generator/
-
-****
-
 ** `add`
-** `checkin`, `checkout` [red]#Coming in v2.0#
+** `checkin`
+** `checkout`
+** `reassign`
+** `service`
 ** `clear`
 
 Example: `login user/damithz pw/forgotpassword`
-
-There are a few default accounts which can be used:
-* `login user/admin pw/admin-pw`
-* `login user/<name> pw/<name>-pw`, where `<name>` is any of the developer
-team's GitHub username
-
-[NOTE]
-More users can be added at `src/data/passwords.json`. When adding passwords
-to the reference list, be sure to add the SHA-256 hashed password.
 
 .Without login, Concierge cannot be cleared
 image::LogInCommand-notsignedin.png[width="400"]
@@ -318,8 +320,7 @@ image::LogOutCommand-success.png[width="400"]
 ****
 * The special classes of commands (as documented in `login`) can no longer be
 executed.
-* Unable to undo/ redo before logout [red]#Coming in v2.0#
-** The `logout` command will erase the command history, so users cannot undo/
+* The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
 ** This is the same as closing and re-opening Concierge after a logout.
 ****
@@ -370,6 +371,8 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *MB04* -- Minibar: Mineral water -- $3.00
 ** *SP01* -- Swimming pool: Entry -- $5.00
 ****
+
+ This command requires a login.
 
 Examples:
 
@@ -425,19 +428,19 @@ Undoable commands: those commands that modify Concierge's content (`add`, `check
 
 Examples:
 
-* `delete 1` +
+* `checkin r/001` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `checkin r/001` command) +
 
 * `select 1` +
 `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
+* `checkin r/001` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `checkin r/001` command) +
 
 === Redoing the previously undone command : `redo`
 
@@ -446,19 +449,19 @@ Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `checkin r/001` +
+`undo` (reverses the `checkin r/001` command) +
+`redo` (reapplies the `checkin r/001` command) +
 
-* `delete 1` +
+* `checkin r/001` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+* `checkin r/001` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `checkin r/001` command) +
+`redo` (reapplies the `checkin r/001` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
@@ -467,7 +470,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the application. +
 Format: `clear`
 
-This command requires a login.
+ This command requires a login.
 
 The rooms are maintained - only all their current and future bookings are
 cleared. I.e. all maintenance requests and faults will still be recorded.
@@ -516,8 +519,8 @@ interested in contributing, please refer to the Developer Guide.
 
 * *Add a Guest and assign a Room* : `add n/NAME p/PHONE_NUMBER e/EMAIL
 t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
-* *Checkin* : `checkin`
-* *Checkout* : `checkout`
+* *Checkin* : `checkin r/ROOM_NUMBER`
+* *Checkout* : `checkout r/ROOM_NUMBER [from/START_DATE]`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` [red]#Coming in v2.0#
 * *List* : `list`
 * *Login* : `login user/USERNAME pw/PASSWORD`
