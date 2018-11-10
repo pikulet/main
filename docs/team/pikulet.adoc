@@ -50,8 +50,7 @@ https://www.baeldung.com/sha-256-hashing-java[Baeldung].
 existing classes and methods from `Person` to `Guest`.
 * Modified the `add` command to
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[take in more
-parameters], namely the
- room and date details) in a hotel booking. Note that the actual `Room` and
+parameters] (namely the room and date details) in a hotel booking. Note that the actual `Room` and
  `Booking` packages were not done by me.
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[Modified the `clear`
 command] to maintain empty hotel rooms.
