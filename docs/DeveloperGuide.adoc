@@ -654,15 +654,6 @@ image::check-in-activity-diagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Deletion of bookings
-
-* **Alternative 1 (current choice):** Use `checkout` to delete any booking.
-** Pros: `checkout` doubles as a delete booking feature, so no need for a `deletebooking` command.
-** Cons: Not very natural, as `checkout` implies checking out a checked-in booking.
-* **Alternative 2:** Use `checkout` to delete only active booking, and create new command `deletebooking` to delete expired and upcoming bookings.
-** Pros: More natural, `checkout` can only do what its name implies.
-** Cons: Need to implement new command and more methods, to support the same deletion operation but with a different name.
-
 ===== Aspect: Immutability of check-in command
 
 * **Alternative 1 (current choice):** `checkIn` a room by creating a new copy of the room
@@ -673,6 +664,16 @@ image::check-in-activity-diagram.png[width="800"]
 * **Alternative 2:** `checkIn` a room by setting the `isCheckedIn` flag of the first booking to true.
 ** Pros: Check-in method is intuitive, and does not return a new room.
 ** Cons: Harder to debug. Tests also become troublesome since changes are made to the same referenced room.
+
+===== Aspect: Deletion of bookings
+
+* **Alternative 1 (current choice):** Use `checkout` to delete any booking.
+** Pros: `checkout` doubles as a delete booking feature, so no need for a `deletebooking` command.
+** Cons: Not very natural, as `checkout` implies checking out a checked-in booking.
+* **Alternative 2:** Use `checkout` to delete only active booking, and create new command `deletebooking` to delete expired and upcoming bookings.
+** Pros: More natural, `checkout` can only do what its name implies.
+** Cons: Need to implement new command and more methods, to support the same deletion operation but with a different name.
+
 // end::checkin[]
 
 // tag::dataencryption[]

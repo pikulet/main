@@ -1,0 +1,83 @@
+= Adam Chew Yong Soon - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Concierge(TM)
+
+---
+
+== Overview
+
+Concierge(TM) is a desktop application simulating a hotel management system used by hotel owners and receptionists. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=adamwth[Code Contributed]]
+
+* *Major enhancements*:
+
+** Added `checkIn` and `checkout` features
+*** What it does: Allows the user to check-in a room's booking that is active, checkout any booking of a room,
+and update the checked-in guest list and archived guest list to reflect the checked-in/out guests respectively.
+*** Justification: This feature is a core feature that supports the daily operations of a hotel, without which the hotel will not
+be able to function. The checking-in/out of a room's booking is a very frequent operation in a typical hotel setting.
+However, it is very cumbersome to execute these operations using the existing `edit` command as it requires many fields to fill in.
+This feature solves this problem by providing a command-line interface with minimal fields to specify, allowing smooth and fast
+checking-in/out of rooms.
+
+*** Highlights: The validity of a check-in operation requires knowledge of how a hotel manages its policy of allowing guests to check-in.
+The current implementation was finalized after experimenting with different validity checks on multiple different scenarios.
+The checkout feature was initially intended to execute similar validity checks for checking-out a booking,
+but has now expanded its scope to double as a delete-booking feature.
+
+* *Other contributions*:
+
+** *Writing the `Room` package*
+*** Single-handedly wrote the entire `Room` package: #71
+
+** *Other features/commands*
+*** Add `list -cg` list checked-in guests feature: #178
+*** Fix `select` command bug and make improvements: #211
+*** Add `deselect` feature: #219
+*** Add `reassign` command: #222
+
+** *GUI-related*
+*** Improve GUI display of rooms in both left and right panels: #115, #154
+
+** *Documentation*
+
+*** User Guide
+**** Update with description of usage of CheckIn, Checkout, and Reassign commands
+**** Add *Terminology* section
+**** Add icons to standardize way of alerting user about important information
+
+*** Developer Guide
+**** Update with detailed description of how CheckIn and Checkout features work
+**** Add Sequence and Activity diagrams for CheckIn and Checkout features as aids to explain control flow of new features
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=checkin]
+
+include::../UserGuide.adoc[tag=reassign]
+
+include::../UserGuide.adoc#check-in-room-code-checkin-code
+
+include::../UserGuide.adoc#checkout-room-code-checkout-code
+
+include::../UserGuide.adoc#reassigning-a-guest-to-another-room-code-reassign-code
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=checkin]
+include::../DeveloperGuide.adoc#room-check-in-checkout-feature
+
