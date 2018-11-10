@@ -207,7 +207,7 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the password file. "
                     + "Will be starting with a sample login account.");
             passwords = getSamplePasswordHashList();
-        }  catch (IOException e) {
+        } catch (IOException e) {
             logger.warning("Problem while reading from the file. "
                     + "Will be starting with a sample login account.");
             passwords = getSamplePasswordHashList();
