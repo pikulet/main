@@ -120,7 +120,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE
   start date from today onwards (i.e. not outdated).
 |===
 
- [TIP]
+[TIP]
 A guest can have any number of tags (including 0)
 
 ****
@@ -135,10 +135,11 @@ from/17/12/18 to/19/12/18`
 Add a guest "John Smith" to room 085 for the period of stay from 17/12/18 to
 19/12/18.
 
-Adding an active booking (i.e. booking starts today): you can preview the
-booking on the left room pane.
+Adding an active booking (i.e. booking starts today):
 
 image::AddCommand-userguide-active.png[width="800"]
+
+You can preview the booking on the left room pane. +
 
 Adding an inactive booking (i.e. booking is in the future): you can view the
 booking by selecting the relevant room, under "All other bookings".
@@ -325,7 +326,7 @@ Commands which require login: <<Adding a guest: `add`, `add`>>, <<Check-in room:
 
 Example: `login user/admin pw/passw0rd`
 
-Without login, Concierge cannot be cleared.
+Without login, Concierge(TM) cannot be cleared.
 
 image::LogInCommand-notsignedin.png[width="400"]
 
@@ -347,7 +348,7 @@ accounts, this sub-section will be useful.
 Step 1: Open the `passwords.json` file, which should be in the same
 folder as your Concierge.jar file. This file stores a list of hashed passwords.
 
-Step 2: Concierge uses SHA-256 password hashing. This hash can be
+Step 2: Concierge(TM) uses SHA-256 password hashing. This hash can be
 generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
 Enter your password in the field to generate the hash.
@@ -355,7 +356,7 @@ Enter your password in the field to generate the hash.
 image::LogInCommand-generatehash.png[width="900"]
 
 [NOTE]
- Concierge was designed to work with alphanumeric usernames and passwords in
+ Concierge(TM) was designed to work with alphanumeric usernames and passwords in
  mind. Do not enter symbols (!, @, %...).
 
 Step 3: Add the entry to the `passwords.json` file. Note that entries are
@@ -376,7 +377,7 @@ image::LogInCommand-newloginsuccess.png[width="400"]
  The parsing of the `passwords.json` file is delicate. Currently, if you
  enter a valid json file format but an incorrect password reference list
  format, you will end up with no default account. To resolve this, delete the
-  `passwords.json` file and re-run Concierge.
+  `passwords.json` file and re-run Concierge(TM).
 
 === Logout : `logout`
 
@@ -464,7 +465,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the concierge application to the state before the previous _undoable_ command was executed. +
+Restores the Concierge(TM) application to the state before the previous
+_undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
