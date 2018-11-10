@@ -133,14 +133,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateConciergeChanged();
     }
 
-    @Override
-    public void updateGuest(Guest target, Guest editedGuest) {
-        requireAllNonNull(target, editedGuest);
-
-        versionedConcierge.updateGuest(target, editedGuest);
-        indicateConciergeChanged();
-    }
-
     //=========== Displayed List Getter and Setter =============================================================
 
     @Override
