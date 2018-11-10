@@ -103,8 +103,7 @@ His/ her information will be stored under his/ her booking in the room.
  This command requires a login.
 
 Example: `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085
-from/17/12/18
-to/19/12/18`
+from/17/12/18 to/19/12/18`
 
 Add a guest "John Smith" to room 085 for the period of stay from 17/12/18 to
 19/12/18.
@@ -118,10 +117,6 @@ Adding an inactive booking (i.e. booking is in the future): you can view the
 booking by selecting the relevant room, under "All other bookings".
 
 image::AddCommand-userguide-notactive.png[width="800"]
-
-When a booking is added and it starts on a future date, then it can only be
-viewed by clicking on the relevant room. It can be found in the "All other
-bookings" section.
 // end::add[]
 
 === Adding a guest: `addx` [red]#Coming in v2.0#

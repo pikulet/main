@@ -17,8 +17,8 @@ is written in Java, and has about 10 kLoC.
 == Summary of contributions
 
 [TIP]
-Access my contributed code https://nus-cs2103-ay1819s1.github
- .io/cs2103-dashboard/#=undefined&search=pikulet[here].
+Access my contributed code
+https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet[here].
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
 These were mainly done in
@@ -54,8 +54,8 @@ parameters], namely the
  room and date details) in a hotel booking. Note that the actual `Room` and
  `Booking` packages were not done by me.
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[Modified the `clear`
-command] to maintain empty hotel rooms. Added function for GUI verification
-of rooms.
+command] to maintain empty hotel rooms.
+* Added function for verification of rooms in GUI tests.
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[Removed `address`] as
  a field in `Person`
 * Removed the https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[`edit`]
@@ -70,8 +70,8 @@ and https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[`delete`] commands
  the team
 * Community
 ** PRs reviewed (with non-trivial review comments):
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/71[#71],
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/157[#157],
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/71[#71],
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/156/[#156],
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/111[#111],
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/100/[#100],
