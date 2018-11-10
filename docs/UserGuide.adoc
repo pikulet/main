@@ -395,13 +395,13 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 
 ****
 * ITEM_NUMBER refers to the number in the menu given to each type of service offered by the hotel.
-* This could be room service, on-demand video streaming, bath supplies, mini bar, etc.
 * The cost can be specified as well, if the guest is to be charged an amount that is
   different from the cost in the menu. Note that the cost has to follow a strict format
   such as 100.00, i.e. with two decimal places. The dollar part of the cost should also
   not exceed `Integer.MAX_VALUE`.
 * Any expenses added with this command will be accounted for under the Expenses portion
-  of the respective rooms.
+  of the respective rooms. The Expenses of the room will also be displayed on the
+  right panel.
 * Only occupied rooms (i.e. rooms with checked-in guests) can have expenses charged to it.
 * It is possible to charge negative values as well. This can be used in cases such as when
   a guest uses a voucher, hence allowing the total expenses to be reduced. Negative
@@ -431,7 +431,7 @@ Adds an expenditure of the item *RS01* to the room's expenses.
 * `service r/096 no/RS03 c/12.34` +
 Adds an expenditure of the item *RS03* to the room's expenses and charge $12.34 for it.
 
-=== Display menu: `menu` [red]#Coming in v1.4#
+=== Display menu: `menu` [red]#Coming in v2.0#
 
 Displays the menu to help users in the use of the `service` command. +
 Format: `menu`
