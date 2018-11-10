@@ -328,7 +328,7 @@ Commands which require login:
 
 Example: `login user/damithz pw/forgotpassword`
 
-.Without login, Concierge cannot be cleared
+.Without login, Concierge(TM) cannot be cleared
 image::LogInCommand-notsignedin.png[width="600"]
 
 .Login with a valid account
@@ -339,25 +339,25 @@ image::LogInCommand-clearsuccess.png[width="600"]
 
 ==== Adding a new account
 
- Currently, Concierge does not have a feature for users to add an account via
+ Currently, Concierge(TM) does not have a feature for users to add an account via
 the app. The reason is because we only _read_ from the password file.
 Nevertheless, for the adventurous users who want to create their own
 accounts, this sub-section will be useful.
 
 * Step 1: Open the `passwords.json` file, which should be in the same
-folder as your Concierge.jar file.
+folder as your Concierge(TM).jar file.
 
 .The `passwords.json` file stores a list of hashed passwords
 image::LogInCommand-passwordsfile.png[width="900"]
 
-* Step 2: Concierge uses SHA-256 password hashing. This hash can be
+* Step 2: Concierge(TM) uses SHA-256 password hashing. This hash can be
 generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
 .Enter your password in the field to generate the hash
 image::LogInCommand-generatehash.png[width="900"]
 
 [NOTE]
- Concierge was designed to work with alphanumeric usernames and passwords in
+ Concierge(TM) was designed to work with alphanumeric usernames and passwords in
  mind. Do not enter symbols (!, @, %...)
 
 * Step 3: Add the entry to the `passwords.json` file. Note that entries are
@@ -367,7 +367,7 @@ Format: `"username" : "hashedPassword"`
 .A new account with username "newUser" and password "mySecurePassw0rd" has been added
 image::LogInCommand-addpasswordentry.png[width="900"]
 
-* Step 4: Close and reload the Concierge application, and your new account
+* Step 4: Close and reload the Concierge(TM) application, and your new account
 will be recognised.
 
 .User is now able to sign in with the new account
@@ -383,7 +383,7 @@ login>>) can no longer be
 executed.
 * The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
-** This achieves the same effect as closing and re-opening Concierge in the
+** This achieves the same effect as closing and re-opening Concierge(TM) in the
 midst of a sign-in session.
 
 Example: `logout`
@@ -572,6 +572,14 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Help* : `help`
 * *Exit* : `exit`
 
+== Features planned for v2.0
+* Commands
+** `addx` - Add a guest to the archived guest list without needing to add a booking
+** `maintenance` - Tag a room as under maintenance
+** `export` - Export the logs of the current session to a text-editable file
+
+* Other features
+** Displaying the checked-in guest's room's information when selecting the checked-in guests 
 
 == FAQ
 
