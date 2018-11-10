@@ -403,6 +403,10 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 * Any expenses added with this command will be accounted for under the Expenses portion
   of the respective rooms.
 * Only occupied rooms (i.e. rooms with checked-in guests) can have expenses charged to it.
+* It is possible to charge negative values as well. This can be used in cases such as when
+  a guest uses a voucher, hence allowing the total expenses to be reduced. Negative
+  values can also be charged if the user wants to remove or adjust an existing expense.
+  Two expense types, XX01 and XX02, were thus created for the purpose of adjustments.
 * The default `Menu` that comes with Concierge consists of the following items. Items
   may be modified, added, or removed through `concierge.xml`.
 ** *RS01* -- Room service: Red wine -- $50.00
@@ -413,6 +417,8 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *MB03* -- Minibar: Tiger beer -- $6.00
 ** *MB04* -- Minibar: Mineral water -- $3.00
 ** *SP01* -- Swimming pool: Entry -- $5.00
+** *XX01* -- Adjustment: Discount -- $0.00
+** "XX02* -- Adjustment: Typo -- $0.00
 ****
 
  This command requires a login.
