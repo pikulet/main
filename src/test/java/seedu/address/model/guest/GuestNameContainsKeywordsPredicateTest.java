@@ -11,12 +11,12 @@ import org.junit.Test;
 
 import seedu.address.testutil.GuestBuilder;
 
-public class NameContainsKeywordsPredicateTest {
+public class GuestNameContainsKeywordsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+        List<Name> firstPredicateKeywordList = Collections.singletonList(new Name("first"));
+        List<Name> secondPredicateKeywordList = Arrays.asList(new Name("first"), new Name("second"));
 
         GuestNameContainsKeywordsPredicate firstPredicate =
                 new GuestNameContainsKeywordsPredicate(firstPredicateKeywordList);
@@ -39,25 +39,31 @@ public class NameContainsKeywordsPredicateTest {
 
         // different guest -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
+
+        // Same hashcode
+        assertTrue(firstPredicate.hashCode() == firstPredicate.hashCode());
+
+        // Different hashcode
+        assertFalse(firstPredicate.hashCode() == secondPredicate.hashCode());
     }
 
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
         GuestNameContainsKeywordsPredicate predicate =
-                new GuestNameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+                new GuestNameContainsKeywordsPredicate(Collections.singletonList(new Name("Alice")));
         assertTrue(predicate.test(new GuestBuilder().withName("Alice Bob").build()));
 
         // Multiple keywords
-        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
+        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("Alice"), new Name("Bob")));
         assertTrue(predicate.test(new GuestBuilder().withName("Alice Bob").build()));
 
         // Only one matching keyword
-        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
+        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("Bob"), new Name("Carol")));
         assertTrue(predicate.test(new GuestBuilder().withName("Alice Carol").build()));
 
         // Mixed-case keywords
-        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
+        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("aLIce"), new Name("bOB")));
         assertTrue(predicate.test(new GuestBuilder().withName("Alice Bob").build()));
     }
 
@@ -68,11 +74,11 @@ public class NameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new GuestBuilder().withName("Alice").build()));
 
         // Non-matching keyword
-        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList("Carol"));
+        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("Carol")));
         assertFalse(predicate.test(new GuestBuilder().withName("Alice Bob").build()));
 
-        // Keywords match phone and email, but does not match name
-        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com"));
+        // Keywords match phone, but does not match name
+        predicate = new GuestNameContainsKeywordsPredicate(Arrays.asList(new Name("12345")));
         assertFalse(predicate.test(new GuestBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").build()));
     }

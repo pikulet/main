@@ -16,6 +16,7 @@ import seedu.address.commons.events.ui.RoomListChangedEvent;
 import seedu.address.commons.events.ui.RoomPanelSelectionChangedEvent;
 import seedu.address.model.room.Room;
 
+
 /**
  * Panel containing the list of one room.
  */
@@ -85,6 +86,13 @@ public class RoomDetailedPanel extends UiPart<Region> {
                 setRoomDetails(room);
             }
         }
+    }
+
+    /**
+     * Clears the items from this list view
+     */
+    public void clearSelection() {
+        roomDetailedView.getItems().clear();
     }
 
 }

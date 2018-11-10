@@ -24,8 +24,6 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CheckInCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditGuestDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -38,12 +36,12 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.guest.Guest;
 import seedu.address.model.guest.GuestNameContainsKeywordsPredicate;
+import seedu.address.model.guest.Name;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomNumber;
 import seedu.address.model.room.booking.BookingPeriod;
-import seedu.address.testutil.EditGuestDescriptorBuilder;
+import seedu.address.testutil.BookingUtil;
 import seedu.address.testutil.GuestBuilder;
-import seedu.address.testutil.GuestUtil;
 import seedu.address.testutil.TypicalExpenseTypes;
 import seedu.address.testutil.TypicalExpenses;
 import seedu.address.testutil.TypicalRoomNumbers;
@@ -61,7 +59,7 @@ public class ConciergeParserTest {
         BookingPeriod bookingPeriod = TODAY_NEXTWEEK;
 
         AddCommand command = (AddCommand) parser.parseCommand(
-                GuestUtil.getAddCommand(guest, roomNumber, bookingPeriod));
+                BookingUtil.getAddCommand(guest, roomNumber, bookingPeriod));
         assertEquals(new AddCommand(guest, roomNumber, bookingPeriod),
                 command);
     }
@@ -73,15 +71,6 @@ public class ConciergeParserTest {
     }
 
     @Test
-    public void parseCommand_edit() throws Exception {
-        Guest guest = new GuestBuilder().build();
-        EditGuestDescriptor descriptor = new EditGuestDescriptorBuilder(guest).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST.getOneBased() + " " + GuestUtil.getEditGuestDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST, descriptor), command);
-    }
-
-    @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
@@ -90,12 +79,13 @@ public class ConciergeParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        List<Name> nameList = Arrays.asList(new Name("foo"), new Name("bar"), new Name("baz"));
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + FLAG_GUEST.toString() + " " + PREFIX_NAME.toString()
                         + keywords.stream().collect(Collectors.joining(" ")));
         List<Predicate<Guest>> listPredicates = new LinkedList<>();
         List<Predicate<Room>> emptyRoomPredicates = new LinkedList<>();
-        listPredicates.add(new GuestNameContainsKeywordsPredicate(keywords));
+        listPredicates.add(new GuestNameContainsKeywordsPredicate(nameList));
         assertEquals(new FindCommand(FLAG_GUEST.toString(), listPredicates, emptyRoomPredicates), command);
     }
 
