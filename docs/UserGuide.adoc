@@ -109,13 +109,14 @@ to/19/12/18`
 Add a guest "John Smith" to room 085 for the period of stay from 17/12/18 to
 19/12/18.
 
-.Adding an active booking
+Adding an active booking (i.e. booking starts today): you can preview the
+booking on the left room pane.
+
 image::AddCommand-userguide-active.png[width="800"]
 
-When a booking is added and it starts today (i.e. it is active), then you can
- preview the booking on the left room pane.
+Adding an inactive booking (i.e. booking is in the future): you can view the
+booking by selecting the relevant room, under "All other bookings".
 
-.Adding an inactive booking (i.e. booking is in the future)
 image::AddCommand-userguide-notactive.png[width="800"]
 
 When a booking is added and it starts on a future date, then it can only be
@@ -304,14 +305,17 @@ Commands which require login:
 
 Example: `login user/damithz pw/forgotpassword`
 
-.Without login, Concierge cannot be cleared
-image::LogInCommand-notsignedin.png[width="600"]
+Without login, Concierge cannot be cleared.
 
-.Login with a valid account
-image::LogInCommand-loginsuccess.png[width="600"]
+image::LogInCommand-notsignedin.png[width="400"]
 
-.After sign in, `clear` command can now be executed
-image::LogInCommand-clearsuccess.png[width="600"]
+Login with a valid account, such as the default one provided.
+
+image::LogInCommand-loginsuccess.png[width="400"]
+
+After sign in, the `clear` command can now be executed.
+
+image::LogInCommand-clearsuccess.png[width="400"]
 
 ==== Adding a new account
 
@@ -355,8 +359,7 @@ Logs out of the Concierge application. +
 Format: `logout`
 
 * The special classes of commands (as documented in <<Login : `login`,
-login>>) can no longer be
-executed.
+login>>) can no longer be executed.
 * The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
 ** This achieves the same effect as closing and re-opening Concierge in the
