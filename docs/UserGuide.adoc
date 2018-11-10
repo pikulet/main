@@ -1,4 +1,4 @@
-= Concierge v1.4 - User Guide
+= Concierge(TM) v1.4 - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -14,20 +14,20 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-F11-2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Concierge(TM)`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
-Concierge is created for *hotel managers and receptionists* of small hotels looking for a simple application to *assist
-the user in hotel management*. More importantly, Concierge is *optimized for those who prefer to work with a Command Line Interface*
-(CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Concierge can get your
+Concierge(TM) is created for *hotel managers and receptionists* of small hotels looking for a simple application to *assist
+the user in hotel management*. More importantly, Concierge(TM) is *optimized for those who prefer to work with a Command Line Interface*
+(CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Concierge(TM) can get your
 hotel management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `concierge.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Concierge.
+.  Copy the file to the folder you want to use as the home folder for your Concierge(TM).
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,39 +37,62 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list -r`* : lists all rooms
-* **`checkin`**`r/085` : checks in the first active booking of room 085
+* **`checkin`**`r/001` : checks in the first booking of room 001
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
 [[Terminology]]
 == Terminology
+Some important things that you should know before using Concierge(TM)
 
 ====
-*Some important things that you need to know before using Concierge*
 
-** Room numbers must be a 3-digit number from 001 to 100. For example,
-* 001, 050, 074, 100 are valid
-* 000, 01, 99, 101 are invalid
+* Room numbers must be a *3-digit number from 001 to 100*. For example,
+** 001, 050, 074, 100 are valid
+** 000, 01, 99, 101 are invalid
 
-** A `Booking` is...
-* `Active` if its start and end date includes today's date, inclusively.
-* `Upcoming` if its start date is strictly after today's date.
-* `Expired` if its end date is strictly before today's date.
-* `Outdated` if its start date is strictly before today's date.
+* The format used for dates is *d/M/y*, whereby
+** `d` - Day can be 1 or 2 digits
+** `M` - Month can be 1 or 2 digits
+** `y` - Year can be 2 or 4 digits (if 2 digits, date is assumed to be in the current century)
 
-** Date format: `d/M/y`
-* `d` - Day can be 1 or 2 digits
-* `M` - Month can be 1 or 2 digits
-* `y` - Year can be 2 or 4 digits (if 2 digits, date is assumed to be in the current century)
+* A `Booking` ...
+** is *Active* if the period between its start and end date includes today's date, inclusively.
+** is *Upcoming* if its start date is strictly after today's date.
+** is *Expired* if its end date is strictly before today's date.
+** is *Outdated* if its start date is strictly before today's date.
+** is *Overlapping* with another booking if its start date is strictly before the other's end date AND the other's start date is strictly before its end date
+** can be uniquely identified by its start date.
 
-** There are 2 guest lists:
-* Checked-in guest list contains all the guests who are currently checked-in.
-* Archived guest list contains all guests who have ever stayed in the hotel before.
-* Since the possibility of returning guests exists, there is no need to synchronize the archived guest list.
-(i.e. it is standalone).
+* There are 2 guest lists:
+** *Checked-in guest list* contains all the guests who are currently checked-in.
+** *Archived guest list* contains all guests who have ever stayed in the hotel before.
+** Therefore, it is possible for a guest who has made a booking to be in
+*** neither lists - guest has yet to check-in and has never stayed in the hotel before
+*** checked-in guest list only - guest has checked-in and has never stayed in the hotel before
+*** archived guest list only - guest has checked-in and has stayed in the hotel before
+*** both lists - guest has checked-in and has stayed in the hotel before
 
 ====
+
+[cols="^.^1,<.^5a", frame=none]
+|===
+|image:icon-key.png[Login requirement,45,45,pdfwidth=50%,scaledwidth=50%]
+|This is a `login` icon. If a command requires login before execution, this icon will be located on its right in its title.
+|===
+
+[cols="^.^1,<.^5a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|This is a *important* icon. You should read the information in these before executing the command, as it will likely
+affect what you can or cannot do.
+|===
+
+[TIP]
+This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
+
+
 
 [[Features]]
 == Features
@@ -84,7 +107,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 // tag::add[]
-=== Adding a guest: `add`
+=== Adding a guest: `add` image:icon-key.png[width="32"]
 
 Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
@@ -92,15 +115,18 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE
 [TIP]
 A guest can have any number of tags (including 0)
 
-****
-* A valid booking cannot clash with an existing booking. It must also have a
-  start date from today onwards (not outdated).
-* A guest can make an unlimited number of bookings with the hotel.
+[cols="^.^1,<.^5a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|
+* A valid booking cannot overlap with an existing booking.
+* A valid booking must have a start date from today onwards. This means that outdated bookings cannot be added.
+* A guest can make an unlimited number of bookings with the hotel, as long as
+the booking is valid.
+* A guest can make a booking for however long he/ she wants.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
 His/ her information will be stored under his/ her booking in the room.
-****
-
- This command requires a login.
+|===
 
 Example: `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085
 from/17/12/18
@@ -118,57 +144,48 @@ When a booking is added and it starts today (i.e. it is active), then you can
 .Adding an inactive booking (i.e. booking is in the future)
 image::AddCommand-userguide-notactive.png[width="800"]
 
-When a booking is added and it starts on a future date, then it can only be
-viewed by clicking on the relevant room. It can be found in the "All other
-bookings" section.
-// end::add[]
+//tag::checkin[]
+=== Check-in room: `checkin` image:icon-key.png[width="32"]
 
-=== Adding a guest: `addx` [red]#Coming in v2.0#
+Checks in the first booking of a room. The guest who made the booking will be added to
+the checked-in guest list.
 
-Adds a guest to the guest list NOT for the purpose of assigning a room (perhaps add to archived guest list) +
-Format: `addx n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG]...`
+[cols="^.^1,<.^5a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Expired and upcoming bookings *cannot* be checked-in.
+|===
 
-Example:
-
-`addx n/guest p/98765432 e/johntan@hotmail.com t/bro`
-
-=== Check-in room: `checkin`
-
-Checks in the room's first active booking.
-[TIP]
-Expired and upcoming bookings *cannot* be checked-in.
-
-Upon checking in the room's first active booking, the guest who made the booking will be added to
-the checked-in guest list. +
 Format: `checkin r/ROOM_NUMBER`
 
- This command requires a login.
 
 Examples:
 
 * `checkin r/085` +
 Checks in room 085, marks room 085's current booking as checked-in, and adds the guest who made the booking
 to the checked-in guest list.
+//end::checkin[]
 
-=== Checkout room: `checkout`
+//tag::checkout[]
+=== Checkout room: `checkout` image:icon-key.png[width="32"]
 
-Checks out the room's first (i.e. earliest) booking, or its booking with the specified start date. +
-[TIP]
-A booking can be uniquely identified by its start date.
+Checks out the room's first (i.e. earliest) booking, or its booking with the specified start date.
+
 [TIP]
 `checkout` 's intended use is the deletion of any booking.
  This means that you can delete a non-checked-in booking using `checkout`.
 
-Depending on whether the guest still has other checked-in bookings, either of the following can occur: +
-
+[cols="^.^1,<.^5a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|
 * If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
 guest list and added to the archived guest list.
 * If the guest still has other checked-in bookings, he/she will *not* be removed from the checked-in guest list,
 but will be added to the archived guest list.
+|===
 
 Format: `checkout r/ROOM_NUMBER [from/START_DATE]`
-
- This command requires a login.
 
 Examples:
 
@@ -176,26 +193,33 @@ Examples:
 Checks out room 085 and the room's first booking.
 * `checkout r/085 from/01/11/18`
 Checks out the booking with start date 01/11/18 from room 085.
+//end::checkout[]
 
-=== Reassigning a guest to another room : `reassign`
+//tag::reassign[]
+=== Reassigning a guest to another room : `reassign` image:icon-key.png[width="32"]
 
-Reassigns a booking from one room to another.
+Reassigns a booking from one room to another. The room's expenses will also be ported over to the new room.
 
-** You can reassign a booking only if all of the following conditions are met:
+[cols="^.^1,<.^5a", frame=none]
+|===
+|image:icon-important.png[role="center"]
+| You can reassign a booking only if:
+
 * The new room is different from the original.
 * Neither the booking nor any of the new room's bookings are expired.
 * The booking does not overlap with any of the new room's bookings.
-* If the booking ends the same day the new room's first booking starts, the new room's first booking cannot be checked-in.
-* If the booking starts the same day the new room's first booking ends, the booking cannot be checked-in.
+* If the booking ends the same day that the new room's first booking starts, the new room's first booking cannot be checked-in.
+* If the booking starts the same day that the new room's first booking ends, the booking cannot be checked-in.
+|===
 
-Format: `reassign r/ROOM_NUMBER from/START_DATE`
 
- This command requires a login.
+Format: `reassign r/ROOM_NUMBER from/START_DATE nr/NEW_ROOM_NUMBER`
 
 Examples:
 
 * `reassign r/085 from/01/11/18 nr/086` +
 Reassigns the booking with start date 01/11/18 in room 085 to room 086.
+//end::reassign[]
 
 //tag::find[]
 === Locating guests and rooms : `find`
@@ -278,7 +302,7 @@ List all checked-in guests
 // tag::loginlogout[]
 === Login : `login`
 
-Logs in to the Concierge application. +
+Logs in to the Concierge(TM) application. +
 Format: `login user/USERNAME pw/PASSWORD`
 
 Note: The username and password are both case-sensitive.
@@ -286,7 +310,7 @@ Note: The username and password are both case-sensitive.
 ****
 * The default account can be accessed with `login user/admin pw/passw0rd`
 * <<Adding a new account, More users can be added>> at `passwords.json`.
-* [v2.0] You can create new accounts via the Concierge app.
+* [v2.0] You can create new accounts via the Concierge(TM) app.
 ****
 
 [TIP]
@@ -304,7 +328,7 @@ Commands which require login:
 
 Example: `login user/damithz pw/forgotpassword`
 
-.Without login, Concierge cannot be cleared
+.Without login, Concierge(TM) cannot be cleared
 image::LogInCommand-notsignedin.png[width="600"]
 
 .Login with a valid account
@@ -315,25 +339,25 @@ image::LogInCommand-clearsuccess.png[width="600"]
 
 ==== Adding a new account
 
- Currently, Concierge does not have a feature for users to add an account via
+ Currently, Concierge(TM) does not have a feature for users to add an account via
 the app. The reason is because we only _read_ from the password file.
 Nevertheless, for the adventurous users who want to create their own
 accounts, this sub-section will be useful.
 
 * Step 1: Open the `passwords.json` file, which should be in the same
-folder as your Concierge.jar file.
+folder as your Concierge(TM).jar file.
 
 .The `passwords.json` file stores a list of hashed passwords
 image::LogInCommand-passwordsfile.png[width="900"]
 
-* Step 2: Concierge uses SHA-256 password hashing. This hash can be
+* Step 2: Concierge(TM) uses SHA-256 password hashing. This hash can be
 generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
 .Enter your password in the field to generate the hash
 image::LogInCommand-generatehash.png[width="900"]
 
 [NOTE]
- Concierge was designed to work with alphanumeric usernames and passwords in
+ Concierge(TM) was designed to work with alphanumeric usernames and passwords in
  mind. Do not enter symbols (!, @, %...)
 
 * Step 3: Add the entry to the `passwords.json` file. Note that entries are
@@ -343,7 +367,7 @@ Format: `"username" : "hashedPassword"`
 .A new account with username "newUser" and password "mySecurePassw0rd" has been added
 image::LogInCommand-addpasswordentry.png[width="900"]
 
-* Step 4: Close and reload the Concierge application, and your new account
+* Step 4: Close and reload the Concierge(TM) application, and your new account
 will be recognised.
 
 .User is now able to sign in with the new account
@@ -351,7 +375,7 @@ image::LogInCommand-newloginsuccess.png[width="900"]
 
 === Logout : `logout`
 
-Logs out of the Concierge application. +
+Logs out of the Concierge(TM) application. +
 Format: `logout`
 
 * The special classes of commands (as documented in <<Login : `login`,
@@ -359,7 +383,7 @@ login>>) can no longer be
 executed.
 * The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
-** This achieves the same effect as closing and re-opening Concierge in the
+** This achieves the same effect as closing and re-opening Concierge(TM) in the
 midst of a sign-in session.
 
 Example: `logout`
@@ -388,7 +412,7 @@ Selects the 2nd guest in the displayed list.
 `select 100` +
 Selects the 100th room in the displayed list.
 
-=== Provide Room Service: `service`
+=== Provide Room Service: `service` image:icon-key.png[width="32"]
 
 Charges a room service to a room  +
 Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
@@ -403,7 +427,7 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 * Any expenses added with this command will be accounted for under the Expenses portion
   of the respective rooms.
 * Only occupied rooms (i.e. rooms with checked-in guests) can have expenses charged to it.
-* The default `Menu` that comes with Concierge consists of the following items. Items
+* The default `Menu` that comes with Concierge(TM) consists of the following items. Items
   may be modified, added, or removed through `concierge.xml`.
 ** *RS01* -- Room service: Red wine -- $50.00
 ** *RS02* -- Room service: Beef steak -- $70.00
@@ -415,8 +439,6 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *SP01* -- Swimming pool: Entry -- $5.00
 ****
 
- This command requires a login.
-
 Examples:
 
 * `service r/085 no/RS01` +
@@ -424,29 +446,6 @@ Adds an expenditure of the item *RS01* to the room's expenses.
 
 * `service r/096 no/RS03 c/12.34` +
 Adds an expenditure of the item *RS03* to the room's expenses and charge $12.34 for it.
-
-=== Display menu: `menu` [red]#Coming in v1.4#
-
-Displays the menu to help users in the use of the `service` command. +
-Format: `menu`
-
-=== Room maintenance: `maintenance` [red]#Coming in v2.0#
-
-Sets the room to be under maintenance. +
-Format: `maintenance ROOM_NUMBER TRUE/FALSE`
-
-****
-* A room under maintenance does not affect any of the other system operations.
-* The receptionist should handle this situation on the ground using his judgment, be it to swap rooms for the guest
-* or ask the guest to wait until the maintenance is over (e.g. leave luggage at hotel and talk a walk outside).
-****
-
-Examples:
-
-* `maintenance 085 TRUE` +
-Sets room 085 to be under maintenance.
-* `maintenance 085 FALSE` +
-Lifts the maintenance status on room 085.
 
 === Listing entered commands : `history`
 
@@ -466,7 +465,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify Concierge's content (`add`, `checkin`, `checkout` and `clear`).
+Undoable commands: those commands that modify Concierge(TM)'s content (`add`, `checkin`, `checkout` and `clear`).
 ====
 
 Examples:
@@ -509,12 +508,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 // tag::clear[]
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` image:icon-key.png[width="32"]
 
 Clears all entries from the application. +
 Format: `clear`
-
- This command requires a login.
 
 The rooms are maintained - only all their current and future bookings are
 cleared. I.e. all maintenance requests and faults will still be recorded.
@@ -547,20 +544,8 @@ Format: `exit`
 
 === Saving the data
 
-Concierge data are saved in the hard disk automatically after any command that changes the data. +
+Concierge(TM) data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files [red]#Coming in v2.0#
-
-Encryption of Guests' personal data is still in the works. If you are
-interested in contributing, please refer to the Developer Guide.
-// end::dataencryption[]
-
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Concierge folder.
 
 == Command Summary
 
@@ -568,13 +553,13 @@ interested in contributing, please refer to the Developer Guide.
 t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Checkin* : `checkin r/ROOM_NUMBER`
 * *Checkout* : `checkout r/ROOM_NUMBER [from/START_DATE]`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` [red]#Coming in v2.0#
+* *Reassign* : `reassign r/ROOM_NUMBER from/START_DATE nr/NEW_ROOM_NUMBER`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]`
 * *List* : `list`
 * *Login* : `login user/USERNAME pw/PASSWORD`
 * *Logout* : `logout`
 * *Select* : `select INDEX`
 * *Room Service* : `service`
-* *Mark Room as faulty* : `fault` [red]#Coming in v2.0#
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
@@ -582,3 +567,27 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Export log* : `export` [red]#Coming in v2.0#
 * *Help* : `help`
 * *Exit* : `exit`
+
+== Features planned for v2.0
+* Commands
+** `addx` - Add a guest to the archived guest list without needing to add a booking
+** `maintenance` - Tag a room as under maintenance
+** `export` - Export the logs of the current session to a text-editable file
+
+* Other features
+** Displaying the checked-in guest's room's information when selecting the checked-in guests
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Concierge(TM) folder.
+
+*Q*: What platform is this application available on? +
+*A*: This application is cross-platform, and can be used on both Windows and Mac OS.
+
+*Q*: Where can I go to purchase this application? +
+*A*: This application is 100% free-of-charge, and is open-source for any and all to contribute to make it better.
+
+*Q*: I've found a bug in the application! How can I report it? +
+*A*: Please open an issue in the issue section and we will see to it as soon as possible. Bug reports only serve to
+make our application better, so do not hesitate to report them to us!
