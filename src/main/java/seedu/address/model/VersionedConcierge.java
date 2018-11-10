@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class VersionedConcierge extends Concierge {
 
-    private List<ReadOnlyConcierge> conciergeStateList;
+    private final List<ReadOnlyConcierge> conciergeStateList;
     private int currentStatePointer;
 
     public VersionedConcierge(ReadOnlyConcierge initialState) {
