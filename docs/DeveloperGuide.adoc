@@ -682,18 +682,10 @@ The `login` feature allows hotel managers to tag every command entered with a
 
 ==== Current Implementation
 
-Currently, the `login` is implemented as a dynamic log-in, so users are not
+Currently, `login` is implemented as a dynamic feature, so users are not
 prompted to sign in upon starting Concierge. Instead, they only have to sign
 in when implementing commands which would mutate the data, such as `add`,
 `checkin`, `checkout`, `reassign`, `service` and `clear`.
-
-===== Storage
-
-The `passwords.json` file is read when Concierge is opened (i.e. in
-`MainApp#init`), and is never written to again. This function is managed by
-the `JsonPasswordsStorage` class, which is very similar to the
-`JsonUserPrefsStorage` class. Intuitively, the usernames and passwords are
-stored as key-value pairs for quick look-up.
 
 ===== Logic
 
@@ -742,6 +734,14 @@ as quickly as possible.
 
 Shown here is the sequence diagram for executing a `logout` command.
 
+===== Storage
+
+The `passwords.json` file is read when Concierge is opened (i.e. in
+`MainApp#init`), and is never written to again. This function is managed by
+the `JsonPasswordsStorage` class, which is very similar to the
+`JsonUserPrefsStorage` class. Intuitively, the usernames and passwords are
+stored as key-value pairs for quick look-up.
+
 ===== Check for sign-in requirement of commands
 
 `LogicManager` does the checks for whether a command requires a sign in, and
@@ -752,7 +752,7 @@ false by default. This means that to make new command require signing-in, one
  only has to overwrite this method.
 
 More information on the design consideration for this aspect can be found
-<<Aspect: Check for sign-in requirement of commands, here>>
+<<Aspect: Check for sign-in requirement of commands, here>>.
 
 ==== Design Considerations
 
@@ -780,11 +780,10 @@ additional checks on sign-in requirement.
 ===== Aspect: Check for sign-in requirement of commands
 
 Given that sign-in is only required for some commands, the priorities in
-designing this aspect are:
-
-* Able to easily mandate login for commands already implemented
-* Able to easily mandate login for future commands
-* Able to easily disable compulsory login for commands
+designing this aspect are the ability to easily:
+** Mandate login for commands already implemented
+** Mandate login for future commands
+** Disable compulsory login for commands
 
 * **Alternative 1 (current choice):** Do the check in `LogInManager#execute`
 ** Pros: It ensures that commands are checked before any execution. When
@@ -801,9 +800,9 @@ reminds the manager to verify the booking.
  implementing a method `checkSignIn(Model)`, commands which require sign-ins
  can call this method in their respective `execute` methods.
 ** Cons:
-*** Difficult to check which methods require sign-in. Every method, instead
- of implementing a boolean check on `requiresSignIn()`, indicates if it
- requires sign-in using a call to a method in the superclass.
+*** It is difficult to check which methods require sign-in. Instead of
+implementing a boolean check on `requiresSignIn()`, every method now makes a
+call to a method (e.g. `performLoginChecks()`) in the superclass.
 **** The proposed solution to this would be to implement the `Command#execute`
  method to do the current check that is in the `LogicManager`. If the command
   requires a sign-in, check the sign in. Every command must call `super()` in
@@ -819,9 +818,9 @@ Unlike the Concierge data, this file is no longer referred to when Concierge
 is in use.
 
 * **Alternative 1 (current choice):** Store passwords in JSON file
-** Pros:
-*** Able to make use of existing `JsonUtil` methods used by the
-`UserPrefs` and `Config` classes.
+** Pros: JSON is very easy to work with.
+*** Able to utilise existing `JsonUtil` methods used by the `UserPrefs` and
+`Config` classes.
 *** Easily parse data into key-value pairs. JSON files already represent data
  in key-value pairs, which semantically matches our needs.
 ** Cons: `JsonUtil` file is not completely suitable for a data type that has
@@ -831,12 +830,12 @@ potentially an unlimited number of entries, since this utility serialises the
 Concierge data.
 ** Pros: Centralises data storage in Concierge. There is only one single
 source of truth for all data-related concerns.
-** Cons:
-***User is overloaded with information in the XMl file. Concierge does
+** Cons: The XML file is too complicated for the needs of password storage.
+*** User is overloaded with information in the XMl file. Concierge does
 not need to write the the passwords file when in use. However, `concierge
 .xml` is constantly being written to, which is an unnecessary feature for the
  passwords component.
-***Furthermore, creating a new entry is difficult since once has to add all
+*** Furthermore, creating a new entry is difficult since once has to add all
 the layers of XML tags involved. Nevertheless, users are not expected to be
 adding new accounts on a regular basis.
 
