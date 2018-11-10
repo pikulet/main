@@ -350,7 +350,7 @@ its parameters.
 An Activity Diagram for the execution of `execute(Model model, CommandHistory
  history)` in the `add` command is shown below.
 
-image::AddCommand-activity-diagram.png[width="800"]
+image::AddCommand-activity-diagram.png[width="700"]
 
 ==== Design Considerations
 ===== Aspect: How to recognise a `BookingPeriod` from the user input?
