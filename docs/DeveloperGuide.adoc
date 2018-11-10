@@ -329,8 +329,7 @@ and assign him a room.
 We currently accept a `Guest`, `RoomNumber` and `BookingPeriod`
 as parameters for the `AddCommand` constructor.
 
-An example of its usage:
-* `add n/Madith p/83141592 e/madith@themyth.com a/Recluse Street -r 041 from/
+An example of its usage: `add n/Madith p/83141592 e/madith@themyth.com a/Recluse Street -r 041 from/
 29/10/2018 to/ 03/11/2018`
 
 The parsing of the `AddCommand` is very similar to what was already
@@ -346,6 +345,8 @@ previously the case in AddressBook4.
 * A new `Booking` object is created with the `Guest` and `BookingPeriod` as
 its parameters.
 * This `Booking` is then added to the `Room` with the `RoomNumber` specified.
+** Every `Room` maintains a `SortedSet<Booking>` which is encapsulated in the
+ `Bookings` (plural) class.
 
 An Activity Diagram for the execution of `execute(Model model, CommandHistory
  history)` in the `add` command is shown below.
@@ -651,23 +652,74 @@ possible to modify the default information through editing the XML file.
 // tag::loginlogout[]
 === Login and Logout
 
-The `login` feature...
+The `login` feature allows hotel managers to tag every command entered with a
+ specific user. That means creating a blame history to help trace rogue
+ commands like employees clearing the entire data set. Managers can also
+ control which receptionists have full access to the Concierge system.
 
 ==== Current Implementation
 
-`LogicManager` checks if commands require sign-in.
+Currently, the `login` is implemented as a dynamic log-in, so users are not
+prompted to sign in upon starting Concierge. Instead, they only have to sign
+in when implementing commands which would mutate the data, such as `add`,
+`checkin`, `checkout`, `reassign`, `service` and `clear`.
+
+===== Storage
+
+The `passwords.json` file is read when Concierge is opened (i.e. in
+`MainApp#init`), and is never written to again. This function is managed by
+the `JsonPasswordsStorage` class, which is very similar to the
+`JsonUserPrefsStorage` class. Intuitively, the usernames and passwords are
+stored as key-value pairs for quick look-up.
+
+===== Logic
+
+Given the nature of the `login` command being dynamic (can be entered at any
+point in time, between any command), it is then natural to implement in like
+a normal command by extending the abstract `Command` class. Similarly, the
+`logout` command is executed like a normal command.
+
+===== Model
+
+The model handles the signing in, using its attribute `LogInManager`. The
+Class Diagram of the `LogInManager` module is shown below.
+
+image::LogInCommand-LogInManager-classdiagram.png[width=700]
+
+`LogInManager` uses an optional `username` to keep track of whether
+the user is currently signed in. The `passwordRef` provides an
+immutable key-value lookup for usernames and passwords. +
+`LogInManager` implements the following operations.
+
+* `LogInManager#isSignedIn()` - checks if the user is currently signed in.
+* `LogInManager#signIn(String, String)` - attempts to sign in with the given
+username and hashed password. This is handled by the `PasswordHashList`.
+* `LogInManager#signOut()` - signs out Concierge.
+
+Additionally, a new method `resetUndoRedoHistory` was added to the
+`VersionedConcierge`. This is used to clear the command history upon a
+`logout` command, so users cannot undo important commands or redo accidental
+commands after signing out.
+
+The `resetUndoRedoHistory` first sets the `currentStatePointer` to 0, then
+commits the current `VersionedConcierge`.
+
+More details on the `VersionedConcierge` can be
+understood from the <<Undo/Redo feature, undo and redo documentation>>.
+
+
+
+Shown here is the sequence diagram for executing a `login` command.
 
 `LogInCommand`: hashing of password is immediate so sensitive data is handled
 as quickly as possible.
 
-`LogInManager` module manages sign-in module.
-#isSignedIn
-#signIn
-#signOut
-#resetUndoRedoHistory
 
-`JsonPasswordsStorage` module manages reading of passwords (only at
-initialisation of Main App).
+
+
+===== Checking if commands require sign-in
+
+`LogicManager` checks if commands require sign-in.
 
 ==== Design Considerations
 ===== Aspect: Accessing features of Concierge with/ without login
