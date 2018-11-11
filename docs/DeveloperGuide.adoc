@@ -728,8 +728,9 @@ false by default. This means that to make new command require signing-in, one
 ===== Aspect: Accessing features of Concierge with/ without login
 
 * **Alternative 1 (current choice):** Login is needed only for some features
-** Pros: Manager can implement some level of access control within Concierge. 
-Some of the more commonly used Concierge features (`list`, `find`) are read-only features.
+** Pros: Manager can implement some level of access control within Concierge.
+ Some of the more commonly used Concierge features (`list`, `find`) are
+ read-only features.
  This is quicker than mandating a sign-in at the start and creating different user views
  based on the account privilege (admin vs normal).
 ** Cons: Not very intuitive to users. They have to enter commands before being
