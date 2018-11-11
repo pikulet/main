@@ -621,7 +621,7 @@ image::CheckinCommandSequenceDiagram.png[width="1280"]
 In Concierge, users will be given the feature of tracking the expenditure of each individual
 guest, in order to facilitate checkout charges. Hence, the three classes, `Expenses`, `Expense`
 and `ExpenseType` have been created for this purpose. In addition, the hotel also has a
-`menu` of goods and services available.
+`Menu` of goods and services available.
 
 ==== Current Implementation
 `ExpenseType` objects are essentially immutable objects that represent a single item or service
@@ -631,8 +631,7 @@ charge a customer by simply providing the menu number of the item and the cost a
 of the item will be able to be referenced. `ExpenseType` information is stored in a `Menu`
 object, which is then stored on the hard disk, since users should have the ability to modify
 the menu manually. The `Menu` object is internally represented with a `HashMap<String, ExpenseType>`,
-with the menu number as keys and the `ExpenseType` objects as values. This allows for the
-serialisation of the `Menu` into XML, since `HashMap` is supported by JAXB.
+with the menu number as keys and the `ExpenseType` objects as values.
 
 * **Alternative 1: Use a List<ExpenseType> to store the menu.** While there may be negligible
 differences for a small menu, searching for an `ExpenseType` object still takes linear time
@@ -680,6 +679,78 @@ the usage of vouchers or certain credit cards. Thus, ExpenseType does not
 need to be modified by users in the application. Nonetheless, it is still
 possible to modify the default information through editing the XML file.
 // end::expenses[]
+
+// tag::money[]
+=== Money
+
+==== Current Implementation
+`Money` is a class used to store monetary values. This class was created to
+enforce the restriction that monetary values should always have at most two
+decimal places, which could be inconvenient if using Java data types such
+as `double` or `BigDecimal`. `Money` objects can be created by the user
+through the `service` command (details in the next section).
+
+The `Money` class contains two main attributes, `dollars` and `cents`, both
+of which are `int`s, since it is unlikely that the cost of any one item will
+exceed `Integer.MAX_VALUE` dollars.
+
+The main method of creating `Money` objects is through the `service` command,
+with the `Money` class parsing a string to convert into a `Money` object.
+The method `isValidMoneyFormat()` handles the checking of the string format,
+and the list of requirements are as follows:
+
+* Can be negative.
+* Format of the string should be {1 to 10 digits}.{2 digits}, e.g. `12.34`.
+  `123`, `.50`, `12.9`, `12345612345.00` are not allowed.
+* The `dollars` section can be 0 but cannot have leading 0, i.e. 0.12 is allowed
+  but 01.23 is not allowed.
+* The `dollars` section should not exceed `Integer.MAX_VALUE`.
+* Cannot have characters that are not digits or `.` or `-`.
+
+==== Design Considerations
+
+===== Aspect: Immutability of Money
+`Money` does not have to be mutable. Adjustment of `Expenses` are to be done
+through the `service` command. `Money` is simply a data type, much like
+`Double` and `Integer`.
+// end::money[]
+
+// tag::service[]
+=== ServiceCommand
+
+==== Current Implementation
+The `service` command is used for charging expenses to rooms. This
+functionality is the main reason that the classes Expenses, Expense,
+ExpenseType, Menu and Money were implemented. The format for the `service`
+command is as such:
+
+`service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
+
+The cost is made optional for the convenience of the user. We expect that
+most of the time, the cost of items are more or less fixed. Instead of
+having the user type in the same cost all of the time, the field is made
+optional. This functionality is enabled by the use of `ExpenseType` and
+`Menu`, which stores the default cost of items. If the cost is not specified,
+the default cost of the item will be used.
+
+As in AddressBook4, the ConciergeParser (aka AddressBookParser) will parse
+the user input and create a `ServiceCommandParser` object to parse a `service`
+command. The `ServiceCommandParser` is responsible for checking that the
+`RoomNumber` and cost (a `Money` object) are in the correct format. Note that
+the item number is not checked here, since the `Menu` object of `Concierge`
+has to be available in order to check that the given item number is a valid
+item. Hence, any string will be accepted by the parser. Since `ServiceCommand`
+has access to the `Model` and thus the `Menu`, the checking is given to
+`ServiceCommand` instead. A successful parse will then return a
+`ServiceCommand(RoomNumber roomNumber, String itemNumber, Optional<Money> itemCost)`
+object.
+
+The following flowchart describes what happens when the `execute` method
+of a `ServiceCommand` is called.
+
+image::ServiceCommand-flowchart.png[width="400"]
+
+// end::service[]
 
 // tag::loginlogout[]
 === Login and Logout
