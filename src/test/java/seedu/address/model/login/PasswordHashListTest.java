@@ -3,11 +3,12 @@ package seedu.address.model.login;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.HASHED_PASSWORD_1;
+import static seedu.address.logic.commands.CommandTestUtil.HASHED_PASSWORD_2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_2;
-import static seedu.address.logic.parser.PasswordHashUtil.hash;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.Test;
@@ -34,11 +35,11 @@ public class PasswordHashListTest {
 
         // correct username, first user
         String retrievedPassword = passwordRef.getExpectedPassword(VALID_USERNAME_1).get();
-        assertEquals(retrievedPassword, hash(VALID_PASSWORD_1));
+        assertEquals(retrievedPassword, HASHED_PASSWORD_1);
 
         // correct username, second user
         retrievedPassword = passwordRef.getExpectedPassword(VALID_USERNAME_2).get();
-        assertEquals(retrievedPassword, hash(VALID_PASSWORD_2));
+        assertEquals(retrievedPassword, HASHED_PASSWORD_2);
     }
 
 
@@ -53,7 +54,7 @@ public class PasswordHashListTest {
         assertFalse(passwordRef.getExpectedPassword("user0").isPresent());
 
         // incorrect username case -> returns empty optional
-        assertFalse(passwordRef.getExpectedPassword("USER1").isPresent());
+        assertFalse(passwordRef.getExpectedPassword(VALID_USERNAME_1.toUpperCase()).isPresent());
 
         // whitespace in preamble of username -> returns empty optional
         assertFalse(passwordRef.getExpectedPassword(" " + VALID_USERNAME_1).isPresent());
@@ -71,8 +72,8 @@ public class PasswordHashListTest {
 
         // same values -> returns true
         assertTrue(passwordRef.equals(new PasswordHashList()
-                .addEntry("user1", "passw0rd")
-                .addEntry("USER2", "passw1rd")));
+                .addEntry(VALID_USERNAME_1, VALID_PASSWORD_1)
+                .addEntry(VALID_USERNAME_2, VALID_PASSWORD_2)));
 
         // different json nodes -> returns false
         assertFalse(passwordRef.equals(new PasswordHashList()));
