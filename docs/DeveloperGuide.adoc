@@ -340,6 +340,10 @@ implemented in AddressBook4. More parameters were added, namely the
 `RoomNumber` and `BookingPeriod`. These are parsed to create the respective
 objects - `Guest`, `RoomNumber` and `BookingPeriod`.
 
+[NOTE]
+In v2.0, users can enter a start date and duration to specify their booking
+period.
+
 As in AddressBook4, the `Logic` component parses the `AddCommand`, and the
 `Model` handles its execution.
 
@@ -354,7 +358,7 @@ its parameters.
 An Activity Diagram for the execution of `execute(Model model, CommandHistory
  history)` in the `add` command is shown below.
 
-image::AddCommand-activity-diagram.png[width="600"]
+image::AddCommand-activity-diagram.png[width="500"]
 
 [NOTE]
 The `AddCommandParser` already checks that `ROOM_NUMBER` is a valid
@@ -363,25 +367,6 @@ there are 100 rooms. The `RoomNotFoundException` is not unexpected to occur
 under any circumstances of user input, but is left there as a defensive measure.
 
 ==== Design Considerations
-===== Aspect: Recognising a `BookingPeriod` from the user input
-
-The relationship we defined between a `Room` and `Booking` is that a `Room`
-has a `Booking`. The `Booking` then comprises a `Guest` and `BookingPeriod`
-field. However, it is troublesome to enter a `BookingPeriod` manually, as it entails
- entering two dates in the DD/MM/YYYY format.
-
-* **Alternative 1 (current choice):** Enter the start and end date of
-`BookingPeriod`
-** Pros: Very easy to parse. The checks for dates all occur at the
-`BookingPeriod` class. There is no conversion needed to track the exact date,
- which is useful to check for the booking status of rooms on a particular date.
-** Cons: Not user-friendly. Requires user to enter two dates.
-
-* **Alternative 2 (coming in v1.5):** Enter the start date and a duration
-** Pros: Very intuitive and user-friendly.
-** Cons: The duration has to be parsed and converted to an end date. The
-current implementation of `BookingPeriod` does not support this method.
-
 ===== Aspect: Check for outdated bookings
 
 Outdated bookings are those which have a start date before today. Concierge
@@ -399,9 +384,9 @@ being added from elsewhere.
 ** Pros: Centralises exceptions thrown related to `Booking` s in the
 `Bookings` class. Increases the cohesiveness of this class.
 ** Cons: All the existing tests and sample data calling the `addBooking`
-method with outdated bookings have to be changed.
-*** It also becomes difficult to do unit tests on checking in bookings which
-are outdated but not expired, since these bookings can no longer be added.
+method with outdated bookings have to be changed. It also becomes difficult
+to do unit tests on checking in bookings which are outdated but not expired,
+since these bookings can no longer be added to the model.
 
 ===== Aspect: Reduce coupling between `Room` and `Guest`
 
@@ -415,27 +400,22 @@ Our team decided to record `Guest` in `Room` instead of recording `Room` in
 `Guest`. The difference between these two selections lies in the time needed for different operations.
 
 * **Alternative 1 (current choice):** Add `Guest` as a field in `Room`
-** Pros: An efficient way for managing bookings. All the `Booking` s tied to a
-particular `Room` can be put together, allowing the Receptionist to determine
- if a `Room` can be booked in `O(m)` time, where `m` is the number of
- `Booking` s in a room. In Concierge, a `Room` is unlikely to have a large number
- of advanced bookings made.
+** Pros: An efficient way for managing bookings. Receptionist can quickly
+determine if the `Room` is free to book. Besides, `Room` s are not expected
+to have a large number of advanced bookings made.
 ** Cons: Difficult to find the `Room` given the `Guest`. When a `Guest` has made
-an advanced booking and wishes to cancel it, we have to search through all the `Room` s.
-However, this is essentially an `O(1)` time operation since the number of `Room` s is constant.
- *** In fact, for most uses of Concierge, we expect `Guest` s to be aware of
- their `Room` s. When the `Guest` calls for room service, we can tag the service
- to the `Room`.
+an advanced booking and wishes to cancel it, we have to search through all
+the `Room` s. Nevertheless, for most uses of Concierge we expect `Guest` s to
+ be aware of their `Room` s.
 
 * **Alternative 2:** Add `Room` as a field in `Guest`
-** Pros: Very customer-centric design. Given the guest, allows the receptionist
- to find the `Room` or `Booking` details of a `Guest` in `O(1)` time.
+** Pros: Very customer-centric design. Centralises all the information about
+the `Guest`, include `Booking` s made and `Expense` s incurred.
 ** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
 `Booking` information is now scattered across individual `Guest` s.
-*** As of v1.4, our implementation includes the list of rooms, and two auxiliary lists:
-checked-in guests and archived guests. These lists help the receptionist to look up the personal
-particulars of the `Guest` quickly. Because `Booking` information is not needed when a receptionist
-intends to look up guest particulars, these lists do not retain any history on the bookings.
+*** [v1.4] On top of the list of rooms, we maintain a separate list of
+checked-in guests. This list does not retain any `Booking` information, as it
+ is meant to help the receptionist quickly look up the `Guest` 's particulars.
 // end::add[]
 
 // tag::list[]
