@@ -685,6 +685,31 @@ account for cases such as the guest having a personalised discount due to
 the usage of vouchers or certain credit cards. Thus, ExpenseType does not
 need to be modified by users in the application. Nonetheless, it is still
 possible to modify the default information through editing the XML file.
+
+===== Aspect: Assignment of the Expenses object
+* **Alternative 1 (current choice):** Assign `expenses` to each `Room`.
+** Pros: Suitable for current architecture. Each `Booking` only has one `Guest`,
+   and each `Guest` will only stay in one `Room`. Makes more sense to assign to
+   `Room` such that it represents the expenditure of the entire `Room` and not
+   one `Guest`, since the occupants of the `Room` can only contribute to one single
+   `Expenses` object. `Room` is a more natural choice over `Booking` as `Booking`
+   is meant to encapsulate booking information such as timing and `Room`.
+   Not much difference in implementation no matter which one of the three classes
+   it is assigned to.
+** Cons: May be confusing to implement. Need to ensure that there are no expenses
+   for rooms that have no guests.
+* **Alternative 2:** Assign `expenses` to each `Guest`.
+** Pros: Can track `expenses` of each `Guest`, can find out who are the heavy
+   spenders. Can use this information for promotional activities such as vouchers
+   or membership.
+** Cons: Not all guests that will stay in the hotel are registered in the guest
+   list, since each `Booking` only requires the name of one `Guest`, regardless of
+   the `Room`. Will require a major refactoring of the `add` command.
+* **Alternative 3:** Assign `expenses` to each `Booking`.
+** Pros: Can allow tracking of the booker's expenditure, less confusing to implement
+   than `Room`, can allow for expenses to be recorded before the guest checks in.
+** Cons: May violate SRP, since `Booking` should ideally only deal with booking
+   information.
 // end::expenses[]
 
 // tag::money[]
@@ -761,6 +786,22 @@ The `model.addExpense()` method call was not illustrated in detail in the flowch
 thus it is illustrated in this sequence diagram.
 
 image::AddExpenseSequenceDiagram.png[width="900"]
+
+==== Design Considerations
+
+===== Aspect: Deleting and editing Expenses
+* **Alternative 1 (current choice):** Use `service` to edit `Expense`s.
+** Pros: Simply keying in `Expense`s with negative values is easy to implement,
+   and does not stray far from real-life implementations, e.g. receipts often
+   contain cost subtractions for discounts and promotions.
+** Cons: May not be elegant, `Expenses` may become cluttered if there's too many
+   corrections.
+* **Alternative 2:** Create new commands to edit and delete `Expense`s.
+** Pros: The `Expenses` will contain all the `Expense`s at their correct prices.
+** Cons: More effort to implement, difficult to implement, e.g. may need to implement
+   listing out all `Expense`s of a `Room` with the `list` command in order to select
+   the `Expense` to delete or edit. Information on discounts and corrections will
+   also be lost.
 
 // end::service[]
 
