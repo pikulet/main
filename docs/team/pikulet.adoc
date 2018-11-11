@@ -55,7 +55,7 @@ https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[#233] and delete
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[#139] commands
 * Modified the `add` command to take in room and date details
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[#104]. Room
-and Booking page not done by me
+and Booking package by others.
 * Modified the `clear` command to maintain empty hotel rooms
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[#162]
 * Added function for GUI verification of rooms
