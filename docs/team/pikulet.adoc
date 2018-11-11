@@ -18,7 +18,7 @@ using a CLI, and it has a GUI created with JavaFX. It is written in Java, and
 
 [TIP]
 Access my contributed code here: +
-https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet.
+https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
 
@@ -30,9 +30,11 @@ still be accessed without signing in. By combining this with the ability
  to export the command history, the auditing process for rogue commands is
  expedited.
 * Highlights:
-** The login/logout feature is dynamic and multiple logins/ logouts can
-happen in the same session. This means that there is a very close integration
- with the existing commands to verify whether these commands are restricted.
+** The login/logout feature is dynamic - the users are not forced to sign in
+upon starting Concierge, and users can logout and log back in within the same
+ session. This means that there is a very close integration with the existing
+  commands to verify the sign-in status and whether the commands are
+  restricted.
 ** This feature is complete - I worked with the different architectural
 components of Concierge, from command parsing (`Logic`) to login verification
  (`Model`) and even password storage (`Storage`).
@@ -51,11 +53,12 @@ delete [#139] commands
 and Booking page not done by me
 * Modified the `clear` command to maintain empty hotel rooms [#162]
 * Added function for GUI verification of rooms [#162]
+* Added most of the Appendices in the Developer Guide [#42]
 
 *Project Management*:
 
 * Managed the team's issue tracker
-* Encouraged team to use clean PRs and TODO
+* Encouraged team to use clean PRs, TODO and Codacy
 * Set up RepoSense for the team [#159]
 * Community
 ** PRs reviewed (with non-trivial review comments): #157, #71, #156, #111,
