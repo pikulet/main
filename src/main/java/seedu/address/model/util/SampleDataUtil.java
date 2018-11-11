@@ -64,7 +64,7 @@ public class SampleDataUtil {
             new ExpenseType("MB03", "Minibar: Tiger beer", new Money(6, 0)),
             new ExpenseType("MB04", "Minibar: Mineral water", new Money(3, 0)),
             new ExpenseType("XX01", "Adjustment: Discount", new Money(0, 0)),
-            new ExpenseType("XX02", "Adjustment: Typo", new Money(0,0))
+            new ExpenseType("XX02", "Adjustment: Typo", new Money(0, 0))
         };
     }
 
