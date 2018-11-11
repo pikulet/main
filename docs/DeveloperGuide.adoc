@@ -755,7 +755,12 @@ object.
 The following flowchart describes what happens when the `execute` method
 of a `ServiceCommand` is called.
 
-image::ServiceCommand-flowchart.png[width="400"]
+image::ServiceCommand-flowchart.png[width="600"]
+
+The `model.addExpense()` method call was not illustrated in detail in the flowchart,
+thus it is illustrated in this sequence diagram.
+
+image::AddExpenseSequenceDiagram.png[width="800"]
 
 // end::service[]
 
