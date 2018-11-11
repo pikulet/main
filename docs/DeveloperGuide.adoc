@@ -396,9 +396,6 @@ Maintaining this coupling allows for very quick lookup both ways, either
 given a `Guest` (which is common at the reception desk) or given a `Room`
 (which is common for housekeeping).
 
-Our team decided to record `Guest` in `Room` instead of recording `Room` in
-`Guest`. The difference between these two selections lies in the time needed for different operations.
-
 * **Alternative 1 (current choice):** Add `Guest` as a field in `Room`
 ** Pros: An efficient way for managing bookings. Receptionist can quickly
 determine if the `Room` is free to book. Besides, `Room` s are not expected
@@ -684,7 +681,7 @@ a normal command by extending the abstract `Command` class. Similarly, the
 The model handles the signing-in, using its attribute `LogInManager`. The
 Class Diagram of the `LogInManager` module is shown below.
 
-image::LogInCommand-LogInManager-classdiagram.png[width=700]
+image::LogInCommand-LogInManager-classdiagram.png[width=500]
 
 `LogInManager` uses an optional `username` to keep track of whether
 the user is currently signed in. The `passwordRef` provides an
@@ -703,8 +700,6 @@ A new method `resetUndoRedoHistory` was added to the
 `logout` command, so users cannot undo important commands or redo accidental
 commands after signing out.
 
-More details on the `VersionedConcierge` can be understood from the <<Undo/Redo feature, undo and redo documentation>>.
-
 ====== Login
 
 Shown here is the sequence diagram for executing a `login` command.
@@ -722,9 +717,6 @@ stored as key-value pairs for quick look-up.
 A SHA-256 hash was used in building up this feature. In future, this hashing
 algorithm can be changed to a HMAC hash which adds a username salt instead.
 
-More information on the design consideration for this aspect can be found
-<<Aspect: Storage of Passwords, here>>.
-
 ===== Check for sign-in requirement of commands
 
 `LogicManager` does the checks for whether a command requires a sign in, and
@@ -733,9 +725,6 @@ whether the model is signed in.
 The `Command` class exposes a new `requiresSignIn()` method that returns
 false by default. This means that to make new command require signing-in, one
  only has to overwrite this method.
-
-More information on the design consideration for this aspect can be found
-<<Aspect: Check for sign-in requirement of commands, here>>.
 
 ==== Design Considerations
 
@@ -758,12 +747,9 @@ on the sign-in requirement.
 
 ===== Aspect: Check for sign-in requirement of commands
 
-Given that sign-in is only required for some commands, the priorities in
-designing this aspect are the ability to easily:
-
-** Mandate login for commands already implemented
-** Mandate login for future commands
-** Disable compulsory login for commands
+Given that sign-in is only required for some commands, the priority in
+designing this aspect is the ability to easily mandate/ disable compulsory
+the login requirement for current and future commands.
 
 * **Alternative 1 (current choice):** Do the check in `LogInManager#execute`
 ** Pros: Ensures that commands are checked before any execution. Users will not
@@ -778,14 +764,7 @@ reminds the manager to verify the booking.
  an attribute of a `Command`, so these internal checks can be done. By
  implementing a method `checkSignIn(Model)`, commands which require sign-ins
  can call this method in their respective `execute` methods.
-** Cons:
-*** It is difficult to check which methods require sign-in. Instead of
-implementing a boolean check on `requiresSignIn()`, every method now makes a
-call to a method (e.g. `performLoginChecks()`) in the superclass. The
-proposed solution to this would be to implement the login checks in the `Command#execute`
-method Every command must call `super()` in its respective `execute` method to perform
-the login checks.
-*** While increasing cohesion, this implementation makes less semantic sense.
+** Cons: While increasing cohesion, this implementation makes less semantic sense.
  The logical misstep comes because one is executing the method, then checking
   if the method can be executed, then "reversing" the execution.
 

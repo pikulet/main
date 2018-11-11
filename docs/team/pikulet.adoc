@@ -17,7 +17,8 @@ using a CLI, and it has a GUI created with JavaFX. It is written in Java, and
 == Summary of contributions
 
 [TIP]
-Access my contributed code: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet.
+Access my contributed code here: https://nus-cs2103-ay1819s1.github
+.io/cs2103-dashboard/#=undefined&search=pikulet.
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
 These were mainly achieved in #168 and #226.
