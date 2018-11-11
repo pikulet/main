@@ -10,13 +10,16 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- * Represents a password hash list, and is used in the {@code LogInHelper}.
+ * Represents a key-value reference list for usernames and passwords, and is
+ * used in the {@code LogInHelper}.
  */
 public class PasswordHashList {
 
+    // Name of the JsonNode variable, used to extract the key-value pairs
     private static final String PASSWORD_REF_NAME = "passwordRef";
-    private JsonNode passwordRef; // The JSON password reference list
-    // The json key that wraps the other key-value pairs
+
+    // The JSON password reference list, also the JSON key that wraps the other key-value pairs
+    private JsonNode passwordRef;
 
     /**
      * Returns an empty password hash list with no username or passwords
@@ -27,7 +30,7 @@ public class PasswordHashList {
 
     /**
      * This method creates a new PasswordHashList using a JsonNode with a
-     * {@code PASSWORD_REF_NAME} wrapper object. This facilitates the
+     * {@code PASSWORD_REF_NAME} wrapper key. This facilitates the
      * serialising and storage component handled by {@code JsonUtil}.
      * @param passwordRef
      */
@@ -38,14 +41,18 @@ public class PasswordHashList {
 
     /**
      * Returns a new {@code PasswordHashList} with the username and password
-     * entry added.
+     * entry added. Currently used for testing, but could be extended to
+     * allow users to add new accounts.
      */
     public PasswordHashList addEntry(String username, String password) {
         requireNonNull(username, password);
 
+        // JsonNode is read-only, while ObjectNode can be written to
         ObjectNode newPasswordRef = (ObjectNode) passwordRef;
         newPasswordRef.put(username, hash(password));
 
+        // The current constructor that takes in a JsonNode object expects a
+        // wrapper {@code PASSWORD_REF_NAME} key.
         PasswordHashList passwordHashList = new PasswordHashList();
         passwordHashList.passwordRef = passwordRef;
 
@@ -72,7 +79,7 @@ public class PasswordHashList {
 
     @Override
     public String toString() {
-        return "Number of users: " + passwordRef.size();
+        return passwordRef.toString();
     }
 
     @Override
