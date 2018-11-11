@@ -43,6 +43,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to <<Features>> for details of each command.
 
 [[Terminology]]
+//tag::terminology[]
 == Terminology
 Some important things that you should know before using Concierge(TM)
 
@@ -57,7 +58,7 @@ Some important things that you should know before using Concierge(TM)
 ** `M` - Month can be 1 or 2 digits
 ** `y` - Year can be 2 or 4 digits (if 2 digits, date is assumed to be in the current century)
 
-* A `Booking` ...
+* A *Booking* ...
 ** is *Active* if the period between its start and end date includes today's date, inclusively.
 ** is *Upcoming* if its start date is strictly after today's date.
 ** is *Expired* if its end date is strictly before today's date.
@@ -76,13 +77,13 @@ Some important things that you should know before using Concierge(TM)
 
 ====
 
-[cols="^.^1,<.^5a", frame=none]
+[cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-key.png[Login requirement,45,45,pdfwidth=50%,scaledwidth=50%]
 |This is a `login` icon. If a command requires login before execution, this icon will be located on its right in its title.
 |===
 
-[cols="^.^1,<.^5a", frame=none]
+[cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[Important info]
 |This is a *important* icon. You should read the information in these before executing the command, as it will likely
@@ -92,6 +93,7 @@ affect what you can or cannot do.
 [TIP]
 This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 
+//end::terminology[]
 
 
 [[Features]]
@@ -106,7 +108,7 @@ This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-// tag::add[]
+//tag::add[]
 === Adding a guest: `add` image:icon-key.png[width="32"]
 
 Adds a booking associated with a guest, room and booking period. +
@@ -115,7 +117,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE
 [TIP]
 A guest can have any number of tags (including 0)
 
-[cols="^.^1,<.^5a", frame=none]
+[cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[Important info]
 |
@@ -144,13 +146,15 @@ When a booking is added and it starts today (i.e. it is active), then you can
 .Adding an inactive booking (i.e. booking is in the future)
 image::AddCommand-userguide-notactive.png[width="800"]
 
+//end::add[]
+
 //tag::checkin[]
 === Check-in room: `checkin` image:icon-key.png[width="32"]
 
 Checks in the first booking of a room. The guest who made the booking will be added to
 the checked-in guest list.
 
-[cols="^.^1,<.^5a", frame=none]
+[cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[Important info]
 |Expired and upcoming bookings *cannot* be checked-in.
@@ -175,14 +179,13 @@ Checks out the room's first (i.e. earliest) booking, or its booking with the spe
 `checkout` 's intended use is the deletion of any booking.
  This means that you can delete a non-checked-in booking using `checkout`.
 
-[cols="^.^1,<.^5a", frame=none]
+[cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[Important info]
 |
 * If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
-guest list and added to the archived guest list.
-* If the guest still has other checked-in bookings, he/she will *not* be removed from the checked-in guest list,
-but will be added to the archived guest list.
+guest list. Otherwise, he/she will *not* be removed from the checked-in guest list.
+* If the guest has checked-in, he/she will be added to the archived guest list.
 |===
 
 Format: `checkout r/ROOM_NUMBER [from/START_DATE]`
@@ -200,7 +203,7 @@ Checks out the booking with start date 01/11/18 from room 085.
 
 Reassigns a booking from one room to another. The room's expenses will also be ported over to the new room.
 
-[cols="^.^1,<.^5a", frame=none]
+[cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[role="center"]
 | You can reassign a booking only if:
