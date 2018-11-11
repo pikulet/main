@@ -339,6 +339,7 @@ The parsing of the `AddCommand` is very similar to what was already
 implemented in AddressBook4. More parameters were added, namely the
 `RoomNumber` and `BookingPeriod`. These are parsed to create the respective
 objects - `Guest`, `RoomNumber` and `BookingPeriod`.
+
 * In v2.0, users can enter a start date and duration to specify their booking
 period.
 
@@ -369,16 +370,15 @@ Outdated bookings are those which have a start date before today. Concierge
 disallows users to `add` outdated bookings.
 
 * **Alternative 1 (current choice):** Do the check in `AddCommand#execute`
-** Pros: Very easy to implement. A simple check in the `execute` method will
-suffice. Only have to check that the `AddCommandSystemTest` uses cases
-without outdated bookings.
+** Pros: Very easy to implement. A parameter check in the `execute` method will
+suffice. Will only affect the `AddCommandSystemTest`.
 ** Cons: The actual `Model#addBooking` does not do any check on the
 `BookingPeriod` being outdated, opening the possibly of outdated `Booking` s
-being added from elsewhere.
+being added from via other commands.
 
 * **Alternative 2:** Do the check in `Room#addBooking`
-** Pros: Centralises exceptions thrown related to `Booking` s in the
-`Bookings` class. Increases the cohesiveness of this class.
+** Pros: Centralises exceptions thrown related to bookings in the
+`Booking` class. Increases the cohesiveness of this class.
 ** Cons: All the existing tests and sample data calling the `addBooking`
 method with outdated bookings have to be changed. It also becomes difficult
 to do unit tests on checking in bookings which are outdated but not expired,
@@ -394,12 +394,12 @@ given a `Guest` (which is common at the reception desk) or given a `Room`
 
 * **Alternative 1 (current choice):** Add `Guest` as a field in `Room`
 ** Pros: An efficient way for managing bookings. Receptionist can quickly
-determine if the `Room` is free to book. Besides, `Room` s are not expected
-to have a large number of advanced bookings made.
+determine if the `Room` is free to book. Lookup time for `Guest` not
+expected to increase greatly, since `Room` s are not expected to have a large
+ number of advanced bookings made.
 ** Cons: Difficult to find the `Room` given the `Guest`. When a `Guest` has made
 an advanced booking and wishes to cancel it, we have to search through all
-the `Room` s. Nevertheless, for most uses of Concierge we expect `Guest` s to
- be aware of their `Room` s.
+the `Room` s. Nevertheless, we expect most guests to be aware of their rooms.
 
 * **Alternative 2:** Add `Room` as a field in `Guest`
 ** Pros: Very customer-centric design. Centralises all the information about
@@ -407,8 +407,8 @@ the `Guest`, including `Booking` s made and `Expense` s incurred.
 ** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
 `Booking` information is now scattered across individual `Guest` s.
 *** [v1.4] On top of the list of rooms, we maintain a separate list of
-checked-in guests. This list does not retain any `Booking` information, as it
- is meant to help the user quickly look up the `Guest` 's particulars.
+checked-in guests. This list does not retain any booking information, as it
+ is meant to for a quick lookup of the guests' particulars.
 // end::add[]
 
 // tag::list[]
@@ -654,9 +654,9 @@ possible to modify the default information through editing the XML file.
 // tag::loginlogout[]
 === Login and Logout
 
-The `login` feature allows hotel managers to tag every command entered with a
- specific user, creating a blame to help trace rogue commands. Managers can also
- control which receptionists have full access to Concierge.
+The `login` feature allows hotel managers to tag commands entered with a
+ specific user, creating a blame history to trace rogue commands. Managers
+ can also control which receptionists have full access to Concierge.
 
 ==== Current Implementation
 
@@ -675,10 +675,10 @@ a normal command, extending the abstract `Command` class. The `logout` command
 
 ===== Model
 
-The model handles the signing-in, using its attribute `LogInManager`. The
-Class Diagram of the `LogInManager` module is shown below.
+The model handles the signing-in, using its attribute `LogInManager`.
+ The Class Diagram of the login module is shown below.
 
-image::LogInCommand-LogInManager-classdiagram.png[width=400]
+image::LogInCommand-LogInManager-classdiagram.png[width=700]
 
 `LogInManager` uses an optional `username` to keep track of whether
 the user is currently signed in. The `passwordReferenceList` provides an
@@ -690,30 +690,32 @@ immutable key-value lookup for usernames and passwords. +
 * `LogInManager#signIn(String, String)` - attempts to sign in with the given
 username and hashed password. This is handled by the `PasswordHashList`. A
 case-insensitive comparison is used on the hash.
-* `LogInManager#signOut()` - signs out Concierge.
+* `LogInManager#signOut()` - signs out of Concierge.
 
 A new method `resetUndoRedoHistory` was added to the
-`VersionedConcierge`. This is used to clear the command history upon a
-`logout` command, so users cannot undo important commands or redo accidental
-commands after signing out.
+`VersionedConcierge` (used for the Undo/ Redo feature). This is used to clear
+the command history upon a `logout` command, so users cannot undo important
+commands or redo accidental bad commands after signing out.
 
 ====== Login
 
-Shown here is the sequence diagram for executing a `login` command.
+Shown below is the Sequence Diagram for executing a valid `login` command.
+The diagram also illustrates how the `LogicManager` checks for the sign-in
+requirement of commands.
 
 image::LogInCommand-sequencediagram.png[width=1000]
 
 ===== Storage
 
-The `passwords.json` file is read when Concierge is opened (i.e. in
-`MainApp#init`), and is never written to again. This function is managed by
-the `JsonPasswordsStorage` class, which is very similar to the
-`JsonUserPrefsStorage` class. Intuitively, the usernames and passwords are
-stored as <<Aspect: Storage of Passwords, key-value pairs>> for quick look-up.
+The `passwords.json` file is read when Concierge is first opened (i.e. in
+`MainApp#init`), and is never written to again. The storage function is
+managed by the `JsonPasswordsStorage` class. Intuitively, the usernames and
+passwords are stored as <<Aspect: Storage of Passwords, key-value pairs>> for
+ quick look-up.
 
-A SHA-256 hash was used in building up this feature. In future, this hashing
-algorithm can be changed to a HMAC hash which adds a username salt as well.
-Then, different users will not know if they have chosen the same passwords.
+A SHA-256 hash was used in building this feature. In future, this hashing
+algorithm can be changed to a HMAC hash, which adds a username salt. Then,
+different users will not know if they have chosen the same passwords.
 
 ===== Check for sign-in requirement of commands
 
@@ -722,19 +724,18 @@ Then, different users will not know if they have chosen the same passwords.
  and whether the model is signed in.
 
 The `Command` class exposes a new `requiresSignIn()` method that returns
-false by default. This means that to make new command require signing-in, one
- only has to overwrite this method.
+false by default. To make new command require signing-in, one only has to
+overwrite this method in that command.
 
 ==== Design Considerations
 
 ===== Aspect: Accessing features of Concierge with/ without login
 
 * **Alternative 1 (current choice):** Login is needed only for some features
-** Pros: Manager can implement some level of access control within Concierge.
- Some of the more commonly used Concierge features (`list`, `find`) are
- read-only features.
- This is quicker than mandating a sign-in at the start and creating different user views
- based on the account privilege (admin vs normal).
+** Pros: Manager can implement some level of access control within Concierge,
+ especially since some of the more commonly used Concierge features (`list`,
+ `find`) are read-only features. This is quicker than mandating a sign-in at
+ the start and creating different user views based on the account privilege (admin vs normal).
 ** Cons: Not very intuitive to users. They have to enter commands before being
 told they need to sign in. The `requiresSignIn()` check takes place after the
 parsing of the command, so a user can is told they cannot execute the command
@@ -756,14 +757,14 @@ the login requirement for current and future commands.
 inadvertently change the model before doing the sign-in checks.
 ** Cons: Unable to implement commands that can do some actions without
 sign-in. For example, a future developer may want to make the `add` command
-such that when the user is not signed-in, a tag is added to the `Guest` that
-reminds the manager to verify the booking.
+such that when the user is not signed-in, the booking is still added but a tag
+ is added to the `Guest`, reminding the manager to verify the booking.
 
 * **Alternative 2:** Do the check in `Command#execute`
 ** Pros: Increases cohesiveness of `Command` class. The compulsory sign-in is
- an attribute of a `Command`, so these internal checks can be done. By
- implementing a method `checkSignIn(Model)`, commands which require sign-ins
- can call this method in their respective `execute` methods.
+ an attribute of a `Command`, so these checks can be done internally.
+ `Command` can implement a method `checkSignIn(Model)`, and commands which
+ require sign-ins can call this method in their respective `execute` methods.
 ** Cons: While increasing cohesion, this implementation makes less semantic sense.
  The logical misstep comes because one is executing the method, then checking
   if the method can be executed, then "reversing" the execution.
@@ -781,16 +782,16 @@ is in use.
 *** Easily parse data into key-value pairs, which semantically matches our needs.
 ** Cons: `JsonUtil` file is not completely suitable for a data type that has
 potentially an unlimited number of entries, since this utility serialises the
- data.
+ data to match the class attributes.
 * **Alternative 2:** Store passwords in same XML file as all other
 Concierge data.
 ** Pros: Centralises data storage in Concierge. There is only one single
-source of truth for all data-related concerns.
+source of truth for all data.
 ** Cons: The XML file is too complicated for the needs of password storage.
 *** Concierge does not need to write the the passwords file when in use.
-While, `concierge.xml` is constantly being written to, this is an unnecessary feature
-for the passwords component.
-*** Furthermore, creating a new password entry is difficult since once has to add all
+`concierge.xml` is constantly being written to, which is an unnecessary and
+possibly unsafe feature for the passwords component.
+*** Creating a new password entry is difficult since once has to add all
 the layers of XML tags involved. Nevertheless, users are not expected to be
 adding new accounts on a regular basis.
 // end::loginlogout[]
