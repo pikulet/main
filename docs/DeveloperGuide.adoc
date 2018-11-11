@@ -339,9 +339,7 @@ The parsing of the `AddCommand` is very similar to what was already
 implemented in AddressBook4. More parameters were added, namely the
 `RoomNumber` and `BookingPeriod`. These are parsed to create the respective
 objects - `Guest`, `RoomNumber` and `BookingPeriod`.
-
-[NOTE]
-In v2.0, users can enter a start date and duration to specify their booking
+* In v2.0, users can enter a start date and duration to specify their booking
 period.
 
 As in AddressBook4, the `Logic` component parses the `AddCommand`, and the
@@ -351,14 +349,13 @@ As in AddressBook4, the `Logic` component parses the `AddCommand`, and the
 previously the case in AddressBook4.
 * A new `Booking` object is created with the `Guest` and `BookingPeriod` as
 its parameters.
-* This `Booking` is then added to the `Room` with the `RoomNumber` specified.
-** Every `Room` maintains a `SortedSet<Booking>` which is encapsulated in the
+* This `Booking` is then added to the `Room` with the `RoomNumber` specified. Every `Room` maintains a `SortedSet<Booking>` which is encapsulated in the
  `Bookings` (plural) class.
 
 An Activity Diagram for the execution of `execute(Model model, CommandHistory
  history)` in the `add` command is shown below.
 
-image::AddCommand-activity-diagram.png[width="500"]
+image::AddCommand-activity-diagram.png[width="400"]
 
 [NOTE]
 The `AddCommandParser` already checks that `ROOM_NUMBER` is a valid
@@ -412,7 +409,7 @@ the `Guest`, include `Booking` s made and `Expense` s incurred.
 `Booking` information is now scattered across individual `Guest` s.
 *** [v1.4] On top of the list of rooms, we maintain a separate list of
 checked-in guests. This list does not retain any `Booking` information, as it
- is meant to help the receptionist quickly look up the `Guest` 's particulars.
+ is meant to help the user quickly look up the `Guest` 's particulars.
 // end::add[]
 
 // tag::list[]
@@ -660,7 +657,7 @@ possible to modify the default information through editing the XML file.
 
 The `login` feature allows hotel managers to tag every command entered with a
  specific user, creating a blame to help trace rogue commands. Managers can also
- control which receptionists have full access to the Concierge system.
+ control which receptionists have full access to Concierge.
 
 ==== Current Implementation
 
@@ -681,7 +678,7 @@ a normal command by extending the abstract `Command` class. Similarly, the
 The model handles the signing-in, using its attribute `LogInManager`. The
 Class Diagram of the `LogInManager` module is shown below.
 
-image::LogInCommand-LogInManager-classdiagram.png[width=500]
+image::LogInCommand-LogInManager-classdiagram.png[width=400]
 
 `LogInManager` uses an optional `username` to keep track of whether
 the user is currently signed in. The `passwordRef` provides an

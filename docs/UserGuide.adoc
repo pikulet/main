@@ -112,18 +112,12 @@ This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
 
-[cols="^.^1,<.^5a", frame=none]
-|===
-|image:icon-important.png[Important info]
-|
-* A valid booking cannot clash with an existing booking. It must also have a
+[NOTE]
+A valid booking cannot clash with an existing booking. It must also have a
   start date from today onwards (i.e. not outdated).
-|===
-
-[TIP]
-A guest can have any number of tags (including 0)
 
 ****
+* A guest can have any number of tags (including 0)
 * A guest can make an unlimited number of bookings with the hotel.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
 His/ her information will be stored under his/ her booking in the room.
@@ -305,13 +299,9 @@ Format: `login user/USERNAME pw/PASSWORD`
 
 Note: The username and password are both case-sensitive.
 
-****
-* The default account can be accessed with `login user/admin pw/passw0rd`
-* <<Adding a new account, More users can be added>> at `passwords.json`.
-* [v2.0] You can create new accounts via the Concierge(TM) app.
-****
-
 [TIP]
+The default account can be accessed with `login user/admin pw/passw0rd`
+
 A login allows the user to access the commands which can affect the
 bookings. Commands which require login: `add`, `checkin`, `checkout`, `reassign`,
 `service` and `clear`.
@@ -330,8 +320,7 @@ After signing in, the `clear` command can now be executed.
 
 ==== Adding a new account
 
- Currently, Concierge(TM) does not have a feature for users to add an account
-  via the app. The reason is because we only read from the password file. Nevertheless, for the adventurous users who want to create their own accounts, this sub-section will be useful.
+ Currently, Concierge(TM) does not have a feature for users to add an account via the app. Nevertheless, for the adventurous users who want to do so, this sub-section will be useful.
 
 Step 1: Concierge(TM) uses SHA-256 password hashing. This hash for your
 *password* can be generated using this

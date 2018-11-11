@@ -3,7 +3,7 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: Concierge(TM) image:ConciergeFinal.png[width="400"]
+== PROJECT: image:ConciergeFinal.png[width="200"]
 
 ---
 
@@ -17,11 +17,10 @@ using a CLI, and it has a GUI created with JavaFX. It is written in Java, and
 == Summary of contributions
 
 [TIP]
-Access my contributed code here: https://nus-cs2103-ay1819s1.github
-.io/cs2103-dashboard/#=undefined&search=pikulet.
+Access my contributed code here: +
+https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet.
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
-These were mainly achieved in #168 and #226.
 
 * What it does: Allows users to login to Concierge and access restricted
 commands which mutate the data.
@@ -34,13 +33,14 @@ still be accessed without signing in. By combining this with the ability
 ** The login/logout feature is dynamic and multiple logins/ logouts can
 happen in the same session. This means that there is a very close integration
  with the existing commands to verify whether these commands are restricted.
-** This feature is complete - there was a need to work with the different
-architectural components of Concierge, from command parsing (`Logic`) to login
-verification (`Model`) and even password storage (`Storage`).
-** The feature attempts to achieve some level of security as the passwords
-are strong as a SHA-256 hash instead of in plaintext.
+** This feature is complete - I worked with the different architectural
+components of Concierge, from command parsing (`Logic`) to login verification
+ (`Model`) and even password storage (`Storage`).
+** The feature attempts to achieve some level of security with SHA-256
+hashing.
 * Credits: The password hash algorithm was taken from https://www.baeldung
 .com/sha-256-hashing-java.
+* These features were mainly achieved in #168 and #226.
 
 *Minor enhancements/ code contributed*:
 
@@ -62,7 +62,7 @@ and Booking page not done by me
 #100, #222, #219
 ** Reported bugs and suggestions for other teams in the class:
 *** https://github.com/CS2103-AY1819S1-W14-3/main/issues/161[Discovered impersistence in data]
-*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[Rearranged command parameters to discover hidden bug],
+*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[Discovered hidden bug]
 *** https://github.com/CS2103-AY1819S1-W14-3/main/issues/157[Made suggestion on bounds checking]
 
 == Contributions to the User Guide
@@ -86,3 +86,9 @@ technical documentation and the technical depth of my contributions to the proje
 include::../DeveloperGuide.adoc[tag=add]
 
 include::../DeveloperGuide.adoc[tag=loginlogout]
+
+== End Note
+
+I am grateful to have had the opportunity to work on this project with
+amazing team members who each had their own strengths. Thank you: @adamwth
+@teowz46 @JiaQingTan @neilish3re
