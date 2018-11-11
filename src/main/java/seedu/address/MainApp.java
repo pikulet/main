@@ -1,7 +1,7 @@
 package seedu.address;
 
 import static seedu.address.model.util.SampleDataUtil.getSampleConcierge;
-import static seedu.address.model.util.SampleDataUtil.getSamplePasswordHashList;
+import static seedu.address.model.util.SampleDataUtil.getDefaultPasswordHashList;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -133,11 +133,11 @@ public class MainApp extends Application {
             }
 
             passwords =
-                    passwordsOptional.orElseGet(SampleDataUtil::getSamplePasswordHashList);
+                    passwordsOptional.orElseGet(SampleDataUtil::getDefaultPasswordHashList);
         } catch (DataConversionException e) {
             logger.warning("Problem while reading from the password file. "
                     + "Will be starting with a sample login account.");
-            passwords = getSamplePasswordHashList();
+            passwords = getDefaultPasswordHashList();
         }
 
         // Update prefs file in case it was missing to begin with or there are new/unused fields
