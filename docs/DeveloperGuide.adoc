@@ -1,4 +1,4 @@
-= Concierge Level 4 - Developer Guide
+= Concierge(TM) - Developer Guide
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-F11-2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Concierge(TM)`      Since: `Aug 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -545,7 +545,7 @@ The room check-in and checkout features makes use of `UniqueRoomList`.
 The logic that supports the check-in and checkout operations mainly reside in the `Concierge` and `Room` classes.
 
 * `UniqueRoomList#checkin(RoomNumber)` -- Checks in the first booking of the room identified by the given room number
-* `UniqueRoomList#checkout(RoomNumber)` -- Checks out the first booking of the room
+* `UniqueRoomList#checkout(RoomNumber)` -- Checks out the first booking of the room identified by the given room number
 * `UniqueRoomList#checkout(RoomNumber, LocalDate)` -- Checks out the room's booking whose start date matches the given date
 
 [NOTE]
@@ -570,9 +570,9 @@ Assuming there is a booking already added to room 001,
 .. throw `ExpiredBookingException` if the room's first booking is expired
 .. throw `InactiveBookingCheckInException` if the room's first booking is not active
 .. throw `BookingAlreadyCheckedInException` if the room's first booking is already checked in
-.. update the first booking as checked-in if no exceptions were thrown
+.. update the first booking as checked-in if no exceptions were thrown, and replace the room with its updated version that has the first booking checked-in
 . `VersionedConcierge#checkinRoom` will call `VersionedConcierge#addCheckedInGuestIfNotPresent`
-. `VersionedConcierge#addCheckedInGuestIfNotPresent` will add the checked-in guest to the checked-in guest list
+. `VersionedConcierge#addCheckedInGuestIfNotPresent` will add the guest of the checked-in booking to the checked-in guest list
  if he/she is not already in it
 
 * The user executes `checkout r/001` when the guest leaves.
@@ -589,20 +589,17 @@ Assuming there is a booking already added to room 001,
 . `VersionedConcierge#checkoutRoom` will call `VersionedConcierge#addGuest`
  to add the guest to the archived guest list if he/she does not already exists in it
 
-The following sequence diagram shows how to CheckinCommand operations works:
+The following sequence diagram shows how `CheckInCommand#execute` works:
 
+._The sequence diagram of `CheckInCommand#execute`._
 image::CheckinCommandSequenceDiagram.png[width="1280"]
 
+The following activity diagram shows how `Concierge#checkInRoom` executes:
+
+._The activity diagram of checking-in a room when `Concierge#checkInRoom` is executed._
+image::check-in-activity-diagram.png[width="800"]
+
 ==== Design Considerations
-
-===== Aspect: Deletion of bookings
-
-* **Alternative 1 (current choice):** Use `checkout` to delete any booking.
-** Pros: `checkout` doubles as a delete booking feature, so no need for a `deletebooking` command.
-** Cons: Not very natural, as `checkout` implies checking out a checked-in booking.
-* **Alternative 2:** Use `checkout` to delete only active booking, and create new command `deletebooking` to delete expired and upcoming bookings.
-** Pros: More natural, `checkout` can only do what its name implies.
-** Cons: Need to implement new command and more methods, to support the same deletion operation but with a different name.
 
 ===== Aspect: Immutability of check-in command
 
@@ -614,6 +611,16 @@ image::CheckinCommandSequenceDiagram.png[width="1280"]
 * **Alternative 2:** `checkIn` a room by setting the `isCheckedIn` flag of the first booking to true.
 ** Pros: Check-in method is intuitive, and does not return a new room.
 ** Cons: Harder to debug. Tests also become troublesome since changes are made to the same referenced room.
+
+===== Aspect: Deletion of bookings
+
+* **Alternative 1 (current choice):** Use `checkout` to delete any booking.
+** Pros: `checkout` doubles as a delete booking feature, so no need for a `deletebooking` command.
+** Cons: Not very natural, as `checkout` implies checking out a checked-in booking.
+* **Alternative 2:** Use `checkout` to delete only active booking, and create new command `deletebooking` to delete expired and upcoming bookings.
+** Pros: More natural, `checkout` can only do what its name implies.
+** Cons: Need to implement new command and more methods, to support the same deletion operation but with a different name.
+
 // end::checkin[]
 
 // tag::expenses[]
@@ -1600,6 +1607,15 @@ Facilities: Any form of services provided within the hotel. These include the sp
 
 * Complete audit trail for all financial transactions
 * Guest history available
+
+[appendix]
+== Market Survey
+
+*Hotel Rendezvous*
+
+* Interviewed via phone about hotel operations
+* For instance, using Hotel Rendezvous as reference, we discovered that hotels only require 1 guest of a booking to provide
+identifications details, thus the responsibility of the guest(s) under that booking falls to him/her.
 
 [appendix]
 == Instructions for Manual Testing
