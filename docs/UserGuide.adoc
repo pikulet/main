@@ -325,17 +325,15 @@ Commands which require login:
 
 Example: `login user/admin pw/passw0rd`
 
+`clear` +
+`"This command requires you to sign in."` +
 Attempting to clear Concierge(TM) without a login is not allowed.
 
-image::LogInCommand-notsignedin.png[width="400"]
-
+`login user/admin pw/passw0rd` +
+`"Successfully signed in as: admin"` +
 Login with a valid account, such as the default one provided.
 
-image::LogInCommand-loginsuccess.png[width="400"]
-
 After signing in, the `clear` command can now be executed.
-
-image::LogInCommand-clearsuccess.png[width="400"]
 
 ==== Adding a new account
 

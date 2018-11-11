@@ -21,6 +21,9 @@ Access my contributed code
 https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet[here].
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
+These were mainly achieved in https://github
+.com/CS2103-AY1819S1-F11-2/main/pull/168[#168] and
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226]
 
 * What it does: Allows users to login to Concierge and access restricted
 commands which mutate the data.
@@ -40,8 +43,7 @@ verification (`Model`) and even password storage (`Storage`).
 are strong as a SHA-256 hash instead of in plaintext.
 * Credits: The password hash algorithm was taken from
 https://www.baeldung.com/sha-256-hashing-java[Baeldung].
-* [Functional and Test code] https://github.com/CS2103-AY1819S1-F11-2/main/pull/168[#168] and
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226]
+
 
 *Minor enhancements/ code contributed*:
 
@@ -60,12 +62,10 @@ command] to maintain empty hotel rooms.
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[verification of rooms]
 in GUI tests.
 
-
 *Project Management*:
 
 * Managed the team's issue tracker
-* Encouraged team to use clean PRs
-* Encouraged team to use TODO to manage their work
+* Encouraged team to use clean PRs and TODO
 * https://github.com/CS2103-AY1819S1-F11-2/main/pull/159[Set up RepoSense] for
  the team
 * Community
