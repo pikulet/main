@@ -313,15 +313,8 @@ Note: The username and password are both case-sensitive.
 
 [TIP]
 A login allows the user to access the commands which can affect the
-bookings.
-
-Commands which require login:
-<<Adding a guest: `add` image:icon-key.png[width="32"], `add`>>,
-<<Check-in room: `checkin` image:icon-key.png[width="32"], `checkin`>>,
-<<Checkout room: `checkout` image:icon-key.png[width="32"], `checkout`>>,
-<<Reassigning a guest to another room : `reassign` image:icon-key.png[width="32"],`reassign`>>,
-<<Provide Room Service: `service` image:icon-key.png[width="32"], `service`>>,
-<<Clearing all entries : `clear` image:icon-key.png[width="32"], `clear`>>
+bookings. Commands which require login: `add`, `checkin`, `checkout`, `reassign`,
+`service` and `clear`.
 
 Example: `login user/admin pw/passw0rd`
 
@@ -340,19 +333,17 @@ After signing in, the `clear` command can now be executed.
  Currently, Concierge(TM) does not have a feature for users to add an account
   via the app. The reason is because we only read from the password file. Nevertheless, for the adventurous users who want to create their own accounts, this sub-section will be useful.
 
-Step 1: Open the `passwords.json` file, which should be in the same
-folder as your `concierge.jar` file. This file stores a list of hashed
-passwords.
-
-Step 2: Concierge(TM) uses SHA-256 password hashing. This hash can be
-generated using this https://passwordsgenerator.net/sha256-hash-generator/[tool].
+Step 1: Concierge(TM) uses SHA-256 password hashing. This hash for your
+*password* can be generated using this
+https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
 [NOTE]
- Concierge(TM) was designed to work with alphanumeric usernames and passwords in
+ Concierge(TM) is designed to work for alphanumeric usernames and passwords in
  mind. Do not enter symbols (!, @, %...).
 
-Step 3: Add the entry to the `passwords.json` file. Note that entries are
-separate with a comma. +
+Step 2: Add the entry to the `passwords.json` file. This should be in the
+same location as `concierge.jar`. Note that entries are separated with a
+comma. +
 Format: `"username" : "hashedPassword"`
 
 In the image below, a new account with username "newUser" and password
@@ -360,8 +351,8 @@ In the image below, a new account with username "newUser" and password
 
 image::LogInCommand-addpasswordentry.png[width="900"]
 
-Step 4: Close and reload the Concierge(TM) application, and your new account
-will be recognised. You are now able to sign in with the new account.
+Step 3: Close and reload the Concierge(TM) application, and your new account
+will be recognised.
 
 [NOTE]
  The parsing of the `passwords.json` file is delicate. Currently, if you

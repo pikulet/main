@@ -3,27 +3,24 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: Concierge(TM)
+== PROJECT: Concierge(TM) image:ConciergeFinal.png[width="400"]
 
 ---
 
 == Overview
 
-Concierge(TM) is a desktop hotel management application used as an all-in-one
-platform for receptionists to handle potential bookings and current guests. The
-user interacts with it using a CLI, and it has a GUI created with JavaFX. It
-is written in Java, and has about 10 kLoC.
+Concierge(TM) is a desktop hotel management application for receptionists to
+handle potential bookings and current guests. The user interacts with it
+using a CLI, and it has a GUI created with JavaFX. It is written in Java, and
+ has about 10 kLoC.
 
 == Summary of contributions
 
 [TIP]
-Access my contributed code
-https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet[here].
+Access my contributed code: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet.
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
-These were mainly achieved in https://github
-.com/CS2103-AY1819S1-F11-2/main/pull/168[#168] and
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226]
+These were mainly achieved in #168 and #226.
 
 * What it does: Allows users to login to Concierge and access restricted
 commands which mutate the data.
@@ -41,46 +38,31 @@ architectural components of Concierge, from command parsing (`Logic`) to login
 verification (`Model`) and even password storage (`Storage`).
 ** The feature attempts to achieve some level of security as the passwords
 are strong as a SHA-256 hash instead of in plaintext.
-* Credits: The password hash algorithm was taken from
-https://www.baeldung.com/sha-256-hashing-java[Baeldung].
-
+* Credits: The password hash algorithm was taken from https://www.baeldung
+.com/sha-256-hashing-java.
 
 *Minor enhancements/ code contributed*:
 
-* https://github.com/CS2103-AY1819S1-F11-2/main/pull/133[Renamed] the
-existing classes and methods from `Person` to `Guest`.
-* https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[Removed `address`] as
- a field in `Person`, removed the https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[`edit`]
-and https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[`delete`] commands.
-* Modified the `add` command to
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[take in more
-parameters] (namely the room and date details) in a hotel booking. Note that the actual `Room` and
- `Booking` packages were not done by me.
-* https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[Modified the `clear`
-command] to maintain empty hotel rooms.
-* Added function for
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[verification of rooms]
-in GUI tests.
+* Renamed the existing classes and methods from `Person` to `Guest` [#133]
+* Removed `Address` a field in `Person` [#143], removed the edit [#233] and
+delete [#139] commands
+* Modified the `add` command to take in room and date details [#104]. Room
+and Booking page not done by me
+* Modified the `clear` command to maintain empty hotel rooms [#162]
+* Added function for GUI verification of rooms [#162]
 
 *Project Management*:
 
 * Managed the team's issue tracker
 * Encouraged team to use clean PRs and TODO
-* https://github.com/CS2103-AY1819S1-F11-2/main/pull/159[Set up RepoSense] for
- the team
+* Set up RepoSense for the team [#159]
 * Community
-** PRs reviewed (with non-trivial review comments):
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/157[#157],
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/71[#71],
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/156/[#156],
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/111[#111],
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/100/[#100],
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/222/[#222],
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/219/[#219]
-** Reported bugs and suggestions for other teams in the class (example:
-https://github.com/CS2103-AY1819S1-W14-3/main/issues/161[discovered impersistence in data],
-https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[rearranged command parameters to discover hidden bug],
-https://github.com/CS2103-AY1819S1-W14-3/main/issues/157[made suggestion])
+** PRs reviewed (with non-trivial review comments): #157, #71, #156, #111,
+#100, #222, #219
+** Reported bugs and suggestions for other teams in the class:
+*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/161[Discovered impersistence in data]
+*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[Rearranged command parameters to discover hidden bug],
+*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/157[Made suggestion on bounds checking]
 
 == Contributions to the User Guide
 
