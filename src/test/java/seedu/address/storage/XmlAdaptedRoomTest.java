@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static seedu.address.storage.XmlAdaptedRoom.MESSAGE_NOT_CHECKED_IN_TO_ADD_EXPENSES;
 import static seedu.address.storage.XmlAdaptedRoom.MESSAGE_NO_BOOKING_TO_ADD_EXPENSES;
@@ -144,7 +143,7 @@ public class XmlAdaptedRoomTest {
         XmlAdaptedRoom room =
                 new XmlAdaptedRoom(VALID_ROOM_NUMBER, VALID_CAPACITY, VALID_BOOKINGS, VALID_EXPENSES, VALID_TAGS);
         assertEquals(room.toString(),
-                VALID_ROOM_NUMBER + VALID_CAPACITY  + VALID_EXPENSES + VALID_BOOKINGS + VALID_TAGS);
+                VALID_ROOM_NUMBER + VALID_CAPACITY + VALID_EXPENSES + VALID_BOOKINGS + VALID_TAGS);
     }
 
     @Test
