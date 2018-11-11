@@ -729,12 +729,7 @@ More details on the `VersionedConcierge` can be understood from the <<Undo/Redo 
 
 Shown here is the sequence diagram for executing a `login` command.
 
-`LogInCommand`: hashing of password is immediate so sensitive data is handled
-as quickly as possible.
-
-====== Logout
-
-Shown here is the sequence diagram for executing a `logout` command.
+image::LogInCommand-sequencediagram.png[width=1000]
 
 ===== Storage
 
