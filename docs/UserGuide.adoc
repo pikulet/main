@@ -360,8 +360,8 @@ login>>) can no longer be executed.
 * The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
 ** Even if you login again, you cannot undo your previous actions.
-** This achieves the same effect as closing and re-opening Concierge(TM) in the
-midst of a sign-in session.
+** This achieves the same effect as closing and re-opening Concierge(TM)
+after a logout.
 
 Example: `logout`
 

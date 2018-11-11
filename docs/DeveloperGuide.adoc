@@ -352,8 +352,7 @@ its parameters.
 * This `Booking` is then added to the `Room` with the `RoomNumber` specified. Every `Room` maintains a `SortedSet<Booking>` which is encapsulated in the
  `Bookings` (plural) class.
 
-An Activity Diagram for the execution of `execute(Model model, CommandHistory
- history)` in the `add` command is shown below.
+An Activity Diagram for the execution of `AddCommand#execute` is shown below.
 
 image::AddCommand-activity-diagram.png[width="400"]
 
@@ -669,9 +668,9 @@ in when executing commands which would mutate the data, such as `add`,
 ===== Logic
 
 Given the nature of the `login` command being dynamic (can be entered at any
-point in time, between any command), it is then natural to implement it like
-a normal command, extending the abstract `Command` class. Similarly, the
-`logout` command is executed like a normal command.
+point in time, between any commands), it is then natural to implement it like
+a normal command, extending the abstract `Command` class. The `logout` command
+ is also implemented in this way.
 
 ===== Model
 
@@ -712,7 +711,8 @@ the `JsonPasswordsStorage` class, which is very similar to the
 stored as key-value pairs for quick look-up.
 
 A SHA-256 hash was used in building up this feature. In future, this hashing
-algorithm can be changed to a HMAC hash which adds a username salt instead.
+algorithm can be changed to a HMAC hash which adds a username salt as well.
+Then, different users will not know if they have chosen the same passwords.
 
 ===== Check for sign-in requirement of commands
 

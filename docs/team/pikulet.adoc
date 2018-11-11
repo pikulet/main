@@ -62,7 +62,7 @@ and Booking page not done by me
 #100, #222, #219
 ** Reported bugs and suggestions for other teams in the class:
 *** https://github.com/CS2103-AY1819S1-W14-3/main/issues/161[Discovered impersistence in data]
-*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[Discovered hidden bug]
+*** https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[Discovered hidden bug by rearranging command]
 *** https://github.com/CS2103-AY1819S1-W14-3/main/issues/157[Made suggestion on bounds checking]
 
 == Contributions to the User Guide
@@ -90,5 +90,5 @@ include::../DeveloperGuide.adoc[tag=loginlogout]
 == End Note
 
 I am grateful to have had the opportunity to work on this project with
-amazing team members who each had their own strengths. Thank you: @adamwth
-@teowz46 @JiaQingTan @neilish3re
+amazing team members who each contributed with their own strengths. Thank
+you, @adamwth @teowz46 @JiaqingTan @neilish3re.
