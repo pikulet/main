@@ -660,10 +660,11 @@ The `login` feature allows hotel managers to tag every command entered with a
 
 ==== Current Implementation
 
-Currently, `login` is implemented as a dynamic feature, so users are not
-prompted to sign in upon starting Concierge. Instead, they only have to sign
-in when executing commands which would mutate the data, such as `add`,
-`checkin`, `checkout`, `reassign`, `service` and `clear`.
+Currently, `login` is implemented as a
+<<Aspect: Accessing features of Concierge with/ without login, dynamic feature>>,
+so users are not prompted to sign in upon starting Concierge. Instead, they
+only have to sign in when executing commands which would mutate the data,
+such as `add`, `checkin`, `checkout`, `reassign`, `service` and `clear`.
 
 ===== Logic
 
@@ -708,7 +709,7 @@ The `passwords.json` file is read when Concierge is opened (i.e. in
 `MainApp#init`), and is never written to again. This function is managed by
 the `JsonPasswordsStorage` class, which is very similar to the
 `JsonUserPrefsStorage` class. Intuitively, the usernames and passwords are
-stored as key-value pairs for quick look-up.
+stored as <<Aspect: Storage of Passwords, key-value pairs>> for quick look-up.
 
 A SHA-256 hash was used in building up this feature. In future, this hashing
 algorithm can be changed to a HMAC hash which adds a username salt as well.
@@ -716,8 +717,9 @@ Then, different users will not know if they have chosen the same passwords.
 
 ===== Check for sign-in requirement of commands
 
-`LogicManager` does the checks for whether a command requires a sign in, and
-whether the model is signed in.
+`LogicManager` does the
+<<Aspect: Check for sign-in requirement of commands, checks for whether a command requires a sign in>>,
+ and whether the model is signed in.
 
 The `Command` class exposes a new `requiresSignIn()` method that returns
 false by default. This means that to make new command require signing-in, one
