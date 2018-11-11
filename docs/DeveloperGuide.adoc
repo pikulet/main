@@ -360,14 +360,14 @@ image::AddCommand-activity-diagram.png[width="400"]
 [NOTE]
 The `AddCommandParser` already checks that `ROOM_NUMBER` is a valid
 string from `001` to `100`, and the initialisation of Concierge checks that
-there are 100 rooms. The `RoomNotFoundException` is not unexpected to occur
-under any circumstances of user input, but is left there as a defensive measure.
+there are 100 rooms. The `RoomNotFoundException` is not expected to occur
+for any user input, but is left there as a defensive measure.
 
 ==== Design Considerations
 ===== Aspect: Check for outdated bookings
 
 Outdated bookings are those which have a start date before today. Concierge
-disallows users to `add` outdated booking.
+disallows users to `add` outdated bookings.
 
 * **Alternative 1 (current choice):** Do the check in `AddCommand#execute`
 ** Pros: Very easy to implement. A simple check in the `execute` method will
@@ -404,7 +404,7 @@ the `Room` s. Nevertheless, for most uses of Concierge we expect `Guest` s to
 
 * **Alternative 2:** Add `Room` as a field in `Guest`
 ** Pros: Very customer-centric design. Centralises all the information about
-the `Guest`, include `Booking` s made and `Expense` s incurred.
+the `Guest`, including `Booking` s made and `Expense` s incurred.
 ** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
 `Booking` information is now scattered across individual `Guest` s.
 *** [v1.4] On top of the list of rooms, we maintain a separate list of
@@ -669,8 +669,8 @@ in when executing commands which would mutate the data, such as `add`,
 ===== Logic
 
 Given the nature of the `login` command being dynamic (can be entered at any
-point in time, between any command), it is then natural to implement in like
-a normal command by extending the abstract `Command` class. Similarly, the
+point in time, between any command), it is then natural to implement it like
+a normal command, extending the abstract `Command` class. Similarly, the
 `logout` command is executed like a normal command.
 
 ===== Model
