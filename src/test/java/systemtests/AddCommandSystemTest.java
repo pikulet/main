@@ -73,8 +73,8 @@ public class AddCommandSystemTest extends ConciergeSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add an active booking to a non-empty Concierge, command with leading spaces and trailing spaces -> added
-         */
+        /* Case: add an active booking to a non-empty Concierge,
+        command with leading spaces and trailing spaces -> added */
         Guest guestToAdd = AMY;
         BookingPeriod bookingPeriodToAdd = BOOKING_PERIOD_AMY;
         RoomNumber roomNumberToAdd = ROOM_NUMBER_AMY;

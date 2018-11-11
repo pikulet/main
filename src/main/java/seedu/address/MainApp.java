@@ -1,7 +1,7 @@
 package seedu.address;
 
-import static seedu.address.model.util.SampleDataUtil.getSampleConcierge;
 import static seedu.address.model.util.SampleDataUtil.getDefaultPasswordHashList;
+import static seedu.address.model.util.SampleDataUtil.getSampleConcierge;
 
 import java.io.IOException;
 import java.nio.file.Path;
