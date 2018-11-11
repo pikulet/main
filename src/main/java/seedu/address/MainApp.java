@@ -125,8 +125,7 @@ public class MainApp extends Application {
         PasswordHashList passwords;
 
         try {
-            Optional<PasswordHashList> passwordsOptional =
-                    storage.getPasswordHashList();
+            Optional<PasswordHashList> passwordsOptional = storage.readPasswordRef();
             if (!passwordsOptional.isPresent()) {
                 logger.info("Password file not found. "
                         + "Will be starting with a sample login account.");
@@ -135,7 +134,11 @@ public class MainApp extends Application {
             passwords =
                     passwordsOptional.orElseGet(SampleDataUtil::getDefaultPasswordHashList);
         } catch (DataConversionException e) {
-            logger.warning("Problem while reading from the password file. "
+            logger.warning("Data file not in the correct format. "
+                    + "Will be starting with a sample login account.");
+            passwords = getDefaultPasswordHashList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. "
                     + "Will be starting with a sample login account.");
             passwords = getDefaultPasswordHashList();
         }

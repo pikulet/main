@@ -16,27 +16,27 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class PasswordHashList {
 
     // Name of the JsonNode variable, used to extract the key-value pairs
-    private static final String PASSWORD_REF_NAME = "passwordRef";
+    private static final String PASSWORD_REF_NAME = "passwordReferenceList";
 
     // The JSON password reference list, also the JSON key that wraps the other key-value pairs
-    private JsonNode passwordRef;
+    private JsonNode passwordReferenceList;
 
     /**
      * Returns an empty password hash list with no username or passwords
      */
     public PasswordHashList() {
-        this.passwordRef = JsonNodeFactory.instance.objectNode();
+        this.passwordReferenceList = JsonNodeFactory.instance.objectNode();
     }
 
     /**
      * This method creates a new PasswordHashList using a JsonNode with a
      * {@code PASSWORD_REF_NAME} wrapper key. This facilitates the
      * serialising and storage component handled by {@code JsonUtil}.
-     * @param passwordRef
+     * @param passwordReferenceList
      */
-    public PasswordHashList(JsonNode passwordRef) {
-        requireNonNull(passwordRef);
-        this.passwordRef = passwordRef.get(PASSWORD_REF_NAME);
+    public PasswordHashList(JsonNode passwordReferenceList) {
+        requireNonNull(passwordReferenceList);
+        this.passwordReferenceList = passwordReferenceList.get(PASSWORD_REF_NAME);
     }
 
     /**
@@ -48,13 +48,13 @@ public class PasswordHashList {
         requireNonNull(username, password);
 
         // JsonNode is read-only, while ObjectNode can be written to
-        ObjectNode newPasswordRef = (ObjectNode) passwordRef;
+        ObjectNode newPasswordRef = (ObjectNode) passwordReferenceList;
         newPasswordRef.put(username, hash(password));
 
         // The current constructor that takes in a JsonNode object expects a
         // wrapper {@code PASSWORD_REF_NAME} key.
         PasswordHashList passwordHashList = new PasswordHashList();
-        passwordHashList.passwordRef = passwordRef;
+        passwordHashList.passwordReferenceList = passwordReferenceList;
 
         return passwordHashList;
     }
@@ -68,7 +68,7 @@ public class PasswordHashList {
     protected Optional<String> getExpectedPassword(String username) {
         requireNonNull(username);
 
-        JsonNode expectedPasswordNode = passwordRef.get(username);
+        JsonNode expectedPasswordNode = passwordReferenceList.get(username);
 
         if (expectedPasswordNode == null) {
             return Optional.empty();
@@ -79,7 +79,7 @@ public class PasswordHashList {
 
     @Override
     public String toString() {
-        return passwordRef.toString();
+        return passwordReferenceList.toString();
     }
 
     @Override
@@ -90,7 +90,7 @@ public class PasswordHashList {
             return false;
         }
 
-        return ((PasswordHashList) other).passwordRef.equals(passwordRef);
+        return ((PasswordHashList) other).passwordReferenceList.equals(passwordReferenceList);
     }
 
 }
