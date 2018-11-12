@@ -388,6 +388,7 @@ Selects the 2nd guest in the displayed list.
 `select 100` +
 Selects the 100th room in the displayed list.
 
+// tag::service[]
 === Provide Room Service: `service` image:icon-key.png[width="32"]
 
 Charges a room service to a room  +
@@ -395,16 +396,22 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 
 ****
 * ITEM_NUMBER refers to the number in the menu given to each type of service offered by the hotel.
-* This could be room service, on-demand video streaming, bath supplies, mini bar, etc.
 * The cost can be specified as well, if the guest is to be charged an amount that is
   different from the cost in the menu. Note that the cost has to follow a strict format
   such as 100.00, i.e. with two decimal places. The dollar part of the cost should also
   not exceed `Integer.MAX_VALUE`.
 * Any expenses added with this command will be accounted for under the Expenses portion
-  of the respective rooms.
+  of the respective rooms. The Expenses of the room will also be displayed on the
+  right panel.
 * Only occupied rooms (i.e. rooms with checked-in guests) can have expenses charged to it.
+* It is possible to charge negative values as well. This can be used in cases such as when
+  a guest uses a voucher, hence allowing the total expenses to be reduced. Negative
+  values can also be charged if the user wants to remove or adjust an existing expense.
+  Two expense types, XX01 and XX02, were thus created for the purpose of adjustments.
 * The default `Menu` that comes with Concierge(TM) consists of the following items. Items
-  may be modified, added, or removed through `concierge.xml`.
+  may be modified, added, or removed through `concierge.xml`. Only item numbers from the
+  `Menu` (case-sensitive) may be used in the `service` command. Future versions will allow
+  displaying of the `Menu` on the main app.
 ** *RS01* -- Room service: Red wine -- $50.00
 ** *RS02* -- Room service: Beef steak -- $70.00
 ** *RS03* -- Room service: Thai massage -- $100.00
@@ -413,6 +420,8 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *MB03* -- Minibar: Tiger beer -- $6.00
 ** *MB04* -- Minibar: Mineral water -- $3.00
 ** *SP01* -- Swimming pool: Entry -- $5.00
+** *XX01* -- Adjustment: Discount -- $0.00
+** *XX02* -- Adjustment: Typo -- $0.00
 ****
 
 Examples:
@@ -422,6 +431,7 @@ Adds an expenditure of the item *RS01* to the room's expenses.
 
 * `service r/096 no/RS03 c/12.34` +
 Adds an expenditure of the item *RS03* to the room's expenses and charge $12.34 for it.
+// end::service[]
 
 === Listing entered commands : `history`
 

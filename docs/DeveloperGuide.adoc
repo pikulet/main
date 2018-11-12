@@ -215,7 +215,7 @@ The `Model`,
 * does not depend on any of the other three components.
 
 [NOTE]
-As a more OOP model, we can store a `Tag` list in `Concierge`, which `Guest` can reference. This would allow `Concierge` to only require one `Tag` object per unique `Tag`, instead of each `Guest` needing their own `Tag` object. An example of how such a model may look like is given below. +
+As a more OOP model, we can store a `Tag` list in `Concierge`, which `Guest` can reference. This would allow `Concierge` to only require one `Tag` object per unique `Tag`, instead of each `Guest` needing their own `Tag` object. An example of how such a model may look like is given below. Only UniqueGuestList is shown for simplicity. +
  +
 image:ModelClassBetterOopDiagram.png[width="800"]
 
@@ -591,7 +591,7 @@ image::check-in-activity-diagram.png[width="800"]
 In Concierge, users will be given the feature of tracking the expenditure of each individual
 guest, in order to facilitate checkout charges. Hence, the three classes, `Expenses`, `Expense`
 and `ExpenseType` have been created for this purpose. In addition, the hotel also has a
-`menu` of goods and services available.
+`Menu` of goods and services available.
 
 ==== Current Implementation
 `ExpenseType` objects are essentially immutable objects that represent a single item or service
@@ -601,8 +601,7 @@ charge a customer by simply providing the menu number of the item and the cost a
 of the item will be able to be referenced. `ExpenseType` information is stored in a `Menu`
 object, which is then stored on the hard disk, since users should have the ability to modify
 the menu manually. The `Menu` object is internally represented with a `HashMap<String, ExpenseType>`,
-with the menu number as keys and the `ExpenseType` objects as values. This allows for the
-serialisation of the `Menu` into XML, since `HashMap` is supported by JAXB.
+with the menu number as keys and the `ExpenseType` objects as values.
 
 * **Alternative 1: Use a List<ExpenseType> to store the menu.** While there may be negligible
 differences for a small menu, searching for an `ExpenseType` object still takes linear time
@@ -649,7 +648,125 @@ account for cases such as the guest having a personalised discount due to
 the usage of vouchers or certain credit cards. Thus, ExpenseType does not
 need to be modified by users in the application. Nonetheless, it is still
 possible to modify the default information through editing the XML file.
+
+===== Aspect: Assignment of the Expenses object
+* **Alternative 1 (current choice):** Assign `expenses` to each `Room`.
+** Pros: Suitable for current architecture. Each `Booking` only has one `Guest`,
+   and each `Guest` will only stay in one `Room`. Makes more sense to assign to
+   `Room` such that it represents the expenditure of the entire `Room` and not
+   one `Guest`, since the occupants of the `Room` can only contribute to one single
+   `Expenses` object. `Room` is a more natural choice over `Booking` as `Booking`
+   is meant to encapsulate booking information such as timing and `Room`.
+   Not much difference in implementation no matter which one of the three classes
+   it is assigned to.
+** Cons: May be confusing to implement. Need to ensure that there are no expenses
+   for rooms that have no guests.
+* **Alternative 2:** Assign `expenses` to each `Guest`.
+** Pros: Can track `expenses` of each `Guest`, can find out who are the heavy
+   spenders. Can use this information for promotional activities such as vouchers
+   or membership.
+** Cons: Not all guests that will stay in the hotel are registered in the guest
+   list, since each `Booking` only requires the name of one `Guest`, regardless of
+   the `Room`. Will require a major refactoring of the `add` command.
+* **Alternative 3:** Assign `expenses` to each `Booking`.
+** Pros: Can allow tracking of the booker's expenditure, less confusing to implement
+   than `Room`, can allow for expenses to be recorded before the guest checks in.
+** Cons: May violate SRP, since `Booking` should ideally only deal with booking
+   information.
 // end::expenses[]
+
+// tag::money[]
+=== Money
+
+==== Current Implementation
+`Money` is a class used to store monetary values. This class was created to
+enforce the restriction that monetary values should always have at most two
+decimal places, which could be inconvenient if using Java data types such
+as `double` or `BigDecimal`. `Money` objects can be created by the user
+through the `service` command (details in the next section).
+
+The `Money` class contains two main attributes, `dollars` and `cents`, both
+of which are `int`s, since it is unlikely that the cost of any one item will
+exceed `Integer.MAX_VALUE` dollars.
+
+The main method of creating `Money` objects is through the `service` command,
+with the `Money` class parsing a string to convert into a `Money` object.
+The method `isValidMoneyFormat()` handles the checking of the string format,
+and the list of requirements are as follows:
+
+* Can be negative.
+* Format of the string should be {1 to 10 digits}.{2 digits}, e.g. `12.34`.
+  `123`, `.50`, `12.9`, `12345612345.00` are not allowed.
+* The `dollars` section can be 0 but cannot have leading 0, i.e. 0.12 is allowed
+  but 01.23 is not allowed.
+* The `dollars` section should not exceed `Integer.MAX_VALUE`.
+* Cannot have characters that are not digits or `.` or `-`.
+
+==== Design Considerations
+
+===== Aspect: Immutability of Money
+`Money` does not have to be mutable. Adjustment of `Expenses` are to be done
+through the `service` command. `Money` is simply a data type, much like
+`Double` and `Integer`.
+// end::money[]
+
+// tag::service[]
+=== ServiceCommand
+
+==== Current Implementation
+The `service` command is used for charging expenses to rooms. This
+functionality is the main reason that the classes Expenses, Expense,
+ExpenseType, Menu and Money were implemented. The format for the `service`
+command is as such:
+
+`service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
+
+The cost is made optional for the convenience of the user. We expect that
+most of the time, the cost of items are more or less fixed. Instead of
+having the user type in the same cost all of the time, the field is made
+optional. This functionality is enabled by the use of `ExpenseType` and
+`Menu`, which stores the default cost of items. If the cost is not specified,
+the default cost of the item will be used.
+
+As in AddressBook4, the ConciergeParser (aka AddressBookParser) will parse
+the user input and create a `ServiceCommandParser` object to parse a `service`
+command. The `ServiceCommandParser` is responsible for checking that the
+`RoomNumber` and cost (a `Money` object) are in the correct format. Note that
+the item number is not checked here, since the `Menu` object of `Concierge`
+has to be available in order to check that the given item number is a valid
+item. Hence, any string will be accepted by the parser. Since `ServiceCommand`
+has access to the `Model` and thus the `Menu`, the checking is given to
+`ServiceCommand` instead. A successful parse will then return a
+`ServiceCommand(RoomNumber roomNumber, String itemNumber, Optional<Money> itemCost)`
+object.
+
+The following flowchart describes what happens when the `execute` method
+of a `ServiceCommand` is called.
+
+image::ServiceCommand-flowchart.png[width="600"]
+
+The `model.addExpense()` method call was not illustrated in detail in the flowchart,
+thus it is illustrated in this sequence diagram.
+
+image::AddExpenseSequenceDiagram.png[width="900"]
+
+==== Design Considerations
+
+===== Aspect: Deleting and editing Expenses
+* **Alternative 1 (current choice):** Use `service` to edit `Expense`s.
+** Pros: Simply keying in `Expense`s with negative values is easy to implement,
+   and does not stray far from real-life implementations, e.g. receipts often
+   contain cost subtractions for discounts and promotions.
+** Cons: May not be elegant, `Expenses` may become cluttered if there's too many
+   corrections.
+* **Alternative 2:** Create new commands to edit and delete `Expense`s.
+** Pros: The `Expenses` will contain all the `Expense`s at their correct prices.
+** Cons: More effort to implement, difficult to implement, e.g. may need to implement
+   listing out all `Expense`s of a `Room` with the `list` command in order to select
+   the `Expense` to delete or edit. Information on discounts and corrections will
+   also be lost.
+
+// end::service[]
 
 // tag::loginlogout[]
 === Login and Logout
