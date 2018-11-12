@@ -114,9 +114,12 @@ This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
 
-[NOTE]
-A valid booking cannot clash with an existing booking. It must also have a
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|A valid booking cannot clash with an existing booking. It must also have a
   start date from today onwards (i.e. not outdated).
+|===
 
 ****
 * A guest can have any number of tags (including 0)
@@ -327,10 +330,13 @@ Step 1: Concierge(TM) uses SHA-256 password hashing. This hash for your
 *password* can be generated using this
 https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
-[NOTE]
- Concierge(TM) is designed to work for alphanumeric usernames and passwords in
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Concierge(TM) is designed to work for alphanumeric usernames and passwords in
  mind. Do not enter symbols (!, @, %...). Do not begin or end your passwords
  with whitespaces.
+|===
 
 Step 2: Add the entry to the `passwords.json` file. This should be in the
 same location as `concierge.jar`. Note that entries are separated with a
@@ -345,11 +351,14 @@ image::LogInCommand-addpasswordentry.png[width="900"]
 Step 3: Close and reload the Concierge(TM) application, and your new account
 will be recognised.
 
-[NOTE]
- Currently, if you enter a valid json file format but an incorrect password
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Currently, if you enter a valid json file format but an incorrect password
  reference list format, you will end up with no default account. This allows
  hotel managers set no user accounts for Concierge. To retrieve the default
  account, delete the `passwords.json` file and re-run Concierge(TM).
+|===
 
 === Logout : `logout`
 
@@ -359,8 +368,8 @@ Format: `logout`
 * The special classes of commands (as documented in <<Login : `login`,
 login>>) can no longer be executed.
 * The `logout` command will erase the command history, so users cannot undo/
-redo commands executed before the logout.
-** Even if you login again, you cannot undo your previous actions.
+redo commands executed before the logout. Even if you login again, you cannot
+ undo your previous actions.
 ** This achieves the same effect as closing and re-opening Concierge(TM)
 after a logout.
 
@@ -442,10 +451,12 @@ Adds an expenditure of the item *RS03* to the room's expenses and charge $12.34 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous
+and next input respectively in the command box.
+|===
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -454,10 +465,11 @@ Restores the Concierge(TM) application to the state before the previous
 _undoable_ command was executed. +
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify Concierge(TM)'s content (`add`, `checkin`, `checkout` and `clear`).
-====
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Undoable commands: those commands that modify Concierge(TM)'s content (`add`, `checkin`, `checkout` and `clear`).
+|===
 
 Examples:
 
@@ -604,11 +616,11 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Checkout* : `checkout r/ROOM_NUMBER [from/START_DATE]`
 * *Reassign* : `reassign r/ROOM_NUMBER from/START_DATE nr/NEW_ROOM_NUMBER`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]`
-* *List* : `list`
+* *List* : `list KEYWORD`
 * *Login* : `login user/USERNAME pw/PASSWORD`
 * *Logout* : `logout`
 * *Select* : `select INDEX`
-* *Room Service* : `service`
+* *Room Service* : `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
