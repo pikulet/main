@@ -513,15 +513,13 @@ image::ClearCommand-success.png[width="400"]
 // end::clear[]
 
 // tag::archive[]
-=== Command Archive: `archive` [red]#Coming in v2.0#
+=== Command Archive: `archive` image:icon-key.png[width="32"] [red]#Coming in v2.0#
 
 All user input is captured and saved onto a log. All keystrokes are
 captured, including invalid/mistyped and login commands.
 
 To open this log, input the archive command +
 Format: `archive`
-
- This command requires a login.
 
 // end::archive[]
 
