@@ -394,20 +394,17 @@ Selects the 100th room in the displayed list.
 Charges a room service to a room  +
 Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 
-****
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[role="center"]
+|
 * ITEM_NUMBER refers to the number in the menu given to each type of service offered by the hotel.
+  Refer to the Menu below.
 * The cost can be specified as well, if the guest is to be charged an amount that is
   different from the cost in the menu. Note that the cost has to follow a strict format
   such as 100.00, i.e. with two decimal places. The dollar part of the cost should also
   not exceed `Integer.MAX_VALUE`.
-* Any expenses added with this command will be accounted for under the Expenses portion
-  of the respective rooms. The Expenses of the room will also be displayed on the
-  right panel.
 * Only occupied rooms (i.e. rooms with checked-in guests) can have expenses charged to it.
-* It is possible to charge negative values as well. This can be used in cases such as when
-  a guest uses a voucher, hence allowing the total expenses to be reduced. Negative
-  values can also be charged if the user wants to remove or adjust an existing expense.
-  Two expense types, XX01 and XX02, were thus created for the purpose of adjustments.
 * The default `Menu` that comes with Concierge(TM) consists of the following items. Items
   may be modified, added, or removed through `concierge.xml`. Only item numbers from the
   `Menu` (case-sensitive) may be used in the `service` command. Future versions will allow
@@ -422,7 +419,13 @@ Format: `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 ** *SP01* -- Swimming pool: Entry -- $5.00
 ** *XX01* -- Adjustment: Discount -- $0.00
 ** *XX02* -- Adjustment: Typo -- $0.00
-****
+|===
+
+[TIP]
+Negative values can be used in `service` command. This can be used in cases such as when
+a guest uses a voucher, hence allowing the total expenses to be reduced. Negative
+values can also be charged if the user wants to remove or edit an existing expense.
+The two expense types, XX01 and XX02, were thus created for the purpose of adjustments.
 
 Examples:
 

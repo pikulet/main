@@ -667,7 +667,9 @@ possible to modify the default information through editing the XML file.
    or membership.
 ** Cons: Not all guests that will stay in the hotel are registered in the guest
    list, since each `Booking` only requires the name of one `Guest`, regardless of
-   the `Room`. Will require a major refactoring of the `add` command.
+   the `Room`. Will require a major refactoring of the `add` command. Complications
+   may also arise if a `Guest` has multiple bookings simultaneously and there is a
+   need to track the `Expenses` over different rooms.
 * **Alternative 3:** Assign `expenses` to each `Booking`.
 ** Pros: Can allow tracking of the booker's expenditure, less confusing to implement
    than `Room`, can allow for expenses to be recorded before the guest checks in.
