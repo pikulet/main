@@ -1,0 +1,6 @@
+{
+  "appTitle" : "Concierge",
+  "logLevel" : "INFO",
+  "userPrefsFilePath" : "preferences.json"
+}
+
