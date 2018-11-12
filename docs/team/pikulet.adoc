@@ -17,8 +17,8 @@ using a CLI, and it has a GUI created with JavaFX. It is written in Java, and
 == Summary of contributions
 
 [TIP]
-Access my contributed code here: +
-https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet
+Access my contributed code
+https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=pikulet[here].
 
 *Major enhancement*: added *the ability to login/logout* of the system. +
 
@@ -40,7 +40,7 @@ components of Concierge, from command parsing (`Logic`) to login verification
  (`Model`) and even password storage (`Storage`).
 ** The feature attempts to achieve some level of security with SHA-256
 hashing.
-* Credits: The password hash algorithm was taken from https://www.baeldung.com/sha-256-hashing-java.
+* Credits: The password hash algorithm was taken from https://www.baeldung.com/sha-256-hashing-java[Baeldung].
 * These features were mainly achieved in
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/168[#168] and
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226].
