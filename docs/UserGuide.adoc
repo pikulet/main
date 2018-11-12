@@ -469,7 +469,8 @@ Format: `undo`
 [cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[Important info]
-|Undoable commands: those commands that modify Concierge(TM)'s content (`add`, `checkin`, `checkout` and `clear`).
+|Undoable commands: those commands that modify Concierge(TM)'s content
+(`add`, `checkin`, `checkout`, `reassign`, `service` and `clear`).
 |===
 
 Examples:
