@@ -42,6 +42,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
+
 [[Terminology]]
 //tag::terminology[]
 == Terminology
@@ -54,9 +55,9 @@ Some important things that you should know before using Concierge(TM)
 ** 000, 01, 99, 101 are invalid
 
 * The format used for dates is *d/M/y*, whereby
-** `d` - Day can be 1 or 2 digits
-** `M` - Month can be 1 or 2 digits
-** `y` - Year can be 2 or 4 digits (if 2 digits, date is assumed to be in the current century)
+** *d* - Day can be 1 or 2 digits
+** *M* - Month can be 1 or 2 digits
+** *y* - Year can be 2 or 4 digits (if 2 digits, date is assumed to be in the current century)
 
 * A *Booking* ...
 ** is *Active* if the period between its start and end date includes today's date, inclusively.
@@ -65,6 +66,11 @@ Some important things that you should know before using Concierge(TM)
 ** is *Outdated* if its start date is strictly before today's date.
 ** is *Overlapping* with another booking if its start date is strictly before the other's end date AND the other's start date is strictly before its end date
 ** can be uniquely identified by its start date.
+
+* Two *guests* are...
+** *different* if they have different names
+** *different* if they have the same name AND both their phone numbers and emails are different
+** *same* if they have the same name AND either their phone number or email, or both, are the same
 
 * There are 2 guest lists:
 ** *Checked-in guest list* contains all the guests who are currently checked-in.
@@ -114,12 +120,9 @@ This is a *tip* icon. You may want to read this if you are new to Concierge(TM).
 Adds a booking associated with a guest, room and booking period. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG] r/ROOM_NUMBER from/START_DATE to/END_DATE`
 
-[cols="^.^1,<.^11a", frame=none]
-|===
-|image:icon-important.png[Important info]
-|A valid booking cannot clash with an existing booking. It must also have a
+[NOTE]
+A valid booking cannot clash with an existing booking. It must also have a
   start date from today onwards (i.e. not outdated).
-|===
 
 ****
 * A guest can have any number of tags (including 0)
@@ -147,6 +150,15 @@ image::AddCommand-userguide-notactive.png[width="800"]
 Checks in the first booking of a room. The guest who made the booking will be added to
 the checked-in guest list.
 
+****
+* If the guest's name is not found in any of the entries in the checked-in guest list, then a new entry will be created.
+* Suppose there is already an entry with the same name as the guest in the checked-in guest list.
+** If both the guest's phone number and email are the same as the ones found in the entry, or only one of them is different,
+then he/she is *treated as the same guest as the one in the entry, and thus the entry will not be updated*.
+** If both the guest's phone number and email are different from the ones found in the entry,
+then he/she is *treated as a different guest from the one in the entry, and a new entry will be created*.
+****
+
 [cols="^.^1,<.^11a", frame=none]
 |===
 |image:icon-important.png[Important info]
@@ -167,19 +179,23 @@ to the checked-in guest list.
 === Checkout room: `checkout` image:icon-key.png[width="32"]
 
 Checks out the room's first (i.e. earliest) booking, or its booking with the specified start date.
+Also updates the checked-in guest list and archived guest list with the guest who made the booking.
+
+****
+* If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
+guest list. Otherwise, he/she will *not* be removed from the checked-in guest list.
+* If the guest has checked-in, he/she will be added to the archived guest list.
+** If the guest's name is not found in any of the entries in the archived guest list, then a new entry will be created.
+** Suppose there is already an entry with the same name as the guest in the archived guest list.
+*** If both the guest's phone number and email are the same as the ones found in the entry, or only one of them is different,
+then he/she is *treated as the same guest as the one in the entry, and thus the entry will not be updated*.
+*** If both the guest's phone number and email are different from the ones found in the entry,
+then he/she is *treated as a different guest from the one in the entry, and a new entry will be created*.
+****
 
 [TIP]
 `checkout` 's intended use is the deletion of any booking.
  This means that you can delete a non-checked-in booking using `checkout`.
-
-[cols="^.^1,<.^11a", frame=none]
-|===
-|image:icon-important.png[Important info]
-|
-* If the guest does not have any other checked-in bookings, then he/she will be removed from the checked-in
-guest list. Otherwise, he/she will *not* be removed from the checked-in guest list.
-* If the guest has checked-in, he/she will be added to the archived guest list.
-|===
 
 Format: `checkout r/ROOM_NUMBER [from/START_DATE]`
 
@@ -222,7 +238,7 @@ Reassigns the booking with start date 01/11/18 in room 085 to room 086.
 
 Finds guests or rooms, depending on the input flag and the keyword filters.
 
-Format: `find [flag] FILTERS`
+Format: `find FLAG FILTER [MOREFILTERS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -232,39 +248,44 @@ Format: `find [flag] FILTERS`
 * Any number of filters can be chained and used together
 ****
 
-Filters for Guest (-g):
+Filters for Guest / Checked-in Guests (-g/-cg):
 
-* `n/ - Name`
-* `p/ - Phone Number`
-* `e/ - Email Address`
-* `t/ - Tags`
+* `n/` - Name
+* `p/` - Phone Number
+* `e/` - Email Address
+* `t/` - Tags
 
 Filters for Rooms (-r):
 
-* `r/ - Room Number`
-* `c/ - Capacity`
-* `t/ - Room Tags`
-* `n/ - Guest name within bookings`
+* `r/` - Room Number
+* `c/` - Capacity
+* `t/` - Room Tags
+* `n/` - Guest name within bookings
 
-* `-hb - Has Bookings Flag`*
-* `-nb - No Bookings Flag`*
-* `from/ - Booking Start Date`^
-* `to/ - Booking End Date`^
+* `-hb` - Has Bookings Flag*
+* `-nb` - No Bookings Flag*
+* `from/` - Booking Start Date^
+* `to/` - Booking End Date^
 
-[TIP]
-Flags marked with * cannot be used together in the same command.
-These flags can be used independently, or with flags marked with ^ . +
-Input dates must be in DD/MM/YY or DD/MM/YYYY format.
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|
+Flags marked with * cannot be used together in the same command. +
+These flags can be used independently, or with flags marked with ^ .
+|===
 
-Find Command Examples:
+Examples:
 
 =======
 * `find -g n/Alex Yu` +
 Find guest(s) with "Alex" or "Yu" or both in their names.
 * `find -g n/Alex t/VIP` +
 Find guest(s) named Alex with tag "VIP".
-* `find -g p/81027115` +
-Find guest(s) with phone number "81027115".
+* `find -cg p/81027115` +
+Find checked-in guest(s) with phone number "81027115".
+* `find -cg t/VIP` +
+Find checked-in guest(s) with tag "VIP".
 * `find -r r/085` +
 Find room 085
 * `find -r c/2` +
@@ -283,7 +304,7 @@ Find all rooms with bookings with tag "RoomService".
 === Listing all guests : `list`
 
 Shows the entire list of rooms, checked-in guests, or archived guests, depending on the input flag +
-Format: `list [flag]`
+Format: `list FLAG`
 
 Examples:
 
@@ -331,13 +352,10 @@ Step 1: Concierge(TM) uses SHA-256 password hashing. This hash for your
 *password* can be generated using this
 https://passwordsgenerator.net/sha256-hash-generator/[tool].
 
-[cols="^.^1,<.^11a", frame=none]
-|===
-|image:icon-important.png[Important info]
-|Concierge(TM) is designed to work for alphanumeric usernames and passwords in
+[NOTE]
+ Concierge(TM) is designed to work for alphanumeric usernames and passwords in
  mind. Do not enter symbols (!, @, %...). Do not begin or end your passwords
  with whitespaces.
-|===
 
 Step 2: Add the entry to the `passwords.json` file. This should be in the
 same location as `concierge.jar`. Note that entries are separated with a
@@ -352,14 +370,11 @@ image::LogInCommand-addpasswordentry.png[width="900"]
 Step 3: Close and reload the Concierge(TM) application, and your new account
 will be recognised.
 
-[cols="^.^1,<.^11a", frame=none]
-|===
-|image:icon-important.png[Important info]
-|Currently, if you enter a valid json file format but an incorrect password
- reference list format, you will end up with no default account. This allows
- hotel managers to set no user accounts for Concierge. To retrieve the default
- account, delete the `passwords.json` file and re-run Concierge(TM).
-|===
+[NOTE]
+ The parsing of the `passwords.json` file is delicate. Currently, if you
+ enter a valid json file format but an incorrect password reference list
+ format, you will end up with no default account. To resolve this, delete the
+  `passwords.json` file and re-run Concierge(TM).
 
 === Logout : `logout`
 
@@ -369,7 +384,8 @@ Format: `logout`
 * The special classes of commands (as documented in <<Login : `login`,
 login>>) can no longer be executed.
 * The `logout` command will erase the command history, so users cannot undo/
-redo commands executed before the logout. Even if you login again, you cannot
+redo commands executed before the logout.
+** Even if you login again, you cannot
  undo your previous actions.
 ** This achieves the same effect as closing and re-opening Concierge(TM)
 after a logout.
@@ -526,17 +542,6 @@ Example: `clear`
 image::ClearCommand-success.png[width="400"]
 // end::clear[]
 
-// tag::archive[]
-=== Command Archive: `archive` image:icon-key.png[width="32"] [red]#Coming in v2.0#
-
-All user input is captured and saved onto a log. All keystrokes are
-captured, including invalid/mistyped and login commands.
-
-To open this log, input the archive command +
-Format: `archive`
-
-// end::archive[]
-
 // tag::autocomplete[]
 === Autocomplete: kbd:[Ctrl], kbd:[Alt]
 
@@ -617,8 +622,8 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Checkin* : `checkin r/ROOM_NUMBER`
 * *Checkout* : `checkout r/ROOM_NUMBER [from/START_DATE]`
 * *Reassign* : `reassign r/ROOM_NUMBER from/START_DATE nr/NEW_ROOM_NUMBER`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]`
-* *List* : `list KEYWORD`
+* *Find* : `find FLAG FILTER [MOREFILTERS]`
+* *List* : `list FLAG`
 * *Login* : `login user/USERNAME pw/PASSWORD`
 * *Logout* : `logout`
 * *Select* : `select INDEX`
@@ -627,7 +632,6 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Clear* : `clear`
-* *Export log* : `export` [red]#Coming in v2.0#
 * *Help* : `help`
 * *Exit* : `exit`
 
@@ -637,6 +641,10 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 ** `menu` - Display the default Concierge(TM) menu
 ** `maintenance` - Tag a room as under maintenance
 ** `export` - Export the logs of the current session to a text-editable file
+// tag::archive[]
+** `archive` - Opens the log where all user input is captured and saved. All keystrokes are
+captured, including invalid/mistyped and login commands.
+// end::archive[]
 
 * Other features
 ** Displaying the checked-in guest's room's information when selecting the checked-in guests
