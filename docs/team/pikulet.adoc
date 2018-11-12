@@ -9,10 +9,10 @@
 
 == Overview
 
-Concierge(TM) is a desktop hotel management application for receptionists to
-handle potential bookings and current guests. The user interacts with it
-using a CLI, and it has a GUI created with JavaFX. It is written in Java, and
- has about 10 kLoC.
+https://github.com/CS2103-AY1819S1-F11-2/main[Concierge(TM)] is a desktop
+hotel management application for receptionists to handle potential bookings
+and current guests. The user interacts with it using a CLI, and it has a GUI
+created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
@@ -47,28 +47,28 @@ https://github.com/CS2103-AY1819S1-F11-2/main/pull/226[#226].
 
 *Minor enhancements/ code contributed*:
 
-* Renamed the existing classes and methods from `Person` to `Guest`
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/133[#133]
-* Removed `Address` a field in `Person`
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[#143], removed the edit
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[#233] and delete
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[#139] commands
-* Modified the `add` command to take in room and date details
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[#104]. Room
-and Booking package by others.
-* Modified the `clear` command to maintain empty hotel rooms
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[#162]
-* Added function for GUI verification of rooms
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[#162]
-* Added most of the Appendices in the Developer Guide
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/42[#42]
+* https://github.com/CS2103-AY1819S1-F11-2/main/pull/133[Renamed]
+ the existing classes and methods from `Person` to `Guest`
+* Removed https://github.com/CS2103-AY1819S1-F11-2/main/pull/143[`Address`]
+ as a field in `Person`, removed the
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/233[edit] and
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/139[delete] commands
+* Modified the https://github.com/CS2103-AY1819S1-F11-2/main/pull/104[`add`]
+command to take in room and date details. Room and Booking package by others.
+* Modified the https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[`clear`]
+ command to maintain empty hotel rooms
+* Added function for
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/162[GUI verification of rooms]
+* Added most of the
+https://github.com/CS2103-AY1819S1-F11-2/main/pull/42[Appendices] in the
+Developer Guide
 
 *Project Management*:
 
 * Managed the team's issue tracker
 * Encouraged team to use clean PRs, TODO and Codacy
-* Set up RepoSense for the team
-https://github.com/CS2103-AY1819S1-F11-2/main/pull/159[#159]
+* Set up https://github.com/CS2103-AY1819S1-F11-2/main/pull/159[RepoSense] for
+ the team
 * Community
 ** PRs reviewed (with non-trivial review comments):
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/157[#157],
@@ -80,8 +80,8 @@ https://github.com/CS2103-AY1819S1-F11-2/main/pull/222[#222],
 https://github.com/CS2103-AY1819S1-F11-2/main/pull/219[#219]
 ** Reported bugs and suggestions for other teams in the class
 *** https://github.com/CS2103-AY1819S1-W14-3/main/issues/161[Discovered impersistence in data],
-https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[Discovered hidden bug by rearranging command],
-https://github.com/CS2103-AY1819S1-W14-3/main/issues/157[Made suggestion on bounds checking]
+https://github.com/CS2103-AY1819S1-W14-3/main/issues/148[discovered hidden bug by rearranging command],
+https://github.com/CS2103-AY1819S1-W14-3/main/issues/157[made suggestion on bounds checking]
 
 == Contributions to the User Guide
 
