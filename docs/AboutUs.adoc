@@ -20,7 +20,7 @@ Side-responsiblities: Scheduling and tracking, Integration
 
 '''
 
-=== Joyce Yeo Shu Hui
+=== Joyce Yeo Shuhui
 image::pikulet.png[width="150", align="left"]
 {empty}[http://github.com/pikulet[github]] [<<pikulet#, portfolio>>]
 
@@ -52,7 +52,7 @@ Side-responsiblities: Code quality
 
 === Neil Mehta
 image::neilish3re.png[width="150", align="left"]
-{empty}[http://github.com/neilish3re[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/neilish3re[github]] [<<neilish3re#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Testing, Commons Component, JUnit expert +

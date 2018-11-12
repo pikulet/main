@@ -100,6 +100,8 @@ When you are ready to start coding,
 
 == Design
 
+[NOTE] The diagrams in this section are intended to be updated only in v.1.5.
+
 [[Design-Architecture]]
 === Architecture
 
@@ -241,6 +243,9 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::undoredo[]
 === Undo/Redo feature
+
+[NOTE]
+Diagrammatic references to "AddressBook" are intended to be removed in v.1.5.
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by `VersionedConcierge`.
@@ -320,23 +325,23 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::add[]
-=== AddCommand
+=== Adding a Booking
 
 The `add` command is used by the receptionist to add the guest to the hotel,
 and assign him a room.
 
 ==== Current Implementation
 We currently accept a `Guest`, `RoomNumber` and `BookingPeriod`
-as parameters for the `AddCommand` constructor.
-
-An example of its usage:
-* `add n/Madith p/83141592 e/madith@themyth.com a/Recluse Street -r 041 from/
-29/10/2018 to/ 03/11/2018`
+as parameters for the `AddCommand` constructor. An example of its usage:
+`add n/Madith p/83141592 e/madith@themyth.com r/041 from/29/11/2018 to/ 03/12/2018`
 
 The parsing of the `AddCommand` is very similar to what was already
 implemented in AddressBook4. More parameters were added, namely the
 `RoomNumber` and `BookingPeriod`. These are parsed to create the respective
 objects - `Guest`, `RoomNumber` and `BookingPeriod`.
+
+* In v2.0, users can enter a start date and duration to specify their booking
+period.
 
 As in AddressBook4, the `Logic` component parses the `AddCommand`, and the
 `Model` handles its execution.
@@ -345,107 +350,65 @@ As in AddressBook4, the `Logic` component parses the `AddCommand`, and the
 previously the case in AddressBook4.
 * A new `Booking` object is created with the `Guest` and `BookingPeriod` as
 its parameters.
-* This `Booking` is then added to the `Room` with the `RoomNumber` specified.
+* This `Booking` is then added to the `Room` with the `RoomNumber` specified. Every `Room` maintains a `SortedSet<Booking>` which is encapsulated in the
+ `Bookings` (plural) class.
 
-An Activity Diagram for the execution of `execute(Model model, CommandHistory
- history)` is shown below.
+An Activity Diagram for the execution of `AddCommand#execute` is shown below.
 
-image::AddCommand-activity-diagram.png[width="600"]
+image::AddCommand-activity-diagram.png[width="400"]
+
+[NOTE]
+The `AddCommandParser` already checks that `ROOM_NUMBER` is a valid
+string from `001` to `100`, and the initialisation of Concierge checks that
+there are 100 rooms. The `RoomNotFoundException` is not expected to occur
+for any user input, but is left there as a defensive measure.
 
 ==== Design Considerations
-===== Aspect: How to recognise a `BookingPeriod` from the user input?
+===== Aspect: Check for outdated bookings
 
-The relationship we defined between a `Room` and `Booking` is that a `Room`
-has a `Booking`. The `Booking` then comprises a `Guest` and `BookingPeriod`
-field.
+Outdated bookings are those which have a start date before today. Concierge
+disallows users to `add` outdated bookings.
 
-However, it is troublesome to enter a `BookingPeriod` manually, as it entails
- entering two dates in the DD/MM/YYYY format.
+* **Alternative 1 (current choice):** Do the check in `AddCommand#execute`
+** Pros: Very easy to implement. A parameter check in the `execute` method will
+suffice. Will only affect the `AddCommandSystemTest`.
+** Cons: The actual `Model#addBooking` does not do any check on the
+`BookingPeriod` being outdated, opening the possibly of outdated `Booking` s
+being added from via other commands.
 
-* **Alternative 1 (current choice):** Enter the start and end date of
-`BookingPeriod`
-** Pros: Very easy to parse. The checks for dates all occur at the
-`BookingPeriod` class. There is no conversion needed to track the exact date,
- which is useful to check for the booking status of rooms on a particular date.
-** Cons: Not user-friendly. Requires user to enter two dates.
+* **Alternative 2:** Do the check in `Room#addBooking`
+** Pros: Centralises exceptions thrown related to bookings in the
+`Booking` class. Increases the cohesiveness of this class.
+** Cons: All the existing tests and sample data calling the `addBooking`
+method with outdated bookings have to be changed. It also becomes difficult
+to do unit tests on checking in bookings which are outdated but not expired,
+since these bookings can no longer be added to the model.
 
-* **Alternative 2 (coming in v1.5):** Enter the start date and a duration
-** Pros: Very intuitive and user-friendly.
-** Cons: The duration has to be parsed and converted to an end date. The
-current implementation of `BookingPeriod` does not support this method.
-
-===== Aspect: Reducing redundancy in `UniqueGuestList` and `UniqueRoomList`
-
-As one can observe in the current implementation, `Guest` is added to the
-guest list of Concierge and is then used again to make a `Booking`. The
-`Booking` is added to Concierge, this time under the room list.
-
-There is a repetition of the addition of a guest - it is added to both the
-`UniqueGuestList` and the `UniqueRoomList`. In an actual use case of
-Concierge, we rarely if not never add the `Guest` to the `UniqueGuestList`
-without assigning him a `Room` under the `UniqueRoomList`.
-
-In its cleanest case, the structure of Concierge would be as follows:
-
-Concierge contains a `UniqueRoomList`. Each room in this internalList may
-consist multiple `Booking` s. Each `Booking` is tagged to one `Guest` and one
-`BookingPeriod`. An illustration of this relationship is shown below.
-
-image::addCommand-class-diagram.png[width="800"]
-
-* **Alternative 1 (current choice):** Keep both the `UniqueGuestList` and
-`UniqueRoomList`
-** Pros: Maintaining a separate list of guests currently allows us to quickly
- check for the `DuplicateGuestException`.
-** Cons: The list is only useful for guest-specific functions. To find the
-`Room` the guest is assigned to, we still have to work through the
-`UniqueRoomList`.
-
-* **Alternative 2:** Remove the `UniqueGuestList`
-** Pros: Remove the redundancy in maintaining two lists. Improved storage space.
-** Cons: Unable to quickly check for a `DuplicateGuestException`. However, we
- must also note that the `DuplicateGuestException` is something we may want
- to remove in future iterations. That is, a `Guest` should be able to make
- multiple `Booking` s. However, this would lead to more complications -
- during `checkout`, we have to look through all the `Booking` s and ensure
- that the `Guest` is no longer needed in the Concierge system. Only then can
- we move the `Guest` to an archive or remove him from the system.
-
-==== Aspect: Reduce coupling between `Room` and `Guest`
+===== Aspect: Reduce coupling between `Room` and `Guest`
 
 Semantically, we can observe a strong coupling and dependency between `Room`
 and `Guest`. A `Room` contains a `Guest`, and a `Guest` also has a `Room`.
-This coupling is more binding than that between `UniqueGuestList` and
-`UniqueRoomList` as described above.
-
-Having to keep track of both sides of the coin introduces an unnecessary
-coupling between these two classes. Our team decided to record `Guest` in
-`Room` instead of recording `Room` in `Guest`. The difference between these
-two selections lies in the time needed for different operations.
+Maintaining this coupling allows for very quick lookup both ways, either
+given a `Guest` (which is common at the reception desk) or given a `Room`
+(which is common for housekeeping).
 
 * **Alternative 1 (current choice):** Add `Guest` as a field in `Room`
-** Pros: An efficient for managing bookings. All the `Booking` s tied to a
-particular `Room` can be put together, allowing the Receptionist to determine
- if a `Room` can be booked in `O(m)` time, where `m` is the number of
- `Booking` s in a room. In the context of Concierge, there is a rare chance
- that a `Room` will have a large number of advanced bookings being made.
-** Cons: It is difficult to find the `Room` given the `Guest`. When a
-`Guest` has made and advanced booking and wishes to cancel it, we have
-to search through all the `Room` s for bookings on the particular date
-tagged to the `Guest`. However, given the `BookingPeriod` of the
-`Guest`, this can be done in `O(1)` time since the number of `Room` s is
-constant.
-*** For most uses of Concierge, we expect `Guest` s to be aware of their
- `Room` s. When the `Guest` calls for room service, we can tag the service
- to the `Room` instead.
+** Pros: An efficient way for managing bookings. Receptionist can quickly
+determine if the `Room` is free to book. Lookup time for `Guest` not
+expected to increase greatly, since `Room` s are not expected to have a large
+ number of advanced bookings made.
+** Cons: Difficult to find the `Room` given the `Guest`. When a `Guest` has made
+an advanced booking and wishes to cancel it, we have to search through all
+the `Room` s. Nevertheless, we expect most guests to be aware of their rooms.
 
 * **Alternative 2:** Add `Room` as a field in `Guest`
-** Pros: Very customer-centric design. Allows the receptionist to find the
-`Room` or `Booking` details of a `Guest` in `O(1)` time.
+** Pros: Very customer-centric design. Centralises all the information about
+the `Guest`, including `Booking` s made and `Expense` s incurred.
 ** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
-Because the `Booking` information is now scattered across individual
-`Guest` s, the search space for `Concierge` to decide if a `Room` is free to
-book is the entire `UniqueGuestList`.
+`Booking` information is now scattered across individual `Guest` s.
+*** [v1.4] On top of the list of rooms, we maintain a separate list of
+checked-in guests. This list does not retain any booking information, as it
+ is meant to for a quick lookup of the guests' particulars.
 // end::add[]
 
 // tag::list[]
@@ -454,7 +417,7 @@ The rooms list feature builds upon, and reuses functions from the ;originally im
 
 The Activity UML Diagram for the current implementation of ListCommand is as follows:
 
-image::ListCommandUml.png[width="600"]
+image::ListCommandUml.png[width="400"]
 
 ==== Current Implementation
 The list function is facilitated by a modified `ListCommand` class, of which the input from the CommandBox is parsed by a `ListCommandParser` class.
@@ -489,7 +452,7 @@ The Find feature expands upon the originally implemented FindCommand, allowing f
 
 The Activity UML Diagram for the current implementation of FindCommand is as follows:
 
-image::FindCommandUml.png[width="600"]
+image::FindCommandUml.png[width="400"]
 
 ==== Current Implementation
 The find function is facilitated by a modified `FindCommand` class, of which the input from the CommandBox is parsed by a `FindCommandParser` class.
@@ -808,14 +771,294 @@ image::AddExpenseSequenceDiagram.png[width="900"]
 // tag::loginlogout[]
 === Login and Logout
 
+The `login` feature allows hotel managers to tag commands entered with a
+ specific user, creating a blame history to trace rogue commands. Managers
+ can also control which receptionists have full access to Concierge.
+
 ==== Current Implementation
+
+Currently, `login` is implemented as a
+<<Aspect: Accessing features of Concierge with/ without login, dynamic feature>>,
+so users are not prompted to sign in upon starting Concierge. Instead, they
+only have to sign in when executing commands which would mutate the data,
+such as `add`, `checkin`, `checkout`, `reassign`, `service` and `clear`.
+
+===== Logic
+
+Given the nature of the `login` command being dynamic (can be entered at any
+point in time, between any commands), it is then natural to implement it like
+a normal command, extending the abstract `Command` class. The `logout` command
+ is also implemented in this way.
+
+===== Model
+
+The model handles the signing-in, using its attribute `LogInManager`.
+ The Class Diagram of the login module is shown below.
+
+image::LogInCommand-LogInManager-classdiagram.png[width=700]
+
+`LogInManager` uses an optional `username` to keep track of whether
+the user is currently signed in. The `passwordReferenceList` provides an
+immutable key-value lookup for usernames and passwords. +
+
+`LogInManager` implements the following operations.
+
+* `LogInManager#isSignedIn()` - checks if the user is currently signed in.
+* `LogInManager#signIn(String, String)` - attempts to sign in with the given
+username and hashed password. This is handled by the `PasswordHashList`. A
+case-insensitive comparison is used on the hash.
+* `LogInManager#signOut()` - signs out of Concierge.
+
+A new method `resetUndoRedoHistory` was added to the
+`VersionedConcierge` (used for the Undo/ Redo feature). This is used to clear
+the command history upon a `logout` command, so users cannot undo important
+commands or redo accidental bad commands after signing out.
+
+====== Login
+
+Shown below is the Sequence Diagram for executing a valid `login` command.
+The diagram also illustrates how the `LogicManager` checks for the sign-in
+requirement of commands.
+
+image::LogInCommand-sequencediagram.png[width=1000]
+
+===== Storage
+
+The `passwords.json` file is read when Concierge is first opened (i.e. in
+`MainApp#init`), and is never written to again. The storage function is
+managed by the `JsonPasswordsStorage` class. Intuitively, the usernames and
+passwords are stored as <<Aspect: Storage of Passwords, key-value pairs>> for
+ quick look-up.
+
+A SHA-256 hash was used in building this feature. In future, this hashing
+algorithm can be changed to a HMAC hash, which adds a username salt. Then,
+different users will not know if they have chosen the same passwords.
+
+===== Check for sign-in requirement of commands
+
+`LogicManager` does the
+<<Aspect: Check for sign-in requirement of commands, checks for whether a command requires a sign in>>,
+ and whether the model is signed in.
+
+The `Command` class exposes a new `requiresSignIn()` method that returns
+false by default. To make new command require signing-in, one only has to
+overwrite this method in that command.
 
 ==== Design Considerations
 
+===== Aspect: Accessing features of Concierge with/ without login
+
+* **Alternative 1 (current choice):** Login is needed only for some features
+** Pros: Manager can implement some level of access control within Concierge,
+ especially since some of the more commonly used Concierge features (`list`,
+ `find`) are read-only features. This is quicker than mandating a sign-in at
+ the start and creating different user views based on the account privilege (admin vs normal).
+** Cons: Not very intuitive to users. They have to enter commands before being
+told they need to sign in. The `requiresSignIn()` check takes place after the
+parsing of the command, so a user can is told they cannot execute the command
+without a sign-in after their command is parsed correctly.
+
+* **Alternative 2:** Login is needed for all features
+** Pros: Very easy to check login validity. This only occurs when Concierge is
+first loaded. Subsequent commands can be executed without additional checks
+on the sign-in requirement.
+
+===== Aspect: Check for sign-in requirement of commands
+
+Given that sign-in is only required for some commands, the priority in
+designing this aspect is the ability to easily mandate/ disable compulsory
+the login requirement for current and future commands.
+
+* **Alternative 1 (current choice):** Do the check in `LogInManager#execute`
+** Pros: Ensures that commands are checked before any execution. Users will not
+inadvertently change the model before doing the sign-in checks.
+** Cons: Unable to implement commands that can do some actions without
+sign-in. For example, a future developer may want to make the `add` command
+such that when the user is not signed-in, the booking is still added but a tag
+ is added to the `Guest`, reminding the manager to verify the booking.
+
+* **Alternative 2:** Do the check in `Command#execute`
+** Pros: Increases cohesiveness of `Command` class. The compulsory sign-in is
+ an attribute of a `Command`, so these checks can be done internally.
+ `Command` can implement a method `checkSignIn(Model)`, and commands which
+ require sign-ins can call this method in their respective `execute` methods.
+** Cons: While increasing cohesion, this implementation makes less semantic sense.
+ The logical misstep comes because one is executing the method, then checking
+  if the method can be executed, then "reversing" the execution.
+
+===== Aspect: Storage of Passwords
+
+The password file is currently read at `MainApp#init`, and saved once.
+Unlike the Concierge data, this file is no longer referred to when Concierge
+is in use.
+
+* **Alternative 1 (current choice):** Store passwords in JSON file
+** Pros: JSON is very easy to work with.
+*** Able to utilise existing `JsonUtil` methods used by the `UserPrefs` and
+`Config` classes.
+*** Easily parse data into key-value pairs, which semantically matches our needs.
+** Cons: `JsonUtil` file is not completely suitable for a data type that has
+potentially an unlimited number of entries, since this utility serialises the
+ data to match the class attributes.
+* **Alternative 2:** Store passwords in same XML file as all other
+Concierge data.
+** Pros: Centralises data storage in Concierge. There is only one single
+source of truth for all data.
+** Cons: The XML file is too complicated for the needs of password storage.
+*** Concierge does not need to write the the passwords file when in use.
+`concierge.xml` is constantly being written to, which is an unnecessary and
+possibly unsafe feature for the passwords component.
+*** Creating a new password entry is difficult since once has to add all
+the layers of XML tags involved. Nevertheless, users are not expected to be
+adding new accounts on a regular basis.
 // end::loginlogout[]
 
+// tag::autocomplete[]
+=== Autocomplete: kbd:[Ctrl], kbd:[Alt]
+
+==== Overview
+
+The Autocomplete feature allows the user to seamlessly type in the
+full command and prefixes without having to worry if he/she missed
+out on any prefix. This feature helps the user by prompting the correct
+format. This is useful as some of the commands require several inputs
+from the user and hence this will save time and commands can be
+executed faster.
+
+A quick-clear has also been added as part of this feature, so that
+the user can again, save time.Press kbd:[Alt] to quick-clear the
+`CommandBox` (saves time for user when he wants to clear the box).
+
+The command box before kbd:[Alt] is pressed:
+
+image::servicepreclear.png[width="419"]
+
+The command box aft kbd:[Alt] is pressed:
+
+image::servicepostclear.png[width="371"]
+
+==== Example of how feature works
+
+**Step 1**: Launch application
+
+**Step 2**: User enters `a` in `CommandBox` then presses kbd:[Ctrl].
+`AutoCompleteManager()` compares `input` through the list of
+`initCommandKeyWords`and proceeds to display the command in the
+`CommandBox` because `a` is an applicable `COMMAND_WORD`.
+
+image::add.png[width="579"]
+
+After kbd:[Ctrl] has been pressed, it automatically inserts the
+first prefix `PREFIX_NAME` in the command line.
+
+image::addPREFIX_NAME.png[width="581"]
+
+**Step 3**: After the user fills up the `PREFIX_NAME` field, he can press
+kbd:[Space] to move on to the next prefix. After pressing kbd:[Space], then
+he can press kbd:[Ctrl]. At this point, `AutoCompleteManager()` is
+called again but this time instead of calling the `getAutoCompleteCommands()`
+it calls `getAutoCompleteNextMissingParameter` since it will detect
+the presence of the `PREFIX_NAME` parameter.
+
+This is the expected outcome before pressing kbd:[Ctrl]
+
+image::anthonyspace.png[width="581"]
+
+This is the expected outcome after pressing kbd:[Ctrl]
+
+image::afteranthonyspace.png[width="581"]
+
+**Step 4**: The user repeats Step 3 until all parameters are input by the user
+and then presses kbd:[Enter] to execute the command.
+Note: For `AddCommand`, the final parameter `PREFIX_TAG` is optional, so
+the user can just delete it if he chooses not to add a tag.
+
+This is the expected outcome after all the parameters are filled.
+
+image::fulladdautocomplete.png[width="953"]
+
+Press kbd:[Enter] to execute the command.
+
+Given below is the activity diagram for the Autocomplete feature.
+
+**Activity Diagram :**
+
+image::AutocompleteActivityDiagram.png[width="331"]
+
+Activity Diagram demonstrates what happens when user presses kbd:[Ctrl]
+
+==== Current Implementation
+
+The Autocomplete mechanism is facilitated by `AutoCompleteManager`, which
+can be found in `LogicManager`. It supports the auto completion of incomplete
+commands by providing a list of auto completed commands from a given incomplete
+command.
+
+An underlying `Trie` data structure is used to facilitate the `AutocompleteManager`.
+`Trie` only supports autocompletion of commands that are provided by the
+`AutocompleteManager`. The `CommandParameterSyntaxHandler` that is found in
+`AutocompleteManager` supports the autocompletion of parameters for commands.
+
+Given below is the class diagram for the Autocomplete feature.
+
+**Autocomplete Class Diagram :**
+
+image::AutocompleteClassDiagram.png[width="719"]
+
+The `CommandBox` interacts with the `AutocompleteManager` using `LogicManager`.
+When the user presses kbd:[Ctrl] in the command box, the `CommandBox` will
+handle the Ctrl key press event and will execute the `AutoCompleteUserInput()`
+method.
+
+Given below is the sequence diagram for the Autocomplete feature.
+
+**Autocomplete Sequence Diagram :**
+
+image::AutocompleteSequenceDiagram.png[width="926"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of Autocomplete
+
+* **Alternative 1 (current choice): ** Use a manager (`AutoCompleteManager`)
+to handle the autocomplete helper methods.
+
+** Pros:
+Allows for better usability and more code abstraction.
+** Cons:
+The amount of time taken for a new developer to to understand all the
+interaction between methods will be longer.
+
+* **Alternative 2: ** Iterate through all possible commands to find match prefix.
+
+** Pros:
+Implementation of this alternative would be easier.
+** Cons:
+If there are too many commands being input consecutively, the application
+might start to lag due to possible loss of performance.
+
+===== Aspect: Implementation of Algorithm
+
+* **Alternative 1 (current choice): ** Trie Data Structure
+
+** Pros:
+Performance of application will be better.
+** Cons:
+The complexity of implementation is higher.
+
+* **Alternative 2: ** Iterate through all possible commands to find
+match prefix.
+
+** Pros:
+Implementation of this alternative would be easier.
+** Cons:
+If there are too many commands being input consecutively, the application
+might start to lag due to possible loss of performance.
+
+// end::autocomplete[]
+
 // tag::archive[]
-=== Command Archive feature
+=== [Proposed] Command Archive feature
 Given below is the UML diagram for the `CommandArchive` Class:
 
 image::CommandArchive_class.png[width="280"]
@@ -827,47 +1070,64 @@ image::CommandHistory_class.png[width="345"]
 ==== Current Implementation
 
 The Command Archive mechanism is facilitated by `CommandArchive`.
-It utilises the `userInputHistory` to extract the latest command that the user has input and passes the `inputString`
-to `stringToFile` method in `CommandArchive` class. The `inputString` is then appended to the `CommandFile.txt` file. Additionally, it
-implements the following operations:
+It utilises the `userInputHistory` to extract the latest command that the user
+has input and passes the `inputString`to `stringToFile` method in `CommandArchive`
+class. The `inputString` is then appended to the `CommandFile.txt` file.
+Additionally, it implements the following operations:
 
-* `StringBuilder()` -- The main operations of the `StringBuilder` are the `append` and `insert` methods which can
-be overloaded to accept data of any type. The `append` method always adds these characters at the end of the builder.
-This operation can be found in `CommandHistory`.
-* `toString()` -- Converts the StringBuilder object into a string named `inputString` so it can be passed to the
-`CommandArchive` class. This operation can be found in `CommandHistory`.
-* `getLogger()` -- Creates `LOGGER` so that it can log any `IOExceptions` that are caught in the catch blocks of the
-methods found in `stringToFile` method of `CommandArchive`.
-* `substring()` -- Extracts the latest command from the `userInputHistory`. This is required because the
-`userInputHistory` appends all the older commands into the LinkedList as well. This is done by looking for the first
- newLine character occurrence of the `inputString`. The substring is then extracted as `latestUserCommand`.
-This operation can be found in `CommandArchive`.
- * `simpleDateFormat()` -- Creates a `timeStamp` in DD/MM/YYY format that can later be appended to
+* `StringBuilder()` -- The main operations of the `StringBuilder` are the `append`
+and `insert` methods which can be overloaded to accept data of any type. The `append`
+method always adds these characters at the end of the builder.This operation
+can be found in `CommandHistory`.
+
+* `toString()` -- Converts the StringBuilder object into a string named
+`inputString` so it can be passed to the `CommandArchive` class. This operation
+can be found in `CommandHistory`.* `getLogger()` -- Creates `LOGGER` so that it
+can log any `IOExceptions` that are caught in the catch blocks of the methods
+found in `stringToFile` method of `CommandArchive`.
+
+* `substring()` -- Extracts the latest command from the `userInputHistory`.
+This is required because the `userInputHistory` appends all the older commands
+into the LinkedList as well. This is done by looking for the first newLine character
+occurrence of the `inputString`. The substring is then extracted as
 `latestUserCommand`. This operation can be found in `CommandArchive`.
- * `fileWriter` -- Writes the stream of characters (which is `latestUserCommand`) to `commandHistory` file. This will
-eventually be the output that is written into `commandFile.txt` via `PrintWriter`. The `PrintWriter` also appends
-`timeStamp` to the latest entry (which is eventually `timeStamp` + `latestUserCommand`). This operation can be found
-in CommandArchive`.
+
+ * `simpleDateFormat()` -- Creates a `timeStamp` in DD/MM/YYY format that can later
+ be appended to `latestUserCommand`. This operation can be found in `CommandArchive`.
+
+ * `fileWriter` -- Writes the stream of characters (which is `latestUserCommand`)
+to `commandHistory` file. This will eventually be the output that is written into
+`commandFile.txt` via `PrintWriter`. The `PrintWriter` also appends `timeStamp`
+to the latest entry (which is eventually `timeStamp` + `latestUserCommand`). This
+operation can be found in CommandArchive`.
+
+ This command requires a login.
 
 ==== Design Considerations
 
 ===== Aspect: How to extract userInputHistory
 
-* **Alternative 1 (current choice):** `userInputHistory` is first put into a `stringBuilder` and then converted to
-string to then pass to `CommandArchive`.
+* **Alternative 1 (current choice):** `userInputHistory` is first put into a
+`stringBuilder` and then converted to string to then pass to `CommandArchive`.
+
 ** Pros:
-1. Easy to implement because `StringBuilder` can utilise `append` and `insert` methods, which can be overloaded
-to accept any data.
+1. Easy to implement because `StringBuilder` can utilise `append` and `insert`
+methods, which can be overloaded to accept any data.
 2. Faster than `StringBuffer` under most implementations.
 3. StringBuilder is mutable while String is immutable.
-** Cons: String is more optimised especially if you don't need the extra features of `StringBuilder`
-* **Alternative 2:** Create a KeyLogger class that implements KeyListener to capture userInput.
-** Pros: It is more secure and can only be accessed for audits and other administrative access purposes and is hidden
-from the user.
+** Cons: String is more optimised especially if you don't need the extra features
+of `StringBuilder`
+* **Alternative 2:** Create a KeyLogger class that implements KeyListener
+to capture userInput.
+** Pros: It is more secure and can only be accessed for audits and other
+administrative access purposes and is hidden from the user.
 ** Cons:
-1. If implemented wrongly, it will become a global KeyLogger that captures userInput outside of application.
-2. Does not utilise the existing infrastructure and data found in the base level program class `CommandHistory` and
-hence would require more effort to implement.
+1. If implemented wrongly, it will become a global KeyLogger that captures
+userInput outside of application.
+
+2. Does not utilise the existing infrastructure
+and data found in the base level program class `CommandHistory` and hence
+would require more effort to implement.
 // end::archive[]
 
 // tag::dataencryption[]
@@ -1081,284 +1341,6 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Concierge depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
-
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all guests in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/ConciergeParser.java[`ConciergeParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/ConciergeParser.java[`ConciergeParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in Concierge, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Concierge.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`] and link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`] allows you to update a guest, and link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/Concierge.java[`Concierge`]. Loop through each guest, and remove the `tag` from each guest.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `Concierge#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Concierge application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last guest in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside guest cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/GuestCard.java[the `GuestCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `GuestCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/ConciergeSystemTest.java[`ConciergeSystemTest#assertCommandBoxShowsDefaultStyle() and ConciergeSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in Concierge.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever Concierge is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of guests when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleConciergeChangedEvent(ConciergeChangedEvent)`] to update the number of guests whenever there are new changes to the concierge.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/ConciergeSystemTest.java[`ConciergeSystemTest`] to also verify the new total number of guests status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving Concierge to the cloud. However, the current implementation of the application constantly saves Concierge after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for Concierge storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupConcierge(ReadOnlyConcierge)`, so that Concierge can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/ConciergeStorage.java[`ConciergeStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlConciergeStorage.java[`XmlConciergeStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `concierge`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a guest specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first guest to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first guest.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/Command.java[`Command`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/ConciergeParser.java[`ConciergeParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `execute()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/ConciergeParserTest.java[`ConciergeParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/ConciergeParser.java[`ConciergeParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/ConciergeParserTest.java[`ConciergeParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `GuestCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/GuestCard.java[`GuestCard`] s to display a remark for each guest later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/GuestListCard.fxml[`GuestListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/GuestCard.java[`GuestCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/GuestCardHandle.java[`GuestCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/guest/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Guest` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`].
-. You may assume that the user will not be able to use the `add` command to modify the remarks field (i.e. the guest will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `concierge.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedGuest` class
-We now have `Remark` s for `Guest` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedGuest.java[`XmlAdaptedGuest`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidGuestConcierge.xml`, `typicalGuestsConcierge.xml`, `validConcierge.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `GuestBuilder`
-Since `Guest` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/GuestBuilder.java[`GuestBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/guest/Guest.java[`Guest`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/GuestBuilder.java[`GuestBuilder`]. This method will create a new `Remark` for the guest that it is currently building.
-. Try and use the method on any sample `Guest` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalGuests.java[`TypicalGuests`].
-
-===== [Step 7] Ui: Connect `Remark` field to `GuestCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/GuestCard.java[`GuestCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/GuestCard.java[`GuestCard`]'s constructor to bind the `Remark` field to the `Guest` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysGuest(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a guest.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == Product Scope
@@ -1667,6 +1649,56 @@ identifications details, thus the responsibility of the guest(s) under that book
 == Instructions for Manual Testing
 
 Given below are instructions to test the app manually.
+
+=== Adding a Booking
+
+`add n/Pikachu p/81726354 e/pi@ka.chu t/wheelchair r/047 from/20/11/2018 to/23/11/2018` +
+Unable to execute command because you have not signed-in to Concierge.
+
+`login user/admin pw/passw0rd` +
+Successfully signed-in to Concierge. The previous booking can be successfully
+ made.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/049 from/20/11/2018 to/23/11/2018` +
+Pikachu can make a new (inactive)** booking in the same time period but a
+different room.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/049 from/16/11/2018 to/20/11/2018` +
+Pikachu can make a new (active)** booking.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/047 from/19/11/2018 to/21/11/2018` +
+Unable to make booking because it overlaps with the previous booking.
+
+`add n/Pikachu p/81726354 e/pi@ka.chu r/047 from/14/11/2018 to/17/11/2018` +
+Unable to make booking because it is outdated.
+
+** As of CS2103 Practical Exam which is expected to be on 16 November 2018.
+
+=== Login/ logout
+
+`clear` +
+Unable to clear because user is not signed in.
+
+`login user/peanuts pw/peanut0` +
+Invalid login account.
+
+`login user/admin pw/passw0rD` +
+Invalid password. Password is case-sensitive.
+
+`login user/admin pw/passw0rd` +
+Successful login.
+
+`clear` +
+Able to clear Concierge.
+
+`logout` +
+Sign out of Concierge.
+
+`clear` +
+Unable to clear because user is not signed in.
+
+`undo` +
+Unable to undo because the revision history was erased.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.

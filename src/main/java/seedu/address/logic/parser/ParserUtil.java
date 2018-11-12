@@ -199,12 +199,12 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String password} into a hashed password.
-     * Strips whitespace off the password, so passwords cannot begin with a
-     * whitespace.
+     * Strips whitespace off the password, so passwords cannot begin or end
+     * with whitespaces.
      */
-    public static String parseAndHashPassword(String pw) throws ParseException {
-        requireNonNull(pw);
-        return PasswordHashUtil.hash(pw.trim());
+    public static String parseAndHashPassword(String password) {
+        requireNonNull(password);
+        return PasswordHashUtil.hash(password.trim());
     }
 
     /**
