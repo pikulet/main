@@ -828,9 +828,10 @@ image::LogInCommand-sequencediagram.png[width=1000]
 
 The `passwords.json` file is read when Concierge is first opened (i.e. in
 `MainApp#init`), and is never written to again. The storage function is
-managed by the `JsonPasswordsStorage` class. Intuitively, the usernames and
-passwords are stored as <<Aspect: Storage of Passwords, key-value pairs>> for
- quick look-up.
+managed by the `JsonPasswordsStorage` class, which interacts with the main
+Concierge software via the `PasswordsStorage` interface as encouraged by the
+Dependency Inversion Principle. Intuitively, passwords are stored as
+<<Aspect: Storage of Passwords, key-value pairs>> for quick look-up.
 
 A SHA-256 hash was used in building this feature. In future, this hashing
 algorithm can be changed to a HMAC hash, which adds a username salt. Then,
@@ -878,6 +879,8 @@ inadvertently change the model before doing the sign-in checks.
 sign-in. For example, a future developer may want to make the `add` command
 such that when the user is not signed-in, the booking is still added but a tag
  is added to the `Guest`, reminding the manager to verify the booking.
+*** Violates the Single Responsibility Principle. The job of `LogicManager`
+is to parse and execute commands.
 
 * **Alternative 2:** Do the check in `Command#execute`
 ** Pros: Increases cohesiveness of `Command` class. The compulsory sign-in is
