@@ -509,7 +509,6 @@ cleared. I.e. all maintenance requests and faults will still be recorded.
 
 Example: `clear`
 
-.Empty room listing with all bookings deleted and expenses reset
 image::ClearCommand-success.png[width="400"]
 // end::clear[]
 
