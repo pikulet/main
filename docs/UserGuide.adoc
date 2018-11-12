@@ -346,10 +346,10 @@ Step 3: Close and reload the Concierge(TM) application, and your new account
 will be recognised.
 
 [NOTE]
- The parsing of the `passwords.json` file is delicate. Currently, if you
- enter a valid json file format but an incorrect password reference list
- format, you will end up with no default account. To resolve this, delete the
-  `passwords.json` file and re-run Concierge(TM).
+ Currently, if you enter a valid json file format but an incorrect password
+ reference list format, you will end up with no default account. This allows
+ hotel managers set no user accounts for Concierge. To retrieve the default
+ account, delete the `passwords.json` file and re-run Concierge(TM).
 
 === Logout : `logout`
 
