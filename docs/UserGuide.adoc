@@ -128,7 +128,7 @@ A valid booking cannot clash with an existing booking. It must also have a
 * A guest can have any number of tags (including 0)
 * A guest can make an unlimited number of bookings with the hotel.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
-His/ her information will be stored under his/ her booking in the room.
+Their personal information will be stored under their booking in the room.
 ****
 
 Example: `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085
@@ -328,8 +328,9 @@ Note: The username and password are both case-sensitive.
 The default account can be accessed with `login user/admin pw/passw0rd`
 
 A login allows the user to access the commands which can affect the
-bookings. Commands which require login: `add`, `checkin`, `checkout`, `reassign`,
-`service` and `clear`.
+bookings. +
+Commands which require login: `add`, `checkin`, `checkout`,
+`reassign`, `service` and `clear`.
 
 Example: `login user/admin pw/passw0rd`
 
@@ -384,7 +385,8 @@ Format: `logout`
 login>>) can no longer be executed.
 * The `logout` command will erase the command history, so users cannot undo/
 redo commands executed before the logout.
-** Even if you login again, you cannot undo your previous actions.
+** Even if you login again, you cannot
+ undo your previous actions.
 ** This achieves the same effect as closing and re-opening Concierge(TM)
 after a logout.
 
@@ -466,10 +468,12 @@ Adds an expenditure of the item *RS03* to the room's expenses and charge $12.34 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous
+and next input respectively in the command box.
+|===
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -478,10 +482,12 @@ Restores the Concierge(TM) application to the state before the previous
 _undoable_ command was executed. +
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify Concierge(TM)'s content (`add`, `checkin`, `checkout` and `clear`).
-====
+[cols="^.^1,<.^11a", frame=none]
+|===
+|image:icon-important.png[Important info]
+|Undoable commands: those commands that modify Concierge(TM)'s content
+(`add`, `checkin`, `checkout`, `reassign`, `service` and `clear`).
+|===
 
 Examples:
 
@@ -533,7 +539,6 @@ cleared. I.e. all maintenance requests and faults will still be recorded.
 
 Example: `clear`
 
-.Empty room listing with all bookings deleted and expenses reset
 image::ClearCommand-success.png[width="400"]
 // end::clear[]
 
@@ -622,7 +627,7 @@ t/TAG r/ROOM_NUMBER from/START_DATE to/END_DATE`
 * *Login* : `login user/USERNAME pw/PASSWORD`
 * *Logout* : `logout`
 * *Select* : `select INDEX`
-* *Room Service* : `service`
+* *Room Service* : `service r/ROOM_NUMBER no/ITEM_NUMBER [c/COST]`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
