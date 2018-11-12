@@ -128,7 +128,7 @@ A valid booking cannot clash with an existing booking. It must also have a
 * A guest can have any number of tags (including 0)
 * A guest can make an unlimited number of bookings with the hotel.
 * When adding a booking, the guest will *not* be added to the archived guest list or checked-in guest list.
-His/ her information will be stored under his/ her booking in the room.
+Their personal information will be stored under their booking in the room.
 ****
 
 Example: `add n/John Smith p/98765432 e/johnsmith@gmail.com t/VIP r/085
