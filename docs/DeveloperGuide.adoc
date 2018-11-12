@@ -1715,10 +1715,10 @@ This is the list of guests currently checked-in.
 `login user/admin pw/passw0rd` +
 Sign in to Concierge.
 
-`add n/Pikachu p/81726354 e/pi@ka.chu r/049 from/16/11/2018 to/20/11/2018` +
+`add n/Pikachu p/81726354 e/pi@ka.chu r/059 from/16/11/2018 to/20/11/2018` +
 Add a booking to Concierge.
 
-`checkin r/049` +
+`checkin r/059` +
 Checks in Pikachu to Concierge.
 
 `list -cg` +
@@ -1732,7 +1732,7 @@ Concierge(TM).
 This is the view of archived guests. It contains people who have ever checked
  out of Concierge.
 
-`checkout r/049` +
+`checkout r/059` +
 Checks out Pikachu from Concierge.
 
 `list -g` +
