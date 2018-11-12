@@ -307,8 +307,9 @@ Note: The username and password are both case-sensitive.
 The default account can be accessed with `login user/admin pw/passw0rd`
 
 A login allows the user to access the commands which can affect the
-bookings. Commands which require login: `add`, `checkin`, `checkout`, `reassign`,
-`service` and `clear`.
+bookings. +
+Commands which require login: `add`, `checkin`, `checkout`,
+`reassign`, `service` and `clear`.
 
 Example: `login user/admin pw/passw0rd`
 
@@ -356,7 +357,7 @@ will be recognised.
 |image:icon-important.png[Important info]
 |Currently, if you enter a valid json file format but an incorrect password
  reference list format, you will end up with no default account. This allows
- hotel managers set no user accounts for Concierge. To retrieve the default
+ hotel managers to set no user accounts for Concierge. To retrieve the default
  account, delete the `passwords.json` file and re-run Concierge(TM).
 |===
 

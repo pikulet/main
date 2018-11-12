@@ -404,7 +404,7 @@ the `Room` s. Nevertheless, we expect most guests to be aware of their rooms.
 * **Alternative 2:** Add `Room` as a field in `Guest`
 ** Pros: Very customer-centric design. Centralises all the information about
 the `Guest`, including `Booking` s made and `Expense` s incurred.
-** Cons: Making a new `Booking` with a new `Guest` is highly inefficient.
+** Cons: Making a new `Booking` with a `Guest` is highly inefficient.
 `Booking` information is now scattered across individual `Guest` s.
 *** [v1.4] On top of the list of rooms, we maintain a separate list of
 checked-in guests. This list does not retain any booking information, as it
@@ -773,9 +773,9 @@ image::AddExpenseSequenceDiagram.png[width="900"]
 // tag::loginlogout[]
 === Login and Logout
 
-The `login` feature allows hotel managers to tag commands entered with a
- specific user, creating a blame history to trace rogue commands. Managers
- can also control which receptionists have full access to Concierge.
+The `login` feature allows hotel managers to control which receptionists
+have full access to Concierge. When paired with the CommandArchive feature,
+they can also create a blame history to trace rogue commands.
 
 ==== Current Implementation
 
@@ -828,9 +828,7 @@ image::LogInCommand-sequencediagram.png[width=1000]
 
 The `passwords.json` file is read when Concierge is first opened (i.e. in
 `MainApp#init`), and is never written to again. The storage function is
-managed by the `JsonPasswordsStorage` class, which interacts with the main
-Concierge software via the `PasswordsStorage` interface as encouraged by the
-Dependency Inversion Principle. Intuitively, passwords are stored as
+managed by the `JsonPasswordsStorage` class. Intuitively, passwords are stored as
 <<Aspect: Storage of Passwords, key-value pairs>> for quick look-up.
 
 A SHA-256 hash was used in building this feature. In future, this hashing
@@ -906,7 +904,7 @@ is in use.
 potentially an unlimited number of entries, since this utility serialises the
  data to match the class attributes.
 * **Alternative 2:** Store passwords in same XML file as all other
-Concierge data.
+Concierge data
 ** Pros: Centralises data storage in Concierge. There is only one single
 source of truth for all data.
 ** Cons: The XML file is too complicated for the needs of password storage.
